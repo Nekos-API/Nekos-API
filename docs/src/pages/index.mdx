@@ -1,0 +1,250 @@
+import React from 'react';
+
+import Link from 'next/link';
+import styles from '../styles/Home.module.css';
+
+import { Tab, Tabs } from 'nextra-theme-docs';
+
+import { FaceSmileIcon, CurrencyDollarIcon, PhotoIcon, BoltIcon } from '@heroicons/react/24/outline'
+import CodePre from '../components/codepre/CodePre';
+
+import JSIcon from '../components/icons/JS';
+import { ArrowUpRightIcon } from '@heroicons/react/24/outline';
+
+import createGlobe from "cobe";
+
+export const features = [
+    {
+        title: "Beginner friendly",
+        description: "The API is very easy to use and to get started with. No complicated things here.",
+        icon: <FaceSmileIcon />
+    },
+    {
+        title: "Free forever",
+        description: "No need to pay for anything, the API is free forever. (we kindly accept donations though)",
+        icon: <CurrencyDollarIcon />
+    },
+    {
+        title: "Thousands of images",
+        description: "The API has thousands of images, and we're adding more every day.",
+        icon: <PhotoIcon />
+    },
+    {
+        title: "Fast",
+        description: "The API is very fast. We asked the creator of light and he said it's the fastest thing he has ever seen.",
+        icon: <BoltIcon />
+    }
+];
+
+export default function Home() {
+    const globeCanvasRef = React.useRef();
+
+    React.useEffect(() => {
+        let width;
+        const onResize = () => {
+            globeCanvasRef.current && (width = window.innerWidth > 600 ? 600 : window.innerWidth);
+            globeCanvasRef.current.setAttribute('height', width / 2);
+            globeCanvasRef.current.setAttribute('width', width);
+        }
+        window.addEventListener('resize', onResize)
+        onResize()
+
+        let phi = 0;
+
+        const globe = createGlobe(globeCanvasRef.current, {
+            width: width,
+            height: width / 2,
+            phi: 0,
+            theta: 0,
+            dark: 1,
+            diffuse: 1.2,
+            mapSamples: 16000,
+            mapBrightness: 6,
+            baseColor: [0.3, 0.3, 0.3],
+            markerColor: [0.1, 0.8, 1],
+            glowColor: [1, 1, 1],
+            offset: [0, width / 2],
+            markers: [],
+            onRender: (state) => {
+                // Called on every animation frame.
+                // `state` will be an empty object, return updated params.
+                state.phi = phi;
+                state.width = width
+                state.height = width
+                state.offset = [0, width]
+                phi += 0.005;
+            }
+        });
+
+        return () => {
+            globe.destroy();
+        }
+    }, []);
+
+    return (
+        <div className={styles.main}>
+            <div className={styles.heroBg}></div>
+            <div className={styles.content}>
+                <div className={styles.heroContainer}>
+                    <h1 className={styles.mainTitle}>Nekos API</h1>
+                    <p className={styles.mainDescription}>An open-source free public anime images API.</p>
+                    <div className="flex flex-row items-center mt-8 gap-8">
+                        <Link href="/docs" className={styles.mainLink}>
+                            Documentation
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                            </svg>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+            <div className={`${styles.content} ${styles.infoContainer}`}>
+                <h2 className={styles.infoTitle}>Features</h2>
+                <div className={styles.infoCards}>
+                    {features.map((feature, i) => (
+                        <Card
+                            key={i}
+                            title={feature.title}
+                            description={feature.description}
+                            icon={feature.icon} />
+                    ))}
+                </div>
+            </div>
+            <div className={`${styles.content} ${styles.infoContainer} flex flex-col items-center relative`}>
+                <h2 className={styles.infoTitle}>Stats</h2>
+                <p className={styles.infoSubtitle}>
+                    Could be better? I don't think so.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-300 dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-700 rounded-xl overflow-hidden font-mono w-full lg:w-auto mt-8">
+                    <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center">
+                        <div className="text-lg">Images</div>
+                        <div className="text-3xl font-bold">+3500</div>
+                    </div>
+                    <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center">
+                        <div className="text-lg">Categories</div>
+                        <div className="text-3xl font-bold">40</div>
+                    </div>
+                    <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center md:col-span-2 lg:col-span-1">
+                        <div className="text-lg">Avg. response time</div>
+                        <div className="text-3xl font-bold">&lt; 1 sec</div>
+                    </div>
+                </div>
+            </div>
+            <div className={`${styles.content} ${styles.infoContainer} ${styles.wrappersContainer}`}>
+                <div>
+                    <h2 className={styles.infoTitle}>Officialy supported wrappers</h2>
+                    <p className={styles.infoSubtitle}>
+                        Easily integrate the API into your project with one of our officialy supported wrappers.
+                    </p>
+                    <div className='flex flex-row items-center gap-4 mt-8'>
+                        <Link href="/docs/libraries/python" className='rounded border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-neutral-400 dark:hover:border-neutral-700 dark:hover:bg-neutral-800 text-sm font-medium flex flex-row items-center leading-none p-2 gap-2 transition'>
+                            <img src="/imgs/logos/python.png" className="h-4 w-4 object-fit" alt="Python icon" />
+                            Python
+                            <ArrowUpRightIcon className='h-4 w-4 stroke-black dark:stroke-white' />
+                        </Link>
+                        <Link href="/docs/libraries/javascript" className='rounded border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-neutral-400 dark:hover:border-neutral-700 dark:hover:bg-neutral-800 text-sm font-medium flex flex-row items-center leading-none p-2 gap-2 transition'>
+                            <div className='h-4 w-4 relative flex flex-col items-center'>
+                                <div className=' absolute block bg-black top-0.5 bottom-0.5 left-0.5 right-0.5'></div>
+                                <JSIcon className="h-4 w-4 fill-[#f0db4f] absolute" />
+                            </div>
+                            JavaScript
+                            <ArrowUpRightIcon className='h-4 w-4 stroke-black dark:stroke-white' />
+                        </Link>
+                    </div>
+                </div>
+                <div style={{ marginTop: "-1rem" }}>
+                    <Tabs items={['Python', 'JavaScript']}>
+                        <Tab>
+                            <CodePre language="python">
+                                {`from anime_api.apis import NekosAPI\n\nnekos = NekosAPI()\n\nnekos.get_random_image()`}
+                            </CodePre>
+                        </Tab>
+                        <Tab>
+                            <CodePre language="javascript">
+                                {`const { NekosAPI } = require('nekosapi');\n\nconst nekos = new NekosAPI();\n\nnekos.getRandomImage().then(image => console.log(image));`}
+                            </CodePre>
+                        </Tab>
+                    </Tabs>
+                </div>
+            </div>
+            <div className={`${styles.content} ${styles.infoContainer} relative flex flex-col items-center`}>
+                <h2 className={styles.infoTitle}>Used by developers all around the world</h2>
+                <p className={styles.infoSubtitle}>
+                    Thousands of projects worldwide use Nekos API to fetch anime images
+                </p>
+                <canvas
+                    ref={globeCanvasRef}
+                    height="100%"
+                    width="100%"
+                    className='-mb-16 mt-6' />
+            </div>
+            <div className={`${styles.content} ${styles.infoContainer} grid grid-cols-1 md:grid-cols-2 gap-16 relative`}>
+                <div>
+                    <h2 className={styles.infoTitle}>Join our community</h2>
+                    <p className={styles.infoSubtitle}>
+                        Join our community on Discord to get help, talk about the API, and more.
+                    </p>
+                    <Link className={styles.discordBanner} href="https://discord.gg/b9Fv3kEfXc">
+                        <img src="https://discordapp.com/api/guilds/1023471762723328010/widget.png?style=banner2" alt="Join our Discord Server" />
+                    </Link>
+                </div>
+                <div>
+                    <h2 className={styles.infoTitle}>Donate</h2>
+                    <p className={styles.infoSubtitle}>
+                        If you like the API, consider donating to help us keep it running.
+                    </p>
+                    <div className="mt-8 flex flex-row items-center gap-4 flex-wrap">
+                        <Link
+                            href="https://ko-fi.com/nekidev"
+                            className="hover:opacity-80 transition"
+                            target="_blank"
+                        >
+                            <img
+                                src="https://storage.ko-fi.com/cdn/kofi5.png?v=3"
+                                alt="Buy Me a Coffee at ko-fi.com"
+                                style={{ height: "36px" }}
+                            />
+                        </Link>
+                        <Link
+                            href="https://patreon.com/nekidev"
+                            className="hover:opacity-80 transition"
+                            target="_blank"
+                        >
+                            <img
+                                src="https://c5.patreon.com/external/logo/become_a_patron_button.png"
+                                alt="Donate at Patreon.com"
+                                style={{ height: "36px", borderRadius: "18px" }}
+                            />
+                        </Link>
+                        <Link
+                            href="https://www.buymeacoffee.com/nekidev"
+                            className="hover:opacity-80 transition"
+                            target="_blank"
+                        >
+                            <img
+                                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                                alt="Buy Me A Coffee"
+                                style={{ height: "36px", borderRadius: "18px" }}
+                            />
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+
+}
+
+export function Card({ title, description, icon }) {
+    return (
+        <div className={styles.cardContainer}>
+            <div className={styles.iconContainer}>{icon}</div>
+            <div>
+                <div className={styles.title}>{title}</div>
+                <div className={styles.description}>{description}</div>
+            </div>
+        </div>
+    );
+}
+
+<Home />

@@ -1,0 +1,28 @@
+@tailwind utilities;
+
+@layer utilities {
+    .popup-tl {
+        @apply bottom-full left-0;
+    }
+    .popup-tr {
+        @apply bottom-full right-0;
+    }
+    .popup-lt {
+        @apply right-full top-0;
+    }
+    .popup-lb {
+        @apply right-full bottom-0;
+    }
+    .popup-bl {
+        @apply top-full left-0;
+    }
+    .popup-br {
+        @apply top-full right-0;
+    }
+    .popup-rt {
+        @apply left-full top-0;
+    }
+    .popup-rb {
+        @apply left-full bottom-0;
+    }
+}

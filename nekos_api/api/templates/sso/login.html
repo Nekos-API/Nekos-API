@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Log in | Nekos API</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            radical: "#FF0055",
+                        },
+                    },
+                },
+            };
+        </script>
+        <style type="text/tailwindcss">
+            @layer base {
+                html {
+                    @apply text-white;
+                    font-family: "Nunito", sans-serif;
+                    background: black
+                        url("https://nzbpkchegjadkvbwosjq.supabase.co/storage/v1/object/sign/nekos-api/images/05e91d1a-eb24-4651-b287-44eda12fff36.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJuZWtvcy1hcGkvaW1hZ2VzLzA1ZTkxZDFhLWViMjQtNDY1MS1iMjg3LTQ0ZWRhMTJmZmYzNi5qcGciLCJpYXQiOjE2NzUzMDkzMjYsImV4cCI6MTY3NTMxMjkyNn0.KZly_Lpy1IJYit9WOOIyHNsYEPL1AfJ7ol7NqOSO3Qg");
+                    background-size: cover;
+                }
+                input {
+                    @apply rounded border p-2 pl-11 bg-neutral-900 border-white focus:border-radical focus:ring-2 focus:ring-radical transition placeholder:text-neutral-600 text-white w-full outline-none;
+                }
+            }
+        </style>
+    </head>
+    <body
+        class="flex flex-col items-center justify-center p-20 relative h-screen"
+    >
+        <div class="w-full max-w-sm p-8 rounded-xl relative bg-black">
+            <h2 class="text-3xl font-bold mb-2">Log in</h2>
+            <p class="text-neutral-400">Deredere vs. Tsundere, who wins?</p>
+            <form class="mt-8 flex flex-col gap-4 w-full" action="" method="POST">
+                <div class="relative w-full block">
+                    <input placeholder="Username" type="text" name="username" required maxlength="32" />
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6 absolute top-0 bottom-0 left-3 m-auto pointer-events-none"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                        />
+                    </svg>
+                </div>
+                <div class="relative w-full block">
+                    <input placeholder="Password" type="password" name="password" required maxlength="32" />
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6 absolute top-0 bottom-0 left-3 m-auto pointer-events-none"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                        />
+                    </svg>
+                </div>
+                {% csrf_token %}
+                <button
+                    class="w-full rounded text-white p-2 text-center bg-radical hover:bg-radical/80 transition mt-4"
+                >
+                    Continue with email
+                </button>
+            </form>
+            <div
+                class="flex flex-row items-center gap-2 text-xs text-neutral-700 mt-4 mx-2"
+            >
+                <div class="flex-1 h-px bg-neutral-800"></div>
+                <span class="leading-none uppercase">or</span>
+                <div class="flex-1 h-px bg-neutral-800"></div>
+            </div>
+            <div>
+                <button
+                    class="w-full rounded text-black p-2 text-center bg-white hover:opacity-80 transition mt-4 relative"
+                >
+                    <img
+                        src="{% static 'svgs/logos/google.svg' %}"
+                        class="h-6 w-6 absolute left-3 top-0 bottom-0 m-auto"
+                    />
+                    Continue with Google
+                </button>
+            </div>
+            <a
+                href="/signup"
+                class="text-center text-sm mt-4 text-radical mx-auto flex flex-row items-center justify-center gap-1 leading-none border-b border-b-transparent hover:border-b-radical w-fit"
+            >
+                Create an account
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-4 h-4"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                    />
+                </svg>
+            </a>
+        </div>
+        {% if error %}
+        <script>
+            alert("{{ error }}");
+        </script>
+        {% endif %}
+    </body>
+</html>

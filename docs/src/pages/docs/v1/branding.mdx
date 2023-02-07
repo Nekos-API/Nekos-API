@@ -1,0 +1,36 @@
+import { Card, Cards } from '../../components/card'
+
+# Branding
+
+Interested in using our brand content? Don't worry, we've got you covered!
+
+## Logos
+
+You can use any of the following versions of the logo:
+
+<Cards>
+    <Card title="Black logo" href="/logo/black.png" icon={<img src="/logo/black.png" className="h-6 w-6" />} demo={true} />
+    <Card title="White logo" href="/logo/white.png" icon={<img src="/logo/white.png" className="h-6 w-6" />} demo={true} />
+</Cards>
+
+Do not modify (that includes cropping, resizing, changing colors, drawing on top, etc.) in any way the logos. You <u>must not</u> use our name and logo to mislead people into thinking that you are the owner of the website or that you are partnered with us (unless you are explicitly allowed by us to do so).
+
+## Colors
+
+Our colors are pretty simple:
+
+export function Color({ name, color, dark }) {
+    return (
+        <div className="h-32 rounded-xl border-2 border-neutral-100 dark:border-neutral-800 flex flex-col p-4 items-end justify-end" style={{ backgroundColor: color, color: dark ? "white" : "black" }}>
+            <div className="font-bold text-xl">{name}</div>
+            <div>{color}</div>
+        </div>
+    )
+}
+
+<div className="my-4 grid gri-cols-1 md:grid-cols-2 gap-4">
+    <Color name="Black" color="#000000" dark={true} />
+    <Color name="White" color="#FFFFFF" dark={false} />
+    {/* <Color name="Pink" color="#f43f5e" dark={false} /> */}
+    <Color name="Radical Red" color="#ff0055" dark={false} />
+</div>

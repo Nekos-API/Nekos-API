@@ -1,0 +1,64 @@
+{
+    "index": {
+        "title": "Home",
+        "type": "page",
+        "theme": {
+            "layout": "raw"
+        }
+    },
+    "documentation": {
+        "title": "Documentation",
+        "type": "menu",
+        "items": {
+            "v1": {
+                "title": "v1.6.0",
+                "href": "/docs/v1"
+            }
+        }
+    },
+    "about": {
+        "title": "About",
+        "type": "page",
+        "theme": {
+            "typesetting": "article",
+            "breadcrumb": false,
+            "footer": true,
+            "sidebar": false,
+            "toc": false,
+            "pagination": false
+        }
+    },
+    "partners": {
+        "title": "Partners",
+        "type": "page",
+        "theme": {
+            "typesetting": "article",
+            "breadcrumb": false,
+            "footer": true,
+            "sidebar": false,
+            "toc": false,
+            "pagination": false
+        }
+    },
+    "graphiql": {
+        "title": "GraphiQL",
+        "type": "page",
+        "href": "/graphiql",
+        "theme": {
+            "layout": "raw"
+        }
+    },
+    "api": {
+        "display": "hidden"
+    },
+    "docs": {
+        "display": "hidden",
+        "theme": {
+            "breadcrumb": true,
+            "footer": true,
+            "sidebar": true,
+            "toc": true,
+            "pagination": true
+        }
+    }
+}
