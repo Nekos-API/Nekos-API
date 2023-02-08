@@ -91,7 +91,7 @@ class ImagesViewSet(views.ModelViewSet):
         "is_original",
         "is_verified",
     ]
-    search_fields = ['@title']
+    search_fields = ['@title', 'title']
 
     @permission_classes([permissions.IsAuthenticated])
     def create(self, request, *args, **kwargs):
