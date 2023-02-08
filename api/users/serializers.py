@@ -45,6 +45,8 @@ class UserPublicSerializer(serializers.HyperlinkedModelSerializer):
             "nickname",
             "biography",
             "avatar_image",
+            "timestamps",
+            "permissions",
             "following",
             "followers",
             "followed_artists",
@@ -53,11 +55,10 @@ class UserPublicSerializer(serializers.HyperlinkedModelSerializer):
             "followed_lists",
             "url",
         ]
-        read_only_fields = [
-            "permissions",
-            "timestamps",
-        ]
-        extra_kwargs = {"avatar_image": {"required": False}}
+        extra_kwargs = {
+            "avatar_image": {"read_only": True},
+            "permissions": {"read_only": True},
+        }
 
     def username_validator(value):
         if len(value) < 4:
@@ -73,7 +74,7 @@ class UserPublicSerializer(serializers.HyperlinkedModelSerializer):
 
     username = serializers.CharField(required=False)
     permissions = PermissionsSerializer(source="*")
-    timestamps = TimestampsSerializer(source="*")
+    timestamps = TimestampsSerializer(source="*", read_only=True)
     following = relations.HyperlinkedRelatedField(
         many=True,
         read_only=True,
@@ -134,6 +135,8 @@ class UserPrivateSerializer(UserPublicSerializer):
             "email",
             "following",
             "followers",
+            "permissions",
+            "timestamps",
             "followed_artists",
             "followed_characters",
             "followed_categories",
@@ -142,15 +145,13 @@ class UserPrivateSerializer(UserPublicSerializer):
             "discord",
             "url",
         ]
-        read_only_fields = [
-            "permissions",
-            "timestamps",
-        ]
-        extra_kwargs = {"avatar_image": {"required": False}}
+        extra_kwargs = {
+            "avatar_image": {"read_only": True},
+            "permissions": {"read_only": True},
+        }
 
     name = NameSerializer(source="*", required=False)
     email = serializers.EmailField(required=False)
-    timestamps = TimestampsPrivateSerializer(source="*")
     liked_images = relations.ResourceRelatedField(
         many=True,
         read_only=True,
