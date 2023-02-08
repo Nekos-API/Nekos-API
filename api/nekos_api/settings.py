@@ -125,10 +125,10 @@ REST_FRAMEWORK = {
         "rest_framework_json_api.parsers.JSONParser",
     ),
     "DEFAULT_FILTER_BACKENDS": (
+        "rest_framework.filters.SearchFilter",
         "rest_framework_json_api.filters.QueryParameterValidationFilter",
         "rest_framework_json_api.filters.OrderingFilter",
         "rest_framework_json_api.django_filters.DjangoFilterBackend",
-        "rest_framework.filters.SearchFilter",
     ),
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
