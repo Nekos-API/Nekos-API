@@ -33,14 +33,44 @@ class ImagesViewSet(views.ModelViewSet):
     serializer_class = ImageSerializer
     filterset_fields = {
         "id": ("exact", "in", "regex", "iregex"),
+        "title": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "regex",
+            "iregex",
+        ),
         "age_rating": ("iexact", "exact", "in", "isnull", "regex", "iregex"),
         "height": ("exact", "lt", "lte", "gt", "gte"),
         "width": ("exact", "lt", "lte", "gt", "gte"),
         "aspect_ratio": ("exact", "startswith", "endswith", "regex"),
         "is_original": ("exact", "isnull"),
         "is_verified": ("exact",),
-        "source_name": ("iexact", "exact", "contains", "icontains", "startswith", "endswith", "isnull", "regex", "iregex"),
-        "source_url": ("iexact", "exact", "contains", "icontains", "startswith", "endswith", "isnull", "regex", "iregex"),
+        "source_name": (
+            "iexact",
+            "exact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "isnull",
+            "regex",
+            "iregex",
+        ),
+        "source_url": (
+            "iexact",
+            "exact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "isnull",
+            "regex",
+            "iregex",
+        ),
     }
     select_for_includes = {
         "__all__": ["artist"],
@@ -61,6 +91,7 @@ class ImagesViewSet(views.ModelViewSet):
         "is_original",
         "is_verified",
     ]
+    search_fields = ['@title']
 
     @permission_classes([permissions.IsAuthenticated])
     def create(self, request, *args, **kwargs):
