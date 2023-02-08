@@ -22,7 +22,7 @@ class EndpointsView(APIView):
 
         return Response(
             {
-                "type": "api-metadata",
+                "type": "api-details",
                 "id": "1",
                 "attributes": {
                     "endpoints": [
