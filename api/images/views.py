@@ -32,15 +32,15 @@ class ImagesViewSet(views.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
     filterset_fields = {
-        "id": ("exact", "in"),
-        "age_rating": ("iexact", "exact", "in", "isnull"),
+        "id": ("exact", "in", "regex", "iregex"),
+        "age_rating": ("iexact", "exact", "in", "isnull", "regex", "iregex"),
         "height": ("exact", "lt", "lte", "gt", "gte"),
         "width": ("exact", "lt", "lte", "gt", "gte"),
-        "aspect_ratio": ("contains",),
-        "is_original": ("exact",),
+        "aspect_ratio": ("exact", "startswith", "endswith", "regex"),
+        "is_original": ("exact", "isnull"),
         "is_verified": ("exact",),
-        "source_name": ("iexact", "exact", "contains", "icontains", "isnull"),
-        "source_url": ("iexact", "exact", "contains", "icontains", "isnull"),
+        "source_name": ("iexact", "exact", "contains", "icontains", "isnull", "regex", "iregex"),
+        "source_url": ("iexact", "exact", "contains", "icontains", "isnull", "regex", "iregex"),
     }
     select_for_includes = {
         "artist": ["artist"],

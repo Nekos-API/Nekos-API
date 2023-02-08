@@ -1,7 +1,0 @@
-.logo {
-    @apply text-neutral-500;
-}
-
-body:global(.graphiql-dark) .logo {
-    @apply text-neutral-400;
-}

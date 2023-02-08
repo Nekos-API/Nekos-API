@@ -1,1 +1,0 @@
-SELECT * FROM "Characters" WHERE id = ''::uuid
