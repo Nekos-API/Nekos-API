@@ -39,11 +39,11 @@ class ImagesViewSet(views.ModelViewSet):
         "aspect_ratio": ("exact", "startswith", "endswith", "regex"),
         "is_original": ("exact", "isnull"),
         "is_verified": ("exact",),
-        "source_name": ("iexact", "exact", "contains", "icontains", "isnull", "regex", "iregex"),
-        "source_url": ("iexact", "exact", "contains", "icontains", "isnull", "regex", "iregex"),
+        "source_name": ("iexact", "exact", "contains", "icontains", "startswith", "endswith", "isnull", "regex", "iregex"),
+        "source_url": ("iexact", "exact", "contains", "icontains", "startswith", "endswith", "isnull", "regex", "iregex"),
     }
     select_for_includes = {
-        "artist": ["artist"],
+        "__all__": ["artist"],
         "uploader": ["uploader"],
     }
     prefetch_for_includes = {
