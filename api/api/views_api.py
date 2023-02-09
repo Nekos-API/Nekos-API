@@ -9,7 +9,7 @@ from django_ratelimit.decorators import ratelimit
 # Create your views here.
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name='get')
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="get")
 class EndpointsView(APIView):
     """
     Endpoint: /
@@ -72,6 +72,7 @@ class EndpointsView(APIView):
                         "/v2/users/@me",
                         "/v2/users/:id",
                         "/v2/users/:id/follow",
+                        "/v2/users/:id/discord",
                         "/v2/users/:id/followers",
                         "/v2/users/:id/following",
                         "/v2/users/:id/liked-images",
@@ -79,6 +80,7 @@ class EndpointsView(APIView):
                         "/v2/users/:id/followed-artists",
                         "/v2/users/:id/followed-characters",
                         "/v2/users/:id/followed-categories",
+                        "/v2/users/:id/relationships/discord",
                         "/v2/users/:id/relationships/followers",
                         "/v2/users/:id/relationships/following",
                         "/v2/users/:id/relationships/liked-images",

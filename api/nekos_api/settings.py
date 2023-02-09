@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "images.apps.ImagesConfig",
     "lists.apps.ListsConfig",
     "users.apps.UsersConfig",
+    "applications.apps.ApplicationsConfig",
     # Third party apps
     "rest_framework",
     "oauth2_provider",
@@ -197,9 +198,11 @@ OAUTH2_PROVIDER = {
         "write": "Write scope",
         "groups": "Access to your groups",
     },
-    'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore',
-    'REFRESH_TOKEN_EXPIRE_SECONDS': timedelta(weeks=4)
+    "OAUTH2_BACKEND_CLASS": "oauth2_provider.oauth2_backends.JSONOAuthLibCore",
+    "REFRESH_TOKEN_EXPIRE_SECONDS": timedelta(weeks=4),
 }
+
+OAUTH2_PROVIDER_APPLICATION_MODEL = "applications.Application"
 
 AUTH_USER_MODEL = "users.User"
 
@@ -227,7 +230,7 @@ BUNNY_USERNAME = os.getenv("BUNNY_USERNAME")
 BUNNY_PASSWORD = os.getenv("BUNNY_PASSWORD")
 BUNNY_REGION = os.getenv("BUNNY_ZONE")
 
-DEFAULT_FILE_STORAGE = 'nekos_api.storage.Storage'
+DEFAULT_FILE_STORAGE = "nekos_api.storage.Storage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

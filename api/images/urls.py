@@ -6,7 +6,7 @@ urlpatterns = [
     path("images", ImagesViewSet.as_view({"get": "list", "post": "create"}), name="image"),
     path(
         "images/<uuid:pk>",
-        ImagesViewSet.as_view({"get": "retrieve", "post": "update", "delete": "delete"}),
+        ImagesViewSet.as_view({"get": "retrieve", "patch": "update", "delete": "delete"}),
         name="image-detail",
     ),
     path(

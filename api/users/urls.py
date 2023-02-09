@@ -13,7 +13,7 @@ urlpatterns = [
     path("users", UserView.as_view({"get": "list"}), name="user"),
     path(
         "users/@me",
-        UserView.as_view({"get": "retrieve", "post": "update"}),
+        UserView.as_view({"get": "retrieve", "patch": "update"}),
         name="user-me",
         kwargs={"pk": "@me"},
     ),
@@ -24,7 +24,7 @@ urlpatterns = [
     ),
     path(
         "users/<uuid:pk>",
-        UserView.as_view({"get": "retrieve", "post": "update"}),
+        UserView.as_view({"get": "retrieve", "patch": "update"}),
         name="user-detail",
     ),
     path(

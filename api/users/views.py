@@ -20,7 +20,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_json_api import views, serializers
 
-from oauth2_provider.models import AccessToken, RefreshToken, Application
+from oauth2_provider.models import AccessToken, RefreshToken
 
 from oauthlib import common
 
@@ -30,6 +30,8 @@ from PIL import Image
 
 from utils import get_or_none
 from utils.decorators import permission_classes
+
+from applications.models import Application
 
 from .models import User, DiscordUser
 from .serializers import UserPublicSerializer, UserPrivateSerializer
@@ -47,6 +49,7 @@ dotenv.load_dotenv()
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unfollow")
 class UserView(views.ModelViewSet):
     queryset = User.objects.all()
+    select_for_includes = {"discord": ["discord"]}
     prefetch_for_includes = {
         "liked_images": ["liked_images"],
         "saved_images": ["saved_images"],
@@ -122,6 +125,23 @@ class UserView(views.ModelViewSet):
 
         return response
 
+    def retrieve_related(self, request, pk, related_field, *args, **kwargs):
+        """
+        Verifies that the request is not trying to access private
+        endpoints.
+        """
+        if related_field in ["saved-images", "discord"]:
+            if not request.user.is_authenticated():
+                raise exceptions.NotAuthenticated()
+            elif str(request.user.pk) != str(pk):
+                raise serializers.ValidationError(
+                    detail="You cannot see this information.", code="forbidden"
+                )
+
+        return super().retrieve_related(
+            request, pk=pk, related_field=related_field, *args, **kwargs
+        )
+
     @permission_classes([permissions.IsAuthenticated])
     def follow(self, request, *args, **kwargs):
         """
@@ -191,7 +211,7 @@ class UserView(views.ModelViewSet):
         return HttpResponse("", status=204)
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="5/m"), name="post")
+@method_decorator(ratelimit(group="api", key="ip", rate="5/m"), name="put")
 class UserAvatarUploadView(APIView):
     """
     This view handles the user avatar image upload.
@@ -200,12 +220,19 @@ class UserAvatarUploadView(APIView):
     parser_classes = [parsers.MultiPartParser]
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request):
+    def put(self, request):
         """
         Handle the file upload.
         """
 
         file_bytes = request.data["file"].file
+
+        # Prevent from uploading files > 2 MB size
+        if file_bytes.getbuffer().nbytes > 2097152:
+            raise serializers.ValidationError(
+                detail="The file is too large. What were you uploading? The max file size is 2 MB!",
+                code="file_size_exceeded",
+            )
 
         image = Image.open(file_bytes)
         image.verify()
@@ -239,10 +266,20 @@ class UserRelationshipsView(views.RelationshipView):
         else:
             return User.objects.get(pk=self.kwargs.get("pk"))
 
-    def get_permissions(self):
-        if self.kwargs.get("related_field") in ["liked-images", "saved-images"]:
-            return [permissions.IsAuthenticated()]
-        return []
+    def get(self, request, pk, related_field, *args, **kwargs):
+        """
+        Verifies that the request is not trying to access private
+        endpoints.
+        """
+        if related_field in ["saved-images", "discord"]:
+            if not request.user.is_authenticated():
+                raise exceptions.NotAuthenticated()
+            elif str(request.user.pk) != str(pk):
+                raise serializers.ValidationError(
+                    detail="You cannot see this information.", code="forbidden"
+                )
+
+        return super().get(request, pk=pk, related_field=related_field, *args, **kwargs)
 
 
 class ExternalAuthAPIViewSet(viewsets.ViewSet):
