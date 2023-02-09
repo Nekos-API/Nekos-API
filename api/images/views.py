@@ -29,7 +29,6 @@ from .serializers import ImageSerializer
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="verify")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unverify")
 class ImagesViewSet(views.ModelViewSet):
-    queryset = Image.objects.all()
     serializer_class = ImageSerializer
     filterset_fields = {
         "id": ("exact", "in", "regex", "iregex"),
@@ -91,7 +90,12 @@ class ImagesViewSet(views.ModelViewSet):
         "is_original",
         "is_verified",
     ]
-    search_fields = ['title']
+    search_fields = ["title"]
+
+    def get_queryset(self, *args, **kwargs):
+        if self.request.user.is_authenticated() and self.request.user.is_superuser:
+            return Image.objects.all()
+        return Image.objects.filter(is_verified=True)
 
     @permission_classes([permissions.IsAuthenticated])
     def create(self, request, *args, **kwargs):
