@@ -10,8 +10,7 @@ urlpatterns = [
     path("v2" + ("/" if settings.DEBUG else ""), include("artists.urls")),
     path("v2" + ("/" if settings.DEBUG else ""), include("categories.urls")),
     path("v2" + ("/" if settings.DEBUG else ""), include("characters.urls")),
-    path("v2" + ("/" if settings.DEBUG else ""), include("users.urls")),
     path("v2" + ("/" if settings.DEBUG else ""), include("lists.urls")),
+    path("v2" + ("/" if settings.DEBUG else ""), include("users.urls")),
+    path("v2" + ("/" if settings.DEBUG else ""), include("applications.urls")),
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
