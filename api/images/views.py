@@ -26,8 +26,7 @@ from .serializers import ImageSerializer
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unlike")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="save")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unsave")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="verify")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unverify")
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="verification_status")
 class ImagesViewSet(views.ModelViewSet):
     serializer_class = ImageSerializer
     filterset_fields = {
@@ -95,7 +94,7 @@ class ImagesViewSet(views.ModelViewSet):
     def get_queryset(self, *args, **kwargs):
         if self.request.user.is_authenticated and self.request.user.is_superuser:
             return Image.objects.all()
-        return Image.objects.filter(is_verified=True)
+        return Image.objects.filter(verification_status=Image.VerificationStatus.VERIFIED)
 
     @permission_classes([permissions.IsAuthenticated])
     def create(self, request, *args, **kwargs):
@@ -150,25 +149,13 @@ class ImagesViewSet(views.ModelViewSet):
         return Response(data="", status=204)
 
     @permission_classes([permissions.IsAuthenticated, permissions.IsAdminUser])
-    def verify(self, request, pk):
+    def verification_status(self, request, pk):
         """
         Verify an image.
         """
 
         image = get_object_or_404(Image, pk=pk)
-        image.is_verified = True
-        image.save()
-
-        return Response(ImageSerializer(image, context={"request": "request"}).data)
-
-    @permission_classes([permissions.IsAuthenticated, permissions.IsAdminUser])
-    def unverify(self, request, pk):
-        """
-        Set an image as not verified.
-        """
-
-        image = get_object_or_404(Image, pk=pk)
-        image.is_verified = False
+        image.verification_status = Image.VerificationStatus(request.GET.get("status"))
         image.save()
 
         return Response(ImageSerializer(image, context={"request": "request"}).data)

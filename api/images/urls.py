@@ -20,9 +20,9 @@ urlpatterns = [
         name="image-save",
     ),
     path(
-        r"images/<uuid:pk>/verify",
-        ImagesViewSet.as_view({"post": "verify", "delete": "unverify"}),
-        name="image-save",
+        r"images/<uuid:pk>/verification",
+        ImagesViewSet.as_view({"post": "verification_status"}),
+        name="image-verification",
     ),
     path(
         r"images/<uuid:pk>/<related_field>",

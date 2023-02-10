@@ -7,6 +7,7 @@ from .views import (
     UserRelationshipsView,
     ExternalAuthAPIViewSet,
     UserAvatarUploadView,
+    NekosAuthorizationView
 )
 
 urlpatterns = [
@@ -43,6 +44,7 @@ urlpatterns = [
         name="user-relationships",
     ),
     path("auth/signup", UserView.as_view({"post": "signup"})),
+    path("auth/authorize", NekosAuthorizationView.as_view(), name="authorize"),
     path("auth/token", TokenView.as_view(), name="token"),
     path("auth/token/revoke", RevokeTokenView.as_view(), name="revoke-token"),
     path(

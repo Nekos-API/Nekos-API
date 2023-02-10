@@ -13,6 +13,7 @@ import dotenv
 from django.http import HttpResponse
 from django.conf import settings
 from django.core.files import File
+from django.contrib.auth import login
 from django.utils.decorators import method_decorator
 
 from rest_framework import exceptions, permissions, viewsets, parsers
@@ -21,6 +22,7 @@ from rest_framework.views import APIView
 from rest_framework_json_api import views, serializers
 
 from oauth2_provider.models import AccessToken, RefreshToken
+from oauth2_provider.views.base import AuthorizationView
 
 from oauthlib import common
 
@@ -398,3 +400,38 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
                 },
             }
         )
+
+
+class NekosAuthorizationView(AuthorizationView):
+    """
+    This view handles the authorization flow. It is a subclass of
+    `oauth2_provider.views.AuthoriztionView`. The difference between these two
+    is that this view allows authorization with the `access_token` query
+    parameter.
+    """
+
+    def get(self, request, *args, **kwargs):
+        """
+        Handle log in with query parameter access token.
+        """
+
+        if not request.user.is_authenticated:
+            access_token = request.GET.get("access_token")
+
+            if not access_token:
+                return HttpResponse(
+                    "The `access_token` query parameter is missing. This is probably due to a misconfiguration of the redirect URL (directly here and not through https://nekosapi.com/authorize)",
+                    status=400,
+                )
+
+            token = AccessToken.objects.get(token=access_token)
+
+            if token.is_expired():
+                return HttpResponse(
+                    "The `access_token` is expired. Login at <a href='https://nekosapi.com/login'>https://nekosapi.com/login</a> to get a new one!",
+                    content_type="text/html",
+                )
+
+            login(request=request, user=token.user)
+
+        return super().get(request, *args, **kwargs)
