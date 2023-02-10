@@ -93,7 +93,7 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
             "source",
             "dimens",
             "is_original",
-            "is_verified",
+            "verification_status",
             "age_rating",
             "timestamps",
             "uploader",
@@ -103,6 +103,11 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
             "liked_by",
             "url",
         ]
+        extra_kwargs = {
+            "is_original": {"required": True},
+            "verification_status": {"read_only": True},
+            "file": {"read_only": True},
+        }
 
     class JSONAPIMeta:
         included_resources = ["artist"]
@@ -127,7 +132,6 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
     colors = ColorsSerializer(source="*", read_only=True)
     source = SourceSerializer(source="*", required=True)
     dimens = DimensionsSerializer(source="*", read_only=True)
-    is_original = serializers.BooleanField(required=True)
     age_rating = serializers.CharField(required=True, validators=[age_rating_validator])
     timestamps = TimestampsSerializer(source="*", read_only=True)
     uploader = relations.ResourceRelatedField(

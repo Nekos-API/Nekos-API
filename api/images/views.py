@@ -1,8 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from django.core.files import File
 from django.utils.decorators import method_decorator
 
-from rest_framework import permissions
+from rest_framework import permissions, parsers
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_json_api import views, serializers
 
@@ -16,9 +18,7 @@ from .serializers import ImageSerializer
 
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
-@method_decorator(
-    ratelimit(group="api", key="user_or_ip", rate="1/s"), name="retrieve_related"
-)
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_related")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="create")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="update")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="delete")
@@ -47,7 +47,7 @@ class ImagesViewSet(views.ModelViewSet):
         "width": ("exact", "lt", "lte", "gt", "gte"),
         "aspect_ratio": ("exact", "startswith", "endswith", "regex"),
         "is_original": ("exact", "isnull"),
-        "is_verified": ("exact",),
+        "verification_status": ("exact", "iexact", "in", "contains", "icontains"),
         "source_name": (
             "iexact",
             "exact",
@@ -88,12 +88,12 @@ class ImagesViewSet(views.ModelViewSet):
         "age_rating",
         "title",
         "is_original",
-        "is_verified",
+        "verification_status",
     ]
     search_fields = ["title"]
 
     def get_queryset(self, *args, **kwargs):
-        if self.request.user.is_authenticated() and self.request.user.is_superuser:
+        if self.request.user.is_authenticated and self.request.user.is_superuser:
             return Image.objects.all()
         return Image.objects.filter(is_verified=True)
 
@@ -102,6 +102,13 @@ class ImagesViewSet(views.ModelViewSet):
         """
         Creates a new unverified image.
         """
+
+        if request.user.uploaded_images.filter(file=None).count() >= 3:
+            raise serializers.ValidationError(
+                detail="You have more than 3 images created without a file uploaded. Upload those files (https://api.nekosapi.com/v2/images/:id/file) or delete the images before creating a new one.",
+                code="missing_file_uploads",
+            )
+
         return super().create(request, *args, **kwargs)
 
     @permission_classes([permissions.IsAuthenticated])
@@ -231,6 +238,68 @@ class ImagesViewSet(views.ModelViewSet):
             )
 
         request.user.saved_images.remove(image)
+
+        return HttpResponse("", status=204)
+
+
+@method_decorator(ratelimit(group="api", key="ip", rate="5/m"), name="put")
+class UploadImageFileView(APIView):
+    """
+    This view handles the image file upload.
+    """
+
+    parser_classes = [parsers.MultiPartParser]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self) -> Image:
+        """
+        Returns the Image object specified by the `pk` path parameter. This
+        view is restricted to file uploaders and to moderators, so other
+        requests are declined with a 403 Forbidden error.
+        """
+        image = Image.objects.get(pk=int(self.kwargs.get("pk")))
+
+        if image.user != self.request.user and not self.request.user.is_superuser:
+            raise serializers.ValidationError(
+                detail="You don't have permission to edit this image.",
+                code="forbidden",
+            )
+
+        return image
+
+    def put(self, request, pk):
+        """
+        This method handles the file upload. Image files must not be bigger
+        than 8 MB. The image can only be modified when it has not been reviewed
+        by an administrator (when the verification status is `not_reviewed`).
+        Once that it has been reviewed by a moderator, it cannot be modified
+        since that would require a re-verification.
+        """
+
+        instance = self.get_object()
+
+        file_bytes = request.data["file"].file
+
+        # Prevent from uploading files > 8 MB size
+        if file_bytes.getbuffer().nbytes > 8 * 1024 * 1024:
+            raise serializers.ValidationError(
+                detail="The file is too large. What were you uploading? The max file size is 8 MB!",
+                code="file_size_exceeded",
+            )
+
+        image = Image.open(file_bytes)
+        image.verify()
+
+        if image.format.lower() not in ["jpeg", "png", "bmp"]:
+            raise serializers.ValidationError(
+                detail="The uploaded image's format is not supported. Is it even an image?",
+                code="invalid_file_format",
+            )
+
+        instance.file = File(file_bytes, name="image.webp")
+        instance.save()
+
+        image.close()
 
         return HttpResponse("", status=204)
 

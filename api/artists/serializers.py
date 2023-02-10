@@ -8,6 +8,11 @@ from users.models import User
 from .models import Artist
 
 
+class TimestampsSerializer(serializers.Serializer):
+    created = serializers.DateTimeField(source="created_at")
+    updated = serializers.DateTimeField(source="updated_at")
+
+
 class ArtistSerializer(serializers.HyperlinkedModelSerializer):
     included_serializers = {
         "images": "images.serializers.ImageSerializer",
@@ -24,6 +29,7 @@ class ArtistSerializer(serializers.HyperlinkedModelSerializer):
             "images",
             "followers",
             "url",
+            "timestamps",
         ]
 
     name = serializers.CharField()
@@ -41,3 +47,4 @@ class ArtistSerializer(serializers.HyperlinkedModelSerializer):
         related_link_view_name="artist-related",
         self_link_view_name="artist-relationships",
     )
+    timestamps = TimestampsSerializer(source="*")

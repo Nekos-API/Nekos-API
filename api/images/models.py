@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.contrib.postgres.fields import ArrayField
 
 from django_resized import ResizedImageField
@@ -27,6 +28,24 @@ class Image(models.Model):
         QUESTIONABLE = "questionable"
         BORDERLINE = "borderline"
         EXPLICIT = "explicit"
+
+    class VerificationStatus(models.TextChoices):
+        """
+        Verification status choices.
+        """
+
+        NOT_REVIEWED = "not_reviewed"
+        ON_REVIEW = "on_review"
+        DECLINED = "declined"
+        VERIFIED = "verified"
+
+    def validate_rgb_value(value):
+        if value not in range(0, 256):
+            raise ValidationError(
+                detail="This is not a valid RGB value (0-255)",
+                code="invalid_rgb_value",
+                params={"value": value},
+            )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
@@ -81,15 +100,29 @@ class Image(models.Model):
         default=False,
         help_text="Wether the image was illustrated by the original artist of the characters that appear in it.",
     )
-    is_verified = models.BooleanField(
-        default=False, help_text="Wether the image was verified by the staff or not."
+
+    verification_status = models.CharField(
+        default=VerificationStatus.NOT_REVIEWED,
+        choices=VerificationStatus.choices,
+        max_length=12,
+        null=False,
+        blank=False,
+        help_text="The image's verification status.",
     )
 
     dominant_color = ArrayField(
-        models.SmallIntegerField(), size=3, null=True, blank=True
+        models.SmallIntegerField(),
+        size=3,
+        null=True,
+        blank=True,
+        validators=[validate_rgb_value],
     )
     primary_color = ArrayField(
-        models.SmallIntegerField(), size=3, null=True, blank=True
+        models.SmallIntegerField(),
+        size=3,
+        null=True,
+        blank=True,
+        validators=[validate_rgb_value],
     )
 
     characters = models.ManyToManyField(

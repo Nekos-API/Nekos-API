@@ -44,7 +44,7 @@ export default function ProfileSettings() {
                         <span className="font-bold block">Biography</span>
                         <textarea
                             type="text"
-                            className="w-full flex-1 outline-none p-3 rounded-md border-2 border-neutral-200 focus:ring-4 focus:ring-crayola-100 focus:border-crayola-300 transition-all resize-y"
+                            className="w-full outline-none p-3 rounded-md border-2 border-neutral-200 focus:ring-4 focus:ring-crayola-100 focus:border-crayola-300 transition resize-y"
                             placeholder={
                                 user &&
                                 `Hi! I'm ${user.attributes.username}, a catgirl lover that...`

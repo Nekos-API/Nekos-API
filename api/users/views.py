@@ -131,7 +131,7 @@ class UserView(views.ModelViewSet):
         endpoints.
         """
         if related_field in ["saved-images", "discord"]:
-            if not request.user.is_authenticated():
+            if not request.user.is_authenticated:
                 raise exceptions.NotAuthenticated()
             elif str(request.user.pk) != str(pk):
                 raise serializers.ValidationError(
@@ -243,12 +243,12 @@ class UserAvatarUploadView(APIView):
                 code="invalid_file_format",
             )
 
-        image.close()
-
         request.user.avatar_image = File(file_bytes, name="avatar.webp")
         request.user.save()
 
-        return HttpResponse("", status=200)
+        image.close()
+
+        return HttpResponse("", status=204)
 
 
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="get")
@@ -272,7 +272,7 @@ class UserRelationshipsView(views.RelationshipView):
         endpoints.
         """
         if related_field in ["saved-images", "discord"]:
-            if not request.user.is_authenticated():
+            if not request.user.is_authenticated:
                 raise exceptions.NotAuthenticated()
             elif str(request.user.pk) != str(pk):
                 raise serializers.ValidationError(

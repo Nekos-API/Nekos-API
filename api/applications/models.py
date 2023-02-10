@@ -5,6 +5,8 @@ from dynamic_filenames import FilePattern
 
 from django_resized import ResizedImageField
 
+from users.models import User
+
 # Create your models here.
 
 
@@ -24,3 +26,13 @@ class Application(AbstractApplication):
     )
 
     description = models.CharField(max_length=500, blank=True, null=True)
+
+    # This field is overriden to change the related name from
+    # `applications_application` to `applications`.
+    user = models.ForeignKey(
+        User,
+        related_name="applications",
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+    )

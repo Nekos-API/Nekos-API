@@ -20,20 +20,14 @@ from .serializers import ListSerializer
 
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
-@method_decorator(
-    ratelimit(group="api", key="user_or_ip", rate="1/s"), name="retrieve_related"
-)
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_related")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="create")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="update")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="delete")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="follow")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unfollow")
-@method_decorator(
-    ratelimit(group="api", key="user_or_ip", rate="1/s"), name="add_images"
-)
-@method_decorator(
-    ratelimit(group="api", key="user_or_ip", rate="1/s"), name="remove_images"
-)
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="add_images")
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="remove_images")
 class ListViewSet(views.ModelViewSet):
     queryset = List.objects.all()
     serializer_class = ListSerializer

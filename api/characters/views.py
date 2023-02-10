@@ -17,9 +17,7 @@ from .serializers import CharacterSerializer
 
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
-@method_decorator(
-    ratelimit(group="api", key="user_or_ip", rate="1/s"), name="retrieve_related"
-)
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_related")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="follow")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unfollow")
 class CharacterViewSet(views.ReadOnlyModelViewSet):
@@ -28,6 +26,100 @@ class CharacterViewSet(views.ReadOnlyModelViewSet):
     prefetch_for_includes = {
         "images": ["images"],
         "followers": ["followers"],
+    }
+    ordering_fields = [
+        "first_name",
+        "last_name",
+        "description",
+        "gender",
+        "species",
+        "ages",
+        "birth_date",
+        "nationality",
+        "occupations",
+        "created_at",
+        "updated_at",
+    ]
+    filterset_fields = {
+        "first_name": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "regex",
+            "in",
+            "iregex",
+        ),
+        "last_name": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "regex",
+            "in",
+            "iregex",
+        ),
+        "description": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "regex",
+            "in",
+            "iregex",
+        ),
+        "gender": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "regex",
+            "in",
+            "iregex",
+        ),
+        "species": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "regex",
+            "in",
+            "iregex",
+        ),
+        "nationality": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "regex",
+            "in",
+            "iregex",
+        ),
+        "occupations": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "regex",
+            "in",
+            "iregex",
+        ),
+        "created_at": ("second", "minute", "hour", "day", "month", "year"),
+        "updated_at": ("second", "minute", "hour", "day", "month", "year"),
     }
 
     @permission_classes([permissions.IsAuthenticated])

@@ -130,3 +130,6 @@ dmypy.json
 
 django_cache/
 media/
+
+# DB exports
+data.json
