@@ -2,10 +2,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from api.views_api import EndpointsView
+from api.views import EndpointsView
 
 urlpatterns = [
-    path("v2" + ("/" if settings.DEBUG else ""), EndpointsView.as_view(), name="endpoints"),
+    path(
+        "v2" + ("/" if settings.DEBUG else ""),
+        EndpointsView.as_view(),
+        name="endpoints",
+    ),
     path("v2" + ("/" if settings.DEBUG else ""), include("images.urls")),
     path("v2" + ("/" if settings.DEBUG else ""), include("artists.urls")),
     path("v2" + ("/" if settings.DEBUG else ""), include("categories.urls")),

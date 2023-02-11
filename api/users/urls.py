@@ -1,13 +1,11 @@
 from django.urls import path
 
-from oauth2_provider.views import TokenView, RevokeTokenView
+from oauth2_provider.views import TokenView, RevokeTokenView, AuthorizationView
 
 from .views import (
     UserView,
     UserRelationshipsView,
-    ExternalAuthAPIViewSet,
     UserAvatarUploadView,
-    NekosAuthorizationView
 )
 
 urlpatterns = [
@@ -44,12 +42,7 @@ urlpatterns = [
         name="user-relationships",
     ),
     path("auth/signup", UserView.as_view({"post": "signup"})),
-    path("auth/authorize", NekosAuthorizationView.as_view(), name="authorize"),
+    path("auth/authorize", AuthorizationView.as_view(), name="authorize"),
     path("auth/token", TokenView.as_view(), name="token"),
     path("auth/token/revoke", RevokeTokenView.as_view(), name="revoke-token"),
-    path(
-        "auth/external/discord",
-        ExternalAuthAPIViewSet.as_view({"get": "discord"}),
-        name="discord-token",
-    ),
 ]

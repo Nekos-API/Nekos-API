@@ -63,3 +63,14 @@ class DiscordUser(models.Model):
 
     access_token = models.CharField(max_length=256)
     refresh_token = models.CharField(max_length=256)
+
+
+class GoogleUser(models.Model):
+
+    id = models.CharField(
+        primary_key=True, null=False, blank=False, unique=True, max_length=256
+    )
+    email = models.EmailField(null=False, blank=False, unique=True)
+    user = models.OneToOneField(
+        User, unique=True, related_name="google", on_delete=models.CASCADE
+    )

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from .models import User, DiscordUser
+from .models import User, DiscordUser, GoogleUser
 
 
 class NekosUserAdmin(UserAdmin):
@@ -13,10 +13,17 @@ class NekosUserAdmin(UserAdmin):
 
 
 class DiscordUserAdmin(admin.ModelAdmin):
-    list_display = ("user", "email")
+    list_display = ("user", "email", "id")
+    raw_id_fields = ("user",)
+    search_fields = ("user__username__icontains", "email__icontains")
+
+
+class GoogleUserAdmin(admin.ModelAdmin):
+    list_display = ("user", "email", "id")
     raw_id_fields = ("user",)
     search_fields = ("user__username__icontains", "email__icontains")
 
 
 admin.site.register(User, NekosUserAdmin)
 admin.site.register(DiscordUser, DiscordUserAdmin)
+admin.site.register(GoogleUser, GoogleUserAdmin)

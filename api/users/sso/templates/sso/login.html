@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Log in / Nekos API</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            crayola: {
+                                50: "#fff2f2",
+                                100: "#ffe4e3",
+                                150: "#ffc0bc",
+                                200: "#ffafaa",
+                                250: "#fe8e87",
+                                300: "#fe7a72",
+                                350: "#fe5c51",
+                                400: "#fe453a",
+                                450: "#fe2a1c",
+                                500: "#fe1001",
+                                550: "#e30f01",
+                                600: "#c50d01",
+                                650: "#ad0b01",
+                                700: "#8d0901",
+                                750: "#780801",
+                                800: "#540500",
+                                850: "#430400",
+                                900: "#1c0200",
+                                950: "#0d0100",
+                            },
+                            tufts: {
+                                100: "#e6f1fc",
+                                200: "#b4d4f5",
+                                300: "#81b8ef",
+                                400: "#4f9ce8",
+                                500: "#1d7fe2",
+                                600: "#1763b0",
+                                700: "#10477e",
+                                800: "#0a2a4b",
+                                900: "#030e19",
+                            },
+                            spring: {
+                                100: "#e4feef",
+                                200: "#adfcd0",
+                                300: "#77f9b1",
+                                400: "#41f792",
+                                500: "#0af573",
+                                600: "#08be59",
+                                700: "#068840",
+                                800: "#035226",
+                                900: "#011b0d",
+                            },
+                        },
+                    },
+                    fontFamily: {
+                        nunito: ["'Nunito'", "sans-serif"],
+                    },
+                },
+            };
+        </script>
+        <style type="text/tailwindcss">
+            @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800&display=swap");
+
+            @tailwind base;
+            @tailwind components;
+            @tailwind utilities;
+
+            @layer base {
+                html {
+                    @apply font-nunito font-medium text-neutral-800;
+                }
+            }
+        </style>
+        <script
+            src="https://www.google.com/recaptcha/api.js"
+            async
+            defer
+        ></script>
+        <base target="_parent" />
+    </head>
+    <body>
+        <div class="flex flex-col items-center justify-center p-4 h-screen">
+            <div class="flex w-full max-w-5xl">
+                <div class="flex flex-col items-center justify-center w-full">
+                    <form method="POST" class="my-8 w-full max-w-xs relative">
+                        {% csrf_token %}
+                        <h2 class="text-3xl font-extrabold">Log in</h2>
+                        <p class="text-neutral-500">
+                            Catgirls are cute, right?
+                        </p>
+                        <div class="mt-4 flex flex-col gap-4">
+                            <div class="relative w-full">
+                                <input
+                                    class="p-2 pl-8 leading-none rounded-lg bg-transparent w-full z-10 block relative outline-none peer placeholder:text-neutral-400 font-medium"
+                                    placeholder="Username"
+                                    required
+                                    name="username"
+                                />
+                                <div
+                                    class="absolute top-0 bottom-0 left-0 right-0 rounded-lg transition-all bg-neutral-100 peer-focus:scale-x-[1.025] peer-focus:scale-y-105"
+                                ></div>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="h-5 w-5 absolute top-0 bottom-0 left-2 my-auto"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                                    />
+                                </svg>
+                            </div>
+                            <div class="relative w-full">
+                                <input
+                                    class="p-2 pl-8 leading-none rounded-lg bg-transparent w-full z-10 block relative outline-none peer placeholder:text-neutral-400 font-medium"
+                                    placeholder="Password"
+                                    required
+                                    type="password"
+                                    name="password"
+                                />
+                                <div
+                                    class="absolute top-0 bottom-0 left-0 right-0 rounded-lg transition-all bg-neutral-100 peer-focus:scale-x-[1.025] peer-focus:scale-y-105"
+                                ></div>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="h-5 w-5 absolute top-0 bottom-0 left-2 my-auto"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                                    />
+                                </svg>
+                            </div>
+                            <a
+                                href="/password-reset"
+                                class="flex flex-row items-center gap-2 text-crayola-350 -mt-2 mb-2 underline decoration-crayola-150 hover:decoration-crayola-300 transition-colors underline-offset-4 text-sm"
+                            >
+                                Forgot your passsword?
+                            </a>
+                            <div
+                                class="g-recaptcha -mb-2 flex flex-col items-center justify-center"
+                                data-sitekey="{{ RECAPTCHA_SITE_KEY }}"
+                            ></div>
+                        </div>
+                        <div class="flex flex-col gap-4 mt-8">
+                            <div
+                                class="w-full grid grid-cols-2 items-center gap-4"
+                            >
+                                <button
+                                    class="text-white leading-none py-3 px-5 relative group flex-1"
+                                >
+                                    <div
+                                        class="absolute top-0 bottom-0 left-0 right-0 bg-crayola-350 rounded-full transition-transform group-hover:scale-105"
+                                    ></div>
+                                    <div
+                                        class="z-10 relative w-full flex flex-col items-center justify-center"
+                                    >
+                                        Log in
+                                    </div>
+                                </button>
+                                <button
+                                    class="text-neutral-800 leading-none py-3 px-5 relative group flex-1"
+                                    type="button"
+                                >
+                                    <div
+                                        class="absolute top-0 bottom-0 left-0 right-0 border-2 border-neutral-200 rounded-full transition-transform group-hover:scale-105"
+                                    ></div>
+                                    <div
+                                        class="z-10 relative w-full flex flex-col items-center justify-center"
+                                    >
+                                        Sign up
+                                    </div>
+                                </button>
+                            </div>
+                            <div
+                                class="flex flex-row items-center gap-2 w-full"
+                            >
+                                <div
+                                    class="h-0.5 rounded-full bg-neutral-200 flex-1"
+                                ></div>
+                                <div
+                                    class="uppercase text-xs leading-none text-neutral-400"
+                                >
+                                    or
+                                </div>
+                                <div
+                                    class="h-0.5 rounded-full bg-neutral-200 flex-1"
+                                ></div>
+                            </div>
+                            <div
+                                class="w-full grid grid-cols-3 items-center gap-4"
+                            >
+                                <a
+                                    href="/external/discord?next={{ request.GET.next|urlencode }}"
+                                    class="w-full flex flex-row"
+                                >
+                                    <button
+                                        class="text-neutral-800 leading-none py-3 px-5 relative group flex-1"
+                                        type="button"
+                                    >
+                                        <div
+                                            class="absolute top-0 bottom-0 left-0 right-0 border-2 border-neutral-200 rounded-full transition-transform group-hover:scale-105"
+                                        ></div>
+                                        <div
+                                            class="z-10 relative w-full flex flex-col items-center justify-center"
+                                        >
+                                            <img
+                                                src="https://cdn.nekosapi.com/static/logos/discord.svg"
+                                                class="h-5 w-5"
+                                            />
+                                        </div>
+                                    </button>
+                                </a>
+                                <a
+                                    href="/external/google?next={{ request.GET.next|urlencode }}"
+                                    class="w-full flex flex-row"
+                                >
+                                    <button
+                                        class="text-neutral-800 leading-none py-3 px-5 relative group flex-1"
+                                        type="button"
+                                    >
+                                        <div
+                                            class="absolute top-0 bottom-0 left-0 right-0 border-2 border-neutral-200 rounded-full transition-transform group-hover:scale-105"
+                                        ></div>
+                                        <div
+                                            class="z-10 relative w-full flex flex-col items-center justify-center"
+                                        >
+                                            <img
+                                                src="https://cdn.nekosapi.com/static/logos/google.svg"
+                                                class="h-5 w-5"
+                                            />
+                                        </div>
+                                    </button>
+                                </a>
+                                <a
+                                    href="/external/github?next={{ request.GET.next|urlencode }}"
+                                    class="w-full flex flex-row"
+                                >
+                                    <button
+                                        class="text-neutral-800 leading-none py-3 px-5 relative group flex-1"
+                                        type="button"
+                                    >
+                                        <div
+                                            class="absolute top-0 bottom-0 left-0 right-0 border-2 border-neutral-200 rounded-full transition-transform group-hover:scale-105"
+                                        ></div>
+                                        <div
+                                            class="z-10 relative w-full flex flex-col items-center justify-center"
+                                        >
+                                            <img
+                                                src="https://cdn.nekosapi.com/static/logos/github.svg"
+                                                class="h-5 w-5"
+                                            />
+                                        </div>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+            {% if request.GET.error %}
+                alert("{{ request.GET.error|escapejs }}")
+            {% endif %}
+        </script>
+    </body>
+</html>

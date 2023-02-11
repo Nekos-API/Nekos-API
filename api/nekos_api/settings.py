@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "images.apps.ImagesConfig",
     "lists.apps.ListsConfig",
     "users.apps.UsersConfig",
+    "users.sso.apps.SsoConfig",
     "applications.apps.ApplicationsConfig",
     # Third party apps
     "rest_framework",
@@ -90,6 +91,8 @@ ROOT_HOSTCONF = "nekos_api.hosts"
 DEFAULT_HOST = "api"
 
 SITE_ID = 1
+
+SESSION_COOKIE_DOMAIN = os.getenv("BASE_DOMAIN")
 
 DJANGORESIZED_DEFAULT_SIZE = None
 DJANGORESIZED_DEFAULT_SCALE = 1
@@ -244,10 +247,10 @@ PROTECTED_API_TOKEN = os.getenv("PROTECTED_API_TOKEN")
 
 
 if DEBUG:
-    LOGIN_URL = "http://127.0.0.1:8000/login"
+    LOGIN_URL = f"http://sso.{os.getenv('BASE_DOMAIN')}:8000/login"
 
-    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1", f"api.{os.getenv('BASE_DOMAIN')}", f"sso.{os.getenv('BASE_DOMAIN')}"]
 else:
-    LOGIN_URL = "https://sso.nekosapi.com/login"
+    LOGIN_URL = f"https://sso.{os.getenv('BASE_DOMAIN')}/login"
 
-    ALLOWED_HOSTS = ["api.nekosapi.com", "sso.nekosapi.com", "admin.nekosapi.com"]
+    ALLOWED_HOSTS = [f"api.{os.getenv('BASE_DOMAIN')}", f"sso.{os.getenv('BASE_DOMAIN')}", f"admin.{os.getenv('BASE_DOMAIN')}"]
