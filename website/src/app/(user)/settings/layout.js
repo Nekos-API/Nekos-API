@@ -16,7 +16,7 @@ import {
     WindowIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function Layout({ children }) {
@@ -154,13 +154,13 @@ function PageLink({ title, icon, href }) {
             href={href}
             className={
                 "flex flex-row items-center gap-2 py-2 group relative transition" +
-                (pathname == href ? " text-crayola-350" : "")
+                (pathname.startsWith(href) ? " text-crayola-350" : "")
             }
         >
             <div
                 className={
                     "absolute top-0 bottom-0 -left-3 -right-3 rounded-full -z-10 transition-all " +
-                    (pathname == href
+                    (pathname.startsWith(href)
                         ? "bg-crayola-50 group-hover:scale-105"
                         : "scale-75 opacity-0 group-hover:scale-100 group-hover:opacity-100 bg-neutral-100")
                 }

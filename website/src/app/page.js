@@ -4,6 +4,7 @@ import React from "react";
 import { LightPrimaryButton, ScaleBorderButton } from "@/components/button";
 import {
     ArrowRightIcon,
+    ExclamationCircleIcon,
     HashtagIcon,
     HeartIcon,
 } from "@heroicons/react/24/outline";
@@ -19,6 +20,14 @@ const fetcher = (url) =>
     }).then((res) => res.json());
 
 export default function Home() {
+    const [betaMessage, setBetaMessage] = React.useState(false);
+
+    React.useEffect(() => {
+        if (!localStorage.getItem("betaMessage")) {
+            setBetaMessage(true);
+        }
+    }, [])
+
     return (
         <div className="py-8 grid grid-cols-[5fr_2fr] gap-12">
             <div>
@@ -30,6 +39,30 @@ export default function Home() {
                     You can look at what other people upload, or upload images
                     yourself!
                 </p>
+                {betaMessage && (
+                    <div className="bg-crayola-350 flex flex-row p-4 gap-4 text-white rounded-lg w-full -mt-4 mb-8">
+                        <ExclamationCircleIcon className="h-6 w-6" />
+                        <div className="flex flex-col gap-2 flex-1">
+                            <div className="font-bold text-xl">Beta version ahead!</div>
+                            <p>
+                                Hello, and welcome to the Nekos Web beta version! As it name says, this is a beta version. This means that most things will not be working properly or completely missing. This website was created to allow developers to create applications to make use of Nekos API and will probably stay like that while we finish the beta version of Nekos API.
+                                <br /> <br />
+                                We are always open to contributions and if you cannot wait to see this project finished you can always make your PR to our <Link href="https://github.com/Nekos-API/Nekos-API" className="underline hover:decoration-transparent">GitHub repository</Link>.
+                                <br /> <br />
+                                This does not mean that the project is abandoned or that it will not be continued. We will continue with this website as soon as a stable version of Nekos API is released.
+                            </p>
+                            <div className="flex flex-row items-center mt-2 gap-2">
+                                <button className="text-crayola-350 bg-white py-3 px-4 rounded-lg leading-none w-fit" onClick={() => {
+                                    localStorage.setItem("betaMessage", "shown");
+                                    setBetaMessage(false);
+                                }}>I understand, now close this</button>
+                                <Link href="https://github.com/Nekos-API/Nekos-API">
+                                    <button className="text-white bg-crayola-300 py-3 px-4 rounded-lg leading-none w-fit">GitHub repository</button>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 <PopularImages />
             </div>
             <div>
@@ -43,10 +76,10 @@ export default function Home() {
                     </p>
                     <div className="my-2 flex flex-row items-center gap-2 w-full">
                         <div className="flex-1 h-2 rounded-full bg-neutral-200 overflow-hidden relative">
-                            <div className="h-2 rounded-full bg-crayola-300 w-[22.73%]"></div>
+                            <div className="h-2 rounded-full bg-crayola-300 w-[27.97%]"></div>
                         </div>
                         <div className="text-xs text-neutral-800 leading-none">
-                            $22.73
+                            $27.97
                         </div>
                     </div>
                     <div className="flex flex-row flex-wrap text-neutral-400 gap-1 leading-none text-xs">

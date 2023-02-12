@@ -3,7 +3,7 @@ from django.urls import path
 from .views import ApplicationView, UploadApplicationIconView
 
 urlpatterns = [
-    path("applications", ApplicationView.as_view({"post": "create"})),
+    path("applications", ApplicationView.as_view({"get": "list", "post": "create"})),
     path(
         "applications/<int:pk>",
         ApplicationView.as_view(

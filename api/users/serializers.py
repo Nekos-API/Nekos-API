@@ -73,7 +73,7 @@ class UserPublicSerializer(serializers.HyperlinkedModelSerializer):
             )
 
     username = serializers.CharField(required=False)
-    permissions = PermissionsSerializer(source="*")
+    permissions = PermissionsSerializer(source="*", read_only=True)
     timestamps = TimestampsSerializer(source="*", read_only=True)
     following = relations.HyperlinkedRelatedField(
         many=True,

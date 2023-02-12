@@ -64,26 +64,24 @@ INSTALLED_APPS = [
     "django_ratelimit",
     "django_resized",
     "django_cleanup.apps.CleanupConfig",
-    "corsheaders",
     "django_bunny_storage",
 ]
 
 MIDDLEWARE = [
     "django_hosts.middleware.HostsRequestMiddleware",
+    "nekos_api.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "nekos_api.middleware.DisableCSRFMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "oauth2_provider.middleware.OAuth2TokenMiddleware",
     "api.middleware.JSONAPIMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    # "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_hosts.middleware.HostsResponseMiddleware",
 ]
-
-CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = "nekos_api.urls"
 ROOT_HOSTCONF = "nekos_api.hosts"
@@ -101,6 +99,10 @@ DJANGORESIZED_DEFAULT_KEEP_META = True
 DJANGORESIZED_DEFAULT_FORCE_FORMAT = "WEBP"
 DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {"WEBP": ".webp"}
 DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = False
+CORS_ORIGIN_WHITELIST = ("http://example.com:3000",)
 
 TEMPLATES = [
     {
@@ -135,6 +137,7 @@ REST_FRAMEWORK = {
         "rest_framework_json_api.django_filters.DjangoFilterBackend",
     ),
     "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
     ),
     "DEFAULT_METADATA_CLASS": "rest_framework_json_api.metadata.JSONAPIMetadata",
@@ -249,8 +252,17 @@ PROTECTED_API_TOKEN = os.getenv("PROTECTED_API_TOKEN")
 if DEBUG:
     LOGIN_URL = f"http://sso.{os.getenv('BASE_DOMAIN')}:8000/login"
 
-    ALLOWED_HOSTS = ["localhost", "127.0.0.1", f"api.{os.getenv('BASE_DOMAIN')}", f"sso.{os.getenv('BASE_DOMAIN')}"]
+    ALLOWED_HOSTS = [
+        "localhost",
+        "127.0.0.1",
+        f"api.{os.getenv('BASE_DOMAIN')}",
+        f"sso.{os.getenv('BASE_DOMAIN')}",
+    ]
 else:
     LOGIN_URL = f"https://sso.{os.getenv('BASE_DOMAIN')}/login"
 
-    ALLOWED_HOSTS = [f"api.{os.getenv('BASE_DOMAIN')}", f"sso.{os.getenv('BASE_DOMAIN')}", f"admin.{os.getenv('BASE_DOMAIN')}"]
+    ALLOWED_HOSTS = [
+        f"api.{os.getenv('BASE_DOMAIN')}",
+        f"sso.{os.getenv('BASE_DOMAIN')}",
+        f"admin.{os.getenv('BASE_DOMAIN')}",
+    ]

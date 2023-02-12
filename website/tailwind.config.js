@@ -48,9 +48,9 @@ module.exports = {
                     900: "#011b0d",
                 },
             },
-        },
-        fontFamily: {
-            nunito: ["'Nunito'", "sans-serif"],
+            fontFamily: {
+                nunito: ["'Nunito'", "sans-serif"],
+            },
         },
     },
     plugins: [

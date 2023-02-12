@@ -98,7 +98,7 @@ export default function Navbar() {
                         </Popup>
                     ) : (
                         <div className="-my-3 flex flex-row items-center gap-4">
-                            <Link href="/login">
+                            <Link href={process.env.NEXT_PUBLIC_LOGIN_URL}>
                                 <ScalePrimaryButton>Log in</ScalePrimaryButton>
                             </Link>
                             <Link href="/signup">

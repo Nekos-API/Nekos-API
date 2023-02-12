@@ -63,20 +63,20 @@ class UserView(views.ModelViewSet):
     }
 
     def get_serializer_class(self):
-        if (self.request.auth and self.kwargs.get("pk") == "@me") or (
-            isinstance(self.request.user, User)
+        if (self.request.user.is_authenticated and self.kwargs.get("pk") == "@me") or (
+            self.request.user.is_authenticated
             and str(self.kwargs.get("pk")) == str(self.request.user.id)
         ):
             return UserPrivateSerializer
         return UserPublicSerializer
 
     def get_object(self):
-        if (self.request.auth and self.kwargs.get("pk") == "@me") or (
-            isinstance(self.request.user, User)
+        if (self.request.user.is_authenticated and self.kwargs.get("pk") == "@me") or (
+            self.request.user.is_authenticated
             and self.kwargs.get("pk") == str(self.request.user.id)
         ):
             return self.request.user
-        elif not self.request.auth and self.kwargs.get("pk") == "@me":
+        elif not self.request.user.is_authenticated and self.kwargs.get("pk") == "@me":
             raise exceptions.NotAuthenticated()
         else:
             return User.objects.get(pk=self.kwargs.get("pk"))
@@ -238,7 +238,7 @@ class UserAvatarUploadView(APIView):
         image = Image.open(file_bytes)
         image.verify()
 
-        if image.format.lower() not in ["jpeg", "png", "bmp"]:
+        if image.format.lower() not in ["jpeg", "png", "webp", "jfif", "avif", "bmp"]:
             raise serializers.ValidationError(
                 detail="The uploaded image's format is not supported. Is it even an image?",
                 code="invalid_file_format",
@@ -257,12 +257,12 @@ class UserRelationshipsView(views.RelationshipView):
     queryset = User.objects.all()
 
     def get_object(self):
-        if (self.request.auth and self.kwargs.get("pk") == "@me") or (
+        if (self.request.user.is_authenticated and self.kwargs.get("pk") == "@me") or (
             isinstance(self.request.user, User)
             and self.kwargs.get("pk") == str(self.request.user.id)
         ):
             return self.request.user
-        elif not self.request.auth and self.kwargs.get("pk") == "@me":
+        elif not self.request.user.is_authenticated and self.kwargs.get("pk") == "@me":
             raise exceptions.NotAuthenticated()
         else:
             return User.objects.get(pk=self.kwargs.get("pk"))

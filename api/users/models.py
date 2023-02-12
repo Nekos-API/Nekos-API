@@ -74,3 +74,15 @@ class GoogleUser(models.Model):
     user = models.OneToOneField(
         User, unique=True, related_name="google", on_delete=models.CASCADE
     )
+
+
+class GitHubUser(models.Model):
+    class Meta:
+        verbose_name = "GitHub User"
+        verbose_name_plural = "GitHub Users"
+
+    id = models.PositiveBigIntegerField(
+        primary_key=True, unique=True, blank=False, null=False
+    )
+    email = models.EmailField(null=False, blank=False)
+    user = models.OneToOneField(User, related_name="github", on_delete=models.CASCADE)

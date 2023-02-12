@@ -277,7 +277,7 @@ class UploadImageFileView(APIView):
         image = Image.open(file_bytes)
         image.verify()
 
-        if image.format.lower() not in ["jpeg", "png", "bmp"]:
+        if image.format.lower() not in ["jpeg", "png", "webp", "jfif", "avif", "bmp"]:
             raise serializers.ValidationError(
                 detail="The uploaded image's format is not supported. Is it even an image?",
                 code="invalid_file_format",

@@ -52,10 +52,9 @@ class ApplicationSerializer(serializers.ModelSerializer):
 
     client_type = serializers.ChoiceField(choices=Application.CLIENT_TYPES)
 
-    # Allow only authorization_code applications
+    # Allow only authorization-code applications
     authorization_grant_type = serializers.ChoiceField(
-        choices=(("authorization_code", "Authorization code"),),
-        required=True
+        choices=(("authorization-code", "Authorization code"),), required=True
     )
 
     credentials = ClientIdSerializer(source="*", read_only=True)

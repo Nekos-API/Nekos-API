@@ -17,6 +17,7 @@ from .serializers import ApplicationSerializer, ApplicationWithSecretSerializer
 # Create your views here.
 
 
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="update")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="create")
@@ -25,6 +26,9 @@ class ApplicationView(views.ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self, *args, **kwargs):
+        return Application.objects.filter(user=self.request.user)
 
     def get_object(self):
         obj = super().get_object()
@@ -57,15 +61,15 @@ class ApplicationView(views.ModelViewSet):
                 detail="You can create up to 10 applications per user to prevent spam.",
                 code="application_limit_reached",
             )
-        
+
         serializer = ApplicationWithSecretSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         # The user is not automatically added so it has to be added here. The
-        # authorization grant type is also set to `authorization_code`
+        # authorization grant type is also set to `authorization-code`
         instance = serializer.create(serializer.validated_data)
         instance.user = request.user
-        instance.authorization_grant_type = "authorization_code"
+        instance.authorization_grant_type = "authorization-code"
 
         # Save the client secret before hashing so that it can be returned to
         # the user.
@@ -81,7 +85,7 @@ class ApplicationView(views.ModelViewSet):
         serializer.instance = instance
 
         return Response(serializer.data)
-    
+
     def delete(self, request, pk):
         """
         Delete an application.
@@ -91,7 +95,7 @@ class ApplicationView(views.ModelViewSet):
 
         application.delete()
 
-        return HttpResponse('', status=204)
+        return HttpResponse("", status=204)
 
 
 @method_decorator(ratelimit(group="api", key="ip", rate="5/m"), name="put")
@@ -115,7 +119,7 @@ class UploadApplicationIconView(APIView):
                 detail="You don't have permission to manage this application.",
                 code="forbidden",
             )
-        
+
         return app
 
     def put(self, request, pk):
@@ -133,7 +137,7 @@ class UploadApplicationIconView(APIView):
         image = Image.open(file_bytes)
         image.verify()
 
-        if image.format.lower() not in ["jpeg", "png", "bmp"]:
+        if image.format.lower() not in ["jpeg", "png", "webp", "jfif", "avif", "bmp"]:
             raise serializers.ValidationError(
                 detail="The uploaded image's format is not supported. Is it even an image?",
                 code="invalid_file_format",
