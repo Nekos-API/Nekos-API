@@ -246,7 +246,7 @@ DEFAULT_FILE_STORAGE = "nekos_api.storage.Storage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-API_VERSION = "2.0.0-Alpha"
+API_VERSION = "2.0.0-Alpha.1"
 
 
 PROTECTED_API_TOKEN = os.getenv("PROTECTED_API_TOKEN")
