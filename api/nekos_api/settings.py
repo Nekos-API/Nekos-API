@@ -36,6 +36,8 @@ DEBUG = os.getenv("DEBUG", "false").lower() == "true"
 # Application definition
 
 INSTALLED_APPS = [
+    # Daphne
+    "daphne",
     # Django Admin Interface
     "admin_interface",
     "colorfield",
@@ -151,6 +153,7 @@ JSON_API_FORMAT_RELATED_LINKS = "dasherize"
 JSON_API_UNIFORM_EXCEPTIONS = True
 
 WSGI_APPLICATION = "nekos_api.wsgi.application"
+ASGI_APPLICATION = "nekos_api.asgi.application"
 
 
 # Database
