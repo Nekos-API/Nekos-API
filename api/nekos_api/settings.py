@@ -30,12 +30,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "false").lower() == "true"
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # Daphne
+    "daphne",
     # Django Admin Interface
     "admin_interface",
     "colorfield",
@@ -86,7 +88,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = "nekos_api.urls"
 ROOT_HOSTCONF = "nekos_api.hosts"
 
-DEFAULT_HOST = "api"
+DEFAULT_HOST = "admin" if not DEBUG else "api"
 
 SITE_ID = 1
 
@@ -102,7 +104,7 @@ DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = False
-CORS_ORIGIN_WHITELIST = ("http://example.com:3000",)
+CORS_ORIGIN_WHITELIST = os.getenv("CORS_ORIGIN_WHITELIST").split(" ")
 
 TEMPLATES = [
     {
@@ -151,6 +153,7 @@ JSON_API_FORMAT_RELATED_LINKS = "dasherize"
 JSON_API_UNIFORM_EXCEPTIONS = True
 
 WSGI_APPLICATION = "nekos_api.wsgi.application"
+ASGI_APPLICATION = "nekos_api.asgi.application"
 
 
 # Database
@@ -232,6 +235,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = "/"
 
 MEDIA_URL = "https://cdn.nekosapi.com/"
 
@@ -243,7 +247,7 @@ DEFAULT_FILE_STORAGE = "nekos_api.storage.Storage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-API_VERSION = "2.0.0-Alpha"
+API_VERSION = "2.0.0-Alpha.1"
 
 
 PROTECTED_API_TOKEN = os.getenv("PROTECTED_API_TOKEN")

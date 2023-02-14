@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2023 Nekos API
+Copyright (c) 2023 Rafael Bradley
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

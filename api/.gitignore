@@ -133,3 +133,5 @@ media/
 
 # DB exports
 data.json
+
+static/
