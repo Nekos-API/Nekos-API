@@ -6,15 +6,15 @@ from api.views import EndpointsView
 
 urlpatterns = [
     path(
-        "v2" + ("/" if settings.DEBUG else ""),
+        "v2/",
         EndpointsView.as_view(),
         name="endpoints",
     ),
-    path("v2" + ("/" if settings.DEBUG else ""), include("images.urls")),
-    path("v2" + ("/" if settings.DEBUG else ""), include("artists.urls")),
-    path("v2" + ("/" if settings.DEBUG else ""), include("categories.urls")),
-    path("v2" + ("/" if settings.DEBUG else ""), include("characters.urls")),
-    path("v2" + ("/" if settings.DEBUG else ""), include("lists.urls")),
-    path("v2" + ("/" if settings.DEBUG else ""), include("users.urls")),
-    path("v2" + ("/" if settings.DEBUG else ""), include("applications.urls")),
+    path("v2/", include("images.urls")),
+    path("v2/", include("artists.urls")),
+    path("v2/", include("categories.urls")),
+    path("v2/", include("characters.urls")),
+    path("v2/", include("lists.urls")),
+    path("v2/", include("users.urls")),
+    path("v2/", include("applications.urls")),
 ]
