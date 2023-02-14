@@ -88,7 +88,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = "nekos_api.urls"
 ROOT_HOSTCONF = "nekos_api.hosts"
 
-DEFAULT_HOST = "api"
+DEFAULT_HOST = "admin" if not DEBUG else "api"
 
 SITE_ID = 1
 
@@ -235,6 +235,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = "/"
 
 MEDIA_URL = "https://cdn.nekosapi.com/"
 
