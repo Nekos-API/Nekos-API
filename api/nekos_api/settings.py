@@ -144,6 +144,7 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_METADATA_CLASS": "rest_framework_json_api.metadata.JSONAPIMetadata",
     "MAX_LIMIT": 50,
+    "DEFAULT_LIMIT": 25,
     "SEARCH_PARAM": "filter[search]",
 }
 
