@@ -1,0 +1,37 @@
+{
+    "index": {
+        "title": "Home",
+        "type": "page",
+        "theme": {
+            "layout": "raw"
+        }
+    },
+    "docs": {
+        "title": "Documentation",
+        "type": "page"
+    },
+    "about": {
+        "title": "About",
+        "type": "page",
+        "theme": {
+            "typesetting": "article",
+            "breadcrumb": false,
+            "footer": true,
+            "sidebar": false,
+            "toc": false,
+            "pagination": false
+        }
+    },
+    "partners": {
+        "title": "Partners",
+        "type": "page",
+        "theme": {
+            "typesetting": "article",
+            "breadcrumb": false,
+            "footer": true,
+            "sidebar": false,
+            "toc": false,
+            "pagination": false
+        }
+    }
+}

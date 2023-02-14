@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+
+@tailwind components;
+
+.code {
+    @apply text-[var(--shiki-color-text)] text-sm;
+    white-space: pre;
+    font-family: 'Inconsolata', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+}
+
+.code span:global(.hljs-keyword) {
+    @apply text-[var(--shiki-token-function)];
+}
+.code span:global(.hljs-string) {
+    @apply text-[var(--shiki-token-string-expression)];
+}
+.code span:global(.hljs-number) {
+    @apply text-[var(--shiki-token-number)];
+}
+.code span:global(.hljs-attr) {
+    @apply text-[var(--shiki-token-keyword)];
+}
+.code span:global(.hljs-punctuation) {
+    @apply text-[var(--shiki-token-punctuation)];
+}
+.code span:global(.hljs-number) {
+    @apply text-[var(--shiki-token-constant)];
+}
+.code span:global(.hljs-title),
+.code span:global(.hljs-built_in), 
+.code span:global(.class_), 
+.code span:global(.function_) {
+    @apply text-[var(--shiki-token-function)];
+}

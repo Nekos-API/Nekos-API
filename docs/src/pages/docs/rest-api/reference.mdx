@@ -1,0 +1,78 @@
+import { Callout } from "nextra-theme-docs";
+
+# Reference
+
+This page will help you understand how to use the Rest API. We highly recommend reading this before starting to use the API.
+
+## Rate limits
+
+The API has a rate limit of **1 request per second**. If you exceed this limit, you will receive a 429 response. You can use the `Retry-After` and the `X-RateLimit-Reset` header to determine how long to wait before retrying.
+
+If you exceed the rate limit 10 times in the same hour, you'll get blocked for an hour.
+
+## Authentication
+
+The API does not require any kind of authentication for regular users. You can go ahead and start using it right away.
+
+If you have an access token, you need to set an `Authorization` header with the token as the value.
+
+```copy=false
+Authorization: Bearer <token>
+```
+
+## Responses
+
+The API will always return a JSON object. The response will have the following structure:
+
+```js
+{
+    "success": Boolean,
+    "data": Object
+}
+```
+
+## Errors
+
+If an error occurs, the API will return a JSON object with the following structure:
+
+```js
+{
+    "code": Integer,
+    "message": String,
+    "success": false
+}
+```
+
+## Pagination
+
+The API uses a limit/offset based pagination system. You can use the limit and offset query parameters to paginate through the results. For example:
+
+```
+GET /api/image?limit=10&offset=0 HTTP/1.1
+```
+
+The default limit is 10 and the maximum limit is 25.
+
+## Searching
+
+In some endpoints there is a `search` query parameter that you can use to filter the results. The queries can be done using the following operators:
+
+| Operator | Description                                                                                                                               | Example                                                                    |
+| :------- | :---------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------- |
+| `%`      | Matches any character one or more times.                                                                                                  | `%aguya%` matches `kaguya-sama`                                            |
+| `_`      | Matches any single character.                                                                                                             | `k_guya` matches `kaguya`                                                  |
+| `\|`     | Matches at least one of the options.                                                                                                      | `kaguya\|megumin` matches `kaguya` and also `megumin`                      |
+| `*`      | Matches the previous character 0 or more times.                                                                                           | `k*aguya` matches `aguya`, `kaguya`, and also `kkaguya`                    |
+| `+`      | Matches the previous character 1 or more times.                                                                                           | `kaguya+` matches `kaguya`, `kaguyaa`, and also `kaguyaaa`                 |
+| `?`      | Matches the previous character 0 or 1 times.                                                                                              | `kaguya?` matches `kaguy` and `kaguya`                                     |
+| `{m}`    | Matches the previous character exactly `m` times.                                                                                         | `kaguya{3}` matches `kaguyaaa`                                             |
+| `{m,}`   | Matches the prevoius character `m` or more times.                                                                                         | `kaguya{2,}` matches `kaguyaa`, `kaguyaaa` and also `kaguyaaaa`            |
+| `{m,n}`  | Matches the prevoius character at least `m` times and no more than `n` times.                                                             | `kaguya{2,4}` matches `kaguyaa`, `kaguyaaa`, and `kaguyaaaa`               |
+| `(...)`  | Groupes items into a single logical item.                                                                                                 | `(kaguya){1,3}` matches `kaguya`, `kaguyakaguya`, and `kaguyakaguyakaguya` |
+| `[...]`  | Specifies a [RegEx](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes) character class. | `[a-z]kaguya` matches `akaguya`, `bkaguya`, `ckaguya`, etc.                |
+
+These operators can be combined to create more complex queries, such as `%?kaguya(-sama)?%?` to match `kaguya` or `kaguya-sama` inside a longer string (i.e. `abckaguya-samadef`, `kaguya123`)
+
+<Callout type="info">
+    Search matches are always case-insenitive.
+</Callout>

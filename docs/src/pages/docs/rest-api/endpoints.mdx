@@ -1,0 +1,1254 @@
+import { Callout, Tab, Tabs } from "nextra-theme-docs";
+import { APIRequest } from "../../../components/apirequest";
+
+# Endpoints
+
+Base url: `https://nekosapi.com/api`
+
+## `GET /`
+
+export let code1 = `
+{
+    "data": [
+        "/",
+        "/stats",
+        ...
+    ],
+    "meta": {
+        "version": "v1.4.2",
+        "baseApiRoute": "/api"
+    },
+    "success": true
+}
+`.trim();
+
+<APIRequest
+    method="GET"
+    endpoint="/"
+    title="Information"
+    description="Returns information about the API such as it's endpoints and version."
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code1,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code1.split("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+/>
+
+## `GET /stats`
+
+export let code2 = `
+{
+    "data": {
+        "images": {
+            "count": 2890,
+            "nsfw": {
+                "nsfw": 9,
+                "questionable": 19,
+                "sfw": 2862
+            },
+            ...
+        },
+        "artists": {
+            "count": 1
+        },
+        ...
+    },
+    "success": true
+}
+`.trim();
+
+<APIRequest
+    method="GET"
+    endpoint="/stats"
+    title="Get current API statistics"
+    description="Get the current API statistics."
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code2,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code2.split("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+/>
+
+## `GET /token`
+
+<Callout type="info">
+    This endpoint requires an access token. You can read more about why we have
+    protected endpoints [here](/docs/faq).
+</Callout>
+
+export let code3 = `
+{
+    "data": {
+        "owner": "xxxxxx (Discord ID: xxxxxxxxxxxxxxxxxx)",
+        "purpose": "xxxxxxxxxxxx",
+        "scopes": ["image:list", "image:custom-expiry:86400"],
+        "issuedBy": "xxxxxx (Discord ID: xxxxxxxxxxxxxxxxxx)",
+        "createdAt": "2023-01-01T00:00:00.000Z",
+        "expires": "2023-01-01T00:00:00.000Z"
+    },
+    "success": true
+}
+`.trim();
+
+<APIRequest
+    method="GET"
+    endpoint="/token"
+    title="Get token information"
+    description="Get information about the current access token."
+    parameters={[
+        {
+            name: "Authorization",
+            type: "token (header)",
+            description: "The access token.",
+            required: true,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code3,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code3.split("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 401,
+            name: "Unauthorized",
+            description: "You have not provided a token.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is not a valid token.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+/>
+
+## `GET /image`
+
+<Callout type="info">
+    This is the only endpoint (ignoring `/token`) that requires authorization.
+    You can read more about why we do this [here](/docs/faq).
+</Callout>
+
+export let code4 = `
+{
+    "data": [
+        {
+            "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "url": "https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png",
+            "artist": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "source": {
+                "name": "xxxxxxx",
+                "url": "https://example.com/xxxxxxx"
+            },
+            "nsfw": "sfw",
+            "categories": [
+                {
+                    "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                    "name": "xxxxxxx",
+                    "description": "xxxxxxxxxxxxxxxxxx",
+                    "nsfw": false,
+                    "createdAt": "2021-01-01T00:00:00.000Z"
+                }
+            ],
+            "characters": [
+                {
+                    "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                    "name": "xxxxxxx",
+                    "description": "xxxxxxxxxxxxxxxxxx",
+                    "source": "xxxxxxxxx",
+                    "gender": "xxxxxx",
+                    "ages": [
+                        16,
+                        17
+                    ],
+                    "birth_date": "xxxx xxxx",
+                    "nationality": "xxxxxxxxx",
+                    "occupations": [
+                        "xxxx xxxxxx",
+                        "xxxxxx xxxxxxx xxxxxxxxxxx"
+                    ],
+                    "createdAt": "2021-01-01T00:00:00.000Z"
+                }
+            ],
+            "createdAt": "2021-01-01T00:00:00.000Z",
+            "meta": {
+                "eTag": "xxxxxxxxxxxxxxxxxxxxx",
+                "size": 6336807,
+                "mimetype": "image/png",
+                "color": "#ffffff",
+                "expires": "2021-01-01T00:00:00.000Z",
+                "dimens": {
+                    "width": 1024,
+                    "height": 1024,
+                    "aspectRatio": "1:1",
+                    "orientation": "landscape"
+                }
+            }
+        }
+    ],
+    "success": true
+}
+`.trim();
+
+<APIRequest
+    method="GET"
+    endpoint="/image"
+    title="Get all images"
+    description="Returns a list of all available images."
+    parameters={[
+        {
+            name: "Authorization",
+            type: "token (header)",
+            description: "The access token.",
+            required: true,
+        },
+        {
+            name: "limit",
+            type: "number",
+            description: "The maximum amount of images to get. (max. 25)",
+        },
+        {
+            name: "offset",
+            type: "number",
+            description: "The number of images to skip.",
+        },
+        {
+            name: "expiry",
+            type: "number",
+            description:
+                "The amount of time in seconds the link will be valid (until expiry) (requires auth)",
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code4,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code4.split("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid limit",
+            description: "The limit provided is not a number between 1 and 25.",
+        },
+        {
+            code: 400,
+            name: "Invalid offset",
+            description: "The offset provided is not a number greater than 0.",
+        },
+        {
+            code: 400,
+            name: "Invalid expiry",
+            description:
+                "The provided custom expiry time is not a number greater than 30.",
+        },
+        {
+            code: 401,
+            name: "Unauthorized",
+            description: "You have not provided a token.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is not a valid token.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The access token provided has not got permission to list all images.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The access token provided has not got permission to set a custom image expiry time.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The custom expiry time is greater than what allowed by the token.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+/>
+
+## `GET /image/random`
+
+export let code5 = `
+{
+    "data": [
+        {
+            "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "url": "https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png",
+            "artist": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "source": {
+                "name": "xxxxxxx",
+                "url": "https://example.com/xxxxxxx"
+            },
+            "nsfw": "sfw",
+            "categories": [
+                {
+                    "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                    "name": "xxxxxxx",
+                    "description": "xxxxxxxxxxxxxxxxxx",
+                    "nsfw": false,
+                    "createdAt": "2021-01-01T00:00:00.000Z"
+                }
+            ],
+            "characters": [
+                {
+                    "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                    "name": "xxxxxxx",
+                    "description": "xxxxxxxxxxxxxxxxxx",
+                    "source": "xxxxxxxxx",
+                    "gender": "xxxxxx",
+                    "ages": [
+                        16,
+                        17
+                    ],
+                    "birth_date": "xxxx xxxx",
+                    "nationality": "xxxxxxxxx",
+                    "occupations": [
+                        "xxxx xxxxxx",
+                        "xxxxxx xxxxxxx xxxxxxxxxxx"
+                    ],
+                    "createdAt": "2021-01-01T00:00:00.000Z"
+                }
+            ],
+            "createdAt": "2021-01-01T00:00:00.000Z",
+            "meta": {
+                "eTag": "xxxxxxxxxxxxxxxxxxxxx",
+                "size": 6336807,
+                "mimetype": "image/png",
+                "color": "#ffffff",
+                "expires": "2021-01-01T00:00:00.000Z",
+                "dimens": {
+                    "width": 1024,
+                    "height": 1024,
+                    "aspectRatio": "1:1",
+                    "orientation": "landscape"
+                }
+            }
+        }
+    ],
+    "success": true
+}
+`.trim();
+
+<APIRequest
+    method="GET"
+    endpoint="/image/random"
+    title="Get random images"
+    description="Returns one or more random images from the specified category."
+    parameters={[
+        {
+            name: "categories",
+            type: "list of strings",
+            description: "The category names that the image should have.",
+        },
+        {
+            name: "limit",
+            type: "number",
+            description: "The maximum amount of images to get. (max. 25)",
+        },
+        {
+            name: "expiry",
+            type: "number",
+            description:
+                "The amount of time in seconds the link will be valid (until expiry) (requires auth)",
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code5,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code5.split("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid categories",
+            description: "One or more categories selected do not exist.",
+        },
+        {
+            code: 400,
+            name: "Invalid limit",
+            description:
+                "The specified limit is not a number between 1 and 25.",
+        },
+        {
+            code: 400,
+            name: "Invalid expiry",
+            description:
+                "The provided custom expiry time is not a number greater than 30.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is not a valid token.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The access token provided has not got permission to set a custom image expiry time.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The custom expiry time is greater than what allowed by the token.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+    apiWrapperDocs={{
+        python: "/docs/libraries/python#get-a-random-image",
+        javascript: "/docs/libraries/javascript#get-a-random-image",
+    }}
+/>
+
+## `GET /image/{id}`
+
+export let code6 = `
+{
+    "data": {
+        "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "url": "https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png",
+        "artist": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "source": {
+            "name": "xxxxxxx",
+            "url": "https://example.com/xxxxxxx"
+        },
+        "nsfw": "sfw",
+        "categories": [
+            {
+                "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "name": "xxxxxxx",
+                "description": "xxxxxxxxxxxxxxxxxx",
+                "nsfw": false,
+                "createdAt": "2021-01-01T00:00:00.000Z"
+            }
+        ],
+        "characters": [
+            {
+                "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "name": "xxxxxxx",
+                "description": "xxxxxxxxxxxxxxxxxx",
+                "source": "xxxxxxxxx",
+                "gender": "xxxxxx",
+                "ages": [
+                    16,
+                    17
+                ],
+                "birth_date": "xxxx xxxx",
+                "nationality": "xxxxxxxxx",
+                "occupations": [
+                    "xxxx xxxxxx",
+                    "xxxxxx xxxxxxx xxxxxxxxxxx"
+                ],
+                "createdAt": "2021-01-01T00:00:00.000Z"
+            }
+        ],
+        "createdAt": "2021-01-01T00:00:00.000Z",
+        "meta": {
+            "eTag": "xxxxxxxxxxxxxxxxxxxxx",
+            "size": 6336807,
+            "mimetype": "image/png",
+            "color": "#ffffff",
+            "expires": "2021-01-01T00:00:00.000Z",
+            "dimens": {
+                "width": 1024,
+                "height": 1024,
+                "aspectRatio": "1:1",
+                "orientation": "landscape"
+            }
+        }
+    },
+    "success": true
+}
+`.trim();
+
+<APIRequest
+    method="GET"
+    endpoint="/image/{id}"
+    title="Get an image"
+    description="Get an image by its ID."
+    parameters={[
+        {
+            name: "id",
+            type: "uuid",
+            description: "The ID of the image to get.",
+            required: true,
+        },
+        {
+            name: "expiry",
+            type: "number",
+            description:
+                "The amount of time in seconds the link will be valid (until expiry) (requires auth)",
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code6,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code6.split("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid ID",
+            description: "The provided ID is not a valid UUID.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is invalid.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The access token provided has not got permission to set a custom image expiry time.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The custom expiry time is greater than what allowed by the token.",
+        },
+        {
+            code: 404,
+            name: "Not found",
+            description: "Could not find image with the provided ID.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+    apiWrapperDocs={{
+        python: "/docs/libraries/python#get-an-image-by-its-id",
+        javascript: "/docs/libraries/javascript#get-an-image-by-its-id",
+    }}
+/>
+
+## `GET /artist`
+
+export let code7 = `
+{
+    "data": [
+        {
+            "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "name": "xxxxxxx",
+            "url": "https://example.com/xxxxxxx"
+        },
+        ...
+    ],
+    "success": true
+}
+`.trim();
+
+<APIRequest
+    method="GET"
+    endpoint="/artist"
+    title="Search for an artist"
+    description="Search for an artist/get all artists."
+    parameters={[
+        {
+            name: 'limit',
+            type: 'number',
+            description: 'The maximum number of images to get.'
+        },
+        {
+            name: 'offset',
+            type: 'number',
+            description: 'The number of images to skip.'
+        },
+        {
+            name: 'search',
+            type: 'string',
+            description: 'A search query (formatted as specified in the reference page).'
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code7,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code7.split("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid limit",
+            description: "The limit provided is not a number between 1 and 25.",
+        },
+        {
+            code: 400,
+            name: "Invalid offset",
+            description: "The offset provided is not a number greater than 0.",
+        },
+        {
+            code: 400,
+            name: "Invalid search query",
+            description: "The search query provided is longer than 50 characters.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is invalid.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+    apiWrapperDocs={{
+        python: "/docs/libraries/python#search-for-an-artist"
+    }}
+
+/>
+
+## `GET /artist/{id}`
+
+export let code8 = `
+{
+    "data": {
+        "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "name": "xxxxxxx",
+        "url": "https://example.com/xxxxxxx",
+        "images": 12
+    },
+    "success": true
+}
+`.trim();
+
+<APIRequest
+    method="GET"
+    endpoint="/artist/{id}"
+    title="Get an artist"
+    description="Get an artist by it's ID."
+    parameters={[
+        {
+            name: 'id',
+            type: 'uuid',
+            description: "The artist's ID.",
+            required: true
+        }
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code8,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code8.split("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid ID",
+            description: "The provided ID is not a valid UUID.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is invalid.",
+        },
+        {
+            code: 404,
+            name: "Not found",
+            description: "Could not find an artist with the provided ID.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+    apiWrapperDocs={{
+        python: "/docs/libraries/python#get-an-artist-by-its-id",
+        javascript: "/docs/libraries/javascript#get-an-artist-by-its-id",
+    }}
+
+/>
+
+## `GET /artist/{id}/images`
+
+export let code9 = `
+{
+    "data": [
+        {
+            "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "url": "https://example.com/assets/xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.png",
+            "artist": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "source": {
+                "name": "xxxxxxx",
+                "url": "https://example.com/xxxxxxx"
+            },
+            "nsfw": "sfw",
+            "categories": [
+                {
+                    "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                    "name": "xxxxxxx",
+                    "description": "xxxxxxxxxxxxxxxxxx",
+                    "nsfw": false,
+                    "createdAt": "2021-01-01T00:00:00.000Z"
+                }
+            ],
+            "characters": [
+                {
+                    "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                    "name": "xxxxxxx",
+                    "description": "xxxxxxxxxxxxxxxxxx",
+                    "source": "xxxxxxxxx",
+                    "gender": "xxxxxx",
+                    "ages": [
+                        16,
+                        17
+                    ],
+                    "birth_date": "xxxx xxxx",
+                    "nationality": "xxxxxxxxx",
+                    "occupations": [
+                        "xxxx xxxxxx",
+                        "xxxxxx xxxxxxx xxxxxxxxxxx"
+                    ],
+                    "createdAt": "2021-01-01T00:00:00.000Z"
+                }
+            ],
+            "createdAt": "2021-01-01T00:00:00.000Z",
+            "meta": {
+                "eTag": "xxxxxxxxxxxxxxxxxxxxx",
+                "size": 6336807,
+                "mimetype": "image/png",
+                "color": "#ffffff",
+                "expires": "2021-01-01T00:00:00.000Z",
+                "dimens": {
+                    "width": 1024,
+                    "height": 1024,
+                    "orientation": "landscape"
+                }
+            }
+        }
+    ],
+    "success": true
+}
+`.trim();
+
+<APIRequest
+    method="GET"
+    endpoint="/artist/{id}/images"
+    title="Get an artist's images"
+    description="Get all images by an artist."
+    parameters={[
+        {
+            name: 'id',
+            type: 'uuid',
+            description: "The artist's ID.",
+            required: true
+        },
+        {
+            name: 'limit',
+            type: 'number',
+            description: 'The maximum amount of images to get.'
+        },
+        {
+            name: 'offset',
+            type: 'number',
+            description: 'The number of images to skip.'
+        },
+        {
+            name: 'expiry',
+            type: 'number',
+            description: 'The amount of time in seconds the link will be valid (until expiry) (requires auth)'
+        }
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code9,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code9.split("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid ID",
+            description: "The provided ID is not a valid UUID.",
+        },
+        {
+            code: 400,
+            name: "Invalid limit",
+            description: "The limit provided is not a number between 1 and 25.",
+        },
+        {
+            code: 400,
+            name: "Invalid offset",
+            description: "The offset provided is not a number greater than 0.",
+        },
+        {
+            code: 400,
+            name: "Invalid expiry",
+            description:
+                "The provided custom expiry time is not a number greater than 30.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is invalid.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The access token provided has not got permission to set a custom image expiry time.",
+        },
+        {
+            code: 403,
+            name: "Missing permission",
+            description:
+                "The custom expiry time is greater than what allowed by the token.",
+        },
+        {
+            code: 404,
+            name: "Not found",
+            description: "Could not find an artist with the provided ID.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+    apiWrapperDocs={{
+        python: "/docs/libraries/python#get-all-artists-images",
+        javascript: "/docs/libraries/javascript#get-all-artists-images",
+    }}
+
+/>
+
+## `GET /character`
+
+export let code10 = `
+{
+    "data": [
+        {
+            "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "name": "xxxxxxx",
+            "description": "xxxxxxxxxxxxxxxxxx",
+            "source": "xxxxxxxxx",
+            "gender": "xxxxxx",
+            "ages": [
+                16,
+                17
+            ],
+            "birth_date": "xxxx xxxx",
+            "nationality": "xxxxxxxxx",
+            "occupations": [
+                "xxxx xxxxxx",
+                "xxxxxx xxxxxxx xxxxxxxxxxx"
+            ],
+            "createdAt": "2021-01-01T00:00:00.000Z"
+        }
+    ],
+    "success": true
+}
+`.trim();
+
+<APIRequest
+    method="GET"
+    endpoint="/character"
+    title="Search for a character"
+    description="Search for a character or get all available characters."
+    parameters={[
+        {
+            name: 'limit',
+            type: 'number',
+            description: 'The maximum amount of characters to get.'
+        },
+        {
+            name: 'offset',
+            type: 'number',
+            description: 'The amount of characters to skip.'
+        },
+        {
+            name: 'search',
+            type: 'string',
+            description: 'A search query (formatted as specified in the reference page).'
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code10,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code10.split("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid limit",
+            description: "The limit provided is not a number between 1 and 25.",
+        },
+        {
+            code: 400,
+            name: "Invalid offset",
+            description: "The offset provided is not a number greater than 0.",
+        },
+        {
+            code: 400,
+            name: "Invalid search query",
+            description: "The search query provided is longer than 50 characters.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is invalid.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+    apiWrapperDocs={{
+        python: "/docs/libraries/python#search-for-a-character",
+    }}
+
+/>
+
+## `GET /character/{id}`
+
+export let code11 = `
+{
+    "data": {
+        "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "name": "xxxxxxx",
+        "description": "xxxxxxxxxxxxxxxxxx",
+        "source": "xxxxxxxxx",
+        "gender": "xxxxxx",
+        "ages": [
+            16,
+            17
+        ],
+        "birth_date": "xxxx xxxx",
+        "nationality": "xxxxxxxxx",
+        "occupations": [
+            "xxxx xxxxxx",
+            "xxxxxx xxxxxxx xxxxxxxxxxx"
+        ],
+        "createdAt": "2021-01-01T00:00:00.000Z",
+        "images": 3
+    },
+    "success": true
+}
+`.trim();
+
+<APIRequest
+    method="GET"
+    endpoint="/character/{id}"
+    title="Get a character"
+    description="Get a character by its ID."
+    parameters={[
+        {
+            name: 'id',
+            type: 'uuid',
+            description: 'The ID of the character to get.',
+            required: true
+        }
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code11,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code11.split("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid ID",
+            description: "The provided ID is not a valid UUID.",
+        },
+        {
+            code: 404,
+            name: "Not found",
+            description: "Could not find a character with the provided ID.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+    apiWrapperDocs={{
+        python: "/docs/libraries/python#get-a-character-by-its-id",
+        javascript: "/docs/libraries/javascript#get-a-character-by-its-id",
+    }}
+
+/>
+
+## `GET /category`
+
+export let code12 = `
+{
+    'data': [
+        {
+            'id': 'xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+            'name': 'xxxxxxx',
+            'description': 'xxxxxxxxxxxxxxxxxx',
+            'nsfw': false,
+            'createdAt': '2021-01-01T00:00:00.000Z',
+        },
+        ...
+    ],
+    'success': true,
+}
+`.trim();
+
+<APIRequest
+    method="GET"
+    endpoint="/category"
+    title="Search for a category"
+    description="Search for a category or get all available categories."
+    parameters={[
+        {
+            name: 'limit',
+            type: 'number',
+            description: 'The maximum amount of categories to get.'
+        },
+        {
+            name: 'offset',
+            type: 'number',
+            description: 'The amount of categories to skip.'
+        },
+        {
+            name: 'search',
+            type: 'string',
+            description: 'A search query (formatted as specified in the reference page).'
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code12,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code12.split("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid limit",
+            description: "The limit provided is not a number between 1 and 25.",
+        },
+        {
+            code: 400,
+            name: "Invalid offset",
+            description: "The offset provided is not a number greater than 0.",
+        },
+        {
+            code: 400,
+            name: "Invalid search query",
+            description: "The search query provided is longer than 50 characters.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is invalid.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+    apiWrapperDocs={{
+        python: "/docs/libraries/python#search-for-a-category",
+        javascript: "/docs/libraries/javascript#get-all-categories",
+    }}
+
+/>
+
+## `GET /category/{id}`
+
+Get a category by its ID.
+
+export let code13 = `
+{
+    "data": {
+        "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "name": "xxxxxxx",
+        "description": "xxxxxxxxxxxxxxxxxx",
+        "nsfw": false,
+        "createdAt": "2021-01-01T00:00:00.000Z",
+        "images": 12
+    },
+    "success": true
+}
+`.trim();
+
+<APIRequest
+    method="GET"
+    endpoint="/category/{id}"
+    title="Get a category"
+    description="Get a category by its ID."
+    parameters={[
+        {
+            name: 'id',
+            type: 'uuid',
+            description: 'The ID of the category to get.',
+            required: true
+        }
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code13,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code13.split("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 400,
+            name: "Invalid ID",
+            description: "The provided ID is not a valid UUID.",
+        },
+        {
+            code: 401,
+            name: "Invalid token",
+            description: "The token provided is invalid.",
+        },
+        {
+            code: 404,
+            name: "Not found",
+            description: "Could not find a category with the provided ID.",
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+    apiWrapperDocs={{
+        python: "/docs/libraries/python#get-a-category-by-its-id",
+        javascript: "/docs/libraries/javascript#get-a-category-by-its-id",
+    }}
+
+/>

@@ -1,0 +1,12 @@
+# Frequently Asked Questions
+
+## Why, if you say that the API is 100% free, there are endpoints that need authorization?
+
+Some endpoints (currently `/image` and `/token`) require authorization with a special access token. This is because these endpoints consume a lot of resources and therefore they need to be reserved for special people (moderators, developers, partners) who need to access these endpoints in very specific cases. Some cases where we issue these tokens are:
+
+- **API wrapper development**: API wrapper developers need to have full access to the API to test it. When they finish their tests, their API tokens are revoked.
+- **Other Nekos-API-related projects developed by us**: We issue tokens when we make a program that needs these special endpoints to work. For example: Daily Neko Discord Bot (which needs the images to expire in a day and not in an hour), Nekos API Admin Platform (to be able to list all the images in the database to make easier the task of specifying each image's characters, tags, author, nsfw level, etc.).
+
+**But... Why are they documented in the public documentation if they are not intended for public use?**
+
+We plan to make these endpoints available to everyone as soon as our server resources permit us. We won't allocate lots of resources to a single query that will affect all the other API users. As soon as we can pay for a better server, we will make these endpoints available to the public. If you want to help us mantain the servers (and release these endpoints sooner), consider making a donation in our [Patreon](https://patreon.com/nekidev).

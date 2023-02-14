@@ -1,0 +1,112 @@
+import Link from "next/link";
+
+# Introduction
+
+Welcome to the Nekos API documentation! Here you can find documentation, guides, and references for the API. Although it may not seem easy at first, we will guide you through the whole API so that you become a pro at it. This guide was written aiming to beginners, so you dont't need to be an expert to use and understand it.
+
+The API is completely open-source. You can find everything in the Nekos API GitHub repository, including this docs, the website, the API, and everything else.
+
+If you are looking for `v1.6.0` docs, you can find them at [v1.nekosapi.com](https://v1.nekosapi.com). You'll be able to access that version until we cannot host it anymore. If this is your first time using the API, then we recommend starting with this version, since it is more complete and is actively mantained. Also, `v1.6.0` has great disadvantages, like link expiry, lower rate limits, fewer images and features, etc.
+
+## Copyright and Licenses
+
+The API is 100% open-source. Everything can be found in our [GitHub repository](https://github.com/Nekos-API/Nekos-API). The whole project is distributed under the MIT license, which basically allows _commercial use_, _modification_, _distribution_ and _private use_ while requiring you to distribute a copy of the license with your version of the code (this is not legal advice). The official license file can be found [here](https://github.com/Nekos-API/Nekos-API/blob/main/LICENSE.md).
+
+## Terms of Use
+
+We do not have any legal document we can provide you with. You can find our guidelines [here](/docs/terms-of-use).
+
+## Crediting
+
+We do not require you to give us credit for anything when using the API. However, if your project uses the API it would be nice if you linked to our website in your project's description or specified somewhere that your project was made possible because of Nekos API. You can find different versions of our logo [here](/docs/branding).
+
+## Contributing
+
+We always welcome any kind of contributions! You can always fork our [GitHub repository](https://github.com/Nekos-API/Nekos-API) and make your code contributions, send your suggestions and feedback to our Discord server, report some missing or incorrect data (also at our Discord server), or make a donation through [Patreon](https://patreon.com/Nekidev), [Ko-fi](https://ko-fi.com/Nekidev), or [Buy Me A Coffee](https://buymeacoffee.com/Nekidev).
+
+### Contributors
+
+The following users have contributed to the development of Nekos API:
+
+export const Contributor = ({ image, name, contributions }) => {
+    return (
+        <div className="h-10 w-10 relative flex flex-col items-center">
+            <img
+                src={image}
+                className="h-10 w-10 rounded-full object-cover peer"
+            />
+            <div className="absolute bottom-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 drop-shadow-md rounded mx-auto whitespace-nowrap flex flex-col items-center py-2 px-4 transition-all opacity-0 mb-0 peer-hover:opacity-100 peer-hover:mb-2 text-neutral-900 dark:text-[#f1f5f9] pointer-events-none">
+                <b className="text-sm">{name}</b>
+                {contributions.map((value, index) => {
+                    return <span className="text-xs text-neutrel-500 dark:text-neutral-400">{value}</span>
+                })}
+            </div>
+        </div>
+    );
+};
+
+<div className="flex flex-row gap-4 mt-8 flex-wrap">
+    <Contributor 
+        image="https://avatars.githubusercontent.com/u/84998222?s=240&v=4" 
+        name="Nekidev" 
+        contributions={[
+            "Main developer",
+            "PY Library mantainer"
+        ]} />
+    <Contributor
+        image="https://cdn.discordapp.com/avatars/420583786053369868/2886496e3fd97d7792560dcd35ad126b.webp?size=240"
+        name="Catboytoshi"
+        contributions={[
+            "Donator"
+        ]} />
+    <Contributor
+        image="https://cdn.discordapp.com/avatars/140788173885276160/4350da9252bbad352366358a4fcd2b9b.webp?size=240"
+        name="Catalysm"
+        contributions={[
+            "Donator",
+            "JS Library mantainer"
+        ]} />
+    <div className="text-sm text-[hsl(var(--nextra-primary-hue),100%,50%)] h-10 flex flex-col items-center justify-center">
+        &plus; All our users
+    </div>
+</div>
+
+<div className="mt-8 flex flex-row items-center gap-4 flex-wrap">
+    <Link
+        href="https://ko-fi.com/nekidev"
+        className="hover:opacity-80 transition"
+        target="_blank"
+    >
+        <img
+            src="https://storage.ko-fi.com/cdn/kofi5.png?v=3"
+            alt="Buy Me a Coffee at ko-fi.com"
+            style={{ height: "36px" }}
+        />
+    </Link>
+    <Link
+        href="https://patreon.com/nekidev"
+        className="hover:opacity-80 transition"
+        target="_blank"
+    >
+        <img
+            src="https://c5.patreon.com/external/logo/become_a_patron_button.png"
+            alt="Donate at Patreon.com"
+            style={{ height: "36px", borderRadius: "18px" }}
+        />
+    </Link>
+    <Link
+        href="https://www.buymeacoffee.com/nekidev"
+        className="hover:opacity-80 transition"
+        target="_blank"
+    >
+        <img
+            src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+            alt="Buy Me A Coffee"
+            style={{ height: "36px", borderRadius: "18px" }}
+        />
+    </Link>
+</div>
+
+## Getting started
+
+That's everything that you need to know (by now)! To start using the API, you can go to the [REST API Reference](/docs/rest-api/reference) section or to the [Libraries](/docs/libraries) page to start using any of our officially supported libraries.
