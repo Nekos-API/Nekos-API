@@ -55,7 +55,7 @@ export function APIRequest({
                                         {value.name}
                                         {value.required && <span className='text-red-500 inline-block ml-1'>*</span>}
                                     </div>
-                                    <div>{value.description}</div>
+                                    <div className='pl-2'>{value.description}</div>
                                 </div>
                             )
                         }) : (

@@ -257,7 +257,7 @@ export let code1 = `
 
 That's it! Now that you have successfully completed the authorization flow, you can authorize your requests setting the `Authorization` header. You can try it out making a request to `/v2/users/@me`:
 
-```http
+```http {3}
 GET /v2/users/@me HTTP/1.1
 Host: api.nekosapi.com
 Authorization: Bearer <your-access-token>
@@ -328,7 +328,7 @@ export let code2 = `
         {
             name: "scope",
             type: "String",
-            description: "The requested scope for the new access token. It must not include any scope that was not requested in the initial authorization."
+            description: "The requested scope for the new access token. It must not include any scope that was not requested in the initial authorization. If not specified, the new access token will have the same permissions that the initial token."
         },
         {
             name: "grant_type",
@@ -347,7 +347,7 @@ export let code2 = `
                 language: "JSON",
                 headers: [
                     "application/json",
-                    `${code2.plit("\n").length} lines`,
+                    `${code2.split("\n").length} lines`,
                 ],
             },
         },
