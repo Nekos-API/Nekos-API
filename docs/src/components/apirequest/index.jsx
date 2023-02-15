@@ -11,6 +11,7 @@ export function APIRequest({
     title,
     description = "",
     parameters = [],
+    headers = [],
     responses = [],
     apiWrapperDocs = {}
 }) {
@@ -33,7 +34,10 @@ export function APIRequest({
             <div>
                 <div className="flex flex-row items-center gap-2 leading-none">
                     <span className="text-sm font-bold text-[hsl(var(--nextra-primary-hue),100%,50%)]">{method}</span>
-                    <span className="text-sm text-neutral-700 dark:text-neutral-200 font-mono">{endpoint}</span>
+                    <span className='text-sm text-neutral-700 dark:text-neutral-200 font-mono'>
+                        <span className='text-neutral-400 dark:text-neutral-500'>https://api.nekosapi.com/v2</span>
+                        <span>{endpoint}</span>
+                    </span>
                 </div>
                 <div className="text-xl font-bold mt-2">{title}</div>
                 <div className='mt-2'>{description}</div>
@@ -41,6 +45,24 @@ export function APIRequest({
             <div style={{
                 display: collapsed ? 'none' : 'block'
             }}>
+                <div className='mt-8'>
+                    <div className='font-bold text-lg'>Headers</div>
+                    <div className='mt-1 flex flex-col gap-px bg-neutral-100 dark:bg-neutral-800 text-sm overflow-x-auto'>
+                        {headers.length > 0 ? headers.map((value, index) => {
+                            return (
+                                <div className='text-neutral-600 dark:text-neutral-400 grid grid-cols-[1fr_minmax(0,1fr)] bg-neutral-50 dark:bg-neutral-900 py-1 items-center gap-4 min-w-[34rem]' key={index}>
+                                    <div className='font-mono rounded bg-neutral-200 dark:bg-black/50 w-fit p-1 -my-1 block leading-none whitespace-nowrap'>
+                                        {value.name}
+                                        {value.required && <span className='text-red-500 inline-block ml-1'>*</span>}
+                                    </div>
+                                    <div>{value.description}</div>
+                                </div>
+                            )
+                        }) : (
+                            <div className='bg-neutral-50 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 pt-1'>No headers</div>
+                        )}
+                    </div>
+                </div>
                 <div className='mt-8'>
                     <div className='font-bold text-lg'>Parameters</div>
                     <div className='mt-1 flex flex-col gap-px bg-neutral-100 dark:bg-neutral-800 text-sm overflow-x-auto'>

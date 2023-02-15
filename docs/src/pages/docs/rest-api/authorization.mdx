@@ -1,0 +1,360 @@
+import { Callout } from "nextra-theme-docs";
+import { APIRequest } from "../../../components/apirequest";
+
+# Authorization
+
+Nekos API uses OAuth2 for a secure user authentication and authorization. We'll guide you through each step so that you can completely understand how the authorization flow works.
+
+<Callout type="info">
+    Many endpoints do not require any kind of authorization. If you don't need
+    features like uploading images, liking or saving images, or editing a user's
+    profile, you can skip this part. You can always come back when you need to
+    implement these features.
+</Callout>
+
+## Flow overview
+
+The flow can be reduced to the following steps:
+
+1. Generating a PKCE code challenge.
+2. Redirecting users to the authorization page.
+3. Receiving a code grant in your web server or application.
+4. Getting the access and refresh tokens with the PKCE code verifier.
+5. Authorizing requests with the access token.
+
+## Creating an application
+
+To authorize a user, you need to create an application. Log in at [Nekos Web](https://web.nekosapi.com) and go to **Settings > Applications > Create new application**. You'll be asked to fill a few details about your new application. These are:
+
+-   <u>Your application name</u>: This will be displayed to users in the
+    authorization page with a message like **Authorize &lt;application
+    name&gt;?**.
+-   <u>A short description</u>: What is your application about? Write something
+    short to explain users who are they giving access to their account to. For
+    example, **The #1 open-source free anime images REST API.**
+-   <u>Client type</u>: Can your application store client credentials securely?
+    For example, a mobile application's code is not a secure place to store a
+    client secret, while your web server is. In other words, could someone get
+    your client secret if they wanted to? (If yes, then your application is
+    **Public**. If not, it's **Confidential**).
+-   <u>Redirect URIs</u>: These are URIs to where users may be redirected after
+    authorizing (or not) your application. You need to specify this so that
+    other people cannot use your application to authorize users in your behalf.
+    Some redirect URI examples are
+    `https://example.com/login/nekos-api/callback` or
+    `https://example.com/auth/external/nekos-api/callback`.
+
+After creating an application, you'll be given two tokens. Make sure to store them securely in a place where they will not get deleted, as you will not be able to regenerate them.
+
+These two tokens are:
+
+1. **Client ID**: A unique identifier for your application. This will be sent to the authorization and token pages. This token is public, so don't worry if someone sees it or uses it (they won't be able to do much without your client secret).
+2. **Client secret**: This is like your application's password. Make sure no one sees it, and if someone gets it, delete the application as soon as possible. With this token, anyone can use your application to mislead users and get access to a user's data as if they were you.
+
+_You can also add a few extra details when creating an application like a logo or your application's terms of use and privacy policy. These will be shown to the user in the authorization page._
+
+## Creating an authorization URL
+
+First, what is the authorization URL? Here is where you'll need to redirect your users so that they can give you access to their accounts. There are some parameters that you'll need to specify in the authorization URL:
+
+1. A PKCE: This is an extension of OAuth 2 that prevents authorization code injection attacks. You generate a `code_verifier` which is used to generate a `code_challenge`, and with these you verify that the request to get an access/refresh token was made by you (the one who redirected the user to the authorization page) and not by other person. This is explained in detail below.
+2. Scope: This allows users to grant only the permissions required for your application to work correctly and nothing else. For example, an `image:upload` scope would allow you to upload images as the user, but not to change this user's email.
+3. Your client ID: The same token that you got when generating your application.
+4. A redirect URI: One of the ones that you specified when creating your application.
+
+### Generating a code verifier and a code challenge
+
+First, let's generate the code verifier. This is the easiest part, just generate a random string between 43 and 128 characters long and encode it using Base64. In Python 3, you can generate using the following code:
+
+```python {6,9}
+import random
+import string
+import base64
+
+# Generates a random string between 43 and 128 characters long
+code_verifier = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(random.randint(43, 128)))
+
+# Encodes it in base64 (URL safe)
+code_verifier = base64.urlsafe_b64encode(code_verifier.encode('utf-8'))
+```
+
+Now that we have the code verifier, we just need to hash it to create a code challenge, which will be sent as a query parameter to the authorization URL. In Python 3, you can do it with the following code:
+
+```python
+"""
+In this example we are assuming that you have previously generated a code
+verifier and that it is stored in the `code_verifier` variable.
+"""
+import hashlib
+
+# Hash the code verifier using SHA-256
+code_challenge = hashlib.sha256(code_verifier).digest()
+
+# Once again, encode the code hashed code challenge using base64 (URL safe) and
+# remove the `=` characters.
+code_challenge = base64.urlsafe_b64encode(code_challenge).decode('utf-8').replace('=', '')
+```
+
+Now that you have successfully generated a code verifier and a code challenge, store them safely. You'll need to use them later.
+
+### Scopes
+
+<Callout type="warning">
+    Currently, scopes is a missing feature. We'll be adding this as soon as
+    possible, but meanwhile you'll be getting full access to the accounts that
+    authorize your application.
+</Callout>
+
+### Generating a state
+
+There is an optional extra parameter that can be included to prevent CSRF (cross site request forgery) attacks: the `state` parameter. It is very easy to implement and increases the security of the authorization by allowing you to verify that the request/response has not been modified by an attacker.
+
+To generate a state parameter, you just need to create a random non-guessable string. Don't make it extremely long since you might get an `414 Request-URI Too Large` error. Something ~1024 characters long will work.
+
+Since the `state` parameter is a plain string, you can encode data into it. This may be useful for more advanced developers, but it's not a requirement.
+
+The `state` parameter works the following way:
+
+1. You generate the state.
+2. You send it to the authorization URL (explained later).
+3. The user authorizes (or not) your application and is redirected to your redirect URI with the code grant or error and the state.
+4. You verify that the state returned to the callback is the same as the one generated by your server.
+
+You'll be explained how to verify the state in the [Getting a code grant](#getting-a-code-grant) section.
+
+<Callout type="warning">
+    Make sure to regenerate the state on every authorization flow. You will be vulnerable to replay attacks if you don't.
+</Callout>
+
+### Creating the URL
+
+Now that we have the code challenge and the code verifier, we just need to generate the URL where users will authorize our application. The authorization URL is `https://api.nekosapi.com/v2/auth/authorize`. The query parameters required are:
+
+1. `response_type`: Set this to `code`, since that's the only response type supported.
+2. `code_challenge`: Set this to the code challenge (the SHA-256 one).
+3. `code_challenge_method`: The code challenge has been hashed with SHA-256, so set this to `S256`.
+4. `client_id`: Your application's client ID.
+5. `redirect_uri`: The URI where the user will be redirected after authorizing (or not) your application.
+6. `state`: If you generated a state, specify it here. Otherwise, do not add this parameter.
+
+Your URL must look something like `https://api.nekosapi.com/v2/auth/authorize?response_type=code&code_challenge=<your-code-challenge>&code_challenge_method=S256&client_id=<your-applications-client-id>&redirect_uri=https://your-domain-or-localhost.com/login/callback`.
+
+If you go there, you should see a message asking you to authorize your application. If you get an error, reading [this article](https://www.oauth.com/oauth2-servers/server-side-apps/possible-errors/) will help you understand each error and how to fix it.
+
+## Getting a code grant
+
+Now that your user has been redirected to the authorization URL that we generated before (since you're now testing, that user is you), you may now receive two possible callbacks:
+
+1. The user has not authorized your application, so you're not getting any tokens.
+2. The user has authorized your application, so you are getting a code grant.
+
+In case 1, the user has cancelled the authorization, so your callback will look something like `https://your-domain-or-localhost.com/callback?error=access_denied`.
+
+If there is no error (which is what you want to occur), you'll be getting the following 2 query parameters in the callback URI:
+
+1. `code`: This is the granted code that you'll need to use to get the access and refresh token.
+2. `state`: If you have provided created a state, it will be returned here.
+
+### Verifying the state
+
+<Callout type="info">
+    If you have not generated a state, you can omit this step.
+</Callout>
+
+The state verification process is simple. Just check that the state in the callback matches the state that you sent in the authorization URL. If they match, no attack has occured. If they do not match, then the request/response has been modified by an attacker and therefore you should decline the callback.
+
+### Getting an access and a refresh token
+
+Now that you have the code, you need to get an access token and a refresh token.
+
+export let code1 = `
+{
+    "access_token": "<access-token>",
+    "refresh_token": "<refresh-token>",
+    "expires": 3600,
+    "scope": "read write groups",
+    "token_type": "Bearer"
+}
+`.trim();
+
+<APIRequest
+    method="POST"
+    endpoint="/auth/token"
+    title="Get an access token and a refresh token"
+    description="Returns an access token and a refresh token."
+    headers={[
+        {
+            name: "Content-Type",
+            description: "application/x-www-form-urlencoded",
+            required: true
+        },
+        {
+            name: "Accept",
+            description: "application/json"
+        }
+    ]}
+    parameters={[
+        {
+            name: "client_id",
+            type: "String",
+            description: "Your application's client ID.",
+            required: true,
+        },
+        {
+            name: "client_secret",
+            type: "String",
+            description: "Your application's client secret.",
+            required: true
+        },
+        {
+            name: "code",
+            type: "String",
+            description: "The code that you've got in the callback.",
+            required: true
+        },
+        {
+            name: "code_verifier",
+            type: "String",
+            description: "The code verifier that you generated.",
+            required: true
+        },
+        {
+            name: "redirect_uri",
+            type: "URL",
+            description: "The URI to where the user was redirected (where the callback was sent).",
+            required: true
+        },
+        {
+            name: "grant_type",
+            type: "String",
+            description: "Set this to `authorization_code`.",
+            required: true
+        }
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code1,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code1.split("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+/>
+
+## Authenticating a request
+
+That's it! Now that you have successfully completed the authorization flow, you can authorize your requests setting the `Authorization` header. You can try it out making a request to `/v2/users/@me`:
+
+```http
+GET /v2/users/@me HTTP/1.1
+Host: api.nekosapi.com
+Authorization: Bearer <your-access-token>
+Accept: application/vnd.api+json
+ 
+{
+    "data": {
+        "type": "user",
+        "id": "some-uuid",
+        "attributes": {
+            ...
+        },
+        ...
+    }
+}
+```
+
+## Refreshing a token
+
+You have successfully authenticated your requests, and suddenly... `401 Unauthenticated`! What has happened? Probably, your access token has expired. Access tokens are only valid for an hour after their generation.
+
+To refresh a token, you need to make a request to the same endpoint where you got the access token, but with a different body.
+
+export let code2 = `
+{
+    "access_token": "<access-token>",
+    "expires": 3600,
+    "scope": "read write groups",
+    "token_type": "Bearer"
+}
+`.trim();
+
+<APIRequest
+    method="POST"
+    endpoint="/auth/token"
+    title="Refresh an access token"
+    description="Refresh an access token after it has expired."
+    headers={[
+        {
+            name: "Content-Type",
+            description: "application/x-www-form-urlencoded",
+            required: true
+        },
+        {
+            name: "Accept",
+            description: "application/json"
+        }
+    ]}
+    parameters={[
+        {
+            name: "client_id",
+            type: "String",
+            description: "Your application's client ID.",
+            required: true,
+        },
+        {
+            name: "client_secret",
+            type: "String",
+            description: "Your application's client secret.",
+            required: true
+        },
+        {
+            name: "refresh_token",
+            type: "String",
+            description: "The refresh token that you got after the first authorization.",
+            required: true
+        },
+        {
+            name: "scope",
+            type: "String",
+            description: "The requested scope for the new access token. It must not include any scope that was not requested in the initial authorization."
+        },
+        {
+            name: "grant_type",
+            type: "String",
+            description: "Set this to `refresh_token`.",
+            required: true
+        }
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was successful.",
+            example: {
+                code: code2,
+                language: "JSON",
+                headers: [
+                    "application/json",
+                    `${code2.plit("\n").length} lines`,
+                ],
+            },
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+/>
