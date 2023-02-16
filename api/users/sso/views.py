@@ -245,7 +245,6 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             headers=headers,
             timeout=10,
         )
-        print(os.getenv("DISCORD_REDIRECT_URI"))
         r.raise_for_status()
 
         discord_access_token = r.json()["access_token"]
