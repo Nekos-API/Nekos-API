@@ -177,7 +177,20 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
         request.session["next"] = request.GET.get("next")
 
         if provider == "discord":
-            response = HttpResponseRedirect(os.getenv("DISCORD_AUTHORIZE_URL", ""))
+            authorization_base_url = "https://discord.com/api/oauth2/authorize"
+            scope = os.getenv("DISCORD_AUTH_SCOPE", "").split(" ")
+            redirect_uri = os.getenv("DISCORD_AUTH_REDIRECT_URI")
+            client_id = os.getenv("DISCORD_CLIENT_ID")
+
+            discord = OAuth2Session(client_id, scope=scope, redirect_uri=redirect_uri)
+
+            authorization_url, state = discord.authorization_url(
+                authorization_base_url, access_type="offline", prompt="select_account"
+            )
+
+            request.session["discord_state"] = state
+
+            response = HttpResponseRedirect(authorization_url)
 
         elif provider == "google":
             authorization_base_url = "https://accounts.google.com/o/oauth2/v2/auth"
@@ -231,34 +244,32 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
 
         # Get the access and refresh tokens
 
-        data = {
-            "client_id": os.getenv("DISCORD_CLIENT_ID"),
-            "client_secret": os.getenv("DISCORD_CLIENT_SECRET"),
-            "grant_type": "authorization-code",
-            "code": request.GET.get("code"),
-            "redirect_uri": os.getenv("DISCORD_REDIRECT_URI"),
-        }
-        headers = {"Content-Type": "application/x-www-form-urlencoded"}
-        r = requests.post(
-            "https://discord.com/api/v10/oauth2/token",
-            data=data,
-            headers=headers,
-            timeout=10,
-        )
-        r.raise_for_status()
+        token_url = "https://discord.com/api/oauth2/token"
+        scope = os.getenv("DISCORD_AUTH_SCOPE", "").split(" ")
+        redirect_uri = os.getenv("DISCORD_AUTH_REDIRECT_URI")
+        client_id = os.getenv("DISCORD_CLIENT_ID")
+        client_secret = os.getenv("DISCORD_CLIENT_SECRET")
+        state = request.session["discord_state"]
 
-        discord_access_token = r.json()["access_token"]
-        discord_refresh_token = r.json()["refresh_token"]
+        # Create the client.
+        discord = OAuth2Session(client_id, scope=scope, redirect_uri=redirect_uri, state=state)
+
+        # Fetches the access and refresh token. If DEBUG is enabled, the http
+        # schema is replaced for https to prevent an `InsecureTransportError`
+        # being raised by oauthlib.
+        discord.fetch_token(
+            token_url,
+            client_secret=client_secret,
+            authorization_response=request.build_absolute_uri()
+            if not settings.DEBUG or request.build_absolute_uri().startswith("https")
+            else request.build_absolute_uri().replace("http", "https"),
+        )
 
         # Get the user's information
 
-        r = requests.get(
+        r = discord.get(
             "https://discord.com/api/v10/users/@me",
-            headers={"Authorization": "Bearer %s" % discord_access_token},
-            timeout=10,
         )
-        r.raise_for_status()
-
         user_data = r.json()
 
         user_avatar = f"https://cdn.discordapp.com/avatars/{user_data['id']}/{user_data['avatar']}.webp?size=512"
@@ -304,9 +315,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             discord_user = DiscordUser(
                 id=int(user_data["id"]),
                 email=user_data["email"],
-                user=user,
-                access_token=discord_access_token,
-                refresh_token=discord_refresh_token,
+                user=user
             )
             discord_user.save()
 
