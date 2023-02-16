@@ -358,3 +358,67 @@ export let code2 = `
         },
     ]}
 />
+
+
+## Revoking a token
+
+Whenever a token, either access or refresh, becomes unuseful to you, you can revoke it. It is recommended to do so in cases like logout, or whenever you have finished using the token and you will not need it in the near future.
+
+Tokens can be revoked making a POST request to '/v2/auth/token/revoke'.
+
+<APIRequest
+    method="POST"
+    endpoint="/auth/token"
+    title="Revoke an access token or a refresh token"
+    description="Revoke an access token or a refresh token after you no longer need it."
+    headers={[
+        {
+            name: "Content-Type",
+            description: "application/x-www-form-urlencoded",
+            required: true
+        },
+        {
+            name: "Accept",
+            description: "application/json"
+        },
+        {
+            name: "Authorization",
+            description: "Basic <base64-encoded-credentials>"
+        }
+    ]}
+    parameters={[
+        {
+            name: "client_id",
+            type: "String",
+            description: "Your application's client ID."
+        },
+        {
+            name: "client_secret",
+            type: "String",
+            description: "Your application's client secret."
+        },
+        {
+            name: "token",
+            type: "String",
+            description: "The token to be revoked.",
+            required: true,
+        },
+        {
+            name: "token_type_hint",
+            type: "String",
+            description: "The type of the token provided. It MUST be either `access_token` or `refresh_token`. This will speed up the request if specified correctly, bot have the contrary effect if the specified value is incorrect. If this parameter is incorrect (e.g. you are revoking an access token but set this parameter to `refresh_token`) the server will continue the lookup in the database for every token type supported."
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed. This does not mean that the revocation was completed successfully."
+        },
+        {
+            code: 429,
+            name: "Too many requests",
+            description: "You have made too many requests.",
+        },
+    ]}
+/>
