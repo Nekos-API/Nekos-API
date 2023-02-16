@@ -262,7 +262,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             token_url,
             client_secret=client_secret,
             authorization_response=request.build_absolute_uri()
-            if not request.build_absolute_uri().startswith("https")
+            if request.build_absolute_uri().startswith("https")
             else request.build_absolute_uri().replace("http", "https"),
         )
 
@@ -362,7 +362,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             token_url,
             client_secret=client_secret,
             authorization_response=request.build_absolute_uri()
-            if not settings.DEBUG or request.build_absolute_uri().startswith("https")
+            if request.build_absolute_uri().startswith("https")
             else request.build_absolute_uri().replace("http", "https"),
         )
 
@@ -445,7 +445,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             token_url=token_url,
             client_secret=client_secret,
             authorization_response=request.build_absolute_uri()
-            if not settings.DEBUG or request.build_absolute_uri().startswith("https")
+            if request.build_absolute_uri().startswith("https")
             else request.build_absolute_uri().replace("http", "https"),
         )
 
