@@ -1,0 +1,17 @@
+https://nekosapi.com/
+https://nekosapi.com/docs
+https://nekosapi.com/docs/getting-started
+https://nekosapi.com/docs/libraries
+https://nekosapi.com/docs/libraries/python
+https://nekosapi.com/docs/libraries/javascript
+https://nekosapi.com/docs/rest-api/reference
+https://nekosapi.com/docs/rest-api/endpoints
+https://nekosapi.com/docs/graphql/reference
+https://nekosapi.com/docs/graphql/queries
+https://nekosapi.com/docs/faq
+https://nekosapi.com/docs/contributing
+https://nekosapi.com/docs/branding
+https://nekosapi.com/docs/terms-of-use
+https://nekosapi.com/about
+https://nekosapi.com/partners
+https://nekosapi.com/graphiql

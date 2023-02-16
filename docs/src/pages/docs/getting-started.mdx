@@ -1,0 +1,75 @@
+# Getting Started
+
+This is not a tutorial on how to use the API, but rather a guide to help you get familiar with the API, its structure, and what you can and cannot do with the content provided. If you are looking for a tutorial on how to use the API, please refer to the **Reference** section for the [Rest API](/docs/rest-api/reference) docs.
+
+## Images
+
+The main purpose of this API is to serve random images. There are certain requisites that the images must follow in order to be served by the API. These are:
+
+-   The image must have at least a HD resolution (1280x720 or 720x1280)
+-   The image must not be a meme or a joke.
+-   The image must not have filters applied to it.
+-   The image must not have any watermarks or labels saying something like _"do not reproduce"_, _"do not repost"_, _"commision"_, or anything like that.
+-   The image must not have been taken from a source that may affect the artist, like FANBOX, Patreon, or similar.
+
+All the images are manually added and checked by our team. If you want to contribute to the API, please refer [here](/docs#contributing).
+
+We try to provide all the information we can about the images, such as the source, the artist, the categories, etc. If you find any image that is missing any of this information, please let us know by [opening an issue on GitHub](https://github.com/Nekidev/nekos-api/issues/new/choose) or contacting us in our [Discord server](https://discord.gg/b9Fv3kEfXc).
+
+### NSFW
+
+The API specifies the image's age rating in every single response. We manually verify every single image before making them available to the public.
+
+#### Explicitness levels
+
+The API has 4 levels of explicitness:
+
+-   `sfw`: Safe for work. These images are adequate for any audience.
+-   `questionable`: These images are still SFW. They may contain some low suggestive content, but nothing explicit.
+-   `borderline`: These images are not safe for work. They will not contain any explicit content, but they may contain some suggestive content.
+-   `nsfw`: Not Safe For Work. These images contain explicit content.
+
+## Artists
+
+We try to provide as much information as we can about the images. This includes the artist that created the image. We will always try to provide the artist's name, but sometimes we may not be able to find it. In these cases, we will provide the source of the image instead. If you find any unsourced image, please let us know by [opening an issue on GitHub](https://github.com/Nekidev/Nekos-API/issues/new) or by sending a message in our Discord server.
+
+It is always a good idea to credit the artists for the images they illustrated. When showing these images to the public, always add credits to the artist, providing links to their social media, donation pages, and more (if available). We provide links to each artist's pages in every artist response.
+
+Artists are also included resources by default, so there is almost no effort required in implementing credits. You can lear more about included resources in the REST API reference section.
+
+## Categories
+
+Categories provide some extra description of the images. They are not meant to be used as tags, but rather as a way to group images that share some common characteristics. For example, all images that have one or more female characters have the `Girl` category.
+
+Categories can be used in many ways:
+
+-   To filter the images.
+-   To provide a more detailed description of the image.
+
+You'll see them in each image's response, together with their description and wether they are NSFW or not.
+
+## Characters
+
+The API also provides information about the characters that appear in the images. We cannot always provide them, since we don't know every single character in the world and therefore there are some that we cannot identify.
+
+The information that we provide about characters is:
+
+- The character's name (and aliases, if any. e.g. **002** from _DARLING in the FRANXX_ has `Zero Two` as an alias).
+- A short character description (e.g. **Hatsune Miku** is described as a _16-year-old virtual idol with long turquoise twintails_).
+- The character's genre (e.g. **Hatsune Miku**'s genre is _Female_).
+- The character's species (usually human, but this can change in characters like pokemons).
+- The character's ages (in plural, all the ages that the character has been seen in the main sources).
+- The character's birth date (i.e. _August 31th_).
+- The character's occupations (e.g. **Kaguya Shinomiya**'s occupations are _High school student_ and _Student council's vicepresident_).
+
+Sometimes we provide extra non-standard information, but these are very rare cases.
+
+## Users
+
+In `v2.0.0-alpha.1` we have introduced user login and signup, which enabled us to build many new features. Users can, among others, like and save images, create image lists and upload new images.
+
+User login can be implemented using OAuth2, which is explained in depth in the REST API reference section.
+
+## Image lists
+
+Image lists are like a playlist, but for images. These are created by users themselves and are commonly used to save images into groups, for example "night images", or "Power fanarts". This feature has been recently implemented, so it may change in the future.
