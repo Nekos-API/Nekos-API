@@ -175,6 +175,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
         """
 
         request.session["next"] = request.GET.get("next")
+        request.session.modified = True
 
         if provider == "discord":
             authorization_base_url = "https://discord.com/api/oauth2/authorize"
@@ -185,7 +186,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             discord = OAuth2Session(client_id, scope=scope, redirect_uri=redirect_uri)
 
             authorization_url, state = discord.authorization_url(
-                authorization_base_url, access_type="offline", prompt="select_account"
+                authorization_base_url
             )
 
             request.session["discord_state"] = state
@@ -201,7 +202,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             google = OAuth2Session(client_id, scope=scope, redirect_uri=redirect_uri)
 
             authorization_url, state = google.authorization_url(
-                authorization_base_url, access_type="offline", prompt="select_account"
+                authorization_base_url
             )
 
             request.session["google_state"] = state
@@ -244,7 +245,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
 
         # Get the access and refresh tokens
 
-        token_url = "https://discord.com/api/oauth2/token"
+        token_url = "https://discord.com/api/v10/oauth2/token"
         scope = os.getenv("DISCORD_AUTH_SCOPE", "").split(" ")
         redirect_uri = os.getenv("DISCORD_AUTH_REDIRECT_URI")
         client_id = os.getenv("DISCORD_CLIENT_ID")
@@ -261,9 +262,10 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             token_url,
             client_secret=client_secret,
             authorization_response=request.build_absolute_uri()
-            if not settings.DEBUG or request.build_absolute_uri().startswith("https")
+            if not request.build_absolute_uri().startswith("https")
             else request.build_absolute_uri().replace("http", "https"),
         )
+
 
         # Get the user's information
 
