@@ -41,7 +41,7 @@ class ImagesViewSet(views.ModelViewSet):
             "regex",
             "iregex",
         ),
-        "age_rating": ("iexact", "exact", "in", "isnull", "regex", "iregex"),
+        "age_rating": ("exact", "iexact", "in", "isnull", "regex", "iregex"),
         "height": ("exact", "lt", "lte", "gt", "gte"),
         "width": ("exact", "lt", "lte", "gt", "gte"),
         "aspect_ratio": ("exact", "startswith", "endswith", "regex"),

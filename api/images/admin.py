@@ -20,6 +20,8 @@ class ImageAdmin(admin.ModelAdmin):
     raw_id_fields = ('artist',)
     filter_horizontal = ('characters', 'categories')
     readonly_fields = ('height', 'width', 'aspect_ratio', 'primary_color', 'dominant_color')
+    search_fields = ('title', 'uploader__username', 'artist__name', 'artist__alias')
+    autocomplete_fields = ('characters', 'categories')
     actions = [verify_images]
 
 

@@ -1,1 +1,417 @@
+import { APIRequest } from '../../../../components/apirequest';
+
 # Image resource
+
+## Search for an image
+
+export let code1 = `
+{
+    "data": {
+        "type": "image",
+        "id": "001a0c73-b9c6-498b-8b81-69fc3e527185",
+        "attributes": {
+            "file": "https://cdn.nekosapi.com/uploads/images/ZQFIROLL75DLFCZHGE5BGH7IZM.webp",
+            "title": "Lumine and Paimon at the beach",
+            "colors": {
+                "primary": "#ffffff",
+                "dominant": "#ffffff"
+            },
+            "source": {
+                "name": "Pixiv",
+                "url": "https://pixiv.net/some-url"
+            },
+            "dimens": {
+                "height": 0,
+                "width": 0,
+                "aspectRatio": "3:4"
+            },
+            "isOriginal": false,
+            "verificationStatus": "verified",
+            "ageRating": "questionable",
+            "timestamps": {
+                "created": "2023-02-13T06:43:01.214358Z",
+                "updated": "2023-02-13T19:24:49.493057Z"
+            }
+        },
+        "relationships": {
+            "uploader": {
+                "links": {
+                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/uploader",
+                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/uploader"
+                },
+                "data": {
+                    "type": "user",
+                    "id": "8fad93cd-4a9c-4e71-b21f-6eb4efebb3db"
+                }
+            },
+            "artist": {
+                "links": {
+                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/artist",
+                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/artist"
+                },
+                "data": null
+            },
+            "categories": {
+                "meta": {
+                    "count": 0
+                },
+                "data": [],
+                "links": {
+                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/categories",
+                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/categories"
+                }
+            },
+            "characters": {
+                "meta": {
+                    "count": 0
+                },
+                "data": [],
+                "links": {
+                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/characters",
+                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/characters"
+                }
+            },
+            "likedBy": {
+                "meta": {
+                    "count": 0
+                },
+                "data": [],
+                "links": {
+                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/liked-by",
+                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/liked-by"
+                }
+            }
+        },
+        "links": {
+            "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185"
+        }
+    }
+}
+`.trim();
+
+<APIRequest
+    endpoint="/images"
+    title="Search for an image"
+    description="Search for an image using a variety of different filters."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true
+        }
+    ]}
+    parameters={[
+        {
+            name: "include",
+            type: "List of strings",
+            description: "The related resources to include in the response.\n\nPossible values: `uploader`, `artist`, `categories`, `characters`, `liked-by`"
+        },
+        {
+            name: "filter[search]",
+            type: "String",
+            description: "Search for an image."
+        },
+        {
+            name: "filter[id]",
+            type: "UUID",
+            description: "Filter by image ID. It is recommended to use **[`/images/:id`](#get-an-image-by-its-id)** instead of this filter."
+        },
+        {
+            name: "filter[id.in]",
+            type: "UUID",
+            description: "Returns images in the ID array (coma-separated. e.g. `first-uuid,second-uuid`)."
+        },
+        {
+            name: "filter[id.regex]",
+            type: "PSQL regular expression",
+            description: "Returns images with IDs matching the **PSQL RegEx** specified."
+        },
+        {
+            name: "filter[id.iregex]",
+            type: "PSQL regular expression",
+            description: "Returns images with IDs matching the **PSQL RegEx** specified (case-insensitive)."
+        },
+        {
+            name: "filter[title]",
+            type: "String",
+            description: "Returns images matching the exact specified value."
+        },
+        {
+            name: "filter[title.iexact]",
+            type: "String",
+            description: "Returns images matching the exact specified value (case-insensitive)."
+        },
+        {
+            name: "filter[title.contains]",
+            type: "String",
+            description: "Returns images where the title contains the specified value."
+        },
+        {
+            name: "filter[title.icontains]",
+            type: "String",
+            description: "Returns images where the title contains the specified value (case-insensitive)."
+        },
+        {
+            name: "filter[title.startswith]",
+            type: "String",
+            description: "Returns images where the title starts with the specified value."
+        },
+        {
+            name: "filter[title.endswith]",
+            type: "String",
+            description: "Returns images where the title ends with the specified value."
+        },
+        {
+            name: "filter[title.regex]",
+            type: "PSQL regular expression",
+            description: "Returns images where the title matches the specified **PSQL RegEx**."
+        },
+        {
+            name: "filter[title.iregex]",
+            type: "PSQL regular expression",
+            description: "Returns images where the title matches the specified **PSQL RegEx** (case-insensitive)."
+        },
+        {
+            name: "filter[ageRating]",
+            type: "String",
+            description: "Returns images with the specified age rating.\n\nPossible values: `sfw`, `questionable`, `borderline`, `nsfw`"
+        },
+        {
+            name: "filter[ageRating.iexact]",
+            type: "String",
+            description: "Returns images with the specified age rating (case-insensitive).\n\nPossible values: `sfw`, `questionable`, `borderline`, `nsfw`"
+        },
+        {
+            name: "filter[ageRating.in]",
+            type: "String",
+            description: "Returns images where the age rating is in the specified list (coma-separated. e.g. `sfw,questionable`).\n\nPossible values: `sfw`, `questionable`, `borderline`, `nsfw`"
+        },
+        {
+            name: "filter[ageRating.isnull]",
+            type: "Boolean",
+            description: "Returns images with an unspecified age rating.\n\nPossible values: `true`, `false`"
+        },
+        {
+            name: "filter[ageRating.regex]",
+            type: "PSQL regular expression",
+            description: "Returns images where the age rating matches the **PSQL RegEx**."
+        },
+        {
+            name: "filter[ageRating.iregex]",
+            type: "PSQL regular expression",
+            description: "Returns images where the age rating matches the **PSQL RegEx** (case-insensitive)."
+        },
+        {
+            name: "filter[height]",
+            type: "Number",
+            description: "Returns images with the specified height."
+        },
+        {
+            name: "filter[height.lt]",
+            type: "Number",
+            description: "Returns images with a height lower than the value specified."
+        },
+        {
+            name: "filter[height.lte]",
+            type: "Number",
+            description: "Returns images with a height lower than or equal to the value specified."
+        },
+        {
+            name: "filter[height.gt]",
+            type: "Number",
+            description: "Returns images with a height greater than the value specified."
+        },
+        {
+            name: "filter[height.gte]",
+            type: "Number",
+            description: "Returns images with a height greater than or equal to the value specified."
+        },
+        {
+            name: "filter[width]",
+            type: "Number",
+            description: "Returns images with the specified width."
+        },
+        {
+            name: "filter[width.lt]",
+            type: "Number",
+            description: "Returns images with a width lower than the value specified."
+        },
+        {
+            name: "filter[width.lte]",
+            type: "Number",
+            description: "Returns images with a width lower than or equal to the value specified."
+        },
+        {
+            name: "filter[width.gt]",
+            type: "Number",
+            description: "Returns images with a width greater than the value specified."
+        },
+        {
+            name: "filter[width.gte]",
+            type: "Number",
+            description: "Returns images with a width greater than or equal to the value specified."
+        },
+        {
+            name: "filter[aspectRatio]",
+            type: "String",
+            description: "Returns images with the specified aspect ratio."
+        },
+        {
+            name: "filter[aspectRatio.startswith]",
+            type: "String",
+            description: "Returns images where the aspect ratio starts with the specified value."
+        },
+        {
+            name: "filter[aspectRatio.endswith]",
+            type: "String",
+            description: "Returns images where the aspect ratio ends with the specified value."
+        },
+        {
+            name: "filter[aspectRatio.regex]",
+            type: "PSQL regular expression",
+            description: "Returns images where the aspect ratio matches the **PSQL RegEx**."
+        }
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: code1,
+                language: "JSON",
+                headers: [
+                    "application/vnd.api+json",
+                    `${code1.split("\n").length} lines`,
+                ],
+            }
+        }
+    ]} />
+
+## Get an image by its ID
+
+export let code2 = `
+{
+    "data": {
+        "type": "image",
+        "id": "001a0c73-b9c6-498b-8b81-69fc3e527185",
+        "attributes": {
+            "file": "https://cdn.nekosapi.com/uploads/images/ZQFIROLL75DLFCZHGE5BGH7IZM.webp",
+            "title": "Lumine and Paimon at the beach",
+            "colors": {
+                "primary": "#ffffff",
+                "dominant": "#ffffff"
+            },
+            "source": {
+                "name": "Pixiv",
+                "url": "https://pixiv.net/some-url"
+            },
+            "dimens": {
+                "height": 0,
+                "width": 0,
+                "aspectRatio": "3:4"
+            },
+            "isOriginal": false,
+            "verificationStatus": "verified",
+            "ageRating": "questionable",
+            "timestamps": {
+                "created": "2023-02-13T06:43:01.214358Z",
+                "updated": "2023-02-13T19:24:49.493057Z"
+            }
+        },
+        "relationships": {
+            "uploader": {
+                "links": {
+                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/uploader",
+                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/uploader"
+                },
+                "data": {
+                    "type": "user",
+                    "id": "8fad93cd-4a9c-4e71-b21f-6eb4efebb3db"
+                }
+            },
+            "artist": {
+                "links": {
+                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/artist",
+                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/artist"
+                },
+                "data": null
+            },
+            "categories": {
+                "meta": {
+                    "count": 0
+                },
+                "data": [],
+                "links": {
+                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/categories",
+                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/categories"
+                }
+            },
+            "characters": {
+                "meta": {
+                    "count": 0
+                },
+                "data": [],
+                "links": {
+                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/characters",
+                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/characters"
+                }
+            },
+            "likedBy": {
+                "meta": {
+                    "count": 0
+                },
+                "data": [],
+                "links": {
+                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/liked-by",
+                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/liked-by"
+                }
+            }
+        },
+        "links": {
+            "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185"
+        }
+    }
+}
+`.trim();
+
+<APIRequest
+    endpoint="/images/:id"
+    title="Get an image by its ID"
+    description="Get an image's details by its ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true
+        }
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID v4",
+            description: "The image's ID.",
+            location: "path",
+            required: true
+        },
+        {
+            name: "include",
+            type: "List of strings",
+            description: "The related resources to include in the response.\nPossible values: uploader,artist,categories,characters,liked-by"
+        }
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: code2,
+                language: "JSON",
+                headers: [
+                    "application/vnd.api+json",
+                    `${code2.split("\n").length} lines`,
+                ],
+            }
+        }
+    ]} />

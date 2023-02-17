@@ -142,4 +142,7 @@ export default {
         )
     },
     defaultShowCopyCode: true,
+    nextThemes: {
+        defaultTheme: 'dark'
+    }
 }

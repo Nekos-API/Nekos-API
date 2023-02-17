@@ -20,6 +20,7 @@
 		"graphql-ws": "^5.11.2",
 		"graphql-yoga": "^3.3.0",
 		"highlight.js": "^11.7.0",
+		"marked": "^4.2.12",
 		"next": "^13.0.6",
 		"nextjs-cors": "^2.1.2",
 		"nextra": "^2.2.9",

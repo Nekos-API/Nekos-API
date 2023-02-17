@@ -23,6 +23,7 @@ specifiers:
   graphql-ws: ^5.11.2
   graphql-yoga: ^3.3.0
   highlight.js: ^11.7.0
+  marked: ^4.2.12
   next: ^13.0.6
   nextjs-cors: ^2.1.2
   nextra: ^2.2.9
@@ -61,6 +62,7 @@ dependencies:
   graphql-ws: 5.11.2_graphql@16.6.0
   graphql-yoga: 3.3.0_graphql@16.6.0
   highlight.js: 11.7.0
+  marked: 4.2.12
   next: 13.0.6_biqbaboplfbrettd7655fr4n2y
   nextjs-cors: 2.1.2_next@13.0.6
   nextra: 2.2.9_6jx7hpii6hgsrmhxgqrmo3277u
@@ -2426,6 +2428,12 @@ packages:
 
   /markdown-table/3.0.3:
     resolution: {integrity: sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==}
+    dev: false
+
+  /marked/4.2.12:
+    resolution: {integrity: sha512-yr8hSKa3Fv4D3jdZmtMMPghgVt6TWbk86WQaWhDloQjRSQhMMYCAro7jP7VDJrjjdV8pxVxMssXS8B8Y5DZ5aw==}
+    engines: {node: '>= 12'}
+    hasBin: true
     dev: false
 
   /match-sorter/6.3.1:

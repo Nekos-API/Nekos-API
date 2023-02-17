@@ -4,7 +4,6 @@ import { ChevronRightIcon, ChevronUpDownIcon, ArrowUpRightIcon } from '@heroicon
 import JSIcon from '../icons/JS';
 import styles from './index.module.css';
 
-
 export function APIRequest({
     method = "GET",
     endpoint,
@@ -15,10 +14,25 @@ export function APIRequest({
     responses = [],
     apiWrapperDocs = {}
 }) {
+    function makeId(length) {
+        let result = '';
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const charactersLength = characters.length;
+        let counter = 0;
+        while (counter < length) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+          counter += 1;
+        }
+        return result;
+    }
+
     const hljs = require('highlight.js');
+    const marked = require('marked');
 
     const [collapsed, setCollapsed] = React.useState(true);
     const [openedResponse, setOpenedResponse] = React.useState(null);
+
+    const [hoveredPathParameter, setHoveredPathParameter] = React.useState();
 
     return (
         <div className={"w-full mt-8 p-4 rounded-lg drop-shadow-sm dark:drop-shadow-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 group/request" + (collapsed ? " cursor-pointer" : "")} onClick={() => {
@@ -36,7 +50,30 @@ export function APIRequest({
                     <span className="text-sm font-bold text-[hsl(var(--nextra-primary-hue),100%,50%)]">{method}</span>
                     <span className='text-sm text-neutral-700 dark:text-neutral-200 font-mono'>
                         <span className='text-neutral-400 dark:text-neutral-500'>https://api.nekosapi.com/v2</span>
-                        <span>{endpoint}</span>
+                        <span>{endpoint.split("/").slice(1).map((value, index) => {
+                            if (value.startsWith(":") && parameters.filter((value, index) => {
+                                // Return only path parameters.
+                                return value.location == "path";
+                            }).map((value, index) => {
+                                // Return only lower case names.
+                                return value.name.toLowerCase();
+                            }).includes(value.slice(1))) {
+                                // The value is a path parameter so it is highlighted.
+                                return <>/<span 
+                                    className='text-[hsl(var(--nextra-primary-hue),100%,50%)] hover:underline hover:underline-offset-2 cursor-default'
+                                    onMouseEnter={() => {
+                                        setHoveredPathParameter(value.slice(1));
+                                        console.log(hoveredPathParameter)
+                                    }}
+                                    onMouseOut={() => {
+                                        setHoveredPathParameter();
+                                        console.log(hoveredPathParameter)
+                                    }}>{value}</span></>
+                            } else {
+                                // The value is not a path parameter.
+                                return "/" + value
+                            }
+                        })}</span>
                     </span>
                 </div>
                 <div className="text-xl font-bold mt-2">{title}</div>
@@ -55,7 +92,7 @@ export function APIRequest({
                                         {value.name}
                                         {value.required && <span className='text-red-500 inline-block ml-1'>*</span>}
                                     </div>
-                                    <div className='pl-2'>{value.description}</div>
+                                    <div className='pl-2' dangerouslySetInnerHTML={{__html: marked.parse(value.description)}}></div>
                                 </div>
                             )
                         }) : (
@@ -65,16 +102,19 @@ export function APIRequest({
                 </div>
                 <div className='mt-8'>
                     <div className='font-bold text-lg'>Parameters</div>
-                    <div className='mt-1 flex flex-col gap-px bg-neutral-100 dark:bg-neutral-800 text-sm overflow-x-auto'>
+                    <div className={'mt-1 -mx-1 flex flex-col gap-px text-sm overflow-x-auto' + (!hoveredPathParameter ? ' bg-neutral-100 dark:bg-neutral-800' : '')}>
                         {parameters.length > 0 ? parameters.map((value, index) => {
                             return (
-                                <div className='text-neutral-600 dark:text-neutral-400 grid grid-cols-[1fr_1fr_minmax(0,2fr)] bg-neutral-50 dark:bg-neutral-900 py-1 items-center gap-4 min-w-[34rem]' key={index}>
-                                    <div className='font-mono rounded bg-neutral-200 dark:bg-black/50 w-fit p-1 -my-1 block leading-none whitespace-nowrap'>
+                                <div className='text-neutral-600 dark:text-neutral-400 grid grid-cols-[1fr_1fr_minmax(0,2fr)] bg-neutral-50 dark:bg-neutral-900 p-1 items-center gap-4 min-w-[36rem] transition' style={{
+                                    backgroundColor: hoveredPathParameter == value.name ? "#262626" : '',
+                                    borderRadius: hoveredPathParameter == value.name ? "0.25rem" : "0",
+                                }} key={index}>
+                                    <div className='font-mono rounded bg-neutral-200 dark:bg-black/50 w-fit p-1 -my-1 block break-all leading-none'>
                                         {value.name}
                                         {value.required && <span className='text-red-500 inline-block ml-1'>*</span>}
                                     </div>
                                     <div className='whitespace-nowrap'>{value.type}</div>
-                                    <div>{value.description}</div>
+                                    <div dangerouslySetInnerHTML={{__html: marked.parse(value.description)}}></div>
                                 </div>
                             )
                         }) : (

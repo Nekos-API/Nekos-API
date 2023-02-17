@@ -10,6 +10,7 @@ class NekosUserAdmin(UserAdmin):
         (_("Library"), {"fields": ("liked_images", "saved_images")}),
     )
     fieldsets[0][1]["fields"] = fieldsets[0][1]["fields"] + ("avatar_image",)
+    autocomplete_fields = ('liked_images', 'saved_images')
 
 
 class DiscordUserAdmin(admin.ModelAdmin):
