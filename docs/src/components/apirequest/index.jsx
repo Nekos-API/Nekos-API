@@ -114,11 +114,11 @@ export function APIRequest({
                                         {value.required && <span className='text-red-500 inline-block ml-1'>*</span>}
                                     </div>
                                     <div className='whitespace-nowrap'>{value.type}</div>
-                                    <div dangerouslySetInnerHTML={{__html: marked.parse(value.description)}}></div>
+                                    <div dangerouslySetInnerHTML={{__html: marked.parse(value.description)}} className='break-words'></div>
                                 </div>
                             )
                         }) : (
-                            <div className='bg-neutral-50 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 pt-1'>No parameters</div>
+                            <div className='bg-neutral-50 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 pt-1 pl-1'>No parameters</div>
                         )}
                     </div>
                 </div>
