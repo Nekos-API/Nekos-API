@@ -46,10 +46,10 @@ class ImagesViewSet(views.ModelViewSet):
         "width": ("exact", "lt", "lte", "gt", "gte"),
         "aspect_ratio": ("exact", "startswith", "endswith", "regex"),
         "is_original": ("exact", "isnull"),
-        "verification_status": ("exact", "iexact", "in", "contains", "icontains"),
+        "verification_status": ("exact", "iexact", "in", "contains", "icontains", "regex", "iregex"),
         "source_name": (
-            "iexact",
             "exact",
+            "iexact",
             "contains",
             "icontains",
             "startswith",
@@ -59,8 +59,8 @@ class ImagesViewSet(views.ModelViewSet):
             "iregex",
         ),
         "source_url": (
-            "iexact",
             "exact",
+            "iexact",
             "contains",
             "icontains",
             "startswith",
