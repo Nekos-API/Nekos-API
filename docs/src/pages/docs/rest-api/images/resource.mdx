@@ -1014,3 +1014,167 @@ export const code4 = `
             description: "The request was completed successfully.",
         }
     ]} />
+
+
+## Like an image
+
+<APIRequest
+    method="POST"
+    endpoint="/images/:id/like"
+    title="Like an image"
+    description="Adds an image to the user's liked images."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true
+        }
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID",
+            description: "The image's ID.",
+            required: true,
+            location: "path"
+        }
+    ]}
+    responses={[
+        {
+            code: 204,
+            name: "Success",
+            description: "The request was completed successfully.",
+        }
+    ]} />
+
+
+<APIRequest
+    method="DELETE"
+    endpoint="/images/:id/like"
+    title="Unlike an image"
+    description="Removes an image from the user's liked images."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true
+        }
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID",
+            description: "The image's ID.",
+            required: true,
+            location: "path"
+        }
+    ]}
+    responses={[
+        {
+            code: 204,
+            name: "Success",
+            description: "The request was completed successfully.",
+        }
+    ]} />
+
+
+## Save an image
+
+<APIRequest
+    method="POST"
+    endpoint="/images/:id/save"
+    title="Save an image"
+    description="Adds an image to the user's saved images."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true
+        }
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID",
+            description: "The image's ID.",
+            required: true,
+            location: "path"
+        }
+    ]}
+    responses={[
+        {
+            code: 204,
+            name: "Success",
+            description: "The request was completed successfully.",
+        }
+    ]} />
+
+
+<APIRequest
+    method="DELETE"
+    endpoint="/images/:id/save"
+    title="Remove an image from saved images"
+    description="Removes an image from the user's saved images."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true
+        }
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID",
+            description: "The image's ID.",
+            required: true,
+            location: "path"
+        }
+    ]}
+    responses={[
+        {
+            code: 204,
+            name: "Success",
+            description: "The request was completed successfully.",
+        }
+    ]} />
