@@ -26,7 +26,7 @@ specifiers:
   marked: ^4.2.12
   next: ^13.0.6
   nextjs-cors: ^2.1.2
-  nextra: ^2.2.9
+  nextra: ^2.2.14
   nextra-theme-docs: ^2.2.9
   node-fetch: ^3.3.0
   nprogress: ^0.2.0
@@ -65,7 +65,7 @@ dependencies:
   marked: 4.2.12
   next: 13.0.6_biqbaboplfbrettd7655fr4n2y
   nextjs-cors: 2.1.2_next@13.0.6
-  nextra: 2.2.9_6jx7hpii6hgsrmhxgqrmo3277u
+  nextra: 2.2.14_6jx7hpii6hgsrmhxgqrmo3277u
   nextra-theme-docs: 2.2.9_6jx7hpii6hgsrmhxgqrmo3277u
   nprogress: 0.2.0
   pg-escape: 0.2.0
@@ -335,16 +335,6 @@ packages:
       vfile: 5.3.6
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /@mdx-js/react/2.1.5_react@18.2.0:
-    resolution: {integrity: sha512-3Az1I6SAWA9R38rYjz5rXBrGKeZhq96CSSyQtqY+maPj8stBsoUH5pNcmIixuGkufYsh8F5+ka2CVPo2fycWZw==}
-    peerDependencies:
-      react: '>=16'
-    dependencies:
-      '@types/mdx': 2.0.3
-      '@types/react': 18.0.26
-      react: 18.2.0
     dev: false
 
   /@mdx-js/react/2.2.1_react@18.2.0:
@@ -3200,15 +3190,15 @@ packages:
       zod: 3.20.2
     dev: false
 
-  /nextra/2.2.9_6jx7hpii6hgsrmhxgqrmo3277u:
-    resolution: {integrity: sha512-6S9v0vlkocxrnQBdsZ/4A2BXyfJ9z/Bp8Ai7yY/N6tbIReoKbALTnmZLTdtNSr7GQrXrZnHTTOveW8vDSf+ohQ==}
+  /nextra/2.2.14_6jx7hpii6hgsrmhxgqrmo3277u:
+    resolution: {integrity: sha512-kToTiTiE4qrQsQ9snFRqCGLLSjKSFgFV/BJm3yp/SRmkmCr1WaWrlmUTAuXlxM7PREbNaZouNSOJ0hGS92rM8A==}
     peerDependencies:
       next: '>=9.5.3'
       react: '>=16.13.1'
       react-dom: '>=16.13.1'
     dependencies:
       '@mdx-js/mdx': 2.2.1
-      '@mdx-js/react': 2.1.5_react@18.2.0
+      '@mdx-js/react': 2.2.1_react@18.2.0
       '@napi-rs/simple-git': 0.1.8
       github-slugger: 2.0.0
       graceful-fs: 4.2.10
@@ -3228,6 +3218,7 @@ packages:
       shiki: 0.12.1
       slash: 3.0.0
       title: 3.5.3
+      unist-util-remove: 3.1.1
       unist-util-visit: 4.1.1
     transitivePeerDependencies:
       - supports-color
@@ -4277,6 +4268,14 @@ packages:
     dependencies:
       '@types/unist': 2.0.6
       unist-util-visit: 4.1.1
+    dev: false
+
+  /unist-util-remove/3.1.1:
+    resolution: {integrity: sha512-kfCqZK5YVY5yEa89tvpl7KnBBHu2c6CzMkqHUrlOqaRgGOMp0sMvwWOVrbAtj03KhovQB7i96Gda72v/EFE0vw==}
+    dependencies:
+      '@types/unist': 2.0.6
+      unist-util-is: 5.1.1
+      unist-util-visit-parents: 5.1.1
     dev: false
 
   /unist-util-stringify-position/3.0.2:
