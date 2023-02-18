@@ -105,6 +105,8 @@ DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
