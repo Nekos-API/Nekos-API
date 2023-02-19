@@ -29,6 +29,8 @@ class User(AbstractUser):
         upload_to=FilePattern(
             filename_pattern="uploads/user/avatar/{uuid:base32}{ext}"
         ),
+        blank=True,
+        null=True
     )
 
     liked_images = models.ManyToManyField(
