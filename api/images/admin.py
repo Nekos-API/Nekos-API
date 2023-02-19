@@ -15,7 +15,7 @@ class ImageAdmin(admin.ModelAdmin):
     Images admin.
     """
 
-    list_display = ('title', 'artist', 'updated_at', 'created_at')
+    list_display = ('title', 'artist', 'age_rating', 'verfication_status', 'created_at', 'updated_at')
     list_filter = ('is_original', 'verification_status', 'age_rating')
     raw_id_fields = ('artist',)
     filter_horizontal = ('characters', 'categories')

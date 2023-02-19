@@ -1,0 +1,144 @@
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid'
+
+# The Ultimate Guide to Content Moderation
+
+This guide specifies how content (images) should be managed in Nekos API. It covers most topics, but if you have any doubts about the meaning of something, or would like something explained in detail, just DM [Neki#1587](https://discord.com/users/777338793803513886).
+
+## Image uploading
+
+When uploading an image, you should check the following:
+
+1. The image is not in an extremely low quality. It should not pixelate when covering the whole screen (either width or height).
+2. The image is not a meme. This kind of content is not allowed in the API since the main purpose of the API is serving anime illustrations alone.
+3. The image is not a modified version of the original. No cropping, watermark, rotation, filter, or any kind of modification is allowed to the original images.
+4. The image hasn't got watermarks saying something like *Do not repost*, *Comission*, *Copyright x artist*, *Reproducing is prohibited*, etc. *Sample* watermarks are not allowed. Watermarks are only acceptable when they credit the artist (copyright watermarks are not allowed to prevent legal problems).
+5. The image must not have been taken from an official source. Official art is not currently allowed in the API. Images drawn by the original artist which are not official content are allowed, but they should be omitted if possible.
+6. No manga pages or short stories allowed. The API is oriented to fanarts and therefore this is not allowed.
+7. Preferably no sketches or incomplete illustrations. This can vary depending of the quality of the sketch. If you consider that a sketch is very good and should be included in the API, you can 
+
+## Quality standard
+
+The API follows a strict quality standard to keep the API's quality consistent (and high, very high). There are certain basic requisites that images should follow to apply. Mainly, these are:
+
+1. High resolution images. Images should be at least HD.
+2. Good illustration. This is very subjective to the moderator's liking, but there are some examples below to help you understand this standard.
+
+Since it's difficult to write these standards into text, you can see the following examples to see what's allowed and what's not.
+
+export const ImageExample = ({ allowed, title, description, url, colSpan = 1 }) => {
+    return (
+        <div className="w-full flex flex-col gap-2" style={{
+            gridColumn: `span ${colSpan} / span ${colSpan}`
+        }}>
+            <img src={url} className="object-cover w-full" style={{
+                aspectRatio: colSpan == 1 ? "2/3" : "144/100"
+            }} />
+            <div className="flex flex-row gap-2">
+                {
+                    allowed ? (
+                        <CheckCircleIcon className="fill-green-400 h-5 w-5 shrink-0 mt-1" />
+                    ) : (
+                        <XCircleIcon className="fill-red-400 h-5 w-5 shrink-0 mt-1" />
+                    )
+                }
+                <div>
+                    <div className="font-bold">{title}</div>
+                    <div className="text-neutral-400 text-sm">{description}</div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+<div className="grid grid-cols-3 gap-8 mt-8 relative">
+    <ImageExample
+        allowed={true}
+        title="High quality image"
+        description="This is a high quality image that matches the quality standards."
+        url="https://cdn.nekosapi.com/uploads/images/ZUEP63KOI5FZFPHVPNBSPWVAR4.webp" />
+    <ImageExample
+        allowed={false}
+        title="No setting"
+        description="Try to avoid images with no setting, like plain backgrounds or with gradients."
+        url="https://cdn.nekosapi.com/uploads/images/R25B6O6ZABAJLCRAWWJ3BRG5EY.webp" />
+    <ImageExample
+        allowed={false}
+        title="No setting"
+        description="The same as the previous example. Pattern backgrounds should be avoided."
+        url="https://cdn.nekosapi.com/uploads/images/GIERUZRRQZFFBNZELRSPAALH44.webp" />
+    <ImageExample 
+        allowed={false}
+        title="No setting"
+        description="The character is standing alone in the image."
+        url="https://cdn.nekosapi.com/uploads/images/ZM6BFA5JOBB3LLNVYGQYRKG3RI.webp" />
+    <ImageExample
+        allowed={false}
+        colSpan={2}
+        title="Strange body proportions"
+        description="The body proportions are strange (head too big/body too small)."
+        url="https://cdn.nekosapi.com/uploads/images/CSAXVO5ZLVC5HLUUTEN5Y43ZAM.webp" />
+    <ImageExample
+        allowed={false}
+        colSpan={2}
+        title="Sketch"
+        description="This image is a sketch."
+        url="https://cdn.nekosapi.com/uploads/images/KP6DI2L36FFADIT2LSI2TYOVYU.webp" />
+    <ImageExample
+        allowed={false}
+        title="Filters and screenshot"
+        description="This image has filters applied and is a screenshot from the series Kanojo, Ookarishimasu."
+        url="https://cdn.nekosapi.com/uploads/images/KRXYC3PCNBACDEG5GH7USUZ53A.webp" />
+    <ImageExample
+        allowed={false}
+        title="Sketch"
+        description="This image is also a sketch."
+        url="https://cdn.nekosapi.com/uploads/images/ACTPD3SPUVFIVGNLBZRUU64MBU.webp" />
+    <ImageExample
+        allowed={false}
+        title="Too basic"
+        description="Too basic illustrations do not meet the quality standards."
+        url="https://cdn.nekosapi.com/uploads/images/DB2FETAKSZDIVOD6RGUTIUGAB4.webp" />
+    <ImageExample
+        title="Plain background and sketch"
+        description="This image has a plain background, is a sketch, and cuts the body."
+        url="https://cdn.nekosapi.com/uploads/images/T3WO2RRXLFD7HGS5PB5QGLVE5I.webp" />
+    <ImageExample
+        title="White outline"
+        description="This image has a plain background and an outline surrounding the characters."
+        url="https://cdn.nekosapi.com/uploads/images/57QEXHO3L5AKNKJ5XQDCW4KNGQ.webp" />
+    <ImageExample
+        allowed={true}
+        title="Fine"
+        description="The character is well drawn and the image has a defined setting."
+        url="https://cdn.nekosapi.com/uploads/images/B6C3UQ6BENE4LPMSYOE47TAZH4.webp" />
+    <ImageExample
+        allowed={true}
+        title="Elaborated"
+        description="The image is correctly illuminated and has a complete background."
+        url="https://cdn.nekosapi.com/uploads/images/TJWKYO3YKBED7LBLYGEA2TJGCI.webp" />
+    <ImageExample
+        allowed={true}
+        colSpan={2}
+        title="Intentional rotation"
+        description="The image has an intentional rotation made by the artist, so no corrections are made."
+        url="https://cdn.nekosapi.com/uploads/images/B3OGDH4FHFC4LPNCR2YBZIBA4E.webp" />
+    <ImageExample
+        allowed={true}
+        title="Artist's style"
+        description="The sharpness of the character's face is part of the artist's style/technique."
+        url="https://cdn.nekosapi.com/uploads/images/MXDBVM4DLZBL7E4NGVOBU4IRMM.webp" />
+</div>
+
+If you have any doubts regarding any image's quality and wether it should be accepted or not, yu can send a message to the staff channel and we'll discuss it together.
+
+## NSFW levels
+
+Coming soon.
+
+## Required data
+
+Coming soon.
+
+## Doubts
+
+If you have any doubts regarding the contents of this document or you're not sure about wether an image should be verified or not, you can set the image's verification status to `On Review` and send a message to the staff channel. We'll discuss it together.
