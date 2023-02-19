@@ -26,6 +26,7 @@ class Image(models.Model):
 
         SFW = "sfw"
         QUESTIONABLE = "questionable"
+        SUGGESTIVE = "suggestive"
         BORDERLINE = "borderline"
         EXPLICIT = "explicit"
 
