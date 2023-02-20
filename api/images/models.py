@@ -153,18 +153,26 @@ class ImageSourceResult(models.Model):
     """
 
     class Sources(models.TextChoices):
-        SAUCE_NAO = 'SauceNAO'
-        IQDB = 'IQDB'
+        SAUCE_NAO = "SauceNAO"
+        IQDB = "IQDB"
 
     id = models.UUIDField(
         primary_key=True, unique=True, default=uuid.uuid4, editable=False
     )
 
-    image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name="source_queries")
+    image = models.ForeignKey(
+        Image, on_delete=models.CASCADE, related_name="source_queries"
+    )
 
+    status = models.SmallIntegerField(default=400)
     result = models.JSONField(max_length=10000)
 
-    source = models.CharField(choices=Sources.choices, max_length=8)
+    source = models.CharField(choices=Sources.choices, max_length=8, editable=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return (
+            f"Query from {self.source} for {self.image.id} (Status code: {self.status})"
+        )

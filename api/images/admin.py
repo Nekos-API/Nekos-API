@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Image
+from .models import Image, ImageSourceResult
 
 # Register your models here.
 
@@ -25,4 +25,11 @@ class ImageAdmin(admin.ModelAdmin):
     actions = [verify_images]
 
 
+class ImageSourceResultAdmin(admin.ModelAdmin):
+    list_display = ('id', 'image', 'source', 'status')
+    list_filter = ('source', 'status')
+    raw_id_fields = ('image',)
+
+
 admin.site.register(Image, ImageAdmin)
+admin.site.register(ImageSourceResult, ImageSourceResultAdmin)

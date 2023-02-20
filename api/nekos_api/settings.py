@@ -263,6 +263,7 @@ if DEBUG:
         "127.0.0.1",
         f"api.{os.getenv('BASE_DOMAIN')}",
         f"sso.{os.getenv('BASE_DOMAIN')}",
+        os.getenv("BASE_DOMAIN")
     ]
 else:
     LOGIN_URL = f"https://sso.{os.getenv('BASE_DOMAIN')}/login"
