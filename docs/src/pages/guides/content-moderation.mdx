@@ -131,9 +131,34 @@ export const ImageExample = ({ allowed, title, description, url, colSpan = 1 }) 
 
 If you have any doubts regarding any image's quality and wether it should be accepted or not, yu can send a message to the staff channel and we'll discuss it together.
 
-## NSFW levels
+## Age rating
 
-Coming soon.
+There are 5 different age ratings: `sfw`, `questionable`, `suggestive`, `borderline`, and `explicit`. Each of them defines how much an image is intended to be erotic. It is called age rating, but in fact, `sfw` is for all ages, `questionable` is for +13, `suggestive` is for +16, and `borderline` and `explicit` should not be seen by people younger than 18 years old.
+
+### SFW
+
+SFW means **S**afe **F**or **W**ork, which basically means that if your grandma sees the image, she would be completely fine with it. Same at work, though you shouldn't be looking at anime images at work.
+
+#### Examples
+
+These are some real life examples of what is considered SFW content:
+
+<div className="grid grid-cols-3 gap-8 mt-8 relative">
+    <ImageExample
+        allowed={true}
+        colSpan={2}
+        title="Not even slightly erotic"
+        description={"Your grandma would be fine if she saw this. She'd even say \"Oh, how cute! I also had a dog when I was young.\""}
+        url="https://cdn.nekosapi.com/uploads/images/B3OGDH4FHFC4LPNCR2YBZIBA4E.webp" />
+
+    <ImageExample
+        allowed={true}
+        title="No doubts this is SFW"
+        description={"Be honest, you'r grandma likes these kind of art. She'd probably say something like \"The beach! I loved going on holidays there with my family when I was young\". She may even tell you an anecdote."}
+        url="https://cdn.nekosapi.com/uploads/images/BVCXRQWKDFD5NIZ7TS2DAA7IZE.webp" />
+</div>
+
+### Questionable
 
 ## Required data
 
