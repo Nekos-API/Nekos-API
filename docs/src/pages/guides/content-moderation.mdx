@@ -1,8 +1,13 @@
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid'
+import { Callout } from 'nextra-theme-docs';
 
 # The Ultimate Guide to Content Moderation
 
 This guide specifies how content (images) should be managed in Nekos API. It covers most topics, but if you have any doubts about the meaning of something, or would like something explained in detail, just DM [Neki#1587](https://discord.com/users/777338793803513886).
+
+<Callout type="warning">
+    This document contains NSFW vocabulary. If you're not at least 18 years old, you are forbidden to continue reading. 
+</Callout>
 
 ## Image uploading
 
@@ -159,6 +164,98 @@ These are some real life examples of what is considered SFW content:
 </div>
 
 ### Questionable
+
+Questionable images are still SFW, but have some kind of content that could be considered kind of erotic.
+
+#### Examples
+
+<div className="grid grid-cols-3 gap-8 mt-8 relative">
+    <ImageExample
+        allowed={true}
+        title="Bikinis are kinda..."
+        description={"Bikinis are still SFW, but what would your dad say if he found out that your 8 year-old brother has a gallery of anime girls wearing bikinis? He wouldn't like it that much..."}
+        url="https://cdn.nekosapi.com/uploads/images/OP4ZXIZH3FGGVHQUXDCUNYMFFU.webp" />
+    <ImageExample
+        allowed={true}
+        title="Borderline SFW"
+        description={"This image has a maid, probably in a shop, holding a bikini. It's SFW but again, if your dad found your 8 year-old brother looking at this, he would probably have a look at your brother's gallery. Just to check, in case that..."}
+        url="https://cdn.nekosapi.com/uploads/images/RHI3SNN2CRC3REE5W54TMLK3BA.webp" />
+    <ImageExample
+        allowed={true}
+        title="Nice and cute, but..."
+        description={"The dress reveals just a bit above the leg. Same example as before."}
+        url="https://cdn.nekosapi.com/uploads/images/7K5SVJPYTFGZBDCHVA7ELI7KDY.webp" />
+</div>
+
+### Suggestive
+
+These are those images which are technically SFW, but suggest some NSFW things.
+
+#### Examples
+
+<div className="grid grid-cols-3 gap-8 mt-8 relative">
+    <ImageExample
+        allowed={true}
+        title="Kinda suggestive"
+        description={"Imagine that you were a guy and had a girl exactly like that in your room. Yeah, the image suggests those kind of things. Also, her nipple is marked on her clothes (this is the main reason why this is suggestive)."}
+        url="https://cdn.nekosapi.com/uploads/images/BOENV46KIVEEDIMIN5KI5EIPBI.webp" />
+    <ImageExample
+        allowed={true}
+        title="Not enough clothing"
+        description={"Yeah, she is sexy. The girl's clothing in this image is erotic. She is still covering all her parts, but..."}
+        url="https://cdn.nekosapi.com/uploads/images/F3TKA5PH6RBJPPUZOBNIGQIL6A.webp" />
+    <ImageExample
+        allowed={true}
+        title="All sweaty"
+        description="Again, the image is still SFW, but the girl is all sweaty, blushing, and the clothing does not help."
+        url="https://cdn.nekosapi.com/uploads/images/FFMZ57L2TVER3OQBHWTWJJVZAA.webp" />
+</div>
+
+### Borderline
+
+This is already NSFW. It does not show anything explicit, but it is obviously suggestive.
+
+#### Examples
+
+<div className="grid grid-cols-3 gap-8 mt-8 relative">
+    <ImageExample
+        allowed={true}
+        title="Undressing"
+        description={"The character in the image is undressing. This is obviously intended to be erotic."}
+        url="https://cdn.nekosapi.com/uploads/images/B25CJLLFOJBN3BGHVYHQ4HQZ3Y.webp" />
+    <ImageExample
+        allowed={true}
+        title="Nothing under those bandages"
+        description={"Hu Tao has got nothing under those bandages and no panties."}
+        url="https://cdn.nekosapi.com/uploads/images/3TSTSF3G35BAHCJ23U7JGDALSM.webp" />
+    <ImageExample
+        allowed={true}
+        title="Her bondice is falling"
+        description={"The girl's bondice is falling, and that's pretty much all she is wearing."}
+        url="https://cdn.nekosapi.com/uploads/images/V3RTRBWMWNBLFFA6PM62GBPGJU.webp" />
+</div>
+
+### Explicit
+
+This is clearly NSFW. In other words, porn. There is no need to explain why these examples are explicit.
+
+<div className="grid grid-cols-3 gap-8 mt-8 relative">
+    <ImageExample
+        allowed={true}
+        title="Boobs out"
+        description={"Yeah, this is explicit."}
+        url="https://cdn.nekosapi.com/uploads/images/APPHBFA3SNBB7C5DWV7W53L3FU.webp" />
+    <ImageExample
+        allowed={true}
+        title="Having sex"
+        description={"I'm pretty sure this could be considered explicit."}
+        url="https://cdn.nekosapi.com/uploads/images/AZEXXOHNIZHWLP7NTX6D2QWNFY.webp" />
+    <ImageExample
+        allowed={true}
+        title="Your boss would fire you"
+        description={"If your boss saw you watching this at work, you'd be fired immediately."}
+        url="https://cdn.nekosapi.com/uploads/images/L4NEAJIFAFB3HN3TCD36WF5YSI.webp" />
+</div>
 
 ## Required data
 
