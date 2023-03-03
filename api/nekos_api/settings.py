@@ -76,7 +76,7 @@ MIDDLEWARE = [
     "nekos_api.middleware.DisableCSRFMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "oauth2_provider.middleware.OAuth2TokenMiddleware",
-    "api.middleware.JSONAPIMiddleware",
+    # "api.middleware.JSONAPIMiddleware",
     "django.middleware.common.CommonMiddleware",
     # "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",

@@ -1,4 +1,6 @@
-from django.http import HttpResponse
+import secrets
+
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.core.files import File
 from django.utils.decorators import method_decorator
@@ -19,6 +21,7 @@ from .serializers import ImageSerializer
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_related")
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_random")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="create")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="update")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="delete")
@@ -26,7 +29,9 @@ from .serializers import ImageSerializer
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unlike")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="save")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unsave")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="verification_status")
+@method_decorator(
+    ratelimit(group="api", key="ip", rate="3/s"), name="verification_status"
+)
 class ImagesViewSet(views.ModelViewSet):
     serializer_class = ImageSerializer
     filterset_fields = {
@@ -46,7 +51,15 @@ class ImagesViewSet(views.ModelViewSet):
         "width": ("exact", "lt", "lte", "gt", "gte"),
         "aspect_ratio": ("exact", "startswith", "endswith", "regex"),
         "is_original": ("exact", "isnull"),
-        "verification_status": ("exact", "iexact", "in", "contains", "icontains", "regex", "iregex"),
+        "verification_status": (
+            "exact",
+            "iexact",
+            "in",
+            "contains",
+            "icontains",
+            "regex",
+            "iregex",
+        ),
         "source_name": (
             "exact",
             "iexact",
@@ -94,7 +107,48 @@ class ImagesViewSet(views.ModelViewSet):
     def get_queryset(self, *args, **kwargs):
         if self.request.user.is_authenticated and self.request.user.is_superuser:
             return Image.objects.all()
-        return Image.objects.filter(verification_status=Image.VerificationStatus.VERIFIED)
+        return Image.objects.filter(
+            verification_status=Image.VerificationStatus.VERIFIED
+        )
+
+    def retrieve_random(self, request, *args, **kwargs):
+        """
+        Returns a random image object.
+        """
+
+        qs = self.filter_queryset(self.get_queryset())
+
+        return Response(
+            ImageSerializer(
+                qs[secrets.randbelow(qs.count())], context={"request": request}
+            ).data
+        )
+    
+    def retrieve_file(self, request, *args, **kwargs):
+        """
+        Returns a redirect to the selected image's image URL.
+        """
+
+        pk = kwargs.get("pk")
+
+        image = get_object_or_404(Image, pk=pk)
+
+        if not image.file:
+            # Failed Dependency. There is no file for that image
+            return HttpResponse("", status=424)
+
+        return HttpResponseRedirect(image.file.url, status=307)
+    
+    def retrieve_random_file(self, request, *args, **kwargs):
+        """
+        Returns a redirect to a random image's image URL.
+        """
+
+        qs = self.filter_queryset(self.get_queryset().exclude(file=None))
+
+        image = qs[secrets.randbelow(qs.count())]
+
+        return HttpResponseRedirect(image.file.url, status=307)
 
     @permission_classes([permissions.IsAuthenticated])
     def create(self, request, *args, **kwargs):
