@@ -212,7 +212,7 @@ class ImagesViewSet(views.ModelViewSet):
         image.verification_status = Image.VerificationStatus(request.GET.get("status"))
         image.save()
 
-        return Response(ImageSerializer(image, context={"request": "request"}).data)
+        return Response(ImageSerializer(image, context={"request": request}).data)
 
     @permission_classes([permissions.IsAuthenticated])
     def like(self, request, *args, **kwargs):

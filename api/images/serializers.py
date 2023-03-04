@@ -48,8 +48,8 @@ class SourceSerializer(serializers.Serializer):
     Serializes the image's source into an object.
     """
 
-    name = serializers.CharField(source="source_name")
-    url = serializers.CharField(source="source_url")
+    name = serializers.CharField(source="source_name", required=False)
+    url = serializers.CharField(source="source_url", required=False)
 
 
 class DimensionsSerializer(serializers.Serializer):
@@ -116,7 +116,7 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
         """
         Validate age rating value.
         """
-        if value not in ["sfw", "questionable", "borderline", "explicit"]:
+        if value not in ["sfw", "questionable", "suggestive", "borderline", "explicit"]:
             raise serializers.ValidationError(
                 detail="Age rating is not valid.", code="invalid_age_rating"
             )
@@ -130,7 +130,7 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
         return attrs
 
     colors = ColorsSerializer(source="*", read_only=True)
-    source = SourceSerializer(source="*", required=True)
+    source = SourceSerializer(source="*", read_only=True)
     dimens = DimensionsSerializer(source="*", read_only=True)
     age_rating = serializers.CharField(required=True, validators=[age_rating_validator])
     timestamps = TimestampsSerializer(source="*", read_only=True)
