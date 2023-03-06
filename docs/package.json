@@ -41,6 +41,7 @@
 		"start": "next start"
 	},
 	"devDependencies": {
+		"@tailwindcss/line-clamp": "^0.4.2",
 		"autoprefixer": "^10.4.13",
 		"color-thief-node": "^1.0.4",
 		"node-fetch": "^3.3.0",

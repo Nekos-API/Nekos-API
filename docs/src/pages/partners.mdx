@@ -40,7 +40,7 @@ export function PartnerCard({
                     <div className="font-medium text-xl leading-none text-neutral-900 dark:text-neutral-100">
                         {name}
                     </div>
-                    <div className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                    <div className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 line-clamp-3">
                         {description}
                     </div>
                 </div>
@@ -85,6 +85,14 @@ export function PartnerCard({
         link="https://discord.gg/Wbhvnn546h"
         linkColor="#78B1E0"
         textColor="white"
+    />
+    <PartnerCard
+        icon="/imgs/partners/dollhouse/logo.png"
+        name="Dollhouse"
+        description="Friendly Monogatari themed social server! Join us in a chill server focused on Anime, Manga, Games, Sports and more."
+        link="https://discord.gg/msNtTYV"
+        linkColor="#01EFE3"
+        textColor="black"
     />
     <div className="h-full w-full flex flex-col items-center justify-center border-[4px] border-dashed border-neutral-200 dark:border-neutral-800 rounded-xl aspect-square">
         <PlusIcon className="h-8 w-8 stroke-neutral-600 dark:stroke-neutral-400" />

@@ -8,6 +8,7 @@ specifiers:
   '@next/font': ^13.1.1
   '@prisma/client': ^4.9.0
   '@supabase/supabase-js': ^2.1.1
+  '@tailwindcss/line-clamp': ^0.4.2
   '@upstash/redis': ^1.18.1
   '@vercel/analytics': ^0.1.8
   autoprefixer: ^10.4.13
@@ -77,6 +78,7 @@ dependencies:
   turbo: 1.7.0
 
 devDependencies:
+  '@tailwindcss/line-clamp': 0.4.2_tailwindcss@3.2.4
   autoprefixer: 10.4.13_postcss@8.4.19
   color-thief-node: 1.0.4
   node-fetch: 3.3.0
@@ -941,6 +943,14 @@ packages:
     dependencies:
       tslib: 2.4.1
     dev: false
+
+  /@tailwindcss/line-clamp/0.4.2_tailwindcss@3.2.4:
+    resolution: {integrity: sha512-HFzAQuqYCjyy/SX9sLGB1lroPzmcnWv1FHkIpmypte10hptf4oPUfucryMKovZh2u0uiS9U5Ty3GghWfEJGwVw==}
+    peerDependencies:
+      tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
+    dependencies:
+      tailwindcss: 3.2.4_postcss@8.4.19
+    dev: true
 
   /@types/acorn/4.0.6:
     resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
