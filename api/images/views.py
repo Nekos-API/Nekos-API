@@ -105,7 +105,7 @@ class ImagesViewSet(views.ModelViewSet):
     search_fields = ["title"]
 
     def get_queryset(self, *args, **kwargs):
-        if self.request.user.is_authenticated and self.request.user.is_superuser:
+        if self.request.user.is_authenticated and self.request.user.is_staff:
             return Image.objects.all()
         return Image.objects.filter(
             verification_status=Image.VerificationStatus.VERIFIED
