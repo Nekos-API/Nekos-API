@@ -21,7 +21,9 @@ export default function Home() {
     };
 
     const setVerification = async (status) => {
-        image.attributes.ageRating = ageRating;
+        var newImage = image;
+        newImage.attributes.ageRating = ageRating;
+
 
         const vres = await fetch(
             process.env.NEXT_PUBLIC_API_BASE +
@@ -46,7 +48,7 @@ export default function Home() {
                     "Content-Type": "application/vnd.api+json",
                 },
                 credentials: "include",
-                body: JSON.stringify({ data: image }),
+                body: JSON.stringify({ data: newImage }),
             }
         );
         if (vres.status != 200) {
