@@ -144,6 +144,7 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
         related_link_view_name="image-related",
         self_link_view_name="image-relationships",
         required=False,
+        allow_null=True,
     )
     categories = relations.ResourceRelatedField(
         queryset=Category.objects,
