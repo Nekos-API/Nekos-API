@@ -107,7 +107,7 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
             "is_original": {"required": True},
             "verification_status": {"read_only": True},
             "file": {"read_only": True},
-            "artist": {"allow_null": True, "allow_blank": True}
+            "artist": {"allow_null": True, "allow_blank": True, "required": False},
         }
 
     class JSONAPIMeta:
