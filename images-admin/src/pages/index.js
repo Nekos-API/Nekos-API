@@ -24,7 +24,6 @@ export default function Home() {
         var newImage = image;
         newImage.attributes.ageRating = age_rating;
 
-
         const vres = await fetch(
             process.env.NEXT_PUBLIC_API_BASE +
                 "/v2/images/" +
@@ -81,67 +80,82 @@ export default function Home() {
                     />
                 </div>
                 <div className="flex flex-row gap-5 items-center">
-                    <div>
+                    <label
+                        for="sfw"
+                        onClick={() => {
+                            setAgeRating("sfw");
+                        }}
+                        className="flex flex-col items-center justify-center"
+                    >
                         <input
                             type="radio"
                             name="age_rating"
                             value="sfw"
                             id="sfw"
                             defaultChecked={true}
-                            onSelect={() => {
-                                setAgeRating("sfw");
-                            }}
                         />
-                        <label for="sfw">SFW</label>
-                    </div>
-                    <div>
+                        <div>SFW</div>
+                    </label>
+                    <label
+                        for="questionable"
+                        onClick={() => {
+                            setAgeRating("questionable");
+                        }}
+                        className="flex flex-col items-center justify-center"
+                    >
                         <input
                             type="radio"
                             name="age_rating"
                             value="questionable"
                             id="questionable"
-                            onSelect={() => {
-                                setAgeRating("questionable");
-                            }}
                         />
-                        <label for="questionable">Questionable</label>
-                    </div>
-                    <div>
+                        <div>Questionable</div>
+                    </label>
+                    <label
+                        for="suggestive"
+                        onClick={() => {
+                            setAgeRating("suggestive");
+                        }}
+                        className="flex flex-col items-center justify-center"
+                    >
                         <input
                             type="radio"
                             name="age_rating"
                             value="suggestive"
                             id="suggestive"
-                            onSelect={() => {
-                                setAgeRating("suggestive");
-                            }}
                         />
-                        <label for="suggestive">Suggestive</label>
-                    </div>
-                    <div>
+                        <div>Suggestive</div>
+                    </label>
+                    <label
+                        for="borderline"
+                        onClick={() => {
+                            setAgeRating("borderline");
+                        }}
+                        className="flex flex-col items-center justify-center"
+                    >
                         <input
                             type="radio"
                             name="age_rating"
                             value="borderline"
                             id="borderline"
-                            onSelect={() => {
-                                setAgeRating("borderline");
-                            }}
                         />
-                        <label for="borderline">Borderline</label>
-                    </div>
-                    <div>
+                        <div>Borderline</div>
+                    </label>
+                    <label
+                        for="explicit"
+                        onSelect={() => {
+                            setAgeRating("explicit");
+                        }}
+                        className="flex flex-col items-center justify-center"
+                    >
                         <input
                             type="radio"
                             name="age_rating"
                             value="explicit"
                             id="explicit"
-                            onSelect={() => {
-                                setAgeRating("explicit");
-                            }}
                         />
-                        <label for="explicit">Explicit</label>
-                    </div>
+                        <div>Explicit</div>
+                    </label>
                 </div>
                 <div className="flex flex-row gap-2.5 items-center">
                     {loading ? (
