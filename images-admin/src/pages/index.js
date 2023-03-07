@@ -20,9 +20,9 @@ export default function Home() {
         return json.data[0];
     };
 
-    const setVerification = async (status) => {
+    const setVerification = async (status, age_rating) => {
         var newImage = image;
-        newImage.attributes.ageRating = ageRating;
+        newImage.attributes.ageRating = age_rating;
 
 
         const vres = await fetch(
@@ -153,7 +153,8 @@ export default function Home() {
                                 onClick={async () => {
                                     setLoading(true);
                                     const success = await setVerification(
-                                        "declined"
+                                        "declined",
+                                        ageRating
                                     );
                                     if (!success) {
                                         setLoading(false);
@@ -171,7 +172,8 @@ export default function Home() {
                                 onClick={async () => {
                                     setLoading(true);
                                     const success = await setVerification(
-                                        "on_review"
+                                        "on_review",
+                                        ageRating
                                     );
                                     if (!success) {
                                         setLoading(false);
@@ -189,7 +191,8 @@ export default function Home() {
                                 onClick={async () => {
                                     setLoading(true);
                                     const success = await setVerification(
-                                        "verified"
+                                        "verified",
+                                        ageRating
                                     );
                                     if (!success) {
                                         setLoading(false);
