@@ -107,12 +107,6 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
             "is_original": {"required": True},
             "verification_status": {"read_only": True},
             "file": {"read_only": True},
-            "artist": {
-                "allow_null": True,
-                "allow_blank": True,
-                "required": False,
-                "default": None,
-            },
         }
 
     class JSONAPIMeta:
@@ -149,6 +143,7 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
         queryset=Artist.objects,
         related_link_view_name="image-related",
         self_link_view_name="image-relationships",
+        required=False,
     )
     categories = relations.ResourceRelatedField(
         queryset=Category.objects,
