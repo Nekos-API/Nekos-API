@@ -158,8 +158,6 @@ export default function Home() {
                                         return;
                                     }
 
-                                    setAgeRating("sfw");
-
                                     setImage(await getNextImage());
                                     setLoading(false);
                                 }}
@@ -178,8 +176,6 @@ export default function Home() {
                                         return;
                                     }
 
-                                    setAgeRating("sfw");
-
                                     setImage(await getNextImage());
                                     setLoading(false);
                                 }}
@@ -197,8 +193,6 @@ export default function Home() {
                                         setLoading(false);
                                         return;
                                     }
-
-                                    setAgeRating("sfw");
 
                                     setImage(await getNextImage());
                                     setLoading(false);
