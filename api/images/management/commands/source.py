@@ -72,6 +72,10 @@ class Command(BaseCommand):
                         )
 
                 if len(possible_sources) == 0:
+                    ImageSourceResult.objects.create(
+                        image=image,
+                        status_code=0
+                    )
                     self.stderr.write(
                         f"QUERIED: ERROR - Image ID: {image.id} - Status code: {r.status_code}"
                     )
