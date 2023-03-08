@@ -27,7 +27,9 @@ class Command(BaseCommand):
         Handle image source fetching.
         """
 
-        for image in Image.objects.filter(source_queries=None, verification_status="verified", source_url=None)[:100]:
+        for image in Image.objects.filter(
+            source_queries=None, verification_status="verified", source_url=None
+        )[:100]:
             # Handle the 100 daily images.
 
             file_url = image.file.url
