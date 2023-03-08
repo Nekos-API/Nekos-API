@@ -149,12 +149,8 @@ class Image(models.Model):
 
 class ImageSourceResult(models.Model):
     """
-    Stores a query from SauceNAO or IQDB.
+    Stores a query from SauceNAO.
     """
-
-    class Sources(models.TextChoices):
-        SAUCE_NAO = "SauceNAO"
-        IQDB = "IQDB"
 
     id = models.UUIDField(
         primary_key=True, unique=True, default=uuid.uuid4, editable=False
@@ -165,14 +161,18 @@ class ImageSourceResult(models.Model):
     )
 
     status = models.SmallIntegerField(default=400)
-    result = models.JSONField(max_length=10000)
-
-    source = models.CharField(choices=Sources.choices, max_length=8, editable=False)
+    
+    title = models.CharField(max_length=256, null=True, blank=True)
+    similarity = models.FloatField()
+    ext_urls = ArrayField(models.URLField(max_length=500), blank=True, null=True)
+    source = models.CharField(max_length=256, null=True, blank=True)
+    artist_name = models.CharField(max_length=256, null=True, blank=True)
+    artist_url = models.CharField(max_length=256, null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return (
-            f"Query from {self.source} for {self.image.id} (Status code: {self.status})"
+            f"Query from SauceNAO for {self.image.id} (Status code: {self.status})"
         )

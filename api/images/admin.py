@@ -26,8 +26,8 @@ class ImageAdmin(admin.ModelAdmin):
 
 
 class ImageSourceResultAdmin(admin.ModelAdmin):
-    list_display = ('id', 'image', 'source', 'status')
-    list_filter = ('source', 'status')
+    list_display = ('id', 'image', 'similarity', 'status')
+    list_filter = ('status',)
     raw_id_fields = ('image',)
 
 
