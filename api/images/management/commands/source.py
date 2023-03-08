@@ -94,19 +94,23 @@ class Command(BaseCommand):
                     artist_url=source["artist"]["url"],
                 )
 
-                image.source_url = source["ext_urls"][0]
+                image.source_url = (
+                    source["ext_urls"][0]
+                    if source["ext_urls"] is not None and len(source["ext_urls"])
+                    else None
+                )
 
                 source_hostname = urlparse(
                     source["source"] if source["source"] else source["ext_urls"][0]
                 ).netloc
 
                 source_names = {
-                    'www.pixiv.net': 'Pixiv',
-                    'danbooru.donmai.us': 'Danbooru',
-                    'gelbooru.com': 'Gelbooru',
-                    'deviantart.com': 'DevianArt',
-                    'www.mangaupdates.com': 'Manga Updates',
-                    'mangadex.org': 'Mangadex'
+                    "www.pixiv.net": "Pixiv",
+                    "danbooru.donmai.us": "Danbooru",
+                    "gelbooru.com": "Gelbooru",
+                    "deviantart.com": "DevianArt",
+                    "www.mangaupdates.com": "Manga Updates",
+                    "mangadex.org": "Mangadex",
                 }
 
                 image.source_name = source_names.get(source_hostname, None)

@@ -106,6 +106,10 @@ def create_username(username) -> str:
             return new_username
 
 
+def get_next(session):
+    return session["next"] if "next" in session else "//" + os.getenv("BASE_DOMAIN", "nekosapi.com")
+
+
 @method_decorator(csrf_protect, name="post")
 class LoginView(View):
     def get(self, request):
@@ -282,7 +286,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             # Only allow verified users
             return HttpResponseRedirect(
                 "/login?error=You+cannot+log+in+with+an+unverified+account.&next="
-                + urllib.parse.quote(request.session["next"])
+                + urllib.parse.quote()
             )
 
         user = get_or_none(User, email=user_data["email"])
@@ -325,7 +329,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
         # logged in directly.
         login(request, user, "django.contrib.auth.backends.ModelBackend")
 
-        next = request.session["next"]
+        next = get_next(request.session)
 
         if not validate_next(next):
             return HttpResponse("Invalid `next` parameter value.")
@@ -374,7 +378,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             # accounts.
             return HttpResponseRedirect(
                 "/login?error=You+cannot+log+in+with+an+unverified+account.&next="
-                + urllib.parse.quote(request.session["next"])
+                + urllib.parse.quote(get_next(request.session))
             )
 
         user = get_or_none(User, email=user_data["email"])
@@ -415,7 +419,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
         # logged in directly.
         login(request, user, "django.contrib.auth.backends.ModelBackend")
 
-        next = request.session["next"]
+        next = get_next(request.session)
 
         # Validate the `next` parameter once more before redirecting.
         if not validate_next(next):
@@ -512,7 +516,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
 
         login(request, user, "django.contrib.auth.backends.ModelBackend")
 
-        next = request.session["next"]
+        next = get_next(request.session)
 
         if not validate_next(next):
             return HttpResponse("Invalid `next` parameter value.")
