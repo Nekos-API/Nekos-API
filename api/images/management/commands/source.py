@@ -112,7 +112,11 @@ class Command(BaseCommand):
                     "yande.re": "yande.re",
                 }
 
-                image.source_name = source_names.get(source_hostname, None)
+                image.source_name = (
+                    source_names[source_hostname]
+                    if source_hostname in source_names
+                    else None
+                )
                 image.save()
 
                 self.stdout.write(
