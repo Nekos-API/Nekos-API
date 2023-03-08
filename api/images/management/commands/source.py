@@ -100,9 +100,7 @@ class Command(BaseCommand):
                     else None
                 )
 
-                source_hostname = urlparse(
-                    source["source"] if source["source"] else source["ext_urls"][0]
-                ).netloc
+                source_hostname = urlparse(image.source_url).netloc
 
                 source_names = {
                     "www.pixiv.net": "Pixiv",
@@ -111,6 +109,7 @@ class Command(BaseCommand):
                     "deviantart.com": "DevianArt",
                     "www.mangaupdates.com": "Manga Updates",
                     "mangadex.org": "Mangadex",
+                    "yande.re": "yande.re",
                 }
 
                 image.source_name = source_names.get(source_hostname, None)
