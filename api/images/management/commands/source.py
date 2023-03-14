@@ -73,9 +73,7 @@ class Command(BaseCommand):
 
                 if len(possible_sources) == 0:
                     ImageSourceResult.objects.create(
-                        image=image,
-                        status=0,
-                        similarity=0
+                        image=image, status=0, similarity=0
                     )
                     self.stderr.write(
                         f"QUERIED: ERROR - Image ID: {image.id} - Status code: {r.status_code}"
@@ -127,7 +125,9 @@ class Command(BaseCommand):
                 image.save()
 
                 self.stdout.write(
-                    f"QUERIED - Image ID: {image.id} - Results: {len(possible_sources)} - Status code: {r.status_code}"
+                    self.style.SUCCESS(
+                        f"QUERIED - Image ID: {image.id} - Results: {len(possible_sources)} - Status code: {r.status_code}"
+                    )
                 )
                 self.stdout.write("Sleeping 10s...\n")
                 time.sleep(10)
