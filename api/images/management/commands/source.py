@@ -74,7 +74,8 @@ class Command(BaseCommand):
                 if len(possible_sources) == 0:
                     ImageSourceResult.objects.create(
                         image=image,
-                        status=0
+                        status=0,
+                        similarity=0
                     )
                     self.stderr.write(
                         f"QUERIED: ERROR - Image ID: {image.id} - Status code: {r.status_code}"
