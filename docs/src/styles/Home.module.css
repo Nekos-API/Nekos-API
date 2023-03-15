@@ -37,10 +37,13 @@
         @apply text-2xl font-light mt-4;
     }
     .mainLink {
-        @apply text-2xl text-[hsl(var(--nextra-primary-hue),100%,50%)] hover:text-[hsl(var(--nextra-primary-hue),100%,70%)] transition flex flex-row items-center gap-4 w-fit leading-none;
+        @apply text-xl py-3 px-6 rounded-lg ring-2 ring-offset-0 ring-offset-transparent ring-[hsl(var(--nextra-primary-hue),100%,50%)] hover:ring-offset-2 transition-all flex flex-row items-center gap-4 w-fit leading-none;
     }
     .mainLink > svg {
         @apply h-6 w-6;
+    }
+    .secondaryLink {
+        @apply text-lg;
     }
 
     div.infoContainer {
