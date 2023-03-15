@@ -39,6 +39,7 @@ specifiers:
   react: ^18.2.0
   react-dom: ^18.2.0
   request-ip: ^3.3.0
+  swr: ^2.1.0
   tailwindcss: ^3.2.4
   turbo: ^1.7.0
 
@@ -75,6 +76,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   request-ip: 3.3.0
+  swr: 2.1.0_react@18.2.0
   turbo: 1.7.0
 
 devDependencies:
@@ -4039,6 +4041,16 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
+  /swr/2.1.0_react@18.2.0:
+    resolution: {integrity: sha512-4hYl5p3/KalQ1MORealM79g/DtLohmud6yyfXw5l4wjtFksYUnocRFudvyaoUtgj3FrVNK9lS25Av9dsZYvz0g==}
+    engines: {pnpm: '7'}
+    peerDependencies:
+      react: ^16.11.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
+    dev: false
+
   /tabbable/4.0.0:
     resolution: {integrity: sha512-H1XoH1URcBOa/rZZWxLxHCtOdVUEev+9vo5YdYhC9tCY4wnybX+VQrCYuy9ubkg69fCBxCONJOSLGfw0DWMffQ==}
     dev: false
@@ -4368,6 +4380,14 @@ packages:
       detect-node-es: 1.1.0
       react: 18.2.0
       tslib: 2.4.1
+    dev: false
+
+  /use-sync-external-store/1.2.0_react@18.2.0:
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /utf-8-validate/5.0.10:
