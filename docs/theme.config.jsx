@@ -1,8 +1,28 @@
+import React from "react"
 import { useRouter } from "next/router"
 import { useConfig } from "nextra-theme-docs"
+import { UserCircleIcon } from "@heroicons/react/24/outline"
+import useSWR from "swr"
 
 import Link from "next/link"
 import Script from "next/script"
+
+const userFetcher = (url) => fetch(`${process.env.NEXT_PUBLIC_API_BASE}${url}`, {
+    credentials: "include",
+    headers: {
+        Accept: "application/vnd.api+json"
+    }
+}).then(res => res.json())
+
+const useUser = () => {
+    const { data, error, isLoading } = useSWR("/v2/users/@me", userFetcher)
+
+    return {
+        user: data,
+        error,
+        isLoading
+    }
+}
 
 export default {
     logo: () => {
@@ -64,6 +84,26 @@ export default {
                 MIT {new Date().getFullYear()} © <a href="https://nekidev.com" target="_blank">Nekidev</a>. Made with ❤ from Argentina.
             </span>
         )
+    },
+    navbar: {
+        extraContent: () => {
+            const { user, error, isLoading } = useUser()
+
+            React.useState(() => {
+                console.log(
+                    user,
+                    error,
+                    isLoading
+                )
+            }, [user, error, isLoading])
+
+            if (isLoading) return <div className="ml-2 m-0.5 h-6 w-6 rounded-full border-2 border-[hsl(var(--nextra-primary-hue),100%,50%)] border-t-transparent animate-spin"></div>
+            if (error || (user && "errors" in user)) return <div className="ml-1.5 flex flex-col items-center justify-center w-7 h-7"><UserCircleIcon className="h-7 w-7" /></div>
+
+            return <div className="ml-2">
+                <img src={user.data.attributes.avatarImage} className="rounded-full object-cover h-7 w-7" />
+            </div>
+        }
     },
     sidebar: {
         defaultMenuCollapseLevel: 1,
