@@ -63,11 +63,9 @@ export function APIRequest({
                                     className='text-[hsl(var(--nextra-primary-hue),100%,50%)] hover:underline hover:underline-offset-2 cursor-default'
                                     onMouseEnter={() => {
                                         setHoveredPathParameter(value.slice(1));
-                                        console.log(hoveredPathParameter)
                                     }}
                                     onMouseOut={() => {
                                         setHoveredPathParameter();
-                                        console.log(hoveredPathParameter)
                                     }}>{value}</span></>
                             } else {
                                 // The value is not a path parameter.

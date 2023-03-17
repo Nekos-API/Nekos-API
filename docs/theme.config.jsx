@@ -88,14 +88,6 @@ export default {
         extraContent: () => {
             const { user, error, isLoading } = useUser()
 
-            React.useState(() => {
-                console.log(
-                    user,
-                    error,
-                    isLoading
-                )
-            }, [user, error, isLoading])
-
             if (isLoading) return <div className="ml-2 m-0.5 h-6 w-6 rounded-full border-2 border-[hsl(var(--nextra-primary-hue),100%,50%)] border-t-transparent animate-spin"></div>
             if (error || (user && "errors" in user)) return <div className="ml-1.5 flex flex-col items-center justify-center w-7 h-7"><UserCircleIcon className="h-7 w-7" /></div>
 
@@ -147,14 +139,12 @@ export default {
                                 ad_element.querySelectorAll("img")[0].style.display = "block";
                                 ad_element.querySelectorAll(".ea-placement")[0].classList.add("ea-type-image")
                                 ad_element.querySelectorAll(".ea-placement")[0].classList.remove("ea-type-text")
-                                console.log("appended to main")
                             } else if (window.innerWidth < 1280 && ad_container_alt.childElementCount == 0) {
                                 ad_container_alt.appendChild(ad_element);
                                 ad_element.setAttribute("data-ea-type", "text");
                                 ad_element.querySelectorAll("img")[0].style.display = "none";
                                 ad_element.querySelectorAll(".ea-placement")[0].classList.add("ea-type-text")
                                 ad_element.querySelectorAll(".ea-placement")[0].classList.remove("ea-type-image")
-                                console.log("appended to alt")
                             }
                         };
 
