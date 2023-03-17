@@ -1,4 +1,7 @@
+import dedent from "dedent-js"
 import { Callout } from 'nextra-theme-docs'
+
+import { APIRequest } from "../../../../components/apirequest"
 
 # Relationships
 
@@ -7,3 +10,122 @@ These endpoints return resources related to the main image resource, such as it'
 <Callout>
     This page is still being developed.
 </Callout>
+
+## Get an image's artist
+
+<APIRequest
+    endpoint="/images/:id/artist"
+    title="Get an image's artist by the image's ID"
+    description="Get an image's artist resource by the image's ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID v4",
+            description: "The image's ID.",
+            location: "path",
+            required: true,
+        }
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: dedent`
+                {
+                    "data": {
+                        "type": "artist",
+                        "id": "4acc3444-528f-4f9a-b275-927e32c78441",
+                        "attributes": {
+                            "name": "xilmo",
+                            "aliases": [
+                                "夕末"
+                            ],
+                            "imageUrl": "https://pbs.twimg.com/profile_images/1563823251293229056/CHZ_lqn3_400x400.jpg",
+                            "officialLinks": [
+                                "https://www.pixiv.net/en/users/19389056"
+                            ],
+                            "timestamps": {
+                                "created": "2023-02-20T08:40:27.006888Z",
+                                "updated": "2023-02-20T08:40:27.006904Z"
+                            }
+                        },
+                        "relationships": {
+                            "images": {
+                                "links": {
+                                    "self": "https://api.nekosapi.com/v2/artists/4acc3444-528f-4f9a-b275-927e32c78441/relationships/images",
+                                    "related": "https://api.nekosapi.com/v2/artists/4acc3444-528f-4f9a-b275-927e32c78441/images"
+                                }
+                            },
+                            "followers": {
+                                "links": {
+                                    "self": "https://api.nekosapi.com/v2/artists/4acc3444-528f-4f9a-b275-927e32c78441/relationships/followers",
+                                    "related": "https://api.nekosapi.com/v2/artists/4acc3444-528f-4f9a-b275-927e32c78441/followers"
+                                }
+                            }
+                        },
+                        "links": {
+                            "self": "https://api.nekosapi.com/v2/artists/4acc3444-528f-4f9a-b275-927e32c78441"
+                        }
+                    }
+                }
+                `,
+                language: "JSON",
+                headers: [
+                    "Content-Type: application/vnd.api+json",
+                ],
+            },
+        },
+    ]}
+/>
+
+<APIRequest
+    endpoint="/images/:id/relationships/artist"
+    title="Get an image's artist relationship by the image's ID"
+    description="Get an image's artist relationship by the image's ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID v4",
+            description: "The image's ID.",
+            location: "path",
+            required: true,
+        }
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: dedent`
+                {
+                    "data": {
+                        "type": "artist",
+                        "id": "4acc3444-528f-4f9a-b275-927e32c78441"
+                    }
+                }
+                `,
+                language: "JSON",
+                headers: [
+                    "Content-Type: application/vnd.api+json",
+                ],
+            },
+        },
+    ]}
+/>
