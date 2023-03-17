@@ -1,15 +1,13 @@
-import dedent from "dedent-js"
-import { Callout } from 'nextra-theme-docs'
+import dedent from "dedent-js";
+import { Callout } from "nextra-theme-docs";
 
-import { APIRequest } from "../../../../components/apirequest"
+import { APIRequest } from "../../../../components/apirequest";
 
 # Relationships
 
 These endpoints return resources related to the main image resource, such as it's artist, it's uploader or it's categories.
 
-<Callout>
-    This page is still being developed.
-</Callout>
+<Callout>This page is still being developed.</Callout>
 
 ## Get an image's artist
 
@@ -31,7 +29,7 @@ These endpoints return resources related to the main image resource, such as it'
             description: "The image's ID.",
             location: "path",
             required: true,
-        }
+        },
     ]}
     responses={[
         {
@@ -79,9 +77,7 @@ These endpoints return resources related to the main image resource, such as it'
                 }
                 `,
                 language: "JSON",
-                headers: [
-                    "Content-Type: application/vnd.api+json",
-                ],
+                headers: ["Content-Type: application/vnd.api+json"],
             },
         },
     ]}
@@ -105,7 +101,7 @@ These endpoints return resources related to the main image resource, such as it'
             description: "The image's ID.",
             location: "path",
             required: true,
-        }
+        },
     ]}
     responses={[
         {
@@ -122,9 +118,7 @@ These endpoints return resources related to the main image resource, such as it'
                 }
                 `,
                 language: "JSON",
-                headers: [
-                    "Content-Type: application/vnd.api+json",
-                ],
+                headers: ["Content-Type: application/vnd.api+json"],
             },
         },
     ]}
