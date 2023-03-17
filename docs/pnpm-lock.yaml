@@ -14,6 +14,7 @@ specifiers:
   autoprefixer: ^10.4.13
   cobe: ^0.6.3
   color-thief-node: ^1.0.4
+  dedent-js: ^1.0.1
   dotenv: ^16.0.3
   express-rate-limit: ^6.7.0
   express-slow-down: ^1.5.0
@@ -54,6 +55,7 @@ dependencies:
   '@upstash/redis': 1.18.1
   '@vercel/analytics': 0.1.8_react@18.2.0
   cobe: 0.6.3
+  dedent-js: 1.0.1
   dotenv: 16.0.3
   express-rate-limit: 6.7.0
   express-slow-down: 1.5.0
@@ -1537,6 +1539,10 @@ packages:
     dependencies:
       mimic-response: 2.1.0
     dev: true
+
+  /dedent-js/1.0.1:
+    resolution: {integrity: sha512-OUepMozQULMLUmhxS95Vudo0jb0UchLimi3+pQ2plj61Fcy8axbP9hbiD4Sz6DPqn6XG3kfmziVfQ1rSys5AJQ==}
+    dev: false
 
   /defaults/1.0.4:
     resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
