@@ -1,4 +1,5 @@
-import { Card, Cards } from '../../components/card'
+import { Card, Cards } from "../../components/card";
+import Link from 'next/link';
 
 # Branding
 
@@ -6,14 +7,62 @@ Interested in using our brand content? Don't worry, we've got you covered!
 
 ## Logos
 
+Do not modify (that includes cropping, resizing, changing colors, drawing on top, etc.) in any way the logos. You <u>must not</u> use our name and logo to mislead people into thinking that you are the owner of the website or that you are partnered with us (unless you are explicitly allowed by us to do so).
+
 You can use any of the following versions of the logo:
 
-<Cards>
-    <Card title="Black logo" href="/logo/black.png" icon={<img src="/logo/black.png" className="h-6 w-6" />} demo={true} />
-    <Card title="White logo" href="/logo/white.png" icon={<img src="/logo/white.png" className="h-6 w-6" />} demo={true} />
-</Cards>
+export const Asset = ({ imageUrl, title, subtitle, dark = true }) => {
+    return (
+        <div className="flex flex-col gap-2">
+            <Link download={true} href={imageUrl}>
+                <img src={imageUrl} className={"w-full rounded-lg p-4 " + (dark ? "bg-neutral-900" : "bg-neutral-100")} />
+            </Link>
+            <div>
+                <div className="font-bold text">{title}</div>
+                <div className="text-neutral-400 text-sm">{subtitle}</div>
+            </div>
+        </div>
+    )
+}
 
-Do not modify (that includes cropping, resizing, changing colors, drawing on top, etc.) in any way the logos. You <u>must not</u> use our name and logo to mislead people into thinking that you are the owner of the website or that you are partnered with us (unless you are explicitly allowed by us to do so).
+### Logo with wordmark
+
+<div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <Asset
+        imageUrl="/branding/logo/logo-with-wordmark.png"
+        title="Logo with wordmark"
+        subtitle="You should always try to use the complete logo (this one) instead of the icon-only one." />
+    <Asset
+        imageUrl="/branding/logo/logo-with-wordmark-light.png"
+        title="Logo with wordmark (light)"
+        subtitle="This is the same logo as the dark one, but useful when the background is light and the wordmark cannot be seen"
+        dark={false} />
+</div>
+
+### Icon-only logos
+
+<div className="flex flex-row gap-8 mt-8">
+    <Link download={true} href="/branding/logo/logo.png">
+        <img src="/branding/logo/logo.png" className="h-24 w-24 p-4 rounded-lg bg-neutral-100" />
+    </Link>
+    <Link download={true} href="/branding/logo/logo-dark.png">
+        <img src="/branding/logo/logo-dark.png" className="h-24 w-24 p-4 rounded-lg bg-neutral-900" />
+    </Link>
+</div>
+
+Use this version of the logo if you do not have enough room for the logo with wordmark or in cases when the Nekos API brand has already been established.
+
+### Banner
+
+You can also use this banner in case that you need it.
+
+<div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <Asset
+        imageUrl="/branding/banner.png"
+        title="Banner"
+        subtitle="A nice banner with a background gradient using the Nekos API brand colors."
+        dark={false} />
+</div>
 
 ## Colors
 
@@ -21,11 +70,14 @@ Our colors are pretty simple:
 
 export function Color({ name, color, dark }) {
     return (
-        <div className="h-32 rounded-xl border-2 border-neutral-100 dark:border-neutral-800 flex flex-col p-4 items-end justify-end" style={{ backgroundColor: color, color: dark ? "white" : "black" }}>
+        <div
+            className="h-32 rounded-xl border-2 border-neutral-100 dark:border-neutral-800 flex flex-col p-4 items-end justify-end"
+            style={{ backgroundColor: color, color: dark ? "white" : "black" }}
+        >
             <div className="font-bold text-xl">{name}</div>
             <div>{color}</div>
         </div>
-    )
+    );
 }
 
 <div className="my-4 grid gri-cols-1 md:grid-cols-2 gap-4">

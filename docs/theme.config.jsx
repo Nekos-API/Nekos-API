@@ -28,7 +28,7 @@ export default {
     logo: () => {
         return (
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem" }}>
-                <img src="/logo/black.png" alt="Logo" width={32} height={32} />
+                <img src="/branding/logo/logo.png" alt="Logo" width={32} height={32} />
                 <span>Nekos API</span>
             </div>
         )
@@ -45,7 +45,7 @@ export default {
             }
         } else {
             return {
-                titleTemplate: 'Nekos API'
+                titleTemplate: 'Nekos API - The open-source anime images API'
             }
         }
     },
@@ -53,10 +53,19 @@ export default {
         const { asPath } = useRouter()
         const { frontMatter } = useConfig()
         return <>
+            <meta property="og:type" content="website" />
             <meta property="og:url" content={`https://nekosapi.com${asPath}`} />
             <meta property="og:title" content={frontMatter.title || 'Nekos API Documentation'} />
-            <meta property="og:description" content={frontMatter.description || 'The open-source free public anime images Restful/GraphQL API.'} />
-            <meta name="description" content={frontMatter.description || 'The open-source free public anime images Restful/GraphQL API.'} />
+            <meta property="og:description" content={frontMatter.description || 'The open-source free public anime images Restful API.'} />
+            <meta property="og:image" content="/branding/banner.png" />
+
+            <meta name="description" content={frontMatter.description || 'The open-source free public anime images Restful API.'} />
+
+            <meta property="twitter:card" content="summary_large_image" />
+            <meta property="twitter:url" content="https://nekosapi.com/" />
+            <meta property="twitter:title" content="Nekos API" />
+            <meta property="twitter:description" content="The open-source free public anime images Restful API." />
+            <meta property="twitter:image" content="/branding/banner.png" />
         </>
     },
     primaryHue: {
