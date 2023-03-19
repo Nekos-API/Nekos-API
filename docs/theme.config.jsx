@@ -60,6 +60,7 @@ export default {
             <meta property="og:image" content="/branding/banner.png" />
 
             <meta name="description" content={frontMatter.description || 'The open-source free public anime images Restful API.'} />
+            <meta name="theme-color" content="#ff0055" />
 
             <meta property="twitter:card" content="summary_large_image" />
             <meta property="twitter:url" content="https://nekosapi.com/" />
