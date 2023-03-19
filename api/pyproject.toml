@@ -2,7 +2,7 @@
 name = "nekos api"
 version = "2.0.0-Alpha"
 description = "An open-source, free and public anime images REST/GraphQL API."
-authors = ["Neki <neki@nekosapi.com>"]
+authors = ["Neki <nekidev@nekosapi.com>"]
 license = "MIT License"
 readme = "README.md"
 
