@@ -89,9 +89,9 @@ export default function Home() {
                     <h1 className={styles.mainTitle}>Nekos API</h1>
                     <p className={styles.mainDescription}>An open-source free public anime images API.</p>
                     <div className="flex flex-row items-center mt-8 gap-8">
-                        <Link href="/docs" className={styles.mainLink}>
+                        <Link href="/docs" className={styles.mainLink + " group"}>
                             Documentation
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="group-hover:translate-x-1">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                             </svg>
                         </Link>

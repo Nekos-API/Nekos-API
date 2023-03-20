@@ -40,10 +40,10 @@
         @apply text-xl py-3 px-6 flex-1 sm:flex-none rounded-lg ring-2 ring-offset-0 ring-offset-transparent ring-[hsl(var(--nextra-primary-hue),100%,50%)] hover:ring-offset-2 transition-all flex flex-row items-center justify-center gap-4 w-fit leading-none;
     }
     .mainLink > svg {
-        @apply h-6 w-6;
+        @apply h-6 w-6 transition-all;
     }
     .secondaryLink {
-        @apply text-lg;
+        @apply text-lg transition-transform hover:scale-110;
     }
 
     div.infoContainer {
