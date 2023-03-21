@@ -121,5 +121,19 @@ These endpoints return resources related to the main image resource, such as it'
                 headers: ["Content-Type: application/vnd.api+json"],
             },
         },
+        {
+            code: 200,
+            name: "Success, no resource",
+            description: "The request was completed successfully but the image has no related artist",
+            example: {
+                code: dedent`
+                {
+                    "data": null
+                }
+                `,
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"]
+            }
+        }
     ]}
 />
