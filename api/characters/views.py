@@ -107,17 +107,6 @@ class CharacterViewSet(views.ReadOnlyModelViewSet):
             "in",
             "iregex",
         ),
-        "occupations": (
-            "exact",
-            "iexact",
-            "contains",
-            "icontains",
-            "startswith",
-            "endswith",
-            "regex",
-            "in",
-            "iregex",
-        ),
         "created_at": ("second", "minute", "hour", "day", "month", "year"),
         "updated_at": ("second", "minute", "hour", "day", "month", "year"),
     }
