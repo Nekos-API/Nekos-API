@@ -7,7 +7,9 @@ import { APIRequest } from "../../../../components/apirequest";
 
 These endpoints return resources related to the main image resource, such as it's artist, it's uploader or it's categories.
 
-<Callout>This page is still being developed.</Callout>
+<Callout type="warning">
+    None of these endpoints supports pagination. They all return all resources at once, which whill probaby cause the request to be <b>extremely slow</b>.
+</Callout>
 
 ## Get an image's artist
 
