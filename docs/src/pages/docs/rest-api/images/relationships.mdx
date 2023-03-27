@@ -123,3 +123,143 @@ These endpoints return resources related to the main image resource, such as it'
         },
     ]}
 />
+
+
+## Get an image's uploader
+
+<APIRequest
+    endpoint="/images/:id/uploader"
+    title="Get an image's uploader by the image's ID"
+    description="Get an image's uploader resource by the image's ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID v4",
+            description: "The image's ID.",
+            location: "path",
+            required: true,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: dedent`
+                {
+                    "data": {
+                        "type": "user",
+                        "id": "8fad93cd-4a9c-4e71-b21f-6eb4efebb3db",
+                        "attributes": {
+                            "username": "Nekidev",
+                            "nickname": "Neki",
+                            "biography": "",
+                            "avatarImage": "https://cdn.nekosapi.com/uploads/user/avatar/L7PSX2YOY5CG5K67JJJZRCNRVY.webp",
+                            "timestamps": {
+                                "joined": "2023-01-29T09:04:52Z"
+                            },
+                            "permissions": {
+                                "isActive": true,
+                                "isStaff": true,
+                                "isSuperuser": true
+                            }
+                        },
+                        "relationships": {
+                            "following": {
+                                "links": {
+                                    "self": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/following",
+                                    "related": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/following"
+                                }
+                            },
+                            "followers": {
+                                "links": {
+                                    "self": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followers",
+                                    "related": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followers"
+                                }
+                            },
+                            "followedArtists": {
+                                "links": {
+                                    "self": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-artists",
+                                    "related": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-artists"
+                                }
+                            },
+                            "followedCharacters": {
+                                "links": {
+                                    "self": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-characters",
+                                    "related": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-characters"
+                                }
+                            },
+                            "followedCategories": {
+                                "links": {
+                                    "self": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-categories",
+                                    "related": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-categories"
+                                }
+                            },
+                            "followedLists": {
+                                "links": {
+                                    "self": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-lists",
+                                    "related": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-lists"
+                                }
+                            }
+                        },
+                        "links": {
+                            "self": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db"
+                        }
+                    }
+                }
+                `,
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+<APIRequest
+    endpoint="/images/:id/relationships/uploader"
+    title="Get an image's uploader relationship by the image's ID"
+    description="Get an image's uploader relationship by the image's ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID v4",
+            description: "The image's ID.",
+            location: "path",
+            required: true,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: dedent`
+                {
+                    "data": {
+                        "type": "user",
+                        "id": "4acc3444-528f-4f9a-b275-927e32c78441"
+                    }
+                }
+                `,
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
