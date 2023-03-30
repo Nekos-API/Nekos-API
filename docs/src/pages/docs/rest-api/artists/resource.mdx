@@ -1,0 +1,299 @@
+import { Callout } from "nextra-theme-docs";
+import dedent from "dedent-js";
+
+import { APIRequest } from "../../../../components/apirequest";
+
+# Artist resource
+
+## Search for an artist
+
+<APIRequest
+    endpoint="/artists"
+    title="Search for an artist"
+    description="Search for an artist using a variety of different filters."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "include",
+            type: "List of strings",
+            description:
+                "The related resources to include in the response.\n\nPossible values: `followers`, `images`",
+        },
+        {
+            name: "filter[search]",
+            type: "String",
+            description: "Search for an image.",
+        },
+        {
+            name: "filter[name]",
+            type: "String",
+            description: "Returns images matching the exact specified value.",
+        },
+        {
+            name: "filter[name.iexact]",
+            type: "String",
+            description:
+                "Returns images matching the exact specified value (case-insensitive).",
+        },
+        {
+            name: "filter[name.contains]",
+            type: "String",
+            description:
+                "Returns images where the name contains the specified value.",
+        },
+        {
+            name: "filter[name.icontains]",
+            type: "String",
+            description:
+                "Returns images where the name contains the specified value (case-insensitive).",
+        },
+        {
+            name: "filter[name.startswith]",
+            type: "String",
+            description:
+                "Returns images where the name starts with the specified value.",
+        },
+        {
+            name: "filter[name.endswith]",
+            type: "String",
+            description:
+                "Returns images where the name ends with the specified value.",
+        },
+        {
+            name: "filter[name.regex]",
+            type: "POSIX RegEx",
+            description:
+                "Returns images where the name matches the specified **POSIX RegEx**.",
+        },
+        {
+            name: "filter[name.iregex]",
+            type: "POSIX RegEx",
+            description:
+                "Returns images where the name matches the specified **POSIX RegEx** (case-insensitive).",
+        },
+        {
+            name: "filter[createdAt]",
+            type: "ISO 8601",
+            description: "Returns images created at a certain date and time."
+        },
+        {
+            name: "filter[createdAt.second]",
+            type: "Number (0-59)",
+            description: "Returns images created at a specific second."
+        },
+        {
+            name: "filter[createdAt.minute]",
+            type: "Number (0-59)",
+            description: "Returns images created at a specific minute."
+        },
+        {
+            name: "filter[createdAt.hour]",
+            type: "Number (0-23)",
+            description: "Returns images created at a specific hour."
+        },
+        {
+            name: "filter[createdAt.day]",
+            type: "Number (1-31)",
+            description: "Returns images created at a specific day of the month."
+        },
+        {
+            name: "filter[createdAt.month]",
+            type: "Number (1-12)",
+            description: "Returns images created during a specific month."
+        },
+        {
+            name: "filter[createdAt.year]",
+            type: "Number (0-2023)",
+            description: "Returns images created during a spcific year."
+        },
+        {
+            name: "filter[updatedAt]",
+            type: "ISO 8601",
+            description: "Returns images created at a certain date and time."
+        },
+        {
+            name: "filter[updatedAt.second]",
+            type: "Number (0-59)",
+            description: "Returns images created at a specific second."
+        },
+        {
+            name: "filter[updatedAt.minute]",
+            type: "Number (0-59)",
+            description: "Returns images created at a specific minute."
+        },
+        {
+            name: "filter[updatedAt.hour]",
+            type: "Number (0-23)",
+            description: "Returns images created at a specific hour."
+        },
+        {
+            name: "filter[updatedAt.day]",
+            type: "Number (1-31)",
+            description: "Returns images created at a specific day of the month."
+        },
+        {
+            name: "filter[updatedAt.month]",
+            type: "Number (1-12)",
+            description: "Returns images created during a specific month."
+        },
+        {
+            name: "filter[updatedAt.year]",
+            type: "Number (0-2023)",
+            description: "Returns images created during a spcific year."
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: dedent`
+                {
+                    "links": {
+                        "first": "https://api.nekosapi.com/v2/artists",
+                        "last": "https://api.nekosapi.com/v2/artists?page%5Blimit%5D=10",
+                        "next": null,
+                        "prev": null
+                    },
+                    "data": [
+                        {
+                            "type": "artist",
+                            "id": "500c5ecf-8d83-4333-8f0f-207941aaa552",
+                            "attributes": {
+                                "name": "さんぱち",
+                                "aliases": [
+                                    "hatizyuusan"
+                                ],
+                                "imageUrl": "https://pbs.twimg.com/profile_images/1538894198732357633/kRwkCnLb_400x400.jpg",
+                                "officialLinks": [
+                                    "https://twitter.com/hatizyuusan"
+                                ],
+                                "timestamps": {
+                                    "created": "2023-02-10T05:45:09.534379Z",
+                                    "updated": "2023-02-10T05:45:10.185431Z"
+                                }
+                            },
+                            "relationships": {
+                                "images": {
+                                    "links": {
+                                        "self": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/relationships/images",
+                                        "related": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/images"
+                                    }
+                                },
+                                "followers": {
+                                    "links": {
+                                        "self": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/relationships/followers",
+                                        "related": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/followers"
+                                    }
+                                }
+                            },
+                            "links": {
+                                "self": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552"
+                            }
+                        }
+                    ],
+                    "meta": {
+                        "pagination": {
+                            "count": 1,
+                            "limit": 10,
+                            "offset": 0
+                        }
+                    }
+                }
+                `,
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+
+## Get an artist by its ID
+
+<APIRequest
+    endpoint="/artists/:id"
+    title="Get an artist by its ID"
+    description="Get an artist's details by its ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID v4",
+            description: "The image's ID.",
+            location: "path",
+            required: true,
+        },
+        {
+            name: "include",
+            type: "List of strings",
+            description:
+                "The related resources to include in the response.\nPossible values: images,followers",
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: dedent`
+                {
+                    "data": {
+                        "type": "artist",
+                        "id": "500c5ecf-8d83-4333-8f0f-207941aaa552",
+                        "attributes": {
+                            "name": "さんぱち",
+                            "aliases": [
+                                "hatizyuusan"
+                            ],
+                            "imageUrl": "https://pbs.twimg.com/profile_images/1538894198732357633/kRwkCnLb_400x400.jpg",
+                            "officialLinks": [
+                                "https://twitter.com/hatizyuusan"
+                            ],
+                            "timestamps": {
+                                "created": "2023-02-10T05:45:09.534379Z",
+                                "updated": "2023-02-10T05:45:10.185431Z"
+                            }
+                        },
+                        "relationships": {
+                            "images": {
+                                "links": {
+                                    "self": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/relationships/images",
+                                    "related": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/images"
+                                }
+                            },
+                            "followers": {
+                                "links": {
+                                    "self": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/relationships/followers",
+                                    "related": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/followers"
+                                }
+                            }
+                        },
+                        "links": {
+                            "self": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552"
+                        }
+                    }
+                }
+                `,
+                language: "JSON",
+                headers: [
+                    "Content-Type: application/vnd.api+json",
+                ],
+            },
+        },
+    ]}
+/>

@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('uploader', help="The uploader's username")
-        parser.add_argument('artist', help="The artist's name", default="")
+        parser.add_argument('--artist', help="The artist's name", default="")
 
     def handle(self, *args, **options):
         """
