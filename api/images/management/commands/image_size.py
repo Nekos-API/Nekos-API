@@ -39,7 +39,13 @@ class Command(BaseCommand):
         for image in images:
             r = requests.get(image.file.url)
             f = io.BytesIO(r.content)
-            pil_image = PIL.Image.open(f)
+
+            try:
+                pil_image = PIL.Image.open(f)
+            except:
+                self.stderr.write(self.style.ERROR("ERROR") + f" - {image.id} - ({j}/{total_images})")
+                j += 1
+                continue
 
             image.height = pil_image.height
             image.width = pil_image.width

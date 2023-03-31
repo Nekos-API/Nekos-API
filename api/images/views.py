@@ -50,6 +50,7 @@ class ImagesViewSet(views.ModelViewSet):
         "height": ("exact", "lt", "lte", "gt", "gte"),
         "width": ("exact", "lt", "lte", "gt", "gte"),
         "aspect_ratio": ("exact", "startswith", "endswith", "regex"),
+        "orientation": ("iexact", "isnull"),
         "is_original": ("exact", "isnull"),
         "verification_status": (
             "exact",

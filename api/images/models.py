@@ -40,6 +40,11 @@ class Image(models.Model):
         DECLINED = "declined"
         VERIFIED = "verified"
 
+    class Orientation(models.TextChoices):
+        LANDSCAPE = "landscape"
+        PORTRAIT = "portrait"
+        SQUARE = "square"
+
     def validate_rgb_value(value):
         if value not in range(0, 256):
             raise ValidationError(
@@ -77,6 +82,12 @@ class Image(models.Model):
         help_text="The image's aspect ratio (w:h).",
         null=True,
         blank=True,
+    )
+    orientation = models.CharField(
+        max_length=9,
+        blank=True,
+        null=True,
+        choices=Orientation.choices
     )
 
     source_url = models.URLField(

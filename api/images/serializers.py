@@ -60,6 +60,7 @@ class DimensionsSerializer(serializers.Serializer):
     height = serializers.IntegerField()
     width = serializers.IntegerField()
     aspectRatio = serializers.CharField(source="aspect_ratio")
+    orientation = serializers.CharField()
 
 
 class TimestampsSerializer(serializers.Serializer):
