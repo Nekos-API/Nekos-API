@@ -73,7 +73,7 @@ class Image(models.Model):
         default=0, help_text="The image's width in pixels."
     )
     aspect_ratio = models.CharField(
-        max_length=11,
+        max_length=20,
         help_text="The image's aspect ratio (w:h).",
         null=True,
         blank=True,
