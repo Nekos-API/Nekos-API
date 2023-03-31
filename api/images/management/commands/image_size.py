@@ -61,3 +61,7 @@ class Command(BaseCommand):
                 + f" - {image.id} - {image.height}x{image.width} [{image.aspect_ratio}] - ({j}/{total_images})"
             )
             j += 1
+
+        for image in Image.objects.all():
+            image.orientation = Image.Orientation.LANDSCAPE if image.width > image.height else Image.Orientation.PORTRAIT if image.height > image.width else Image.Orientation.SQUARE
+            image.save()
