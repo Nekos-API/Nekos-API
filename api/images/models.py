@@ -129,12 +129,17 @@ class Image(models.Model):
         blank=True,
         validators=[validate_rgb_value],
     )
-    primary_color = ArrayField(
-        models.SmallIntegerField(),
-        size=3,
+    palette = ArrayField(
+        ArrayField(
+            models.SmallIntegerField(),
+            size=3,
+            null=False,
+            blank=False,
+            validators=[validate_rgb_value]
+        ),
+        size=10,
         null=True,
-        blank=True,
-        validators=[validate_rgb_value],
+        blank=True
     )
 
     characters = models.ManyToManyField(

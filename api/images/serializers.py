@@ -19,18 +19,18 @@ from .models import Image
 
 
 class ColorsSerializer(serializers.Serializer):
-    primary = serializers.SerializerMethodField()
     dominant = serializers.SerializerMethodField()
+    palette = serializers.SerializerMethodField()
 
-    def get_primary(self, obj):
+    def get_palette(self, obj):
         """
         Parses r,g,b db array to hex color code
         """
-        return (
-            "#{:02x}{:02x}{:02x}".format(*obj.primary_color)
-            if obj.primary_color
+        return [(
+            "#{:02x}{:02x}{:02x}".format(*color)
+            if color
             else None
-        )
+        ) for color in obj.palette] if obj.palette else []
 
     def get_dominant(self, obj):
         """
