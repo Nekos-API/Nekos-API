@@ -4,6 +4,7 @@ import time
 import PIL.Image
 
 from django.core.management.base import BaseCommand, CommandError
+from django.db.models import Q
 
 import requests
 
@@ -28,7 +29,9 @@ def get_aspect_ratio(height: int, width: int):
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        images = Image.objects.filter(height=0, width=0).exclude(file=None)
+        images = Image.objects.filter(height=0, width=0).exclude(
+            Q(file="") | Q(file=None)
+        )
         total_images = images.count()
 
         j = 1
