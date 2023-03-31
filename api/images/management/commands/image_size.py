@@ -15,7 +15,7 @@ def get_aspect_ratio(height: int, width: int):
     Returns the aspect ratio of an image.
     """
     divider = 0
-    i = height if height > width else width
+    i = height if height < width else width
 
     while i != 0:
         if height % i == 0 and width % i == 0:
