@@ -1,10 +1,11 @@
+
 import io
 import os
 import time
 import PIL.Image
 
 from django.core.management.base import BaseCommand, CommandError
-from django.db.models import Q
+from django.db.models import F, Q
 
 import requests
 
@@ -62,6 +63,8 @@ class Command(BaseCommand):
             )
             j += 1
 
-        for image in Image.objects.all():
-            image.orientation = Image.Orientation.LANDSCAPE if image.width > image.height else Image.Orientation.PORTRAIT if image.height > image.width else Image.Orientation.SQUARE
-            image.save()
+        Image.objects.filter(height__gt=F("width")).update(orientation=Image.Orientation.PORTRAIT)
+        Image.objects.filter(width__gt=F("height")).update(orientation=Image.Orientation.LANDSCAPE)
+        Image.objects.filter(width=F("height")).update(orientation=Image.Orientation.SQUARE)
+
+        self.stdout.write(self.style.SUCCESS("ALL IMAGE DIMENSIONS UPDATED"))
