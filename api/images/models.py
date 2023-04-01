@@ -156,6 +156,18 @@ class Image(models.Model):
         on_delete=models.CASCADE,
     )
 
+    mimetype = models.CharField(
+        max_length=11,
+        null=True,
+        blank=True,
+        help_text="The image's file format."
+    )
+    file_size = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+        help_text="The file size in bytes of the image file."
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

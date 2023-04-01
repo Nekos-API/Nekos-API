@@ -63,6 +63,14 @@ class DimensionsSerializer(serializers.Serializer):
     orientation = serializers.CharField()
 
 
+class MetadataSerializer(serializers.Serializer):
+    """
+    Serializes `mimetype` and `fileSize` into an object.
+    """
+    mimetype = serializers.CharField()
+    fileSize = serializers.IntegerField(source="file_size")
+
+
 class TimestampsSerializer(serializers.Serializer):
     """
     Serializes the created_at and updated_at fields into an object.
@@ -96,6 +104,7 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
             "is_original",
             "verification_status",
             "age_rating",
+            "metadata",
             "timestamps",
             "uploader",
             "artist",
@@ -135,6 +144,7 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
     dimens = DimensionsSerializer(source="*", read_only=True)
     age_rating = serializers.CharField(required=True, validators=[age_rating_validator])
     timestamps = TimestampsSerializer(source="*", read_only=True)
+    metadata = MetadataSerializer(source="*", read_only=True)
     uploader = relations.ResourceRelatedField(
         related_link_view_name="image-related",
         self_link_view_name="image-relationships",
