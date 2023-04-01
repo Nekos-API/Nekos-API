@@ -47,7 +47,11 @@ class Command(BaseCommand):
                     files=dict(file=f.content),
                 )
 
-                results = r.json()["results"]
+                try:
+                    results = r.json()["results"]
+                except:
+                    self.stderr.write(self.style.ERROR("ERROR - Key error in response"))
+                    continue
                 possible_sources = []
 
                 for result in results:
