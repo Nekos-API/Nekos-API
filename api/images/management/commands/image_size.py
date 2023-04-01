@@ -1,4 +1,3 @@
-
 import io
 import os
 import time
@@ -44,7 +43,9 @@ class Command(BaseCommand):
             try:
                 pil_image = PIL.Image.open(f)
             except:
-                self.stderr.write(self.style.ERROR("ERROR") + f" - {image.id} - ({j}/{total_images})")
+                self.stderr.write(
+                    self.style.ERROR("ERROR") + f" - {image.id} - ({j}/{total_images})"
+                )
                 j += 1
                 continue
 
@@ -63,8 +64,14 @@ class Command(BaseCommand):
             )
             j += 1
 
-        Image.objects.filter(height__gt=F("width")).update(orientation=Image.Orientation.PORTRAIT)
-        Image.objects.filter(width__gt=F("height")).update(orientation=Image.Orientation.LANDSCAPE)
-        Image.objects.filter(width=F("height")).update(orientation=Image.Orientation.SQUARE)
+        Image.objects.filter(height__gt=F("width")).update(
+            orientation=Image.Orientation.PORTRAIT
+        )
+        Image.objects.filter(width__gt=F("height")).update(
+            orientation=Image.Orientation.LANDSCAPE
+        )
+        Image.objects.filter(width=F("height")).update(
+            orientation=Image.Orientation.SQUARE
+        )
 
         self.stdout.write(self.style.SUCCESS("ALL IMAGE DIMENSIONS UPDATED"))
