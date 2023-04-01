@@ -50,7 +50,7 @@ class Command(BaseCommand):
                 try:
                     results = r.json()["results"]
                 except:
-                    self.stderr.write(self.style.ERROR("ERROR - Key error in response"))
+                    self.stderr.write(self.style.ERROR(f"ERROR - Key error in response - {r.status_code}"))
                     continue
                 possible_sources = []
 
