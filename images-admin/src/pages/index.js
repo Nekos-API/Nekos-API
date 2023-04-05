@@ -20,9 +20,9 @@ export default function Home() {
         return json.data[0];
     };
 
-    const setVerification = async (status, age_rating) => {
+    const setVerification = async (status) => {
         var newImage = image;
-        newImage.attributes.ageRating = age_rating;
+        newImage.attributes.ageRating = ageRating;
 
         const vres = await fetch(
             process.env.NEXT_PUBLIC_API_BASE +
@@ -168,7 +168,6 @@ export default function Home() {
                                     setLoading(true);
                                     const success = await setVerification(
                                         "declined",
-                                        ageRating
                                     );
                                     if (!success) {
                                         setLoading(false);
@@ -187,7 +186,6 @@ export default function Home() {
                                     setLoading(true);
                                     const success = await setVerification(
                                         "on_review",
-                                        ageRating
                                     );
                                     if (!success) {
                                         setLoading(false);
@@ -206,7 +204,6 @@ export default function Home() {
                                     setLoading(true);
                                     const success = await setVerification(
                                         "verified",
-                                        ageRating
                                     );
                                     if (!success) {
                                         setLoading(false);
