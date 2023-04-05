@@ -9,6 +9,10 @@ from .models import Image, ImageSourceResult
 def verify_images(modeladmin, request, queryset):
     queryset.update(verification_status=Image.VerificationStatus.VERIFIED)
 
+@admin.action(description='Mark selected images as not reviewed')
+def unverify_images(modeladmin, request, queryset):
+    queryset.update(verification_status=Image.VerificationStatus.NOT_REVIEWED)
+
 
 class ImageAdmin(admin.ModelAdmin):
     """
@@ -22,7 +26,7 @@ class ImageAdmin(admin.ModelAdmin):
     readonly_fields = ('height', 'width', 'aspect_ratio', 'palette', 'dominant_color', 'mimetype', 'file_size')
     search_fields = ('title', 'uploader__username', 'artist__name', 'artist__aliases')
     autocomplete_fields = ('characters', 'categories')
-    actions = [verify_images]
+    actions = [verify_images, unverify_images]
 
 
 class ImageSourceResultAdmin(admin.ModelAdmin):
