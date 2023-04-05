@@ -285,6 +285,17 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "django-logentry-admin"
+version = "1.1.0"
+description = "Show all LogEntry objects in the Django admin site."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Django = ">=2.2"
+
+[[package]]
 name = "django-oauth-toolkit"
 version = "2.2.0"
 description = "OAuth2 Provider for Django"
@@ -749,7 +760,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "27c5cbf6ccd191ae4ea901e0bf4a6ee072c20e8773db11472dec17da6591fc2b"
+content-hash = "eb839ccaf38911d07c9aa534df1e396673baee866d1627e49095cebbe6994dbb"
 
 [metadata.files]
 asgiref = [
@@ -1010,6 +1021,10 @@ django-filter = [
 django-hosts = [
     {file = "django-hosts-5.2.tar.gz", hash = "sha256:32be764dbb0714878a1e6ba5c771418946eb0a17079a14f12e1afa90f182f191"},
     {file = "django_hosts-5.2-py3-none-any.whl", hash = "sha256:cc4128b3020f059faaad6adb0f8a6784a72b74f979ef2c0d640677d872422dbe"},
+]
+django-logentry-admin = [
+    {file = "django-logentry-admin-1.1.0.tar.gz", hash = "sha256:d0354f36da6f48204ae8327533128060513c8ef40259cbde1049d07db4e5d95a"},
+    {file = "django_logentry_admin-1.1.0-py3-none-any.whl", hash = "sha256:26269ca78cd421c3cc63cb58eae55339c031b0d8a880e5b4404489d4128dd290"},
 ]
 django-oauth-toolkit = [
     {file = "django-oauth-toolkit-2.2.0.tar.gz", hash = "sha256:46890decb24a34e2a5382debeaf7752e50d90b7a11716cf2a9fd067097ec0963"},

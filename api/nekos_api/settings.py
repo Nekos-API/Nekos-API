@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     "django_resized",
     "django_cleanup.apps.CleanupConfig",
     "django_bunny_storage",
+    "logentry_admin",
 ]
 
 MIDDLEWARE = [
@@ -103,9 +104,9 @@ DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {"WEBP": ".webp"}
 DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False
 
 USE_X_FORWARDED_HOST = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-X_FRAME_OPTIONS = 'SAMEORIGIN'
+X_FRAME_OPTIONS = "SAMEORIGIN"
 
 TEMPLATES = [
     {
@@ -263,7 +264,7 @@ if DEBUG:
         "127.0.0.1",
         f"api.{os.getenv('BASE_DOMAIN')}",
         f"sso.{os.getenv('BASE_DOMAIN')}",
-        os.getenv("BASE_DOMAIN")
+        os.getenv("BASE_DOMAIN"),
     ]
 else:
     LOGIN_URL = f"https://sso.{os.getenv('BASE_DOMAIN')}/login"
@@ -276,22 +277,22 @@ else:
 
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
         },
     },
-    'root': {
-        'handlers': ['console'],
-        'level': 'WARNING',
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",
     },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
-            'propagate': False,
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
         },
     },
 }
