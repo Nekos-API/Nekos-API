@@ -33,13 +33,13 @@ class CategorySerializer(serializers.ModelSerializer):
 
     sub = serializers.CharField(source="type")
     timestamps = TimestampsSerializer(source="*")
-    images = relations.HyperlinkedRelatedField(
+    images = relations.ResourceRelatedField(
         queryset=Image.objects,
         many=True,
         related_link_view_name="category-related",
         self_link_view_name="category-relationships",
     )
-    followers = relations.HyperlinkedRelatedField(
+    followers = relations.ResourceRelatedField(
         queryset=User.objects,
         many=True,
         related_link_view_name="category-related",

@@ -35,13 +35,13 @@ class ArtistSerializer(serializers.HyperlinkedModelSerializer):
     name = serializers.CharField()
     image_url = serializers.URLField(source="image")
     official_links = serializers.ListField(source="links")
-    images = relations.HyperlinkedRelatedField(
+    images = relations.ResourceRelatedField(
         many=True,
         queryset=Image.objects,
         related_link_view_name="artist-related",
         self_link_view_name="artist-relationships",
     )
-    followers = relations.HyperlinkedRelatedField(
+    followers = relations.ResourceRelatedField(
         many=True,
         queryset=User.objects,
         related_link_view_name="artist-related",

@@ -75,37 +75,37 @@ class UserPublicSerializer(serializers.HyperlinkedModelSerializer):
     username = serializers.CharField(required=False)
     permissions = PermissionsSerializer(source="*", read_only=True)
     timestamps = TimestampsSerializer(source="*", read_only=True)
-    following = relations.HyperlinkedRelatedField(
+    following = relations.ResourceRelatedField(
         many=True,
         read_only=True,
         related_link_view_name="user-related",
         self_link_view_name="user-relationships",
     )
-    followers = relations.HyperlinkedRelatedField(
+    followers = relations.ResourceRelatedField(
         many=True,
         read_only=True,
         related_link_view_name="user-related",
         self_link_view_name="user-relationships",
     )
-    followed_characters = relations.HyperlinkedRelatedField(
+    followed_characters = relations.ResourceRelatedField(
         many=True,
         read_only=True,
         related_link_view_name="user-related",
         self_link_view_name="user-relationships",
     )
-    followed_categories = relations.HyperlinkedRelatedField(
+    followed_categories = relations.ResourceRelatedField(
         many=True,
         read_only=True,
         related_link_view_name="user-related",
         self_link_view_name="user-relationships",
     )
-    followed_artists = relations.HyperlinkedRelatedField(
+    followed_artists = relations.ResourceRelatedField(
         many=True,
         read_only=True,
         related_link_view_name="user-related",
         self_link_view_name="user-relationships",
     )
-    followed_lists = relations.HyperlinkedRelatedField(
+    followed_lists = relations.ResourceRelatedField(
         many=True,
         read_only=True,
         related_link_view_name="user-related",
