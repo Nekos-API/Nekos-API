@@ -4,6 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.core.files import File
 from django.utils.decorators import method_decorator
+from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
+from django.contrib.contenttypes.models import ContentType
 
 from rest_framework import permissions, parsers
 from rest_framework.views import APIView
@@ -16,6 +18,8 @@ from utils.decorators import permission_classes
 
 from .models import Image
 from .serializers import ImageSerializer
+
+from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
 
 
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
@@ -212,6 +216,13 @@ class ImagesViewSet(views.ModelViewSet):
         image = get_object_or_404(Image, pk=pk)
         image.verification_status = Image.VerificationStatus(request.GET.get("status"))
         image.save()
+
+        LogEntry.objects.log_action(
+            user_id=request.user.id,
+            content_type_id=ContentType.objects.get_for_model(Image).pk,
+            object_id=image.id,
+            object_repr=unicode(image.title),
+            action_flag=CHANGE)
 
         return Response(ImageSerializer(image, context={"request": request}).data)
 
