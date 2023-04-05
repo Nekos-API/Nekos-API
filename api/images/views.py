@@ -179,7 +179,7 @@ class ImagesViewSet(views.ModelViewSet):
             Image.objects.select_related("uploader"), pk=kwargs.get("pk")
         )
 
-        if not request.user.is_superuser:
+        if not request.user.is_staff:
             if request.user != image.uploader:
                 raise serializers.ValidationError(
                     detail="You cannot update an image that you have not originally posted.",
