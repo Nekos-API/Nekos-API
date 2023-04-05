@@ -221,7 +221,7 @@ class ImagesViewSet(views.ModelViewSet):
             user_id=request.user.id,
             content_type_id=ContentType.objects.get_for_model(Image).pk,
             object_id=image.id,
-            object_repr=unicode(image.title),
+            object_repr=image.title,
             action_flag=CHANGE)
 
         return Response(ImageSerializer(image, context={"request": request}).data)
