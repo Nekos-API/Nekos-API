@@ -3,7 +3,7 @@ import React from "react";
 export default function Home() {
     const [loading, setLoading] = React.useState(false);
     const [image, setImage] = React.useState();
-    const [ageRating, setAgeRating] = React.useState("sfw");
+    var ageRating = "sfw";
 
     const getNextImage = async () => {
         const res = await fetch(
@@ -20,9 +20,9 @@ export default function Home() {
         return json.data[0];
     };
 
-    const setVerification = async (status, age_rating) => {
+    const setVerification = async (status) => {
         var newImage = image;
-        newImage.attributes.ageRating = age_rating;
+        newImage.attributes.ageRating = ageRating;
 
         const vres = await fetch(
             process.env.NEXT_PUBLIC_API_BASE +
@@ -83,7 +83,7 @@ export default function Home() {
                     <label
                         for="sfw"
                         onClick={() => {
-                            setAgeRating("sfw");
+                            ageRating = "sfw";
                         }}
                         className="flex flex-col items-center justify-center"
                     >
@@ -99,7 +99,7 @@ export default function Home() {
                     <label
                         for="questionable"
                         onClick={() => {
-                            setAgeRating("questionable");
+                            ageRating = "questionable";
                         }}
                         className="flex flex-col items-center justify-center"
                     >
@@ -114,7 +114,7 @@ export default function Home() {
                     <label
                         for="suggestive"
                         onClick={() => {
-                            setAgeRating("suggestive");
+                            ageRating = "suggestive";
                         }}
                         className="flex flex-col items-center justify-center"
                     >
@@ -129,7 +129,7 @@ export default function Home() {
                     <label
                         for="borderline"
                         onClick={() => {
-                            setAgeRating("borderline");
+                            setAgeRatingageRating = "borderline";
                         }}
                         className="flex flex-col items-center justify-center"
                     >
@@ -144,7 +144,7 @@ export default function Home() {
                     <label
                         for="explicit"
                         onSelect={() => {
-                            setAgeRating("explicit");
+                            ageRating = "explicit";
                         }}
                         className="flex flex-col items-center justify-center"
                     >
@@ -168,7 +168,6 @@ export default function Home() {
                                     setLoading(true);
                                     const success = await setVerification(
                                         "declined",
-                                        ageRating
                                     );
                                     if (!success) {
                                         setLoading(false);
@@ -186,8 +185,7 @@ export default function Home() {
                                 onClick={async () => {
                                     setLoading(true);
                                     const success = await setVerification(
-                                        "on_review",
-                                        ageRating
+                                        "on_review"
                                     );
                                     if (!success) {
                                         setLoading(false);
@@ -206,7 +204,6 @@ export default function Home() {
                                     setLoading(true);
                                     const success = await setVerification(
                                         "verified",
-                                        ageRating
                                     );
                                     if (!success) {
                                         setLoading(false);
