@@ -5,6 +5,10 @@ export default function Home() {
     const [image, setImage] = React.useState();
     const [ageRating, setAgeRating] = React.useState("sfw");
 
+    React.useEffect(() => {
+        console.log(ageRating)
+    }, [ageRating])
+
     const getNextImage = async () => {
         const res = await fetch(
             process.env.NEXT_PUBLIC_API_BASE +
@@ -79,84 +83,15 @@ export default function Home() {
                         src={image && !loading ? image.attributes.file : ""}
                     />
                 </div>
-                <div className="flex flex-row gap-5 items-center">
-                    <label
-                        for="sfw"
-                        onClick={() => {
-                            setAgeRating("sfw");
-                        }}
-                        className="flex flex-col items-center justify-center"
-                    >
-                        <input
-                            type="radio"
-                            name="age_rating"
-                            value="sfw"
-                            id="sfw"
-                            defaultChecked={true}
-                        />
-                        <div>SFW</div>
-                    </label>
-                    <label
-                        for="questionable"
-                        onClick={() => {
-                            setAgeRating("questionable");
-                        }}
-                        className="flex flex-col items-center justify-center"
-                    >
-                        <input
-                            type="radio"
-                            name="age_rating"
-                            value="questionable"
-                            id="questionable"
-                        />
-                        <div>Questionable</div>
-                    </label>
-                    <label
-                        for="suggestive"
-                        onClick={() => {
-                            setAgeRating("suggestive");
-                        }}
-                        className="flex flex-col items-center justify-center"
-                    >
-                        <input
-                            type="radio"
-                            name="age_rating"
-                            value="suggestive"
-                            id="suggestive"
-                        />
-                        <div>Suggestive</div>
-                    </label>
-                    <label
-                        for="borderline"
-                        onClick={() => {
-                            setAgeRating("borderline");
-                        }}
-                        className="flex flex-col items-center justify-center"
-                    >
-                        <input
-                            type="radio"
-                            name="age_rating"
-                            value="borderline"
-                            id="borderline"
-                        />
-                        <div>Borderline</div>
-                    </label>
-                    <label
-                        for="explicit"
-                        onClick={() => {
-                            setAgeRating("explicit");
-                        }}
-                        className="flex flex-col items-center justify-center"
-                    >
-                        <input
-                            type="radio"
-                            name="age_rating"
-                            value="explicit"
-                            id="explicit"
-                        />
-                        <div>Explicit</div>
-                    </label>
-                </div>
+                <select onChange={(e) => {
+                    setAgeRating(e.target.value)
+                }} className="p-2 rounded border border-neutral-300 cursor-pointer transition hover:border-neutral-400 w-full">
+                    <option value="sfw" defaultChecked={true}>Safe For Work</option>
+                    <option value="questionable">Questionable</option>
+                    <option value="suggestive">Suggestive</option>
+                    <option value="borderline">Borderline</option>
+                    <option value="explicit">Explicit</option>
+                </select>
                 <div className="flex flex-row gap-2.5 items-center">
                     {loading ? (
                         <div>Loading...</div>
