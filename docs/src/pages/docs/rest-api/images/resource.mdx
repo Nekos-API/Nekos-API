@@ -105,19 +105,19 @@ import { APIRequest } from "../../../../components/apirequest";
             name: "filter[ageRating]",
             type: "(Enum) String",
             description:
-                "Returns images with the specified age rating.\n\nPossible values: `sfw`, `questionable`, `borderline`, `nsfw`",
+                "Returns images with the specified age rating.\n\nPossible values: `sfw`, `questionable`, `suggestive`, `borderline`, `explicit`",
         },
         {
             name: "filter[ageRating.iexact]",
             type: "(Enum) String",
             description:
-                "Returns images with the specified age rating (case-insensitive).\n\nPossible values: `sfw`, `questionable`, `borderline`, `nsfw`",
+                "Returns images with the specified age rating (case-insensitive).\n\nPossible values: `sfw`, `questionable`, `suggestive`, `borderline`, `explicit`",
         },
         {
             name: "filter[ageRating.in]",
             type: "List of (enum) string",
             description:
-                "Returns images where the age rating is in the specified list (coma-separated. e.g. `sfw,questionable`).\n\nPossible values: `sfw`, `questionable`, `borderline`, `nsfw`",
+                "Returns images where the age rating is in the specified list (coma-separated. e.g. `sfw,questionable`).\n\nPossible values: `sfw`, `questionable`, `suggestive`, `borderline`, `explicit`",
         },
         {
             name: "filter[ageRating.isnull]",
