@@ -7,8 +7,6 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
 from schema import Schema, And, Use, Optional, SchemaError
 
-from images.models import Image
-
 
 class Event(Enum):
     ON_IMAGE_UPDATE = "on-image-update"
@@ -20,7 +18,7 @@ subscription_schema = {
     "subscription": bool,
     Optional("data"): {
         "type": Use(str, lambda t: t in ("image",)),
-        "id": Use(str, lambda i: Image.objects.filter(pk=i).exists()),
+        "id": Use(str),
     },
 }
 
