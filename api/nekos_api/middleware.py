@@ -4,6 +4,10 @@ from urllib import parse
 
 from django import http
 
+import dotenv
+
+dotenv.load_dotenv()
+
 
 class CorsMiddleware(object):
     def __init__(self, get_response):
@@ -59,11 +63,23 @@ class CorsMiddleware(object):
 
 
 class DisableCSRFMiddleware(object):
-
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
-        setattr(request, '_dont_enforce_csrf_checks', True)
+        setattr(request, "_dont_enforce_csrf_checks", True)
         response = self.get_response(request)
         return response
+
+
+class WebSocketHostMiddleware:
+    def __init__(self, inner):
+        self.inner = inner
+
+    def __call__(self, scope, *args, **kwargs):
+        host = [h[1] for h in scope["headers"] if h[0] == b"host"][0]
+
+        if not (host.decode().split(":")[0] == "api." + os.getenv("BASE_DOMAIN")):
+            raise Exception()
+
+        return self.inner(scope, *args, **kwargs)

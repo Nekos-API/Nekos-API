@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "users.sso.apps.SsoConfig",
     "applications.apps.ApplicationsConfig",
+    "webhooks.apps.WebhooksConfig",
     # Third party apps
     "rest_framework",
     "oauth2_provider",
@@ -157,6 +158,15 @@ JSON_API_UNIFORM_EXCEPTIONS = True
 
 WSGI_APPLICATION = "nekos_api.wsgi.application"
 ASGI_APPLICATION = "nekos_api.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.getenv("REDIS_URL")],
+        },
+    },
+}
 
 
 # Database

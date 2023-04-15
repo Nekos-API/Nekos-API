@@ -31,6 +31,8 @@ channels = "^4.0.0"
 daphne = "^4.0.0"
 colorthief = "^0.2.1"
 django-logentry-admin = "^1.1.0"
+channels-redis = "^4.1.0"
+schema = "^0.7.5"
 
 
 [build-system]
