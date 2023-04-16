@@ -9,13 +9,17 @@ from schema import Schema, And, Use, Optional, SchemaError
 
 
 class Event(Enum):
+    ON_IMAGE_CREATE = "on-image-create"
     ON_IMAGE_UPDATE = "on-image-update"
     ON_IMAGE_DELETE = "on-image-delete"
+    ON_ARTIST_CREATE = "on-artist-create"
+    ON_ARTIST_UPDATE = "on-artist-update"
+    ON_ARTIST_DELETE = "on-artist-delete"
 
 
 subscription_schema = {
     "event": Use(Event),
-    "subscription": bool,
+    "subscribe": bool,
     Optional("data"): {
         "type": Use(str, lambda t: t in ("image",)),
         "id": Use(str),
