@@ -17,4 +17,5 @@ urlpatterns = [
     path("v2/", include("lists.urls")),
     path("v2/", include("users.urls")),
     path("v2/", include("applications.urls")),
+    path("v2/", include("webhooks.urls")),
 ]

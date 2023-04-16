@@ -1,11 +1,19 @@
 import uuid
+import secrets
 
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
+
+from validators.domain import domain
 
 from django_resized import ResizedImageField
 
 from dynamic_filenames import FilePattern
+
+import dns.resolver
+
+import requests
 
 # Create your models here.
 
@@ -30,7 +38,7 @@ class User(AbstractUser):
             filename_pattern="uploads/user/avatar/{uuid:base32}{ext}"
         ),
         blank=True,
-        null=True
+        null=True,
     )
 
     liked_images = models.ManyToManyField(
@@ -56,7 +64,6 @@ class User(AbstractUser):
 
 
 class DiscordUser(models.Model):
-
     id = models.PositiveBigIntegerField(primary_key=True, unique=True)
     email = models.EmailField(unique=True)
     user = models.OneToOneField(
@@ -68,7 +75,6 @@ class DiscordUser(models.Model):
 
 
 class GoogleUser(models.Model):
-
     id = models.CharField(
         primary_key=True, null=False, blank=False, unique=True, max_length=256
     )
@@ -88,3 +94,75 @@ class GitHubUser(models.Model):
     )
     email = models.EmailField(null=False, blank=False)
     user = models.OneToOneField(User, related_name="github", on_delete=models.CASCADE)
+
+
+class Domain(models.Model):
+    def validate_domain(value) -> None:
+        if domain(value) != True:
+            raise ValidationError("Invalid domain name.")
+
+    def generate_token() -> str:
+        return secrets.token_urlsafe(32)
+
+    class VerificationMethod(models.TextChoices):
+        DNS = "dns"
+        FILE = "file"
+
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
+    name = models.CharField(max_length=254, validators=[validate_domain], unique=True)
+    user = models.ForeignKey(
+        "users.User", related_name="domains", on_delete=models.CASCADE
+    )
+
+    verification_token = models.CharField(
+        default=generate_token, editable=False, null=False, blank=False, max_length=43
+    )
+    verification_method = models.CharField(
+        choices=VerificationMethod.choices,
+        default=VerificationMethod.DNS,
+        null=False,
+        blank=False,
+        max_length=5,
+    )
+
+    verified = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
+
+    def verify(self):
+        """
+        Try to verify the domain
+        """
+        if self.verification_method == Domain.VerificationMethod.DNS:
+            answer = dns.resolver.resolve(self.name, "TXT")
+
+            self.verified = False
+
+            for record in answer:
+                record = record.to_text()
+
+                if record == f'"nekosapi-verification={self.verification_token}"':
+                    self.verified = True
+                    break
+
+            self.save()
+
+        elif self.verification_method == Domain.VerificationMethod.FILE:
+            self.verified = False
+            r = requests.get(f"https://{self.name}/nekosapi-verify.txt", timeout=5)
+
+            if r.status_code not in range(200, 300):
+                self.save()
+                return self.verified
+
+            try:
+                if r.text == f"nekosapi-verification={self.verification_token}":
+                    self.verified = True
+                    self.save()
+            except:
+                self.verified = False
+                self.save()
+
+        return self.verified

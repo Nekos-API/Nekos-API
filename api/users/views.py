@@ -12,6 +12,7 @@ import dotenv
 
 from django.http import HttpResponse
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 from django.core.files import File
 from django.contrib.auth import login
 from django.utils.decorators import method_decorator
@@ -34,8 +35,8 @@ from utils.decorators import permission_classes
 
 from applications.models import Application
 
-from .models import User, DiscordUser
-from .serializers import UserPublicSerializer, UserPrivateSerializer
+from .models import User, DiscordUser, Domain
+from .serializers import UserPublicSerializer, UserPrivateSerializer, DomainSerializer
 
 dotenv.load_dotenv()
 
@@ -281,3 +282,42 @@ class UserRelationshipsView(views.RelationshipView):
                 )
 
         return super().get(request, pk=pk, related_field=related_field, *args, **kwargs)
+
+
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_related")
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="update")
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="delete")
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="create")
+class DomainView(views.ModelViewSet):
+    """
+    CRUD for domains.
+    """
+
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = DomainSerializer
+    select_for_includes = {"user": ["user"]}
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Domain.objects.filter()
+        return Domain.objects.filter(user=self.request.user)
+
+    def delete(self, request, pk):
+        """
+        Delete a domain.
+        """
+
+        domain = get_object_or_404(self.get_queryset().select_related("user"), pk=pk)
+
+        if not request.user.is_superuser:
+            if request.user != domain.user:
+                raise serializers.ValidationError(
+                    detail="You cannot delete an domain that you do not own.",
+                    code="cannot_delete_unowned_domain",
+                )
+
+        domain.delete()
+
+        return Response(data="", status=204)

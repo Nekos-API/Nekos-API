@@ -128,7 +128,7 @@ class ImagesViewSet(views.ModelViewSet):
                 qs[secrets.randbelow(qs.count())], context={"request": request}
             ).data
         )
-    
+
     def retrieve_file(self, request, *args, **kwargs):
         """
         Returns a redirect to the selected image's image URL.
@@ -143,7 +143,7 @@ class ImagesViewSet(views.ModelViewSet):
             return HttpResponse("", status=424)
 
         return HttpResponseRedirect(image.file.url, status=307)
-    
+
     def retrieve_random_file(self, request, *args, **kwargs):
         """
         Returns a redirect to a random image's image URL.
@@ -176,7 +176,7 @@ class ImagesViewSet(views.ModelViewSet):
         """
 
         image = get_object_or_404(
-            Image.objects.select_related("uploader"), pk=kwargs.get("pk")
+            self.get_queryset().select_related("uploader"), pk=kwargs.get("pk")
         )
 
         if not request.user.is_staff:
@@ -194,7 +194,7 @@ class ImagesViewSet(views.ModelViewSet):
         Delete an image.
         """
 
-        image = get_object_or_404(Image.objects.select_related("uploader"), pk=pk)
+        image = get_object_or_404(self.get_queryset().select_related("uploader"), pk=pk)
 
         if not request.user.is_superuser:
             if request.user != image.uploader:
@@ -222,7 +222,8 @@ class ImagesViewSet(views.ModelViewSet):
             content_type_id=ContentType.objects.get_for_model(Image).pk,
             object_id=image.id,
             object_repr=image.title,
-            action_flag=CHANGE)
+            action_flag=CHANGE,
+        )
 
         return Response(ImageSerializer(image, context={"request": request}).data)
 
@@ -310,7 +311,7 @@ class UploadImageFileView(APIView):
         view is restricted to file uploaders and to moderators, so other
         requests are declined with a 403 Forbidden error.
         """
-        image = Image.objects.get(pk=int(self.kwargs.get("pk")))
+        image = self.get_queryset().get(pk=int(self.kwargs.get("pk")))
 
         if image.user != self.request.user and not self.request.user.is_superuser:
             raise serializers.ValidationError(
@@ -359,4 +360,9 @@ class UploadImageFileView(APIView):
 
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="get")
 class ImageRelationshipsView(views.RelationshipView):
-    queryset = Image.objects
+    def get_queryset(self, *args, **kwargs):
+        if self.request.user.is_authenticated and self.request.user.is_staff:
+            return Image.objects.all()
+        return Image.objects.filter(
+            verification_status=Image.VerificationStatus.VERIFIED
+        )
