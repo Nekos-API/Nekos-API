@@ -7,6 +7,7 @@
         "title": "Reference"
     },
     "rest-api": "Rest API",
+    "websockets": "WebSockets",
     "--- More ---": {
         "type": "separator",
         "title": "More"

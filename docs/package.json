@@ -24,7 +24,7 @@
 		"marked": "^4.2.12",
 		"next": "^13.0.6",
 		"nextjs-cors": "^2.1.2",
-		"nextra": "^2.2.14",
+		"nextra": "^2.4.0",
 		"nextra-theme-docs": "^2.2.9",
 		"nprogress": "^0.2.0",
 		"pg-escape": "^0.2.0",
