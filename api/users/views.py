@@ -321,3 +321,14 @@ class DomainView(views.ModelViewSet):
         domain.delete()
 
         return Response(data="", status=204)
+
+
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="get")
+class DomainRelationshipsView(views.RelationshipView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = DomainSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Domain.objects.all()
+        return Domain.objects.filter(user=self.request.user)

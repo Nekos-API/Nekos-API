@@ -7,18 +7,6 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
 from schema import Schema, And, Use, Optional, SchemaError
 
-from webhooks.models import Webhook
-
-
-subscription_schema = {
-    "event": Use(Webhook.Event),
-    "subscribe": bool,
-    Optional("data"): {
-        "type": Use(str, lambda t: t in ("image",)),
-        "id": Use(str),
-    },
-}
-
 
 class EventConsumer(AsyncJsonWebsocketConsumer):
     groups = ["events"]
@@ -31,6 +19,17 @@ class EventConsumer(AsyncJsonWebsocketConsumer):
         pass
 
     async def receive_json(self, content) -> None:
+        from webhooks.models import Webhook
+
+        subscription_schema = {
+            "event": Use(Webhook.Event),
+            "subscribe": bool,
+            Optional("data"): {
+                "type": Use(str, lambda t: t in ("image",)),
+                "id": Use(str),
+            },
+        }
+
         try:
             content = Schema(subscription_schema).validate(content)
 

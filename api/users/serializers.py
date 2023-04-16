@@ -133,6 +133,7 @@ class UserPrivateSerializer(UserPublicSerializer):
             "biography",
             "avatar_image",
             "email",
+            "secret_key",
             "following",
             "followers",
             "permissions",
@@ -148,6 +149,7 @@ class UserPrivateSerializer(UserPublicSerializer):
         extra_kwargs = {
             "avatar_image": {"read_only": True},
             "permissions": {"read_only": True},
+            "secret_key": {"read_only": True},
         }
 
     name = NameSerializer(source="*", required=False)

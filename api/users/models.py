@@ -23,9 +23,13 @@ class User(AbstractUser):
     User model.
     """
 
+    def generate_secret_key():
+        return secrets.token_urlsafe(192)
+
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, null=False
     )
+    secret_key = models.CharField(max_length=256, default=generate_secret_key)
 
     nickname = models.CharField(max_length=50, null=True, blank=True)
 
