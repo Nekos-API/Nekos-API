@@ -1,8 +1,8 @@
 from django.urls import path
 
-from oauth2_provider.views import TokenView, RevokeTokenView, AuthorizationView
+from oauth2_provider.views import TokenView, RevokeTokenView
 
-from .views import UserView, UserRelationshipsView, UserAvatarUploadView, DomainView, DomainRelationshipsView
+from .views import UserView, UserRelationshipsView, UserAvatarUploadView, DomainView, DomainRelationshipsView, AuthorizationWithCaptchaView
 
 urlpatterns = [
     path("users", UserView.as_view({"get": "list"}), name="user"),
@@ -56,7 +56,7 @@ urlpatterns = [
         name="domain-relationship",
     ),
     path("auth/signup", UserView.as_view({"post": "signup"})),
-    path("auth/authorize", AuthorizationView.as_view(), name="authorize"),
+    path("auth/authorize", AuthorizationWithCaptchaView.as_view(), name="authorize"),
     path("auth/token", TokenView.as_view(), name="token"),
     path("auth/token/revoke", RevokeTokenView.as_view(), name="revoke-token"),
 ]

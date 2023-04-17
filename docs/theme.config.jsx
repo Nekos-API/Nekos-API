@@ -7,6 +7,8 @@ import useSWR from "swr"
 import Link from "next/link"
 import Script from "next/script"
 
+import Popup from "./src/components/popup"
+
 const userFetcher = (url) => fetch(`${process.env.NEXT_PUBLIC_API_BASE}${url}`, {
     credentials: "include",
     headers: {
@@ -99,7 +101,41 @@ export default {
             const { user, error, isLoading } = useUser()
 
             if (isLoading) return <div className="ml-2 m-0.5 h-6 w-6 rounded-full border-2 border-[hsl(var(--nextra-primary-hue),100%,50%)] border-t-transparent animate-spin"></div>
-            if (error || (user && "errors" in user)) return <div className="ml-1.5 flex flex-col items-center justify-center w-7 h-7"><UserCircleIcon className="h-7 w-7" /></div>
+            if (error || (user && "errors" in user)) {
+                return (
+                    <Popup
+                        trigger={(
+                            <UserCircleIcon className="h-7 w-7" />
+                        )}
+                        triggerContainerClassName="ml-1.5 flex flex-col items-center justify-center w-7 h-7 cursor-pointer"
+                        alignment="bottom-right"
+                        popupContainerClassName="pt-3"
+                        initialAnim={{
+                            y: -5,
+                            opacity: 0
+                        }}
+                        animate={{
+                            y: 0,
+                            opacity: 1,
+                            transition: {
+                                duration: .1
+                            }
+                        }}
+                        exitAnim={{
+                            y: -5,
+                            opacity: 0,
+                            transition: {
+                                duration: .1
+                            }
+                        }}
+                    >
+                        <div className="py-1 border border-neutral-700 rounded-lg bg-neutral-800 drop-shadow whitespace-nowrap flex flex-col">
+                            <Link href={process.env.NEXT_PUBLIC_NEKOS_API_AUTH_URL} className="nx-relative nx-hidden nx-w-full nx-select-none nx-whitespace-nowrap nx-text-gray-600 hover:nx-text-gray-900 dark:nx-text-gray-400 dark:hover:nx-text-gray-100 md:nx-inline-block nx-py-1.5 nx-transition-colors ltr:nx-pl-3 ltr:nx-pr-9 rtl:nx-pr-3 rtl:nx-pl-9">Log in</Link>
+                            <Link href="" className="nx-relative nx-hidden nx-w-full nx-select-none nx-whitespace-nowrap nx-text-gray-600 hover:nx-text-gray-900 dark:nx-text-gray-400 dark:hover:nx-text-gray-100 md:nx-inline-block nx-py-1.5 nx-transition-colors ltr:nx-pl-3 ltr:nx-pr-9 rtl:nx-pr-3 rtl:nx-pl-9">Sign up</Link>
+                        </div>
+                    </Popup>
+                )
+            }
 
             return <div className="ml-1.5 min-w-7">
                 <img src={user.data.attributes.avatarImage} className="rounded-full object-cover h-7 w-7" />

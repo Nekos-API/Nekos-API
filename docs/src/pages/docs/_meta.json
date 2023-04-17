@@ -19,5 +19,10 @@
         "title": "About",
         "href": "/about",
         "newWindow": false
+    },
+    "donate": {
+        "title": "Donate",
+        "href": "/donate",
+        "newWindow": false
     }
 }

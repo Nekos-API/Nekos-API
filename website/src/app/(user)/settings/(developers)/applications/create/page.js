@@ -325,25 +325,33 @@ export default function CreateApplication() {
                         </div>
                     </div>
                     <div className="flex flex-col items-start gap-6">
-                        <div>
+                        <div className="flex flex-col gap-1 items-stretch w-full">
                             <div className="text-xl font-bold">Client ID</div>
-                            <div className="text-base break-all font-mono">
-                                {
+                            <input
+                                type="text"
+                                className="w-full outline-none p-3 py-1.5 rounded-md bg-neutral-100 cursor-not-allowed font-mono"
+                                value={
                                     createdApplicationData.attributes
                                         .credentials.clientId
                                 }
-                            </div>
+                                disabled={true}
+                            />
                         </div>
-                        <div>
+                        <div className="flex flex-col gap-1 items-stretch w-full">
                             <div className="text-xl font-bold">
                                 Client Secret
                             </div>
-                            <div className="text-base break-all font-mono">
+                            <textarea
+                                type="text"
+                                className="w-full outline-none p-3 rounded-md bg-neutral-100 cursor-not-allowed font-mono"
+                                rows={4}
+                                disabled={true}
+                            >
                                 {
                                     createdApplicationData.attributes
                                         .credentials.clientSecret
                                 }
-                            </div>
+                            </textarea>
                         </div>
                     </div>
                 </>

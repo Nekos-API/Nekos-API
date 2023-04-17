@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import useSWR from "swr";
 import colcade from "colcade";
+import styles from "./page.module.css";
 
 const fetcher = (url) =>
     fetch(process.env.NEXT_PUBLIC_API_BASE + url, {
@@ -29,8 +30,8 @@ export default function Home() {
     }, [])
 
     return (
-        <div className="py-8 grid grid-cols-[5fr_2fr] gap-12">
-            <div>
+        <div className="py-8 grid grid-cols-[5fr_2fr] gap-12 max-w-5xl relative">
+            <div className="max-w-full">
                 <h2 className="text-3xl font-extrabold text-neutral-800">
                     Welcome to Nekos Web!
                 </h2>
@@ -79,7 +80,7 @@ export default function Home() {
                             <div className="h-2 rounded-full bg-crayola-300 w-[27.97%]"></div>
                         </div>
                         <div className="text-xs text-neutral-800 leading-none">
-                            $27.97
+                            $4.5
                         </div>
                     </div>
                     <div className="flex flex-row flex-wrap text-neutral-400 gap-1 leading-none text-xs">
@@ -156,30 +157,30 @@ function PopularImages() {
 
     React.useEffect(() => {
         if (isLoading == false) {
-            const c = new colcade(".imgs-grid", {
-                columns: ".imgs-grid-col",
+            const c = new colcade("." + styles.imgsGrid, {
+                columns: "." + styles.imgsGridCol,
                 items: ".image",
             });
         }
     }, [data]);
 
     return (
-        <div>
+        <div className="">
             <h3 className="text-2xl font-extrabold text-neutral-800">
                 Popular images
             </h3>
-            <div className="relative pt-4">
-                <div className="imgs-grid flex gap-8">
+            <div className="relative pt-4 max-w-full">
+                <div className={styles.imgsGrid}>
                     {isLoading ? (
                         <></>
                     ) : error ? (
                         <div>Error</div>
                     ) : (
                         <>
-                            <div className="imgs-grid-col imgs-grid-col--1 flex-1"></div>
-                            <div className="imgs-grid-col imgs-grid-col--2 flex-1"></div>
-                            <div className="imgs-grid-col imgs-grid-col--3 flex-1 hidden sm:block"></div>
-                            <div className="imgs-grid-col imgs-grid-col--4 flex-1 hidden lg:block"></div>
+                            <div className={`${styles.imgsGridCol} imgs-grid-col--1`}></div>
+                            <div className={`${styles.imgsGridCol} imgs-grid-col--2`}></div>
+                            <div className={`${styles.imgsGridCol} imgs-grid-col--3 hidden sm:block`}></div>
+                            <div className={`${styles.imgsGridCol} imgs-grid-col--4 hidden lg:block`}></div>
                             {data.data.map((value, index) => {
                                 return (
                                     <ImageComponent

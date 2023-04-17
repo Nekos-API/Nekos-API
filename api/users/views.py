@@ -23,6 +23,7 @@ from rest_framework.views import APIView
 from rest_framework_json_api import views, serializers
 
 from oauth2_provider.models import AccessToken, RefreshToken
+from oauth2_provider.views import AuthorizationView
 
 from oauthlib import common
 
@@ -41,6 +42,36 @@ from .serializers import UserPublicSerializer, UserPrivateSerializer, DomainSeri
 dotenv.load_dotenv()
 
 # Create your views here.
+
+
+def get_client_ip(request) -> str:
+    """
+    Returns the original client IP.
+    """
+    x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(",")[0]
+    else:
+        ip = request.META.get("REMOTE_ADDR")
+    return ip
+
+
+def validate_recaptcha(request) -> bool:
+    """
+    Validates a reCAPTCHA challenge and returns wether it has been successful
+    or not.
+    """
+    r = requests.post(
+        "https://www.google.com/recaptcha/api/siteverify?"
+        + urllib.parse.urlencode(
+            {
+                "response": request.POST.get("g-recaptcha-response"),
+                "secret": os.getenv("RECAPTCHA_SECRET_KEY"),
+                "remoteip": get_client_ip(request),
+            }
+        )
+    )
+    return r.json()["success"]
 
 
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
@@ -332,3 +363,17 @@ class DomainRelationshipsView(views.RelationshipView):
         if self.request.user.is_superuser:
             return Domain.objects.all()
         return Domain.objects.filter(user=self.request.user)
+
+
+@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="post")
+class AuthorizationWithCaptchaView(AuthorizationView):
+    
+    def post(self, request, *args, **kwargs):
+        """
+        Validate the ReCaptcha challenge.
+        """
+
+        if not validate_recaptcha(request):
+            return self.get(request, *args, **kwargs)
+
+        return super().post(request, *args, **kwargs)
