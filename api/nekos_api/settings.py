@@ -142,8 +142,8 @@ REST_FRAMEWORK = {
         "rest_framework_json_api.django_filters.DjangoFilterBackend",
     ),
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",
         "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+        "rest_framework.authentication.SessionAuthentication",
     ),
     "DEFAULT_METADATA_CLASS": "rest_framework_json_api.metadata.JSONAPIMetadata",
     "MAX_LIMIT": 50,
