@@ -38,11 +38,11 @@ urlpatterns = [
         name="user-relationships",
     ),
     path(
-        "domains", DomainView.as_view({"get": "list", "post": "create"}), name="domain"
+        "domains", DomainView.as_view({"get": "list"}), name="domain"
     ),
     path(
         "domains/<uuid:pk>",
-        DomainView.as_view({"get": "retrieve", "patch": "update", "delete": "delete"}),
+        DomainView.as_view({"get": "retrieve"}),
         name="domain-detail",
     ),
     path(

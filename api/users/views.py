@@ -93,6 +93,11 @@ class UserView(views.ModelViewSet):
         "followed_categories": ["followed_categories"],
         "followed_lists": ["followed_lists"],
     }
+    filterset_fields = {
+        "discord__id": [
+            "exact"
+        ]
+    }
 
     def get_serializer_class(self):
         if (self.request.user.is_authenticated and self.kwargs.get("pk") == "@me") or (
@@ -304,7 +309,7 @@ class UserRelationshipsView(views.RelationshipView):
         Verifies that the request is not trying to access private
         endpoints.
         """
-        if related_field in ["saved-images", "discord"]:
+        if related_field in ["saved-images"]:
             if not request.user.is_authenticated:
                 raise exceptions.NotAuthenticated()
             elif str(request.user.pk) != str(pk):
