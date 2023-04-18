@@ -1,14 +1,14 @@
-import os
-
-import urllib
-
 from datetime import timedelta, datetime
 
 from tempfile import NamedTemporaryFile
 
-import requests
+import os
 
-import dotenv
+import urllib
+
+import secrets
+
+import json
 
 from django.http import HttpResponse
 from django.conf import settings
@@ -20,6 +20,7 @@ from django.utils.decorators import method_decorator
 from rest_framework import exceptions, permissions, parsers
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ViewSet
 from rest_framework_json_api import views, serializers
 
 from oauth2_provider.models import AccessToken, RefreshToken
@@ -30,6 +31,10 @@ from oauthlib import common
 from django_ratelimit.decorators import ratelimit
 
 from PIL import Image
+
+import requests
+
+import dotenv
 
 from utils import get_or_none
 from utils.decorators import permission_classes
@@ -93,16 +98,16 @@ class UserView(views.ModelViewSet):
         "followed_categories": ["followed_categories"],
         "followed_lists": ["followed_lists"],
     }
-    filterset_fields = {
-        "discord__id": [
-            "exact"
-        ]
-    }
+    filterset_fields = {"discord__id": ["exact"]}
 
     def get_serializer_class(self):
-        if (self.request.user.is_authenticated and self.kwargs.get("pk") == "@me") or (
-            self.request.user.is_authenticated
-            and str(self.kwargs.get("pk")) == str(self.request.user.id)
+        if (
+            (self.request.user.is_authenticated and self.kwargs.get("pk") == "@me")
+            or (
+                self.request.user.is_authenticated
+                and str(self.kwargs.get("pk")) == str(self.request.user.id)
+            )
+            or (self.request.user.is_authenticated and self.request.user.is_superuser)
         ):
             return UserPrivateSerializer
         return UserPublicSerializer
@@ -249,6 +254,49 @@ class UserView(views.ModelViewSet):
         return HttpResponse("", status=204)
 
 
+class UserAdminViewSet(ViewSet):
+
+    @permission_classes([permissions.IsAdminUser])
+    def create_token(self, request, pk):
+        """
+        Creates an access and a refresh token for a specific user.
+        """
+
+        user = get_object_or_404(User, pk=pk)
+
+        application = Application.objects.get(pk=1)
+
+        refresh_token = RefreshToken.objects.create(
+            user=user,
+            application=application,
+            token=secrets.token_urlsafe(20),
+        )
+
+        access_token = AccessToken.objects.create(
+            user=user,
+            application=application,
+            source_refresh_token=refresh_token,
+            token=secrets.token_urlsafe(20),
+            expires=datetime.utcnow() + timedelta(hours=1),
+        )
+
+        return HttpResponse(
+            content=json.dumps(
+                {
+                    "data": {
+                        "type": "token",
+                        "id": None,
+                        "attributes": {
+                            "access": access_token.token,
+                            "refresh": refresh_token.token,
+                        },
+                    }
+                }
+            ),
+            content_type="application/vnd.api+json",
+        )
+
+
 @method_decorator(ratelimit(group="api", key="ip", rate="5/m"), name="put")
 class UserAvatarUploadView(APIView):
     """
@@ -372,7 +420,6 @@ class DomainRelationshipsView(views.RelationshipView):
 
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="post")
 class AuthorizationWithCaptchaView(AuthorizationView):
-    
     def post(self, request, *args, **kwargs):
         """
         Validate the ReCaptcha challenge.
