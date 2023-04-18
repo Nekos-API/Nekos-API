@@ -297,3 +297,85 @@ import { APIRequest } from "../../../../components/apirequest";
         },
     ]}
 />
+
+## Follow an artist
+
+<APIRequest
+    method="POST"
+    endpoint="/artists/:id/follow"
+    title="Follow an artist"
+    description="Follows an artist by its ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID",
+            description: "The artists's ID.",
+            required: true,
+            location: "path",
+        },
+    ]}
+    responses={[
+        {
+            code: 204,
+            name: "Success",
+            description: "The request was completed successfully.",
+        },
+    ]}
+/>
+
+<APIRequest
+    method="DELETE"
+    endpoint="/artists/:id/follow"
+    title="Unfollow an artist"
+    description="Unfollows an artist by its ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID",
+            description: "The artists's ID.",
+            required: true,
+            location: "path",
+        },
+    ]}
+    responses={[
+        {
+            code: 204,
+            name: "Success",
+            description: "The request was completed successfully.",
+        },
+    ]}
+/>
