@@ -190,7 +190,10 @@ CACHES = {
     }
 }
 
-STORAGES = {"staticfiles": {"BACKEND": "nekos_api.storage.Storage"}}
+STORAGES = {
+    "default": "nekos_api.storage.Storage",
+    "staticfiles": {"BACKEND": "nekos_api.storage.Storage"}
+}
 
 
 # Password validation
@@ -286,8 +289,6 @@ MEDIA_URL = "https://cdn.nekosapi.com/"
 BUNNY_USERNAME = os.getenv("BUNNY_USERNAME")
 BUNNY_PASSWORD = os.getenv("BUNNY_PASSWORD")
 BUNNY_REGION = os.getenv("BUNNY_ZONE")
-
-DEFAULT_FILE_STORAGE = "nekos_api.storage.Storage"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
