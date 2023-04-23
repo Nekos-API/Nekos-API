@@ -191,7 +191,7 @@ CACHES = {
 }
 
 STORAGES = {
-    "default": "nekos_api.storage.Storage",
+    "default": {"backend": "nekos_api.storage.Storage"},
     "staticfiles": {"BACKEND": "nekos_api.storage.Storage"}
 }
 
