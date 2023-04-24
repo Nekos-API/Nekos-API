@@ -33,7 +33,7 @@ class EventConsumer(AsyncJsonWebsocketConsumer):
         try:
             content = Schema(subscription_schema).validate(content)
 
-            if content["subscription"]:
+            if content["subscribe"]:
                 subscription = {
                     "event": content["event"],
                     "data": content.get("data", None),
@@ -84,10 +84,10 @@ class EventConsumer(AsyncJsonWebsocketConsumer):
     async def event(self, data: dict) -> None:
         data = data["data"]
 
-        event_name = data["event"]
+        event_id = data["event"]["id"]
 
         subscriptions = [
-            s for s in self.scope["session"]["events"] if s["event"].value == event_name
+            s for s in self.scope["session"]["events"] if s["event"].value == event_id
         ]
 
         notify = False

@@ -372,7 +372,6 @@ class UserRelationshipsView(views.RelationshipView):
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_related")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="update")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="delete")
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="create")
 class DomainView(views.ModelViewSet):
     """
@@ -387,24 +386,6 @@ class DomainView(views.ModelViewSet):
         if self.request.user.is_superuser:
             return Domain.objects.filter()
         return Domain.objects.filter(user=self.request.user)
-
-    def delete(self, request, pk):
-        """
-        Delete a domain.
-        """
-
-        domain = get_object_or_404(self.get_queryset().select_related("user"), pk=pk)
-
-        if not request.user.is_superuser:
-            if request.user != domain.user:
-                raise serializers.ValidationError(
-                    detail="You cannot delete an domain that you do not own.",
-                    code="cannot_delete_unowned_domain",
-                )
-
-        domain.delete()
-
-        return Response(data="", status=204)
 
 
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="get")

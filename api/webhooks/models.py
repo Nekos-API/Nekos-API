@@ -1,7 +1,11 @@
 import uuid
 
+from urllib.parse import urlparse
+
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+
+from users.models import Domain
 
 # Create your models here.
 
@@ -16,6 +20,10 @@ class Webhook(models.Model):
         ON_ARTIST_UPDATE = "on-artist-update"
         ON_ARTIST_DELETE = "on-artist-delete"
 
+    def validate_url(value):
+        if urlparse(value).scheme != "https":
+            raise ValidationError("The webhook URL's scheme can only be https.")
+
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
     name = models.CharField(max_length=256)
@@ -26,4 +34,21 @@ class Webhook(models.Model):
         blank=False,
     )
 
-    urls = ArrayField(models.CharField(max_length=256), blank=False)
+    url = models.CharField(max_length=256, validators=[validate_url])
+
+    @property
+    def domain(self):
+        domain_name = urlparse(self.url).netloc
+        return self.user.domains.filter(name=domain_name).first()
+
+    def save(self, *args, **kwargs):
+        result = super().save(*args, **kwargs)
+
+        if self.domain is None:
+            Domain.objects.create(
+                user=self.user,
+                name=domain_name,
+                verification_method=Domain.VerificationMethod.FILE,
+            )
+
+        return result
