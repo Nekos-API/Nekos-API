@@ -36,7 +36,7 @@ export default {
         )
     },
     project: {
-        link: 'https://github.com/Nekidev/Nekos-API',
+        link: 'https://github.com/Nekos-API/Nekos-API',
     },
     docsRepositoryBase: "https://github.com/Nekidev/Nekos-API",
     useNextSeoProps() {
