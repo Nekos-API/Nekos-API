@@ -9,12 +9,13 @@ https://nekosapi.com/docs/rest-api/authorization/
 https://nekosapi.com/docs/rest-api/images/resource/
 https://nekosapi.com/docs/rest-api/images/relationships/
 https://nekosapi.com/docs/rest-api/artists/resource/
+https://nekosapi.com/docs/rest-api/artists/relationships/
 https://nekosapi.com/docs/websockets/
 https://nekosapi.com/docs/websockets/events/
-https://nekosapi.com/docs/faq/
 https://nekosapi.com/docs/contributing/
 https://nekosapi.com/docs/branding/
 https://nekosapi.com/docs/terms-of-use/
+https://nekosapi.com/docs/api-comparison/
 https://nekosapi.com/about/
 https://nekosapi.com/partners/
 https://nekosapi.com/graphiql/
