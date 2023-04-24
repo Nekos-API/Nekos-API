@@ -19,7 +19,6 @@ urlpatterns = [
         r"artists/<uuid:pk>/<related_field>",
         ArtistViewSet.as_view({"get": "retrieve_related"}),
         name="artist-related",
-        kwargs={"related_field": "images"},
     ),
     path(
         r"artists/<uuid:pk>/relationships/<related_field>",

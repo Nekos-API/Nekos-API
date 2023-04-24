@@ -19,6 +19,7 @@ def event(event_type: Webhook.Event, instance: Model, **kwargs):
         {
             "type": "event",
             "data": {
+                "type": "event",
                 "event": {
                     "name": event_type.value.replace("-", " ").title(),
                     "id": str(event_type.value)

@@ -26,21 +26,29 @@ To subscribe or unsubscribe from an event, send a JSON message following this sc
 You can subscribe to multiple events sending a subscription event multiple times, one for each event to which you are subscribing to.
 
 <Callout type="info">
-    If you have subscibed to two events that send the same notification, you will only receive the notification once.
-    
-    E.g. you subscribed to all image updates and to updates of an image with ID `123`. If that image gets updated, you'll only get one notification message although two events are sending you the same notification.
+    If you have subscibed to two events that send the same notification, you
+    will only receive the notification once. E.g. you subscribed to all image
+    updates and to updates of an image with ID `123`. If that image gets
+    updated, you'll only get one notification message although two events are
+    sending you the same notification.
 </Callout>
 
 ### All Events
 
-| Name              | Code               | Description                                             |
-| ----------------- | ------------------ | ------------------------------------------------------- |
-| On image created  | `on-image-create`  | Sends a notification when an image resource is created  |
-| On image updated  | `on-image-update`  | Sends a notification when an image resource is updated  |
-| On image deleted  | `on-image-delete`  | Sends a notification when an image resource is deleted  |
-| On artist created | `on-artist-create` | Sends a notification when an artist resource is created |
-| On artist updated | `on-artist-update` | Sends a notification when an artist resource is updated |
-| On artist deleted | `on-artist-delete` | Sends a notification when an artist resource is deleted |
+| Name                 | Code                  | Description                                                |
+| -------------------- | --------------------- | ---------------------------------------------------------- |
+| On image created     | `on-image-create`     | Sends a notification when an image resource is created     |
+| On image updated     | `on-image-update`     | Sends a notification when an image resource is updated     |
+| On image deleted     | `on-image-delete`     | Sends a notification when an image resource is deleted     |
+| On artist created    | `on-artist-create`    | Sends a notification when an artist resource is created    |
+| On artist updated    | `on-artist-update`    | Sends a notification when an artist resource is updated    |
+| On artist deleted    | `on-artist-delete`    | Sends a notification when an artist resource is deleted    |
+| On category created  | `on-category-create`  | Sends a notification when an category resource is created  |
+| On category updated  | `on-category-update`  | Sends a notification when an category resource is updated  |
+| On category deleted  | `on-category-delete`  | Sends a notification when an category resource is deleted  |
+| On character created | `on-character-create` | Sends a notification when an character resource is created |
+| On character updated | `on-character-update` | Sends a notification when an character resource is updated |
+| On character deleted | `on-character-delete` | Sends a notification when an character resource is deleted |
 
 ## Notification
 
@@ -48,7 +56,11 @@ All notifications follow the following schema:
 
 ```js filename="Notification shema"
 {
-    "event": String,    // The event code of the event you are getting notified for
+    "type": "event",
+    "event": {
+        "name": String, // The event's name
+        "id": String    // The event ID of the event to which you subscribed to
+    },
     "data": {           // Contains the event resource's data
         "type": String, // The event resource's resource type (the one returned in Rest API's responses)
         "id": String,   // The event resource's ID

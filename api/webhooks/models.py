@@ -20,6 +20,14 @@ class Webhook(models.Model):
         ON_ARTIST_UPDATE = "on-artist-update"
         ON_ARTIST_DELETE = "on-artist-delete"
 
+        ON_CATEGORY_CREATE = "on-category-create"
+        ON_CATEGORY_UPDATE = "on-category-update"
+        ON_CATEGORY_DELETE = "on-category-delete"
+
+        ON_CHARACTER_CREATE = "on-character-create"
+        ON_CHARACTER_UPDATE = "on-character-update"
+        ON_CHARACTER_DELETE = "on-character-delete"
+
     def validate_url(value):
         if urlparse(value).scheme != "https":
             raise ValidationError("The webhook URL's scheme can only be https.")
