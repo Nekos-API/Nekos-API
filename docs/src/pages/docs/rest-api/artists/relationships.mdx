@@ -279,8 +279,8 @@ These endpoints return resources related to the main artist resource, such as it
 
 <APIRequest
     endpoint="/artists/:id/followers"
-    title="Get an image's uploader by the image's ID"
-    description="Get an image's uploader resource by the image's ID."
+    title="Get an artist's followers by the artist's ID"
+    description="Get an artist's follower resources by the artist's ID."
     headers={[
         {
             name: "Accept",
@@ -292,7 +292,7 @@ These endpoints return resources related to the main artist resource, such as it
         {
             name: "id",
             type: "UUID v4",
-            description: "The image's ID.",
+            description: "The artist's ID.",
             location: "path",
             required: true,
         },
@@ -305,65 +305,106 @@ These endpoints return resources related to the main artist resource, such as it
             example: {
                 code: dedent`
                 {
-                    "data": {
-                        "type": "user",
-                        "id": "8fad93cd-4a9c-4e71-b21f-6eb4efebb3db",
-                        "attributes": {
-                            "username": "Nekidev",
-                            "nickname": "Neki",
-                            "biography": "",
-                            "avatarImage": "https://cdn.nekosapi.com/uploads/user/avatar/L7PSX2YOY5CG5K67JJJZRCNRVY.webp",
-                            "timestamps": {
-                                "joined": "2023-01-29T09:04:52Z"
+                    "data":[
+                        {
+                            "type":"user",
+                            "id":"8fad93cd-4a9c-4e71-b21f-6eb4efebb3db",
+                            "attributes":{
+                                "username":"Nekidev",
+                                "nickname":"Neki",
+                                "biography":"",
+                                "avatarImage":"https://cdn.nekosapi.com/uploads/user/avatar/L7PSX2YOY5CG5K67JJJZRCNRVY.webp",
+                                "timestamps":{
+                                    "joined":"2023-01-29T09:04:52Z"
+                                },
+                                "permissions":{
+                                    "isActive":true,
+                                    "isStaff":true,
+                                    "isSuperuser":true
+                                }
                             },
-                            "permissions": {
-                                "isActive": true,
-                                "isStaff": true,
-                                "isSuperuser": true
+                            "relationships":{
+                                "following":{
+                                    "meta":{
+                                        "count":0
+                                    },
+                                    "data":[
+                                        
+                                    ],
+                                    "links":{
+                                        "self":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/following",
+                                        "related":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/following"
+                                    }
+                                },
+                                "followers":{
+                                    "meta":{
+                                        "count":0
+                                    },
+                                    "data":[
+                                        
+                                    ],
+                                    "links":{
+                                        "self":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followers",
+                                        "related":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followers"
+                                    }
+                                },
+                                "followedArtists":{
+                                    "meta":{
+                                        "count":1
+                                    },
+                                    "data":[
+                                        {
+                                            "type":"artist",
+                                            "id":"500c5ecf-8d83-4333-8f0f-207941aaa552"
+                                        }
+                                    ],
+                                    "links":{
+                                        "self":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-artists",
+                                        "related":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-artists"
+                                    }
+                                },
+                                "followedCharacters":{
+                                    "meta":{
+                                        "count":0
+                                    },
+                                    "data":[
+                                        
+                                    ],
+                                    "links":{
+                                        "self":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-characters",
+                                        "related":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-characters"
+                                    }
+                                },
+                                "followedCategories":{
+                                    "meta":{
+                                        "count":0
+                                    },
+                                    "data":[
+                                        
+                                    ],
+                                    "links":{
+                                        "self":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-categories",
+                                        "related":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-categories"
+                                    }
+                                },
+                                "followedLists":{
+                                    "meta":{
+                                        "count":0
+                                    },
+                                    "data":[
+                                        
+                                    ],
+                                    "links":{
+                                        "self":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-lists",
+                                        "related":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-lists"
+                                    }
+                                }
+                            },
+                            "links":{
+                                "self":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db"
                             }
-                        },
-                        "relationships": {
-                            "following": {
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/following",
-                                    "related": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/following"
-                                }
-                            },
-                            "followers": {
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followers",
-                                    "related": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followers"
-                                }
-                            },
-                            "followedArtists": {
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-artists",
-                                    "related": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-artists"
-                                }
-                            },
-                            "followedCharacters": {
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-characters",
-                                    "related": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-characters"
-                                }
-                            },
-                            "followedCategories": {
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-categories",
-                                    "related": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-categories"
-                                }
-                            },
-                            "followedLists": {
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-lists",
-                                    "related": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-lists"
-                                }
-                            }
-                        },
-                        "links": {
-                            "self": "https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db"
                         }
-                    }
+                    ]
                 }
                 `,
                 language: "JSON",
@@ -374,9 +415,9 @@ These endpoints return resources related to the main artist resource, such as it
 />
 
 <APIRequest
-    endpoint="/images/:id/relationships/uploader"
-    title="Get an image's uploader relationship by the image's ID"
-    description="Get an image's uploader relationship by the image's ID."
+    endpoint="/artists/:id/relationships/followers"
+    title="Get an artist's follower relationships by the artist's ID"
+    description="Get an artist's follower relationships by the artist's ID."
     headers={[
         {
             name: "Accept",
@@ -388,7 +429,7 @@ These endpoints return resources related to the main artist resource, such as it
         {
             name: "id",
             type: "UUID v4",
-            description: "The image's ID.",
+            description: "The artist's ID.",
             location: "path",
             required: true,
         },
@@ -405,410 +446,6 @@ These endpoints return resources related to the main artist resource, such as it
                         "type": "user",
                         "id": "4acc3444-528f-4f9a-b275-927e32c78441"
                     }
-                }
-                `,
-                language: "JSON",
-                headers: ["Content-Type: application/vnd.api+json"],
-            },
-        },
-    ]}
-/>
-
-## Get an image's categories
-
-<APIRequest
-    endpoint="/images/:id/categories"
-    title="Get all image's categories by the image's ID"
-    description="Get an image's category resources by the image's ID."
-    headers={[
-        {
-            name: "Accept",
-            description: "application/vnd.api+json",
-            required: true,
-        },
-    ]}
-    parameters={[
-        {
-            name: "id",
-            type: "UUID v4",
-            description: "The image's ID.",
-            location: "path",
-            required: true,
-        },
-    ]}
-    responses={[
-        {
-            code: 200,
-            name: "Success",
-            description: "The request was completed successfully.",
-            example: {
-                code: dedent`
-                {
-                    "data": [
-                        {
-                            "type": "category",
-                            "id": "60304e04-6b0b-4930-a3dc-ba8d9e36d160",
-                            "attributes": {
-                                "name": "Illustration",
-                                "description": "The image is an illustration.",
-                                "sub": "format",
-                                "isNsfw": false,
-                                "timestamps": {
-                                    "created": "2023-01-26T04:35:57.105000Z",
-                                    "updated": "2023-01-26T04:35:57.105000Z"
-                                }
-                            },
-                            "relationships": {
-                                "images": {
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160/relationships/images",
-                                        "related": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160/images"
-                                    }
-                                },
-                                "followers": {
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160/relationships/followers",
-                                        "related": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160/followers"
-                                    }
-                                }
-                            },
-                            "links": {
-                                "self": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160"
-                            }
-                        }
-                    ]
-                }
-                `,
-                language: "JSON",
-                headers: ["Content-Type: application/vnd.api+json"],
-            },
-        },
-    ]}
-/>
-
-<APIRequest
-    endpoint="/images/:id/relationships/categories"
-    title="Get an image's category relationships by the image's ID"
-    description="Get an image's category relationships by the image's ID."
-    headers={[
-        {
-            name: "Accept",
-            description: "application/vnd.api+json",
-            required: true,
-        },
-    ]}
-    parameters={[
-        {
-            name: "id",
-            type: "UUID v4",
-            description: "The image's ID.",
-            location: "path",
-            required: true,
-        },
-    ]}
-    responses={[
-        {
-            code: 200,
-            name: "Success",
-            description: "The request was completed successfully.",
-            example: {
-                code: dedent`
-                {
-                    "data": [
-                        {
-                            "type": "category",
-                            "id": "4acc3444-528f-4f9a-b275-927e32c78441"
-                        }
-                    ]
-                }
-                `,
-                language: "JSON",
-                headers: ["Content-Type: application/vnd.api+json"],
-            },
-        },
-    ]}
-/>
-
-## Get an image's characters
-
-<APIRequest
-    endpoint="/images/:id/characters"
-    title="Get all image's characters by the image's ID"
-    description="Get an image's character resources by the image's ID."
-    headers={[
-        {
-            name: "Accept",
-            description: "application/vnd.api+json",
-            required: true,
-        },
-    ]}
-    parameters={[
-        {
-            name: "id",
-            type: "UUID v4",
-            description: "The image's ID.",
-            location: "path",
-            required: true,
-        },
-    ]}
-    responses={[
-        {
-            code: 200,
-            name: "Success",
-            description: "The request was completed successfully.",
-            example: {
-                code: dedent`
-                {
-                    "data": [
-                        {
-                            "type": "character",
-                            "id": "97f37562-8a5b-48d5-a923-0ee3b15e56fd",
-                            "attributes": {
-                                "name": {
-                                    "first": "Kurumi",
-                                    "last": "Toksaki",
-                                    "aliases": [
-                                        "Nightmare",
-                                        "Kurumin"
-                                    ]
-                                },
-                                "description": "Kurumi Tokisaki is the main antagonist in the Date a Live series. She is the third Spirit to be encountered in the series and is the most dangerous and lethal Spirit. She is heavily obsessed with Shidou and has the ability to manipulate time. Her codename is Nightmare.",
-                                "gender": "Female",
-                                "species": "Spirit",
-                                "ages": [
-                                    17,
-                                    18
-                                ],
-                                "birthDate": "June 10th",
-                                "nationality": "Japanese",
-                                "occupations": [
-                                    "Student"
-                                ],
-                                "timestamps": {
-                                    "created": "2023-02-18T19:30:29.424109Z",
-                                    "updated": "2023-02-18T19:30:29.424124Z"
-                                }
-                            },
-                            "relationships": {
-                                "images": {
-                                    "meta": {
-                                        "count": 1
-                                    },
-                                    "data": [
-                                        {
-                                        "type": "image",
-                                        "id": "ff7e0f68-dd76-4689-82dd-1c1427399dc9"
-                                        }
-                                    ],
-                                    "links": {
-                                        "self": "http://localhost:8000/v2/characters/97f37562-8a5b-48d5-a923-0ee3b15e56fd/relationships/images",
-                                        "related": "http://localhost:8000/v2/characters/97f37562-8a5b-48d5-a923-0ee3b15e56fd/images"
-                                    }
-                                },
-                                "followers": {
-                                    "meta": {
-                                        "count": 0
-                                    },
-                                    "data": [
-                                        
-                                    ],
-                                    "links": {
-                                        "self": "http://localhost:8000/v2/characters/97f37562-8a5b-48d5-a923-0ee3b15e56fd/relationships/followers",
-                                        "related": "http://localhost:8000/v2/characters/97f37562-8a5b-48d5-a923-0ee3b15e56fd/followers"
-                                    }
-                                }
-                            },
-                            "links": {
-                                "self": "http://localhost:8000/v2/characters/97f37562-8a5b-48d5-a923-0ee3b15e56fd"
-                            }
-                        }
-                    ]
-                }
-                `,
-                language: "JSON",
-                headers: ["Content-Type: application/vnd.api+json"],
-            },
-        },
-    ]}
-/>
-
-<APIRequest
-    endpoint="/images/:id/relationships/characters"
-    title="Get an image's character relationships by the image's ID"
-    description="Get an image's character relationships by the image's ID."
-    headers={[
-        {
-            name: "Accept",
-            description: "application/vnd.api+json",
-            required: true,
-        },
-    ]}
-    parameters={[
-        {
-            name: "id",
-            type: "UUID v4",
-            description: "The image's ID.",
-            location: "path",
-            required: true,
-        },
-    ]}
-    responses={[
-        {
-            code: 200,
-            name: "Success",
-            description: "The request was completed successfully.",
-            example: {
-                code: dedent`
-                {
-                    "data": [
-                        {
-                            "type": "character",
-                            "id": "4acc3444-528f-4f9a-b275-927e32c78441"
-                        }
-                    ]
-                }
-                `,
-                language: "JSON",
-                headers: ["Content-Type: application/vnd.api+json"],
-            },
-        },
-    ]}
-/>
-
-## Get all users who liked an image
-
-<APIRequest
-    endpoint="/images/:id/liked-by"
-    title="Get all users who liked an image by the image's ID"
-    description="Get all user resources who liked an image by the image's ID"
-    headers={[
-        {
-            name: "Accept",
-            description: "application/vnd.api+json",
-            required: true,
-        },
-    ]}
-    parameters={[
-        {
-            name: "id",
-            type: "UUID v4",
-            description: "The image's ID.",
-            location: "path",
-            required: true,
-        },
-    ]}
-    responses={[
-        {
-            code: 200,
-            name: "Success",
-            description: "The request was completed successfully.",
-            example: {
-                code: dedent`
-                {
-                    "data": [
-                        {
-                            "type": "user",
-                            "id": "5480e95b-d492-4b44-bfa2-3b03bd0d6263",
-                            "attributes": {
-                                "username": "SomeUserGamer",
-                                "nickname": null,
-                                "biography": null,
-                                "avatarImage": "https://cdn.nekosapi.com/uploads/user/avatar/OW2JR2AM7BHPTGCYGNOUPGTEO4.webp",
-                                "timestamps": {
-                                    "joined": "2023-01-30T08:01:24Z"
-                                },
-                                "permissions": {
-                                    "isActive": true,
-                                    "isStaff": false,
-                                    "isSuperuser": false
-                                }
-                            },
-                            "relationships": {
-                                "following": {
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/users/5480e95b-d492-4b44-bfa2-3b03bd0d6263/relationships/following",
-                                        "related": "https://api.nekosapi.com/v2/users/5480e95b-d492-4b44-bfa2-3b03bd0d6263/following"
-                                    }
-                                },
-                                "followers": {
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/users/5480e95b-d492-4b44-bfa2-3b03bd0d6263/relationships/followers",
-                                        "related": "https://api.nekosapi.com/v2/users/5480e95b-d492-4b44-bfa2-3b03bd0d6263/followers"
-                                    }
-                                },
-                                "followedArtists": {
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/users/5480e95b-d492-4b44-bfa2-3b03bd0d6263/relationships/followed-artists",
-                                        "related": "https://api.nekosapi.com/v2/users/5480e95b-d492-4b44-bfa2-3b03bd0d6263/followed-artists"
-                                    }
-                                },
-                                "followedCharacters": {
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/users/5480e95b-d492-4b44-bfa2-3b03bd0d6263/relationships/followed-characters",
-                                    "related": "https://api.nekosapi.com/v2/users/5480e95b-d492-4b44-bfa2-3b03bd0d6263/followed-characters"
-                                }
-                                },
-                                "followedCategories": {
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/users/5480e95b-d492-4b44-bfa2-3b03bd0d6263/relationships/followed-categories",
-                                        "related": "https://api.nekosapi.com/v2/users/5480e95b-d492-4b44-bfa2-3b03bd0d6263/followed-categories"
-                                    }
-                                },
-                                "followedLists": {
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/users/5480e95b-d492-4b44-bfa2-3b03bd0d6263/relationships/followed-lists",
-                                        "related": "https://api.nekosapi.com/v2/users/5480e95b-d492-4b44-bfa2-3b03bd0d6263/followed-lists"
-                                    }
-                                }
-                            },
-                            "links": {
-                                "self": "https://api.nekosapi.com/v2/users/5480e95b-d492-4b44-bfa2-3b03bd0d6263"
-                            }
-                        }
-                    ]
-                }
-                `,
-                language: "JSON",
-                headers: ["Content-Type: application/vnd.api+json"],
-            },
-        },
-    ]}
-/>
-
-<APIRequest
-    endpoint="/images/:id/relationships/liked-by"
-    title="Get all relationships of the users who liked an image by the image's ID"
-    description="Get all relationships of the users who liked an image by the image's ID."
-    headers={[
-        {
-            name: "Accept",
-            description: "application/vnd.api+json",
-            required: true,
-        },
-    ]}
-    parameters={[
-        {
-            name: "id",
-            type: "UUID v4",
-            description: "The image's ID.",
-            location: "path",
-            required: true,
-        },
-    ]}
-    responses={[
-        {
-            code: 200,
-            name: "Success",
-            description: "The request was completed successfully.",
-            example: {
-                code: dedent`
-                {
-                    "data": [
-                        {
-                            "type": "user",
-                            "id": "4acc3444-528f-4f9a-b275-927e32c78441"
-                        }
-                    ]
                 }
                 `,
                 language: "JSON",
