@@ -1,11 +1,10 @@
 import uuid
+import secrets
 
 from urllib.parse import urlparse
 
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
-
-from users.models import Domain
 
 # Create your models here.
 
@@ -32,31 +31,22 @@ class Webhook(models.Model):
         if urlparse(value).scheme != "https":
             raise ValidationError("The webhook URL's scheme can only be https.")
 
+    def generate_token():
+        """
+        Returns a 256-character-long URL-safe token.
+        """
+        return secrets.token_urlsafe(192)
+
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
     name = models.CharField(max_length=256)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
 
     events = ArrayField(
-        models.CharField(max_length=16, choices=Event.choices),
+        models.CharField(max_length=19, choices=Event.choices),
         blank=False,
     )
 
     url = models.CharField(max_length=256, validators=[validate_url])
 
-    @property
-    def domain(self):
-        domain_name = urlparse(self.url).netloc
-        return self.user.domains.filter(name=domain_name).first()
-
-    def save(self, *args, **kwargs):
-        result = super().save(*args, **kwargs)
-
-        if self.domain is None:
-            Domain.objects.create(
-                user=self.user,
-                name=domain_name,
-                verification_method=Domain.VerificationMethod.FILE,
-            )
-
-        return result
+    verification_key = models.CharField(max_length=256, default=generate_token)

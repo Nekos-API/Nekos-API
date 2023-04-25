@@ -5,6 +5,8 @@ from django.db.models import Model
 
 from channels.layers import get_channel_layer
 
+# grequests must be kept above requests
+import grequests
 import requests
 
 from webhooks.models import Webhook
@@ -14,6 +16,7 @@ channel_layer = get_channel_layer()
 
 
 def event(event_type: Webhook.Event, instance: Model, **kwargs):
+    # Send a message to all clients connected to the websocket API.
     async_to_sync(channel_layer.group_send)(
         "events",
         {
@@ -32,28 +35,23 @@ def event(event_type: Webhook.Event, instance: Model, **kwargs):
         },
     )
 
-    for webhook in Webhook.objects.select_related("user").filter(
-        events__contains=[event_type]
-    ):
-        user = webhook.user
-        domain = webhook.domain
+    webhooks = Webhook.objects.get(events__contains=[event_type])
 
+    rs = []
+
+    for webhook in webhooks:
+        rs.append(grequests.get(webhook.url, timeout=5))
+
+    # Make all requests asynchronously
+    responses = grequests.map(rs, size=20)
+
+    i = 0
+    for response in responses:
         try:
-            if domain.verified:
-                requests.post(
-                    webhook.url,
-                    json={
-                        "webhook": {"name": webhook.name, "id": str(webhook.id)},
-                        "data": {
-                            "event": event_type.value,
-                            "resource": {
-                                "type": instance.JSONAPIMeta.resource_name,
-                                "id": str(instance.pk),
-                            },
-                        },
-                        "secretKey": user.secret_key,
-                    },
-                )
+            if r.text == f"nekosapi-verify={webhook.verification_key}":
+                pass
 
-        except AttributeError:
+        except:
             pass
+
+        i += 1

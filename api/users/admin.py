@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from .models import User, DiscordUser, GoogleUser, GitHubUser, Domain
+from .models import User, DiscordUser, GoogleUser, GitHubUser
 
 
 class NekosUserAdmin(UserAdmin):
@@ -31,16 +31,7 @@ class GitHubUserAdmin(admin.ModelAdmin):
     search_fields = ("user__username__icontains", "email__icontains")
 
 
-class DomainAdmin(admin.ModelAdmin):
-    list_display = ("name", "user", "verified", "verification_method")
-    raw_id_fields = ("user",)
-    search_fields = ("name", "user__username")
-    list_filter = ("verified", "verification_method")
-    readonly_fields = ("verification_token",)
-
-
 admin.site.register(User, NekosUserAdmin)
 admin.site.register(DiscordUser, DiscordUserAdmin)
 admin.site.register(GoogleUser, GoogleUserAdmin)
 admin.site.register(GitHubUser, GitHubUserAdmin)
-admin.site.register(Domain, DomainAdmin)

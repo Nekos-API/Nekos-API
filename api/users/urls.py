@@ -6,8 +6,6 @@ from .views import (
     UserView,
     UserRelationshipsView,
     UserAvatarUploadView,
-    DomainView,
-    DomainRelationshipsView,
     AuthorizationWithCaptchaView,
     UserAdminViewSet,
 )
@@ -49,22 +47,6 @@ urlpatterns = [
         "users/<uuid:pk>/relationships/<related_field>",
         UserRelationshipsView.as_view(),
         name="user-relationships",
-    ),
-    path("domains", DomainView.as_view({"get": "list"}), name="domain"),
-    path(
-        "domains/<uuid:pk>",
-        DomainView.as_view({"get": "retrieve"}),
-        name="domain-detail",
-    ),
-    path(
-        "domains/<uuid:pk>/<related_field>",
-        DomainView.as_view({"get": "retrieve_related"}),
-        name="domain-related",
-    ),
-    path(
-        "domains/<uuid:pk>/relationships/<related_field>",
-        DomainRelationshipsView.as_view(),
-        name="domain-relationship",
     ),
     path("auth/signup", UserView.as_view({"post": "signup"})),
     path("auth/authorize", AuthorizationWithCaptchaView.as_view(), name="authorize"),

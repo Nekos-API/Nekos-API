@@ -10,13 +10,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name="domain",
-            name="name",
-            field=models.CharField(
-                max_length=253,
-                unique=True,
-                validators=[users.models.Domain.validate_domain],
-            ),
-        ),
+
     ]

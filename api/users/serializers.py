@@ -6,7 +6,7 @@ from categories.models import Category
 from artists.models import Artist
 from lists.models import List
 
-from .models import User, DiscordUser, Domain
+from .models import User, DiscordUser
 
 
 class NameSerializer(serializers.Serializer):
@@ -177,30 +177,3 @@ class DiscordUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = DiscordUser
         fields = ["email"]
-
-
-class DomainVerificationSerializer(serializers.Serializer):
-    isVerified = serializers.BooleanField(source="verified", read_only=True)
-    method = serializers.ChoiceField(
-        choices=Domain.VerificationMethod.choices,
-        source="verification_method",
-        required=False,
-    )
-
-
-class DomainSerializer(serializers.ModelSerializer):
-    included_serializers = {"user": "users.serializers.UserPublicSerializer"}
-
-    class Meta:
-        model = Domain
-        fields = ["user", "name", "verification"]
-
-    def validate(self, attrs):
-        """
-        Set the uploader to the user itself.
-        """
-
-        attrs["user"] = self.context["request"].user
-        return attrs
-
-    verification = DomainVerificationSerializer(source="*")

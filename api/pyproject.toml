@@ -14,7 +14,6 @@ strawberry-graphql = "^0.155.2"
 django-cors-headers = "^3.13.0"
 psycopg2-binary = "^2.9.5"
 python-dotenv = "^0.21.1"
-djangorestframework-jsonapi = "^6.0.0"
 django-filter = "^22.1"
 django-admin-interface = "^0.24.2"
 django-oauth-toolkit = "^2.2.0"
@@ -36,6 +35,9 @@ schema = "^0.7.5"
 validators = "^0.20.0"
 tldextract = "^3.4.0"
 dnspython = "^2.3.0"
+requests-threads = "^0.1.1"
+djangorestframework-jsonapi = {git = "https://github.com/django-json-api/django-rest-framework-json-api.git"}
+grequests = "^0.6.0"
 
 
 [build-system]

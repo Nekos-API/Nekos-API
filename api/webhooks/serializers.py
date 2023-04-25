@@ -11,7 +11,7 @@ class WebhookSerializer(serializers.HyperlinkedModelSerializer):
         fields = [
             "name",
             "events",
-            "urls",
+            "url",
             "user",
         ]
 

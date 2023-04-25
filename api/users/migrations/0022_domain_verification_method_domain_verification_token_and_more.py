@@ -10,29 +10,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name="domain",
-            name="verification_method",
-            field=models.CharField(
-                choices=[("dns", "Dns"), ("file", "File")], default="dns", max_length=5
-            ),
-        ),
-        migrations.AddField(
-            model_name="domain",
-            name="verification_token",
-            field=models.CharField(
-                default=users.models.Domain.generate_token,
-                editable=False,
-                max_length=43,
-            ),
-        ),
-        migrations.AlterField(
-            model_name="domain",
-            name="name",
-            field=models.CharField(
-                max_length=254,
-                unique=True,
-                validators=[users.models.Domain.validate_domain],
-            ),
-        ),
+
     ]

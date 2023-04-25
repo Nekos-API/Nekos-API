@@ -41,8 +41,8 @@ from utils.decorators import permission_classes
 
 from applications.models import Application
 
-from .models import User, DiscordUser, Domain
-from .serializers import UserPublicSerializer, UserPrivateSerializer, DomainSerializer
+from .models import User, DiscordUser
+from .serializers import UserPublicSerializer, UserPrivateSerializer
 
 dotenv.load_dotenv()
 
@@ -366,37 +366,6 @@ class UserRelationshipsView(views.RelationshipView):
                 )
 
         return super().get(request, pk=pk, related_field=related_field, *args, **kwargs)
-
-
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_related")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="update")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="create")
-class DomainView(views.ModelViewSet):
-    """
-    CRUD for domains.
-    """
-
-    permission_classes = [permissions.IsAuthenticated]
-    serializer_class = DomainSerializer
-    select_for_includes = {"user": ["user"]}
-
-    def get_queryset(self):
-        if self.request.user.is_superuser:
-            return Domain.objects.filter()
-        return Domain.objects.filter(user=self.request.user)
-
-
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="get")
-class DomainRelationshipsView(views.RelationshipView):
-    permission_classes = [permissions.IsAuthenticated]
-    serializer_class = DomainSerializer
-
-    def get_queryset(self):
-        if self.request.user.is_superuser:
-            return Domain.objects.all()
-        return Domain.objects.filter(user=self.request.user)
 
 
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="post")
