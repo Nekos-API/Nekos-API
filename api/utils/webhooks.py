@@ -25,11 +25,11 @@ def event(event_type: Webhook.Event, instance: Model, **kwargs):
                 "type": "event",
                 "event": {
                     "name": event_type.value.replace("-", " ").title(),
-                    "id": str(event_type.value)
+                    "id": str(event_type.value),
                 },
                 "data": {
                     "id": str(instance.pk),
-                    "type": instance.JSONAPIMeta.resource_name
+                    "type": instance.JSONAPIMeta.resource_name,
                 },
             },
         },
@@ -37,21 +37,43 @@ def event(event_type: Webhook.Event, instance: Model, **kwargs):
 
     webhooks = Webhook.objects.get(events__contains=[event_type])
 
-    rs = []
+    get_rs = []
 
     for webhook in webhooks:
-        rs.append(grequests.get(webhook.url, timeout=5))
+        get_rs.append(grequests.get(webhook.url, timeout=5))
 
     # Make all requests asynchronously
-    responses = grequests.map(rs, size=20)
+    responses = grequests.map(get_rs, size=20)
+
+    post_rs = []
 
     i = 0
     for response in responses:
+        webhook = webhooks[i]
         try:
             if r.text == f"nekosapi-verify={webhook.verification_key}":
-                pass
+                post_rs.append(
+                    grequests.post(
+                        webhooks[i].url,
+                        timeout=5,
+                        json={
+                            "webhook": {"name": webhook.name, "id": webhook.id, "url": webhook.url},
+                            "data": {
+                                "event": str(event_type.value),
+                                "resource": {
+                                    "type": instance.JSONAPIMeta.resource_name,
+                                    "id": str(instance.pk)
+                                },
+                            },
+                            "secretKey": webhook.user.secret_key,
+                        },
+                    )
+                )
 
         except:
             pass
 
         i += 1
+
+    # Make all requests asynchronously
+    grequests.map(post_rs, size=20)
