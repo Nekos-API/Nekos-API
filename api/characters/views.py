@@ -107,8 +107,8 @@ class CharacterViewSet(views.ReadOnlyModelViewSet):
             "in",
             "iregex",
         ),
-        "created_at": ("second", "minute", "hour", "day", "month", "year"),
-        "updated_at": ("second", "minute", "hour", "day", "month", "year"),
+        "created_at": ("exact", "second", "minute", "hour", "day", "month", "year"),
+        "updated_at": ("exact", "second", "minute", "hour", "day", "month", "year"),
     }
 
     @permission_classes([permissions.IsAuthenticated])

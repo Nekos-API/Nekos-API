@@ -5,19 +5,19 @@ import { APIRequest } from "../../../../components/apirequest";
 
 # Relationships
 
-These endpoints return resources related to the main artist resource, such as it's images or its followers.
+These endpoints return resources related to the main character resource, such as it's images or its followers.
 
 <Callout type="warning">
     None of these endpoints supports pagination. They all return all resources
     at once, which whill probaby cause the request to be <b>extremely slow</b>.
 </Callout>
 
-## Get an artist's images
+## Get a category's images
 
 <APIRequest
-    endpoint="/artists/:id/images"
-    title="Get an artist's images by the artist's ID"
-    description="Get an artist's images resources by the artist's ID."
+    endpoint="/categories/:id/images"
+    title="Get a category's images by the category's ID"
+    description="Get a category's images resources by the category's ID."
     headers={[
         {
             name: "Accept",
@@ -29,7 +29,7 @@ These endpoints return resources related to the main artist resource, such as it
         {
             name: "id",
             type: "UUID v4",
-            description: "The artist's ID.",
+            description: "The category's ID.",
             location: "path",
             required: true,
         },
@@ -98,8 +98,8 @@ These endpoints return resources related to the main artist resource, such as it
                                 },
                                 "artist": {
                                     "links": {
-                                        "self": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd/relationships/artist",
-                                        "related": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd/artist"
+                                        "self": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd/relationships/character",
+                                        "related": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd/character"
                                     },
                                     "data": {
                                         "type": "artist",
@@ -189,8 +189,8 @@ These endpoints return resources related to the main artist resource, such as it
                                         }
                                     ],
                                     "links": {
-                                        "self": "https://api.nekosapi.com/v2/artists/7603139f-6855-40a4-bb6c-da85684b09db/relationships/images",
-                                        "related": "https://api.nekosapi.com/v2/artists/7603139f-6855-40a4-bb6c-da85684b09db/images"
+                                        "self": "https://api.nekosapi.com/v2/characters/7603139f-6855-40a4-bb6c-da85684b09db/relationships/images",
+                                        "related": "https://api.nekosapi.com/v2/characters/7603139f-6855-40a4-bb6c-da85684b09db/images"
                                     }
                                 },
                                 "followers": {
@@ -201,13 +201,13 @@ These endpoints return resources related to the main artist resource, such as it
 
                                     ],
                                     "links": {
-                                        "self": "https://api.nekosapi.com/v2/artists/7603139f-6855-40a4-bb6c-da85684b09db/relationships/followers",
-                                        "related": "https://api.nekosapi.com/v2/artists/7603139f-6855-40a4-bb6c-da85684b09db/followers"
+                                        "self": "https://api.nekosapi.com/v2/characters/7603139f-6855-40a4-bb6c-da85684b09db/relationships/followers",
+                                        "related": "https://api.nekosapi.com/v2/characters/7603139f-6855-40a4-bb6c-da85684b09db/followers"
                                     }
                                 }
                             },
                             "links": {
-                                "self": "https://api.nekosapi.com/v2/artists/7603139f-6855-40a4-bb6c-da85684b09db"
+                                "self": "https://api.nekosapi.com/v2/characters/7603139f-6855-40a4-bb6c-da85684b09db"
                             }
                         }
                     ]
@@ -222,9 +222,9 @@ These endpoints return resources related to the main artist resource, such as it
 />
 
 <APIRequest
-    endpoint="/artists/:id/relationships/images"
-    title="Get an artist's image relationships by the artist's ID"
-    description="Get an artist's images relationship by the artist's ID."
+    endpoint="/categories/:id/relationships/images"
+    title="Get a category's image relationships by the category's ID"
+    description="Get a category's images relationship by the category's ID."
     headers={[
         {
             name: "Accept",
@@ -236,7 +236,7 @@ These endpoints return resources related to the main artist resource, such as it
         {
             name: "id",
             type: "UUID v4",
-            description: "The artist's ID.",
+            description: "The category's ID.",
             location: "path",
             required: true,
         },
@@ -263,7 +263,7 @@ These endpoints return resources related to the main artist resource, such as it
             code: 200,
             name: "Success, no resource",
             description:
-                "The request was completed successfully but the artist has no related images",
+                "The request was completed successfully but the character has no related images",
             example: {
                 code: dedent`
                 {
@@ -277,12 +277,12 @@ These endpoints return resources related to the main artist resource, such as it
     ]}
 />
 
-## Get an artist's followers
+## Get a category's followers
 
 <APIRequest
-    endpoint="/artists/:id/followers"
-    title="Get an artist's followers by the artist's ID"
-    description="Get an artist's follower resources by the artist's ID."
+    endpoint="/categories/:id/followers"
+    title="Get a category's followers by the category's ID"
+    description="Get a category's follower resources by the category's ID."
     headers={[
         {
             name: "Accept",
@@ -294,7 +294,7 @@ These endpoints return resources related to the main artist resource, such as it
         {
             name: "id",
             type: "UUID v4",
-            description: "The artist's ID.",
+            description: "The category's ID.",
             location: "path",
             required: true,
         },
@@ -417,9 +417,9 @@ These endpoints return resources related to the main artist resource, such as it
 />
 
 <APIRequest
-    endpoint="/artists/:id/relationships/followers"
-    title="Get an artist's follower relationships by the artist's ID"
-    description="Get an artist's follower relationships by the artist's ID."
+    endpoint="/characters/:id/relationships/followers"
+    title="Get a category's follower relationships by the category's ID"
+    description="Get a category's follower relationships by the category's ID."
     headers={[
         {
             name: "Accept",
@@ -431,7 +431,7 @@ These endpoints return resources related to the main artist resource, such as it
         {
             name: "id",
             type: "UUID v4",
-            description: "The artist's ID.",
+            description: "The category's ID.",
             location: "path",
             required: true,
         },

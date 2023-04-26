@@ -10,6 +10,10 @@ https://nekosapi.com/docs/rest-api/images/resource/
 https://nekosapi.com/docs/rest-api/images/relationships/
 https://nekosapi.com/docs/rest-api/artists/resource/
 https://nekosapi.com/docs/rest-api/artists/relationships/
+https://nekosapi.com/docs/rest-api/characters/resource/
+https://nekosapi.com/docs/rest-api/characters/relationships/
+https://nekosapi.com/docs/rest-api/catgories/resource/
+https://nekosapi.com/docs/rest-api/catgories/relationships/
 https://nekosapi.com/docs/websockets/
 https://nekosapi.com/docs/websockets/events/
 https://nekosapi.com/docs/contributing/
