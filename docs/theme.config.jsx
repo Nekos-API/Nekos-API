@@ -38,7 +38,7 @@ export default {
     project: {
         link: 'https://github.com/Nekos-API/Nekos-API',
     },
-    docsRepositoryBase: "https://github.com/Nekidev/Nekos-API",
+    docsRepositoryBase: "https://github.com/Nekidev/Nekos-API/tree/main",
     useNextSeoProps() {
         const { route } = useRouter()
         if (route !== '/') {
