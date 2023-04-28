@@ -337,7 +337,7 @@ LOGGING = {
         'errorFile': {
             'level':'ERROR',
             'class':'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(BASE_DIR, '/logs/nekos-error.log'),
+            'filename': './logs/nekos-error.log',
             'maxBytes': 1024*1024*15, # 15MB
             'backupCount': 10,
         },
