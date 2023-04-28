@@ -348,13 +348,9 @@ LOGGING = {
     },
     "loggers": {
         "django": {
-            "handlers": ["console"],
-            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "handlers": ["console", "errorFile"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "DEBUG"),
             "propagate": False,
-        },
-        "errors": {
-            "handlers": ["errorFile"],
-            "level": "ERROR"
         }
     },
 }
