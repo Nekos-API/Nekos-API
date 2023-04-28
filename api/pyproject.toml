@@ -38,6 +38,7 @@ dnspython = "^2.3.0"
 requests-threads = "^0.1.1"
 djangorestframework-jsonapi = {git = "https://github.com/django-json-api/django-rest-framework-json-api.git"}
 grequests = "^0.6.0"
+NudeNet = "^2.0.9"
 
 
 [build-system]
