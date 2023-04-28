@@ -3,6 +3,7 @@ from django.utils.decorators import method_decorator
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 from django_ratelimit.decorators import ratelimit
 
@@ -134,12 +135,13 @@ class VersionsView(APIView):
         )
 
 
+@api_view()
 def error_404(request):
     return Response(
         {"errors": [{"detail": "Not found.", "status": "404", "code": "not_found"}]}
     )
 
-
+@api_view()
 def error_500(request):
     return Response(
         {
