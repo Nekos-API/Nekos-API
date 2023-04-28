@@ -15,6 +15,7 @@ export function PartnerCard({
     link,
     linkColor,
     textColor,
+    linkText
 }) {
     return (
         <div className="w-full rounded-lg overflow-hidden bg-white dark:bg-neutral-900 relative border dark:border-0 border-neutral-200 drop-shadow-md">
@@ -52,7 +53,7 @@ export function PartnerCard({
                             color: textColor,
                         }}
                     >
-                        Visit their website
+                        {linkText}
                     </button>
                 </Link>
             </div>
@@ -69,14 +70,16 @@ export function PartnerCard({
         link="https://otakugifs.xyz/"
         linkColor="#0c59e0"
         textColor="white"
+        linkText="Visit their website"
     />
     <PartnerCard
         icon="/imgs/partners/miyabi/logo.png"
         name="Miyabi"
         description="A Discord bot based on anime/manga/games to collect characters and more."
-        link="https://miyabi.oreki.tech"
+        link="https://miyabi.rocks"
         linkColor="#ef4444"
         textColor="white"
+        linkText="Visit their website"
     />
     <PartnerCard
         icon="/imgs/partners/aurora/logo.jpg"
@@ -85,6 +88,7 @@ export function PartnerCard({
         link="https://discord.gg/Wbhvnn546h"
         linkColor="#78B1E0"
         textColor="white"
+        linkText="Visit their Discord server"
     />
     <PartnerCard
         icon="/imgs/partners/dollhouse/logo.png"
@@ -93,6 +97,7 @@ export function PartnerCard({
         link="https://discord.gg/msNtTYV"
         linkColor="#01EFE3"
         textColor="black"
+        linkText="Visit their Discord server"
     />
     <div className="h-full w-full flex flex-col items-center justify-center border-[4px] border-dashed border-neutral-200 dark:border-neutral-800 rounded-xl aspect-square">
         <PlusIcon className="h-8 w-8 stroke-neutral-600 dark:stroke-neutral-400" />
