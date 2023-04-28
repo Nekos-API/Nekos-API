@@ -12,7 +12,7 @@ from django_ratelimit.decorators import ratelimit
 @method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="get")
 class EndpointsView(APIView):
     """
-    Endpoint: /
+    Endpoint: /v2
     """
 
     def get(self, request):
@@ -97,5 +97,38 @@ class EndpointsView(APIView):
                     ],
                     "apiVersion": settings.API_VERSION,
                 },
+            }
+        )
+
+
+class VersionsView(APIView):
+    """
+    Endpoint: /
+    """
+
+    def get(self, request):
+        """
+        Handle GET request.
+        """
+
+        return Response(
+            {
+                "versions": {
+                    "v0": {
+                        "baseEndpoint": "/v0",
+                        "status": "deprecated",
+                        "documentation": "https://v0.nekosapi.com/api/v1/redoc"
+                    },
+                    "v1": {
+                        "baseEndpoint": "/v1",
+                        "status": "stable",
+                        "documentation": "https://v1.nekosapi.com/docs/rest-api/reference"
+                    },
+                    "v2": {
+                        "baseEndpoint": "/v2",
+                        "status": "preview",
+                        "documentation": "https://nekosapi.com/docs/rest-api/introduction"
+                    }
+                }
             }
         )

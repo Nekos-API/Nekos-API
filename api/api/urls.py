@@ -2,9 +2,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from api.views import EndpointsView
+from api.views import EndpointsView, VersionsView
 
 urlpatterns = [
+    path(
+        "",
+        VersionsView.as_view(),
+        name="versions",
+    ),
     path(
         "v2/",
         EndpointsView.as_view(),

@@ -15,6 +15,8 @@ from datetime import timedelta
 
 import os
 
+import grequests
+
 import dotenv
 
 dotenv.load_dotenv()
