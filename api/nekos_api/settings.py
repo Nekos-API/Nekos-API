@@ -350,7 +350,7 @@ LOGGING = {
         "django": {
             "handlers": ["console", "errorFile"],
             "level": os.getenv("DJANGO_LOG_LEVEL", "DEBUG"),
-            "propagate": False,
+            "propagate": True,
         }
     },
 }
