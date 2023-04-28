@@ -136,15 +136,39 @@ class VersionsView(APIView):
 
 
 @api_view()
-def error_404(request, exception):
-    print(exception)
+def error_400(request, exception):
     return Response(
-        {"errors": [{"detail": "Not found.", "status": "404", "code": "not_found"}]}
+        {
+            "errors": [
+                {"detail": "Bad request.", "status": "400", "code": "bad_request"}
+            ]
+        },
+        status=400,
     )
 
+
 @api_view()
-def error_500(request, exception):
-    print(exception)
+def error_404(request, exception):
+    return Response(
+        {"errors": [{"detail": "Not found.", "status": "404", "code": "not_found"}]},
+        status=404,
+    )
+
+
+@api_view()
+def error_403(request, exception):
+    return Response(
+        {
+            "errors": [
+                {"detail": "Permission denied.", "status": "403", "code": "forbidden"}
+            ]
+        },
+        status=403,
+    )
+
+
+@api_view()
+def error_500(request):
     return Response(
         {
             "errors": [
@@ -154,5 +178,6 @@ def error_500(request, exception):
                     "code": "server_internal_error",
                 }
             ]
-        }
+        },
+        status=500,
     )

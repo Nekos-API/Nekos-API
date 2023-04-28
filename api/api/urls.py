@@ -2,7 +2,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from api.views import EndpointsView, VersionsView, error_404, error_500
+from api.views import EndpointsView, VersionsView, error_400, error_403, error_404, error_500
 
 urlpatterns = [
     path(
@@ -25,5 +25,7 @@ urlpatterns = [
     path("v2/", include("webhooks.urls")),
 ]
 
+handler400 = error_400
+handler403 = error_403
 handler404 = error_404
 handler500 = error_500
