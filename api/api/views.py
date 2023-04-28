@@ -136,13 +136,15 @@ class VersionsView(APIView):
 
 
 @api_view()
-def error_404(request):
+def error_404(request, exception):
+    print(exception)
     return Response(
         {"errors": [{"detail": "Not found.", "status": "404", "code": "not_found"}]}
     )
 
 @api_view()
-def error_500(request):
+def error_500(request, exception):
+    print(exception)
     return Response(
         {
             "errors": [
