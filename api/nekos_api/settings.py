@@ -334,6 +334,13 @@ LOGGING = {
         "console": {
             "class": "logging.StreamHandler",
         },
+        'errorFile': {
+            'level':'ERROR',
+            'class':'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, '/logs/nekos-error.log'),
+            'maxBytes': 1024*1024*15, # 15MB
+            'backupCount': 10,
+        },
     },
     "root": {
         "handlers": ["console"],
@@ -345,5 +352,9 @@ LOGGING = {
             "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
             "propagate": False,
         },
+        "errors": {
+            "handlers": ["errorFile"],
+            "level": "ERROR"
+        }
     },
 }
