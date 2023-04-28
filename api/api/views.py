@@ -117,18 +117,38 @@ class VersionsView(APIView):
                     "v0": {
                         "baseEndpoint": "/v0",
                         "status": "deprecated",
-                        "documentation": "https://v0.nekosapi.com/api/v1/redoc"
+                        "documentation": "https://v0.nekosapi.com/api/v1/redoc",
                     },
                     "v1": {
                         "baseEndpoint": "/v1",
                         "status": "stable",
-                        "documentation": "https://v1.nekosapi.com/docs/rest-api/reference"
+                        "documentation": "https://v1.nekosapi.com/docs/rest-api/reference",
                     },
                     "v2": {
                         "baseEndpoint": "/v2",
                         "status": "preview",
-                        "documentation": "https://nekosapi.com/docs/rest-api/introduction"
-                    }
+                        "documentation": "https://nekosapi.com/docs/rest-api/introduction",
+                    },
                 }
             }
         )
+
+
+def error_404(request):
+    return Response(
+        {"errors": [{"detail": "Not found.", "status": "404", "code": "not_found"}]}
+    )
+
+
+def error_500(request):
+    return Response(
+        {
+            "errors": [
+                {
+                    "detail": "Server internal error.",
+                    "status": "500",
+                    "code": "server_internal_error",
+                }
+            ]
+        }
+    )
