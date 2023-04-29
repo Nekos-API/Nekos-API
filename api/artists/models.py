@@ -11,6 +11,9 @@ class Artist(models.Model):
     Artist model.
     """
 
+    class JSONAPIMeta:
+        resource_name = "artist"
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, null=False)
 
     name = models.CharField(max_length=50, help_text="The artist's name")

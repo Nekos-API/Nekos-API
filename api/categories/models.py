@@ -13,6 +13,9 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = "categories"
 
+    class JSONAPIMeta:
+        resource_name = "category"
+
     class Type(models.TextChoices):
         CHARACTER = "character"
         SETTING = "setting"

@@ -28,4 +28,4 @@ urlpatterns = [
 handler400 = error_400
 handler403 = error_403
 handler404 = error_404
-handler500 = error_500
+# handler500 = error_500

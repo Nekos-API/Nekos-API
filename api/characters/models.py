@@ -11,6 +11,9 @@ class Character(models.Model):
     Character model.
     """
 
+    class JSONAPIMeta:
+        resource_name = "character"
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, null=False, editable=False)
 
     first_name = models.CharField(max_length=50)

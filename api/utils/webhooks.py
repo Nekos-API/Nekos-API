@@ -35,7 +35,7 @@ def event(event_type: Webhook.Event, instance: Model, **kwargs):
         },
     )
 
-    webhooks = Webhook.objects.get(events__contains=[event_type])
+    webhooks = Webhook.objects.filter(events__contains=[event_type])
 
     get_rs = []
 
