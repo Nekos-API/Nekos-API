@@ -351,6 +351,7 @@ class UploadImageFileView(APIView):
             )
 
         instance.file = File(file_bytes, name="image.webp")
+        instance.verification_status = Image.VerificationStatus.NOT_REVIEWED
         instance.save()
 
         image.close()
