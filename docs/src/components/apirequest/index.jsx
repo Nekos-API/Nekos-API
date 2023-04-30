@@ -64,7 +64,7 @@ export function APIRequest({
                     </span>
                 </div>
                 <div className="text-xl font-bold mt-2">{title}</div>
-                <div className='mt-2'>{description}</div>
+                <div className='mt-2' dangerouslySetInnerHTML={{__html: marked.parse(description)}}></div>
             </div>
             <div style={{
                 display: collapsed ? 'none' : 'block'

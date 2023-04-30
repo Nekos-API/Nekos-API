@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import ImagesViewSet, ImageRelationshipsView
+from .views import ImagesViewSet, ImageRelationshipsView, UploadImageFileView
 
 urlpatterns = [
     path("images", ImagesViewSet.as_view({"get": "list", "post": "create"}), name="image"),
@@ -15,6 +15,11 @@ urlpatterns = [
         "images/<uuid:pk>/file",
         ImagesViewSet.as_view({"get": "retrieve_file"}),
         name="image-file",
+    ),
+    path(
+        "images/<uuid:pk>/upload",
+        UploadImageFileView.as_view(),
+        name="image-file-upload",
     ),
     path(
         r"images/<uuid:pk>/like",
