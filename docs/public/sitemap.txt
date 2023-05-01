@@ -14,8 +14,10 @@ https://nekosapi.com/docs/rest-api/characters/resource/
 https://nekosapi.com/docs/rest-api/characters/relationships/
 https://nekosapi.com/docs/rest-api/catgories/resource/
 https://nekosapi.com/docs/rest-api/catgories/relationships/
-https://nekosapi.com/docs/websockets/
+https://nekosapi.com/docs/websockets/introduction
 https://nekosapi.com/docs/websockets/events/
+https://nekosapi.com/docs/embeds/introduction/
+https://nekosapi.com/docs/embeds/images/
 https://nekosapi.com/docs/contributing/
 https://nekosapi.com/docs/branding/
 https://nekosapi.com/docs/terms-of-use/
