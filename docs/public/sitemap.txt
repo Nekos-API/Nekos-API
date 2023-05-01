@@ -22,6 +22,7 @@ https://nekosapi.com/docs/contributing/
 https://nekosapi.com/docs/branding/
 https://nekosapi.com/docs/terms-of-use/
 https://nekosapi.com/docs/api-comparison/
+https://nekosapi.com/docs/changelog/
 https://nekosapi.com/about/
 https://nekosapi.com/partners/
 https://nekosapi.com/graphiql/
