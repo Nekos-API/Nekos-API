@@ -57,6 +57,7 @@
                         {% endif %}
                     </div>
                 </div>
+                <div class="flex-1"></div>
                 {% if image.palette|length != 0 and request.GET.palette != 'false' %}
                     <div class="flex flex-row items-center w-full rounded overflow-hidden">
                         {% for color in image.palette %}
