@@ -210,10 +210,10 @@ export default {
     },
     main: (children) => {
         return (
-            <div>
+            <>
                 {children.children}
                 <div id="ad-docs-toc-alt"></div>
-            </div>
+            </>
         )
     },
     defaultShowCopyCode: true,
