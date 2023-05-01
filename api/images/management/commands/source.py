@@ -28,7 +28,7 @@ class Command(BaseCommand):
         """
 
         for image in Image.objects.filter(
-            source_queries=None, verification_status="verified", source_url=None
+            source_queries=None, source_url=None
         )[:100]:
             # Handle the 100 daily images.
 

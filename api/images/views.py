@@ -1,11 +1,13 @@
 import secrets
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
+from django.views import View
 from django.core.files import File
 from django.utils.decorators import method_decorator
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
 from django.contrib.contenttypes.models import ContentType
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 from rest_framework import permissions, parsers
 from rest_framework.views import APIView
@@ -367,3 +369,16 @@ class ImageRelationshipsView(views.RelationshipView):
         return Image.objects.filter(
             verification_status=Image.VerificationStatus.VERIFIED
         )
+
+
+class ImageEmbedView(View):
+
+    @method_decorator(xframe_options_exempt)
+    def get(self, request, pk):
+        """
+        Returns the rendered embed of an image.
+        """
+
+        image = get_object_or_404(Image, pk=pk)
+
+        return render(request, "images/embeds/image.html", context={"image": image})

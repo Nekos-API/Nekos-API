@@ -8,6 +8,7 @@
     },
     "rest-api": "Rest API",
     "websockets": "WebSockets",
+    "embeds": "Embeds",
     "--- More ---": {
         "type": "separator",
         "title": "More"

@@ -1,0 +1,26 @@
+# Embeds API
+
+Nekos API has some nice embeds you can add using an `<iframe>{:html}` to your website without needing to make API calls, component design, or anything. Just set the height and width and you're ready to go!
+
+## Why embeds?
+
+There are many Nekos API users who don't like making designs or they just can't manage to make things look good. The embeds API provides you with nice premade components that show the image and some information about it. For example:
+
+<div className="mt-8 grid sm:grid-cols-2 gap-8 relative">
+    <iframe
+        src="http://127.0.0.1:8000/v2/images/d3bb228c-312f-4f6d-b09b-e7f35735e6e1/embed?orientation=horizontal&theme=dark"
+        frameborder="0"
+        className="rounded w-full"
+    ></iframe>
+    <iframe
+        src="http://127.0.0.1:8000/v2/images/d3bb228c-312f-4f6d-b09b-e7f35735e6e1/embed?orientation=horizontal&theme=light"
+        frameborder="0"
+        className="rounded w-full"
+    ></iframe>
+</div>
+
+As you can see, the default embeds already look good. Those embeds need no configuration and can be added everywhere (as long as it supports HTML).
+
+## And the watermarks?
+
+There is no **Powered by Nekos API**, **View on Nekos API** or **Nekos API** label in the embeds. Though it would be nice if you added a `?nekos_logo=true` to the embeds, we do not require it and have it disabled by default. If you like this project, please consider enabling it to support us.
