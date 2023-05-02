@@ -107,7 +107,7 @@ export default {
             }, [])
 
             return (
-                <div className="flex flex-col md:flex-row items-center justify-between w-full gap-4">
+                <div className="flex flex-col md:flex-row md:items-center justify-between w-full gap-4">
                     <div>
                         MIT {new Date().getFullYear()} © <a href="https://nekidev.com" target="_blank">Nekidev</a>. Made with ❤ from Argentina.
                     </div>
