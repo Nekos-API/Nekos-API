@@ -102,7 +102,19 @@ export default {
     },
     footer: {
         text: () => {
-            const { status, error, isLoading } = useStatus();
+            const [status, setStatus] = React.useState();
+            const [error, setError] = React.useState();
+            const [isLoading, setIsLoading] = React.useState(true);
+
+            React.useEffect(() => {
+                fetch('/api/status', { cache: "no-store" }).then(res => res.json()).then((data) => {
+                    setStatus(data.status)
+                }).catch((e) => {
+                    setError(e)
+                }).finally(() => {
+                    setIsLoading(false)
+                })
+            }, [])
 
             return (
                 <div className="flex flex-col md:flex-row items-center justify-between w-full gap-4">
@@ -120,7 +132,7 @@ export default {
                                     Loading...
                                 </span>
                             </>
-                        ) : error || (status != null && status.status != "up") ? (
+                        ) : error || (status != undefined && status.status != "up") ? (
                             <>
                                 <div className="h-2.5 w-2.5 rounded-full bg-red-400">
                                     <div className="h-2.5 w-2.5 rounded-full bg-red-400 animate-ping"></div>
