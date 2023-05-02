@@ -26,6 +26,17 @@ const useUser = () => {
     }
 }
 
+const statusFetcher = () => fetch('/api/status').then(res => res.json())
+const useStatus = () => {
+    const { data, error, isLoading } = useSWR(statusFetcher)
+
+    return {
+        status: data,
+        error,
+        isLoading
+    }
+}
+
 export default {
     logo: () => {
         return (
@@ -90,11 +101,51 @@ export default {
         )
     },
     footer: {
-        "text": (
-            <span>
-                MIT {new Date().getFullYear()} © <a href="https://nekidev.com" target="_blank">Nekidev</a>. Made with ❤ from Argentina.
-            </span>
-        )
+        text: () => {
+            const { status, error, isLoading } = useStatus();
+
+            return (
+                <div className="flex flex-col md:flex-row items-center justify-between w-full gap-4">
+                    <div>
+                        MIT {new Date().getFullYear()} © <a href="https://nekidev.com" target="_blank">Nekidev</a>. Made with ❤ from Argentina.
+                    </div>
+                    <Link href="https://status.nekosapi.com/" target="_blank" className="rounded p-2 border border-neutral-200 hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600 bg-white dark:bg-black leading-none w-fit text-neutral-800 dark:text-white font-medium flex flex-row items-center gap-2 drop-shadow-sm transition cursor-pointer">
+                        {isLoading ? (
+                            <>
+                                <div className="h-2.5 w-2.5 rounded-full bg-neutral-400">
+                                    <div className="h-2.5 w-2.5 rounded-full bg-neutral-400 animate-ping"></div>
+                                </div>
+                                Status:
+                                <span>
+                                    Loading...
+                                </span>
+                            </>
+                        ) : error || (status != null && status.status != "up") ? (
+                            <>
+                                <div className="h-2.5 w-2.5 rounded-full bg-red-400">
+                                    <div className="h-2.5 w-2.5 rounded-full bg-red-400 animate-ping"></div>
+                                </div>
+                                Status:
+                                <span className="text-red-400">
+                                    Some systems are down!
+                                </span>
+                            </>
+                        ) : (
+                            <>
+                                <div className="h-2.5 w-2.5 rounded-full bg-green-400">
+                                    <div className="h-2.5 w-2.5 rounded-full bg-green-400 animate-ping"></div>
+                                </div>
+                                Status:
+                                <span className="text-green-400">
+                                    All systems are up
+                                </span>
+                            </>
+                        )}
+                        
+                    </Link>
+                </div>
+            )
+        }
     },
     navbar: {
         extraContent: () => {
