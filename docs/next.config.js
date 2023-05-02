@@ -11,7 +11,7 @@ module.exports = withNextra({
         path: "/",
         domains: ["discordapp.com"],
     },
-    trailingSlash: true,
+    trailingSlash: false,
     async headers() {
         return [
             {
