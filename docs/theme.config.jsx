@@ -122,7 +122,7 @@ export default {
                                     Loading...
                                 </span>
                             </>
-                        ) : error || (status != undefined && status.status != "up") ? (
+                        ) : error || (status != undefined && status != "up") ? (
                             <>
                                 <div className="h-2.5 w-2.5 rounded-full bg-red-400">
                                     <div className="h-2.5 w-2.5 rounded-full bg-red-400 animate-ping"></div>
