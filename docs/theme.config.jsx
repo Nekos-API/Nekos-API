@@ -26,7 +26,7 @@ const useUser = () => {
     }
 }
 
-const statusFetcher = () => fetch('/api/status').then(res => res.json())
+const statusFetcher = () => fetch('/api/status', { cache: "no-store" }).then(res => res.json())
 const useStatus = () => {
     const { data, error, isLoading } = useSWR(statusFetcher)
 
