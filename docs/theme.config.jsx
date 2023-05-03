@@ -109,7 +109,7 @@ export default {
             return (
                 <div className="flex flex-col md:flex-row md:items-center justify-between w-full gap-4">
                     <div>
-                        MIT {new Date().getFullYear()} © <a href="https://nekidev.com" target="_blank">Nekidev</a>. Made with ❤ from Argentina.
+                        MIT {new Date().getFullYear()} © <a href="https://nekidev.com" target="_blank">Nekidev</a>. Made with ❤ from Argentina, the football world champion 🏆 ⭐⭐⭐.
                     </div>
                     <Link href="https://status.nekosapi.com/" target="_blank" className="rounded p-2 border border-neutral-200 hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600 bg-white dark:bg-black leading-none w-fit text-neutral-800 dark:text-white font-medium flex flex-row items-center gap-2 drop-shadow-sm transition cursor-pointer">
                         {isLoading ? (
