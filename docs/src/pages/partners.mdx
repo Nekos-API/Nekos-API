@@ -3,7 +3,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 
 # Partners
 
-<div className="w-full text-lg dark:text-neutral-400 text-neutral-600">
+<div className="w-full text-lg dark:text-neutral-400 text-neutral-600 text-center">
     Communities, projects, and other people we work with
 </div>
 
@@ -12,10 +12,8 @@ export function PartnerCard({
     banner,
     name,
     description,
-    link,
-    linkColor,
-    textColor,
-    linkText
+    color,
+    links
 }) {
     return (
         <div className="w-full rounded-lg overflow-hidden bg-white dark:bg-neutral-900 relative border dark:border-0 border-neutral-200 drop-shadow-md">
@@ -27,7 +25,7 @@ export function PartnerCard({
                 <div
                     className="h-32 bg-neutral-100 dark:bg-neutral-800"
                     style={{
-                        background: `radial-gradient(${linkColor} 0.5px, transparent 0.5px), radial-gradient(${linkColor} 0.5px, transparent 0.5px)`,
+                        background: `radial-gradient(${color} 0.5px, transparent 0.5px), radial-gradient(${color} 0.5px, transparent 0.5px)`,
                         backgroundSize: "20px 20px",
                         backgroundPosition: "0 0,10px 10px",
                     }}
@@ -45,17 +43,23 @@ export function PartnerCard({
                         {description}
                     </div>
                 </div>
-                <Link href={link} target="_blank">
-                    <button
-                        className={`rounded text-center w-full p-2 text-sm mt-2 hover:opacity-80 transition`}
-                        style={{
-                            backgroundColor: linkColor,
-                            color: textColor,
-                        }}
-                    >
-                        {linkText}
-                    </button>
-                </Link>
+                <div className="flex flex-col items-center gap-2">
+                    {links.map((value, index) => {
+                        return (
+                            <Link href={value.link} target="_blank" className="w-full">
+                                <button
+                                    className={`rounded text-center w-full p-2 text-sm mt-2 hover:opacity-80 transition`}
+                                    style={{
+                                        backgroundColor: value.linkColor,
+                                        color: value.textColor,
+                                    }}
+                                >
+                                    {value.linkText}
+                                </button>
+                            </Link>
+                        )
+                    })}
+                </div>
             </div>
         </div>
     );
@@ -67,37 +71,69 @@ export function PartnerCard({
         banner="/imgs/partners/otakugifs/banner.png"
         name="OtakuGIFs"
         description="OtakuGIFs delivers over 940 high quality anime GIFs, WebPs & AVIFs as 67 reactions with a simple API."
-        link="https://otakugifs.xyz/"
-        linkColor="#0c59e0"
-        textColor="white"
-        linkText="Visit their website"
+        color="#0c59e0"
+        links={[
+            {
+                link: "https://otakugifs.xyz/",
+                linkColor: "#0c59e0",
+                textColor: "white",
+                linkText: "Visit their website"
+            },
+            {
+                link: "https://discord.gg/fzj7MxGt2w",
+                linkColor: "#5865F2",
+                textColor: "white",
+                linkText: "Visit their Discord server"
+            }
+        ]}
     />
     <PartnerCard
         icon="/imgs/partners/miyabi/logo.png"
         name="Miyabi"
         description="A Discord bot based on anime/manga/games to collect characters and more."
-        link="https://miyabi.rocks"
-        linkColor="#ef4444"
-        textColor="white"
-        linkText="Visit their website"
+        color="#ef4444"
+        links={[
+            {
+                link: "https://miyabi.rocks",
+                linkColor: "#ef4444",
+                textColor: "white",
+                linkText: "Visit their website"
+            },
+            {
+                link: "https://discord.gg/RsAthAKYSm",
+                linkColor: "#5865F2",
+                textColor: "white",
+                linkText: "Visit their Discord server"
+            }
+        ]}
     />
     <PartnerCard
         icon="/imgs/partners/aurora/logo.jpg"
         name="Ʌurora™ | Anime & Chill"
         description="Aurora is themed after the Date A Live series, but it's not limited to only just that. Aurora is a general anime community so feel free to talk about anything you like!"
-        link="https://discord.gg/Wbhvnn546h"
-        linkColor="#78B1E0"
-        textColor="white"
-        linkText="Visit their Discord server"
+        color="#78B1E0"
+        links={[
+            {
+                link: "https://discord.gg/Wbhvnn546h",
+                linkColor: "#78B1E0",
+                textColor: "white",
+                linkText: "Visit their Discord server"
+            }
+        ]}
     />
     <PartnerCard
         icon="/imgs/partners/dollhouse/logo.png"
         name="Dollhouse"
         description="Friendly Monogatari themed social server! Join us in a chill server focused on Anime, Manga, Games, Sports and more."
-        link="https://discord.gg/msNtTYV"
-        linkColor="#01EFE3"
-        textColor="black"
-        linkText="Visit their Discord server"
+        color="#01EFE3"
+        links={[
+            {
+                link: "https://discord.gg/msNtTYV",
+                linkColor: "#01EFE3",
+                textColor: "black",
+                linkText: "Visit their Discord server"
+            }
+        ]}
     />
     <div className="h-full w-full flex flex-col items-center justify-center border-[4px] border-dashed border-neutral-200 dark:border-neutral-800 rounded-xl aspect-square">
         <PlusIcon className="h-8 w-8 stroke-neutral-600 dark:stroke-neutral-400" />
