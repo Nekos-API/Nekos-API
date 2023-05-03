@@ -32,7 +32,7 @@
         </style>
     </head>
     <body class="relative">
-        <div class="flex max-h-screen max-w-screen h-screen w-screen overflow-hidden items-stretch relative {% if request.GET.orientation == 'horizontal' %}flex-row{% else %}flex-col{% endif %} gap-4 p-4 border rounded border-neutral-300 dark:border-neutral-800 dark:bg-black">
+        <div class="flex max-h-screen max-w-screen h-screen w-screen overflow-hidden items-stretch relative {% if request.GET.orientation == 'horizontal' %}flex-row{% else %}flex-col{% endif %} gap-4 p-4 border rounded border-neutral-300 dark:border-neutral-700 bg-white dark:bg-black">
             {% if request.GET.orientation == 'horizontal' %}
             <div class="h-full min-w-fit">
                 <img src="{{ image.file.url }}" class="rounded aspect-[{{ image.aspect_ratio|replace:":,/" }}] block h-full min-w-fit" />
