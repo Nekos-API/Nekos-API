@@ -1513,6 +1513,44 @@ import { APIRequest } from "../../../../components/apirequest";
     ]}
 />
 
+## Update an image's verification status
+
+<APIRequest
+    method="POST"
+    endpoint="/images/:id/verification"
+    title="Update an image's verfication status"
+    description="Update an image's verification status by the image's ID. Only admin users can use this endpoint."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID v4",
+            description: "The image's ID.",
+            location: "path",
+            required: true,
+        },
+        {
+            name: "status",
+            type: "List of strings",
+            description:
+                "The new verification status.\nPossible values: not_reviewed,declined,on_review,verified",
+        },
+    ]}
+    responses={[
+        {
+            code: 204,
+            name: "Success",
+            description: "The request was completed successfully.",
+        },
+    ]}
+/>
+
 ## Upload an image
 
 export const code3 = `
