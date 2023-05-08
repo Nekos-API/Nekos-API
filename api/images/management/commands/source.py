@@ -29,7 +29,7 @@ class Command(BaseCommand):
 
         for image in Image.objects.filter(
             source_queries=None, source_url=None
-        )[:100]:
+        ).exclude(file=None).exclude(file='')[:100]:
             # Handle the 100 daily images.
 
             file_url = image.file.url
