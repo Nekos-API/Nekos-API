@@ -16,7 +16,7 @@ import createGlobe from "cobe";
 export const features = [
     {
         title: "Advanced features",
-        description: "Included relationships, advanced filters, and a clean specification will help you build anything you want.",
+        description: "Advanced features and a clean specification will help you build anything you want.",
         icon: <CpuChipIcon />
     },
     {
@@ -88,7 +88,7 @@ export default function Home() {
                 <div className="relative">
                     <div className={styles.heroContainer}>
                         <h1 className={styles.mainTitle}>Nekos API</h1>
-                        <p className={styles.mainDescription}>An open-source free public anime images API.</p>
+                        <p className={styles.mainDescription}>An open-source free public anime images & gifs API.</p>
                         <div className="flex flex-row items-center mt-8 gap-8">
                             <Link href="/docs" className={styles.mainLink + " group"}>
                                 Documentation
@@ -107,12 +107,16 @@ export default function Home() {
                                 </svg>
                             </Link>
                         </div>
+                        <div className={styles.catPattern}></div>
                     </div>
                     <div className="absolute top-8 bottom-0 right-0 overflow-hidden max-w-sm hidden lg:block">
                         <img src="/imgs/landing-neko-1.png" />
-                        <Link href="https://www.pixiv.net/en/artworks/72946322" target="_blank" className="absolute bottom-4 right-0 rounded p-2 border border-neutral-200 hover:border-neutral-400 dark:border-neutral-700 dark:hover:border-neutral-600 dark:hover:bg-neutral-900 bg-white dark:bg-black leading-none w-fit text-neutral-800 dark:text-white text-sm flex flex-row items-center gap-2 drop-shadow-sm transition cursor-pointer">
+                        <Link href="https://www.pixiv.net/en/artworks/72946322" target="_blank" className="absolute bottom-4 right-0 rounded p-2 border border-neutral-200 hover:border-neutral-400 dark:border-neutral-700 dark:hover:border-neutral-600 dark:hover:bg-neutral-900 bg-white dark:bg-black leading-none w-fit text-neutral-800 dark:text-white text-sm flex flex-row items-center gap-2 drop-shadow-sm transition cursor-pointer group">
                             Illustrated by:
-                            <b>かる</b>
+                            <b className="flex flex-row items-end">
+                                <span className="relative flex flex-col items-center justify-center after:content-['ka'] after:absolute after:bottom-[calc(100%-.0rem)] after:opacity-0 after:left-0 after:right-0 after:block after:mx-auto after:text-[.5rem] after:font-normal after:w-fit after:translate-y-2 after:transition-all group-hover:after:translate-y-0 group-hover:after:opacity-50">か</span>
+                                <span className="relative flex flex-col items-center justify-center after:content-['ru'] after:absolute after:bottom-[calc(100%-.0rem)] after:opacity-0 after:left-0 after:right-0 after:block after:mx-auto after:text-[.5rem] after:font-normal after:w-fit after:translate-y-2 after:transition-all group-hover:after:translate-y-0 group-hover:after:opacity-50">る</span>
+                            </b>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                             </svg>
@@ -140,7 +144,7 @@ export default function Home() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-300 dark:bg-neutral-700 border border-neutral-300 dark:border-neutral-700 rounded-xl overflow-hidden font-mono w-full lg:w-auto mt-8">
                     <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center">
                         <div className="text-lg">Images</div>
-                        <div className="text-3xl font-bold">+13400</div>
+                        <div className="text-3xl font-bold">+13.5k</div>
                     </div>
                     <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center">
                         <div className="text-lg">Categories</div>
@@ -149,6 +153,18 @@ export default function Home() {
                     <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center md:col-span-2 lg:col-span-1">
                         <div className="text-lg">Avg. response time</div>
                         <div className="text-3xl font-bold">&lt; 1 sec</div>
+                    </div>
+                    <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center">
+                        <div className="text-lg">GIFs</div>
+                        <div className="text-3xl font-bold">+3k</div>
+                    </div>
+                    <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center">
+                        <div className="text-lg">Reactions</div>
+                        <div className="text-3xl font-bold">+70</div>
+                    </div>
+                    <div className="bg-white dark:bg-neutral-900 px-12 py-4 flex flex-col items-center justify-center text-center">
+                        <div className="text-lg">Reqs. per month</div>
+                        <div className="text-3xl font-bold">+100k</div>
                     </div>
                 </div>
             </div>

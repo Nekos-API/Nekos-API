@@ -8,6 +8,12 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {},
+    fontFamily: {
+      mono: [
+        "'Ubuntu Mono'",
+        "monospace"
+      ]
+    }
   },
   plugins: [
     require('@tailwindcss/line-clamp')

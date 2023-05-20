@@ -4,7 +4,7 @@ import Link from "next/link";
 
 Welcome to the Nekos API documentation! Here you can find documentation, guides, and references for the API. Although it may not seem easy at first, we will guide you through the whole API so that you become a pro at it. This guide was written aiming to beginners, so you dont't need to be an expert to use and understand it.
 
-The API is completely open-source. You can find everything in the Nekos API GitHub repository, including these docs, the website, the API, and everything else.
+The API is completely open-source. You can find everything in the [Nekos API GitHub repository](https://github.com/Nekos-API/Nekos-API), including these docs, the website, the API, and everything else.
 
 If you are looking for `v1.6.0` docs, you can find them at [v1.nekosapi.com](https://v1.nekosapi.com). You'll be able to access that version until we cannot host it anymore. If this is your first time using the API, then we recommend starting with this version, since it is more complete and is actively mantained. Also, `v1.6.0` has great disadvantages, like link expiry, lower rate limits, fewer images and features, etc.
 
@@ -28,11 +28,11 @@ We always welcome any kind of contributions! You can always fork our [GitHub rep
 
 The following users have contributed to the development of Nekos API:
 
-export const Contributor = ({ image, name, contributions }) => {
+export const Contributor = ({ discordId, name, contributions }) => {
     return (
-        <div className="h-10 w-10 relative flex flex-col items-center">
+        <Link className="h-10 w-10 relative flex flex-col items-center" href={`https://discord.com/users/${discordId}`} target="_blank">
             <img
-                src={image}
+                src={`/api/discord/avatar?user_id=${discordId}`}
                 className="h-10 w-10 rounded-full object-cover peer"
             />
             <div className="absolute bottom-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 drop-shadow-md rounded mx-auto whitespace-nowrap flex flex-col items-center py-2 px-4 transition-all opacity-0 mb-0 peer-hover:opacity-100 peer-hover:mb-2 text-neutral-900 dark:text-[#f1f5f9] pointer-events-none">
@@ -41,13 +41,13 @@ export const Contributor = ({ image, name, contributions }) => {
                     return <span className="text-xs text-neutrel-500 dark:text-neutral-400">{value}</span>
                 })}
             </div>
-        </div>
+        </Link>
     );
 };
 
 <div className="flex flex-row gap-4 mt-8 flex-wrap">
     <Contributor 
-        image="https://avatars.githubusercontent.com/u/84998222?s=240&v=4" 
+        discordId="777338793803513886"
         name="Nekidev" 
         contributions={[
             "Main developer",
@@ -57,13 +57,13 @@ export const Contributor = ({ image, name, contributions }) => {
             "Content moderator"
         ]} />
     <Contributor
-        image="https://cdn.discordapp.com/avatars/420583786053369868/6f8b93fb352414c27c66f53226688918.webp?size=240"
+        discordId="420583786053369868"
         name="Beyondtoshi"
         contributions={[
             "Donator"
         ]} />
     <Contributor
-        image="https://cdn.discordapp.com/avatars/140788173885276160/0f70baed22edb454278bc04f6abe6f35.webp?size=240"
+        discordId="140788173885276160"
         name="Catalysm"
         contributions={[
             "Partner",
@@ -71,7 +71,7 @@ export const Contributor = ({ image, name, contributions }) => {
             "JS Library maintainer"
         ]} />
     <Contributor
-        image="https://cdn.nekosapi.com/uploads/user/avatar/Z7W2VBQGD5ABVF6HPARPBEZQHI.webp"
+        discordId="835137181504372806"
         name="Oreki"
         contributions={[
             "Partner",
@@ -80,7 +80,7 @@ export const Contributor = ({ image, name, contributions }) => {
             "Discord moderator"
         ]} />
     <Contributor
-        image="https://cdn.nekosapi.com/uploads/user/avatar/ABZEW76I5RF27C5T4J6O3S3LRA.webp"
+        discordId="407135783678640128"
         name="pimako"
         contributions={[
             "Content moderator",
@@ -88,13 +88,13 @@ export const Contributor = ({ image, name, contributions }) => {
             "Discord moderator"
         ]} />
     <Contributor
-        image="https://cdn.discordapp.com/avatars/183444648360935424/5b20e3d3f7b49529c266693e8f9f1e53.webp?size=240"
+        discordId="183444648360935424"
         name="Vexuas"
         contributions={[
             "Donator",
         ]} />
     <Contributor
-        image="https://cdn.discordapp.com/avatars/814512313084149804/a_81f9d8d2a761842a74414b4a6ad2921f.gif?size=240"
+        discordId="814512313084149804"
         name="SLIME"
         contributions={[
             "Deno library maintainer",

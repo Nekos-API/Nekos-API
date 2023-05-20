@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import { useConfig } from "nextra-theme-docs"
 import { UserCircleIcon } from "@heroicons/react/24/outline"
 import useSWR from "swr"
+import CatIcon from "./src/components/icons/Cat";
 
 import Link from "next/link"
 import Script from "next/script"
@@ -33,6 +34,7 @@ export default {
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem" }}>
                 <img src="/branding/logo/logo.png" alt="Logo" width={32} height={32} />
                 <span>Nekos API</span>
+                <div className="font-mono p-1 rounded border dark:border-neutral-700 dark:bg-neutral-800 border-neutral-200 bg-neutral-100 text-sm leading-none h-fit">v2.0.0</div>
             </div>
         )
     },
@@ -109,7 +111,12 @@ export default {
             return (
                 <div className="flex flex-col md:flex-row md:items-center justify-between w-full gap-4">
                     <div>
-                        MIT {new Date().getFullYear()} © <a href="https://nekidev.com" target="_blank" className="hover:underline">Nekidev</a>. Made with ❤ from Argentina, <Link className="hover:underline" href="https://google.com/search?q=argentina+vs+france+2022+world+cup+results" target="_blank">the football world champion 🏆 ⭐⭐⭐</Link>.
+                        MIT {new Date().getFullYear()} © <a href="https://nekidev.com" target="_blank" className="hover:underline">Nekidev</a>. Made with
+                        <div className="h-4 inline-block overflow-hidden group relative leading-none -mb-0.5 mx-1 cursor-default">
+                            <div className="group-hover:-mt-4 transition-all">❤</div>
+                            <CatIcon className="h-4 w-4" />
+                        </div>
+                        from Argentina, <Link className="hover:underline" href="https://google.com/search?q=argentina+vs+france+2022+world+cup+results" target="_blank">the football world champion 🏆 ⭐⭐⭐</Link>.
                     </div>
                     <Link href="https://status.nekosapi.com/" target="_blank" className="rounded p-2 border border-neutral-200 hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600 bg-white dark:bg-black leading-none w-fit text-neutral-800 dark:text-white font-medium flex flex-row items-center gap-2 drop-shadow-sm transition cursor-pointer">
                         {isLoading ? (
@@ -195,6 +202,20 @@ export default {
             </div>
         }
     },
+    search: {
+        emptyResult: () => {
+            return (
+                <div className="flex flex-col gap-2 items-center justify-center h-[100px] text-neutral-500 text-sm">
+                    <svg width="648" height="648" viewBox="0 0 648 648" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6">
+                        <g>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M62.3705 107.926C60.1685 99.1344 68.1344 91.1685 76.9264 93.3705L230.892 131.933C233.354 132.55 235.945 132.361 238.313 131.449C265.065 121.151 294.127 115.507 324.507 115.507C354.745 115.507 383.677 121.099 410.325 131.305C412.688 132.21 415.271 132.396 417.726 131.781L571.087 93.3705C579.879 91.1685 587.845 99.1344 585.643 107.926L547.472 260.329C546.848 262.818 547.048 265.438 547.986 267.827C558.651 294.987 564.507 324.563 564.507 355.507C564.507 488.055 457.055 555.507 324.507 555.507C191.958 555.507 84.5066 488.055 84.5066 355.507C84.5066 325.127 90.1513 296.065 100.449 269.313C101.361 266.945 101.55 264.354 100.933 261.892L62.3705 107.926ZM124.128 159.98C123.394 157.049 126.049 154.394 128.98 155.128L190.943 170.647C193.958 171.402 194.998 175.158 192.8 177.356L146.356 223.8C144.158 225.998 140.402 224.958 139.647 221.943L124.128 159.98ZM520.033 155.128C522.964 154.394 525.619 157.049 524.885 159.98L509.366 221.943C508.611 224.958 504.855 225.998 502.657 223.8L456.214 177.356C454.016 175.158 455.055 171.402 458.07 170.647L520.033 155.128Z"/>
+                        </g>
+                    </svg>
+                    No cats found.
+                </div>
+            )
+        }
+    },
     sidebar: {
         defaultMenuCollapseLevel: 1,
         toggleButton: true,
@@ -272,5 +293,10 @@ export default {
     defaultShowCopyCode: true,
     nextThemes: {
         defaultTheme: 'dark'
+    },
+    components: {
+        "a": ({ children, href, ...props }) => {
+            return <Link className="text-[hsl(var(--nextra-primary-hue)100%_45%/var(--tw-text-opacity))] text-primary-600 no-underline hover:underline decoration-from-font [text-underline-position:from-font]" href={href} {...props}>{children}</Link>
+        }
     }
 }
