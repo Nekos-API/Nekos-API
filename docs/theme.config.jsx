@@ -9,6 +9,7 @@ import Link from "next/link"
 import Script from "next/script"
 
 import Popup from "./src/components/popup"
+import contributors from "./src/constants/contributors"
 
 const userFetcher = (url) => fetch(`${process.env.NEXT_PUBLIC_API_BASE}${url}`, {
     credentials: "include",
@@ -330,17 +331,17 @@ export default {
 
         const Contributor = ({ username, image, url }) => {
             return (
-                <Link href={url} className="relative flex flex-col items-center">
+                <Link href={url} className="relative flex flex-col items-center" target="_blank">
                     <img src={image} className="h-7 w-7 object-cover block hover:scale-110 transition-all rounded-full peer" />
-                    <div className="absolute bottom-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 drop-shadow-md rounded mx-auto whitespace-nowrap flex flex-col items-center py-1 px-2 transition-all opacity-0 mb-0 peer-hover:opacity-100 peer-hover:mb-2 text-neutral-900 dark:text-[#f1f5f9] pointer-events-none">
+                    <div className="absolute bottom-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 drop-shadow-md rounded mx-auto whitespace-nowrap flex flex-col items-center py-1 px-2 transition-all opacity-0 mb-0 peer-hover:opacity-100 peer-hover:mb-2 text-neutral-900 dark:text-[#f1f5f9] pointer-events-none after:absolute after:-bottom-1 after:left-0 after:right-0 after:mx-auto after:w-2 after:h-2 after:rotate-45 after:rounded-sm after:bg-white after:dark:bg-neutral-900 after:border after:border-neutral-200 after:dark:border-neutral-800 after:!border-t-transparent after:!border-l-transparent">
                         <span className="text-xs">{username}</span>
                     </div>
                 </Link>
             )
         }
 
-        var contributors = []
-        var contributorIDs = []
+        var commitAuthors = []
+        var commiterAuthorIDs = []
 
         var commitDates = []
 
@@ -352,9 +353,9 @@ export default {
                     url: commit.author.html_url
                 }
 
-                if (!contributorIDs.includes(commit.author.login)) {
-                    contributors.push(authorData)
-                    contributorIDs.push(commit.author.login)
+                if (!commiterAuthorIDs.includes(commit.author.login)) {
+                    commitAuthors.push(authorData)
+                    commiterAuthorIDs.push(commit.author.login)
                 }
             }
 
@@ -370,7 +371,7 @@ export default {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                     </svg>
                     <div className="flex flex-row gap-4 flex-wrap">
-                        {(!isLoading && !error) ? contributors.map((value, index) => {
+                        {(!isLoading && !error) ? commitAuthors.map((value, index) => {
                             return <Contributor {...value} key={index} />
                         }) : (
                             <>...</>

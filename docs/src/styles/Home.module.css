@@ -68,7 +68,7 @@
         @apply text-4xl font-bold;
     }
     p.infoSubtitle {
-        @apply mt-4 text-xl opacity-70;
+        @apply mt-4 text-xl opacity-70 max-w-4xl;
     }
     div.infoCards {
         @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-8 gap-8 relative;

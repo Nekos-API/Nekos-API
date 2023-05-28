@@ -1,4 +1,5 @@
 import Link from "next/link";
+import contributors from "../../constants/contributors";
 
 # Introduction
 
@@ -33,9 +34,9 @@ export const Contributor = ({ discordId, name, contributions }) => {
         <Link className="h-10 w-10 relative flex flex-col items-center" href={`https://discord.com/users/${discordId}`} target="_blank">
             <img
                 src={`/api/discord/avatar?user_id=${discordId}`}
-                className="h-10 w-10 rounded-full object-cover peer"
+                className="h-10 w-10 rounded-full object-cover peer transition-all hover:scale-110"
             />
-            <div className="absolute bottom-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 drop-shadow-md rounded mx-auto whitespace-nowrap flex flex-col items-center py-2 px-4 transition-all opacity-0 mb-0 peer-hover:opacity-100 peer-hover:mb-2 text-neutral-900 dark:text-[#f1f5f9] pointer-events-none">
+            <div className="absolute bottom-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 drop-shadow-md rounded mx-auto whitespace-nowrap flex flex-col items-center py-2 px-4 transition-all opacity-0 mb-0 peer-hover:opacity-100 peer-hover:mb-2 text-neutral-900 dark:text-[#f1f5f9] pointer-events-none after:absolute after:-bottom-1 after:left-0 after:right-0 after:mx-auto after:w-2 after:h-2 after:rotate-45 after:rounded-sm after:bg-white after:dark:bg-neutral-900 after:border after:border-neutral-200 after:dark:border-neutral-800 after:!border-t-transparent after:!border-l-transparent">
                 <b className="text-sm">{name}</b>
                 {contributions.map((value, index) => {
                     return <span className="text-xs text-neutrel-500 dark:text-neutral-400">{value}</span>
@@ -46,59 +47,13 @@ export const Contributor = ({ discordId, name, contributions }) => {
 };
 
 <div className="flex flex-row gap-4 mt-8 flex-wrap">
-    <Contributor 
-        discordId="777338793803513886"
-        name="Nekidev" 
-        contributions={[
-            "Main developer",
-            "PY Library maintainer",
-            "Documentation writer",
-            "Discord moderator",
-            "Content moderator"
-        ]} />
-    <Contributor
-        discordId="420583786053369868"
-        name="Beyondtoshi"
-        contributions={[
-            "Donator"
-        ]} />
-    <Contributor
-        discordId="140788173885276160"
-        name="Catalysm"
-        contributions={[
-            "Partner",
-            "Donator",
-            "JS Library maintainer"
-        ]} />
-    <Contributor
-        discordId="835137181504372806"
-        name="Oreki"
-        contributions={[
-            "Partner",
-            "Content moderator",
-            "Image contributor",
-            "Discord moderator"
-        ]} />
-    <Contributor
-        discordId="407135783678640128"
-        name="pimako"
-        contributions={[
-            "Content moderator",
-            "Image contributor",
-            "Discord moderator"
-        ]} />
-    <Contributor
-        discordId="183444648360935424"
-        name="Vexuas"
-        contributions={[
-            "Donator",
-        ]} />
-    <Contributor
-        discordId="814512313084149804"
-        name="SLIME"
-        contributions={[
-            "Deno library maintainer",
-        ]} />
+    {contributors.map((value, index) => {
+        return <Contributor
+            discordId={value.id}
+            name={value.name}
+            contributions={value.contributions}
+            key={index} />
+    })}
     <div className="text-sm text-[hsl(var(--nextra-primary-hue),100%,50%)] h-10 flex flex-col items-center justify-center">
         &plus; All our users
     </div>
@@ -154,7 +109,7 @@ export const ResourceCard = ({
 }) => {
     return (
         <Link href={url} className="flex-1 overflow-hidden rounded flex flex-row relative items-stretch transition-all cursor-pointer border border-gray-200 bg-transparent no-underline shadow-sm shadow-gray-100 duration-200 dark:border-neutral-800 dark:shadow-none hover:border-gray-300 hover:bg-slate-50 hover:shadow-md hover:shadow-gray-100 dark:hover:border-neutral-700 dark:hover:bg-neutral-900 dark:hover:shadow-none">
-            <div className="w-2 h-full bg-[hsl(var(--nextra-primary-hue)100%_45%/var(--tw-text-opacity))]"></div>
+            <div className="w-2 h-full bg-[hsl(var(--nextra-primary-hue)100%_45%/var(--tw-text-opacity))] shrink-0"></div>
             <div className="flex-1 p-4">
                 <div className="mb-4 p-2 rounded-lg bg-gradient-to-br from-[hsl(var(--nextra-primary-hue)100%_45%/var(--tw-text-opacity))] to-[hsl(330,100%,50%)] w-fit">
                     {icon}
