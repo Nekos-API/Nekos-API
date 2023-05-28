@@ -60,17 +60,17 @@ export default {
         return <>
             <meta property="og:type" content="website" />
             <meta property="og:url" content={`https://nekosapi.com${asPath}`} />
-            <meta property="og:title" content={frontMatter.title || 'Nekos API Documentation'} />
-            <meta property="og:description" content={frontMatter.description || 'The open-source free public anime images Restful API. Get +10k manually added and verified high quality anime images with metadata such as the artist, original post, categories, characters, and even color palette using a single API!'} />
+            <meta property="og:title" content={frontMatter.title || 'Nekos API - Unleash the Meow-nificent Power of +17.5k Anime Images, GIFs, and More!'} />
+            <meta property="og:description" content={frontMatter.description || 'Purrfect your anime adventures with Nekos API! Unleash the power of +13.5k high-quality anime images and GIFs that will make your heart go UwU. Dive into a world of artists, categories, and adorable characters. Get whiskered away with WebSockets and customizable embeds for an unforgettable anime experience. Embrace the cat-tastic magic of Nekos API now!'} />
             <meta property="og:image" content="/branding/banner.png" />
 
-            <meta name="description" content={frontMatter.description || 'The open-source free public anime images Restful API. Get +10k manually added and verified high quality anime images with metadata such as the artist, original post, categories, characters, and even color palette using a single API!'} />
+            <meta name="description" content={frontMatter.description || "Purrfect your anime adventures with Nekos API! Unleash the power of +13.5k high-quality anime images and GIFs that will make your heart go UwU. Dive into a world of artists, categories, and adorable characters. Get whiskered away with WebSockets and customizable embeds for an unforgettable anime experience. Embrace the cat-tastic magic of Nekos API now!"} />
             <meta name="theme-color" content="#ff0055" />
 
             <meta property="twitter:card" content="summary_large_image" />
             <meta property="twitter:url" content="https://nekosapi.com/" />
-            <meta property="twitter:title" content="Nekos API" />
-            <meta property="twitter:description" content="The open-source free public anime images Restful API. Get +10k manually added and verified high quality anime images with metadata such as the artist, original post, categories, characters, and even color palette using a single API!" />
+            <meta property="twitter:title" content="Nekos API - Unleash the Meow-nificent Power of +17.5k Anime Images, GIFs, and More!" />
+            <meta property="twitter:description" content="Purrfect your anime adventures with Nekos API! Unleash the power of +13.5k high-quality anime images and GIFs that will make your heart go UwU. Dive into a world of artists, categories, and adorable characters. Get whiskered away with WebSockets and customizable embeds for an unforgettable anime experience. Embrace the cat-tastic magic of Nekos API now!" />
             <meta property="twitter:image" content="/branding/banner.png" />
         </>
     },
@@ -150,7 +150,7 @@ export default {
                                 </span>
                             </>
                         )}
-                        
+
                     </Link>
                 </div>
             )
@@ -208,7 +208,7 @@ export default {
                 <div className="flex flex-col gap-2 items-center justify-center h-[100px] text-neutral-500 text-sm">
                     <svg width="648" height="648" viewBox="0 0 648 648" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6">
                         <g>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M62.3705 107.926C60.1685 99.1344 68.1344 91.1685 76.9264 93.3705L230.892 131.933C233.354 132.55 235.945 132.361 238.313 131.449C265.065 121.151 294.127 115.507 324.507 115.507C354.745 115.507 383.677 121.099 410.325 131.305C412.688 132.21 415.271 132.396 417.726 131.781L571.087 93.3705C579.879 91.1685 587.845 99.1344 585.643 107.926L547.472 260.329C546.848 262.818 547.048 265.438 547.986 267.827C558.651 294.987 564.507 324.563 564.507 355.507C564.507 488.055 457.055 555.507 324.507 555.507C191.958 555.507 84.5066 488.055 84.5066 355.507C84.5066 325.127 90.1513 296.065 100.449 269.313C101.361 266.945 101.55 264.354 100.933 261.892L62.3705 107.926ZM124.128 159.98C123.394 157.049 126.049 154.394 128.98 155.128L190.943 170.647C193.958 171.402 194.998 175.158 192.8 177.356L146.356 223.8C144.158 225.998 140.402 224.958 139.647 221.943L124.128 159.98ZM520.033 155.128C522.964 154.394 525.619 157.049 524.885 159.98L509.366 221.943C508.611 224.958 504.855 225.998 502.657 223.8L456.214 177.356C454.016 175.158 455.055 171.402 458.07 170.647L520.033 155.128Z"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M62.3705 107.926C60.1685 99.1344 68.1344 91.1685 76.9264 93.3705L230.892 131.933C233.354 132.55 235.945 132.361 238.313 131.449C265.065 121.151 294.127 115.507 324.507 115.507C354.745 115.507 383.677 121.099 410.325 131.305C412.688 132.21 415.271 132.396 417.726 131.781L571.087 93.3705C579.879 91.1685 587.845 99.1344 585.643 107.926L547.472 260.329C546.848 262.818 547.048 265.438 547.986 267.827C558.651 294.987 564.507 324.563 564.507 355.507C564.507 488.055 457.055 555.507 324.507 555.507C191.958 555.507 84.5066 488.055 84.5066 355.507C84.5066 325.127 90.1513 296.065 100.449 269.313C101.361 266.945 101.55 264.354 100.933 261.892L62.3705 107.926ZM124.128 159.98C123.394 157.049 126.049 154.394 128.98 155.128L190.943 170.647C193.958 171.402 194.998 175.158 192.8 177.356L146.356 223.8C144.158 225.998 140.402 224.958 139.647 221.943L124.128 159.98ZM520.033 155.128C522.964 154.394 525.619 157.049 524.885 159.98L509.366 221.943C508.611 224.958 504.855 225.998 502.657 223.8L456.214 177.356C454.016 175.158 455.055 171.402 458.07 170.647L520.033 155.128Z" />
                         </g>
                     </svg>
                     No cats found.
@@ -298,5 +298,106 @@ export default {
         "a": ({ children, href, ...props }) => {
             return <Link className="text-[hsl(var(--nextra-primary-hue)100%_45%/var(--tw-text-opacity))] text-primary-600 no-underline hover:underline decoration-from-font [text-underline-position:from-font]" href={href} {...props}>{children}</Link>
         }
+    },
+    gitTimestamp: () => {
+        const router = useRouter();
+
+        const [commitData, setCommitData] = React.useState();
+        const [isLoading, setIsLoading] = React.useState(true);
+        const [error, setError] = React.useState();
+
+        React.useEffect(() => {
+            setError(false)
+            setIsLoading(true)
+            fetch(
+                `https://api.github.com/repos/Nekos-API/Nekos-API/commits?path=/docs/src/pages${
+                    ['/', '/docs'].includes(router.pathname) ?
+                        router.pathname + '/index.mdx' :
+                        router.pathname + ".mdx"
+                }`)
+                .then((data) => data.json())
+                .then((data) => {
+                    setCommitData(data)
+                    setIsLoading(false)
+                    setError(false)
+                })
+                .catch((e) => {
+                    setCommitData(null)
+                    setError(true)
+                    setIsLoading(false)
+                })
+        }, [router.asPath])
+
+        const Contributor = ({ username, image, url }) => {
+            return (
+                <Link href={url} className="relative flex flex-col items-center">
+                    <img src={image} className="h-7 w-7 object-cover block hover:scale-110 transition-all rounded-full peer" />
+                    <div className="absolute bottom-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 drop-shadow-md rounded mx-auto whitespace-nowrap flex flex-col items-center py-1 px-2 transition-all opacity-0 mb-0 peer-hover:opacity-100 peer-hover:mb-2 text-neutral-900 dark:text-[#f1f5f9] pointer-events-none">
+                        <span className="text-xs">{username}</span>
+                    </div>
+                </Link>
+            )
+        }
+
+        var contributors = []
+        var contributorIDs = []
+
+        var commitDates = []
+
+        if (commitData) {
+            for (const commit of commitData) {
+                const authorData = {
+                    username: commit.author.login,
+                    image: commit.author.avatar_url,
+                    url: commit.author.html_url
+                }
+
+                if (!contributorIDs.includes(commit.author.login)) {
+                    contributors.push(authorData)
+                    contributorIDs.push(commit.author.login)
+                }
+            }
+
+            commitDates = commitData.map((value, index) => value.commit.committer.date).sort(function(a, b) {
+                return Date.parse(a) > Date.parse(b);
+            });
+        }
+
+        return (
+            <div className="w-full text-left block">
+                <div className="flex flex-row gap-2 mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 mt-1">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                    </svg>
+                    <div className="flex flex-row gap-4 flex-wrap">
+                        {(!isLoading && !error) ? contributors.map((value, index) => {
+                            return <Contributor {...value} key={index} />
+                        }) : (
+                            <>...</>
+                        )}
+                    </div>
+                </div>
+                <div className="w-full text-left inline-flex flex-row gap-4 items-center">
+                    <div className="flex flex-row items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Created on {(!isLoading && !error) ? (
+                            new Date(commitDates[commitDates.length - 1])
+                        ).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : (
+                            <>...</>
+                        )}
+                    </div>
+                    <div className="flex flex-row items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                        </svg>
+                        Last updated on {(!isLoading && !error) ? (new Date(commitDates[0])).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : (
+                            <>...</>
+                        )}
+                    </div>
+                </div>
+            </div>
+        )
     }
 }

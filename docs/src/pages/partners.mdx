@@ -13,7 +13,8 @@ export function PartnerCard({
     name,
     description,
     color,
-    links
+    links,
+    isDiscordServer
 }) {
     return (
         <div className="w-full rounded-lg overflow-hidden bg-white dark:bg-neutral-900 relative border dark:border-0 border-neutral-200 drop-shadow-md">
@@ -45,10 +46,25 @@ export function PartnerCard({
                 </div>
                 <div className="flex flex-col items-center gap-2">
                     {links.map((value, index) => {
-                        return (
-                            <Link href={value.link} target="_blank" className="w-full">
+                        if (value.link) {
+                            return (
+                                <Link href={value.link} target="_blank" className="w-full">
+                                    <button
+                                        className={`rounded text-center w-full p-2 text-sm mt-2 hover:opacity-80 transition`}
+                                        style={{
+                                            backgroundColor: value.linkColor,
+                                            color: value.textColor,
+                                        }}
+                                    >
+                                        {value.linkText}
+                                    </button>
+                                </Link>
+                            )
+                        } else {
+                            return (
                                 <button
-                                    className={`rounded text-center w-full p-2 text-sm mt-2 hover:opacity-80 transition`}
+                                    className={`rounded text-center w-full p-2 text-sm mt-2 transition cursor-not-allowed`}
+                                    disabled={true}
                                     style={{
                                         backgroundColor: value.linkColor,
                                         color: value.textColor,
@@ -56,8 +72,8 @@ export function PartnerCard({
                                 >
                                     {value.linkText}
                                 </button>
-                            </Link>
-                        )
+                            )
+                        }
                     })}
                 </div>
             </div>
@@ -114,10 +130,10 @@ export function PartnerCard({
         color="#78B1E0"
         links={[
             {
-                link: "https://discord.gg/Wbhvnn546h",
+                link: null,
                 linkColor: "#78B1E0",
-                textColor: "white",
-                linkText: "Visit their Discord server"
+                textColor: "black",
+                linkText: "Coming soon!"
             }
         ]}
     />

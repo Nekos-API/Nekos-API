@@ -144,4 +144,46 @@ You can open a ticket in our Discord server or DM any of the moderators if you'd
 
 ## Getting started
 
-That's everything that you need to know (by now)! To start using the API, you can go to the [REST API Reference](/docs/rest-api/reference) section or to the [Getting Started](/docs/getting-started) page to start learning about the API and its structure.
+That's everything that you need to know (by now)! You can follow any of the links below, or go to the [next page](/docs/getting-started) to get started!
+
+export const ResourceCard = ({
+    icon,
+    title,
+    description,
+    url,
+}) => {
+    return (
+        <Link href={url} className="flex-1 overflow-hidden rounded flex flex-row relative items-stretch transition-all cursor-pointer border border-gray-200 bg-transparent no-underline shadow-sm shadow-gray-100 duration-200 dark:border-neutral-800 dark:shadow-none hover:border-gray-300 hover:bg-slate-50 hover:shadow-md hover:shadow-gray-100 dark:hover:border-neutral-700 dark:hover:bg-neutral-900 dark:hover:shadow-none">
+            <div className="w-2 h-full bg-[hsl(var(--nextra-primary-hue)100%_45%/var(--tw-text-opacity))]"></div>
+            <div className="flex-1 p-4">
+                <div className="mb-4 p-2 rounded-lg bg-gradient-to-br from-[hsl(var(--nextra-primary-hue)100%_45%/var(--tw-text-opacity))] to-[hsl(330,100%,50%)] w-fit">
+                    {icon}
+                </div>
+                <b className="text-xl block mb-2 text-slate-900 dark:text-slate-100">{title}</b>
+                <p className="text-slate-900 dark:text-neutral-400 leading-snug">{description}</p>
+            </div>
+        </Link>
+    )
+}
+
+<div className="flex flex-row gap-8 mt-8">
+    <ResourceCard
+        title="Getting Started"
+        description="
+Get started with our Anime Images and GIFs API now! Explore, create, and enjoy an immersive anime experience."
+        icon={(
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+            </svg>
+        )}
+        url="/docs/getting-started" />
+    <ResourceCard
+        title="Libraries"
+        description="Unleash our API wrappers for Python and JavaScript! Supercharge your anime integration now!"
+        icon={(
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+            </svg>
+        )}
+        url="/docs/libraries" />
+</div>

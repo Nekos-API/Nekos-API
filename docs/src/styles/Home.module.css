@@ -82,10 +82,10 @@
     }
 
     .discordBanner {
-        @apply relative mt-8 rounded overflow-hidden w-fit block h-16;
+        @apply relative mt-8 rounded overflow-hidden w-fit block h-24;
     }
     .discordBanner > img {
-        @apply h-16;
+        @apply h-24;
     }
     .patreonLink {
         @apply relative mt-8 block h-10;
