@@ -63,7 +63,7 @@ export default {
             <meta property="og:url" content={`https://nekosapi.com${asPath}`} />
             <meta property="og:title" content={frontMatter.title || 'Nekos API - Unleash the Meow-nificent Power of +17.5k Anime Images, GIFs, and More!'} />
             <meta property="og:description" content={frontMatter.description || 'Discover +13.5k high-quality anime images & GIFs for UwU-filled adventures. Explore artists, categories, and adorable characters. Embark on purrfect anime journeys now!'} />
-            <meta property="og:image" content="/branding/banner.png" />
+            <meta property="og:image" content="/imgs/banners/banner.jfif" />
 
             <meta name="description" content={frontMatter.description || "Discover +13.5k high-quality anime images & GIFs for UwU-filled adventures. Explore artists, categories, and adorable characters. Embark on purrfect anime journeys now!"} />
             <meta name="theme-color" content="#ff0055" />
