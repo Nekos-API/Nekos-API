@@ -80,7 +80,7 @@ export default {
         dark: 340,
     },
     chat: {
-        "link": "https://discord.gg/b9Fv3kEfXc"
+        "link": "https://discord.gg/PgQnuM3YnM"
     },
     banner: {
         "key": "WebSockets-API-released",
@@ -311,10 +311,9 @@ export default {
             setError(false)
             setIsLoading(true)
             fetch(
-                `https://api.github.com/repos/Nekos-API/Nekos-API/commits?path=/docs/src/pages${
-                    ['/', '/docs'].includes(router.pathname) ?
-                        router.pathname + '/index.mdx' :
-                        router.pathname + ".mdx"
+                `https://api.github.com/repos/Nekos-API/Nekos-API/commits?path=/docs/src/pages${['/', '/docs'].includes(router.pathname) ?
+                    router.pathname + '/index.mdx' :
+                    router.pathname + ".mdx"
                 }`)
                 .then((data) => data.json())
                 .then((data) => {
@@ -359,7 +358,7 @@ export default {
                 }
             }
 
-            commitDates = commitData.map((value, index) => value.commit.committer.date).sort(function(a, b) {
+            commitDates = commitData.map((value, index) => value.commit.committer.date).sort(function (a, b) {
                 return Date.parse(a) > Date.parse(b);
             });
         }

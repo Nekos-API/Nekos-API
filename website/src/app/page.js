@@ -27,7 +27,7 @@ export default function Home() {
         if (!localStorage.getItem("betaMessage")) {
             setBetaMessage(true);
         }
-    }, [])
+    }, []);
 
     return (
         <div className="py-8 grid grid-cols-[5fr_2fr] gap-12 max-w-5xl relative">
@@ -44,21 +44,52 @@ export default function Home() {
                     <div className="bg-crayola-350 flex flex-row p-4 gap-4 text-white rounded-lg w-full -mt-4 mb-8">
                         <ExclamationCircleIcon className="h-6 w-6" />
                         <div className="flex flex-col gap-2 flex-1">
-                            <div className="font-bold text-xl">Beta version ahead!</div>
+                            <div className="font-bold text-xl">
+                                Beta version ahead!
+                            </div>
                             <p>
-                                Hello, and welcome to the Nekos Web beta version! As it name says, this is a beta version. This means that most things will not be working properly or completely missing. This website was created to allow developers to create applications to make use of Nekos API and will probably stay like that while we finish the beta version of Nekos API.
+                                Hello, and welcome to the Nekos Web beta
+                                version! As it name says, this is a beta
+                                version. This means that most things will not be
+                                working properly or completely missing. This
+                                website was created to allow developers to
+                                create applications to make use of Nekos API and
+                                will probably stay like that while we finish the
+                                beta version of Nekos API.
                                 <br /> <br />
-                                We are always open to contributions and if you cannot wait to see this project finished you can always make your PR to our <Link href="https://github.com/Nekos-API/Nekos-API" className="underline hover:decoration-transparent">GitHub repository</Link>.
+                                We are always open to contributions and if you
+                                cannot wait to see this project finished you can
+                                always make your PR to our{" "}
+                                <Link
+                                    href="https://github.com/Nekos-API/Nekos-API"
+                                    className="underline hover:decoration-transparent"
+                                >
+                                    GitHub repository
+                                </Link>
+                                .
                                 <br /> <br />
-                                This does not mean that the project is abandoned or that it will not be continued. We will continue with this website as soon as a stable version of Nekos API is released.
+                                This does not mean that the project is abandoned
+                                or that it will not be continued. We will
+                                continue with this website as soon as a stable
+                                version of Nekos API is released.
                             </p>
                             <div className="flex flex-row items-center mt-2 gap-2">
-                                <button className="text-crayola-350 bg-white py-3 px-4 rounded-lg leading-none w-fit" onClick={() => {
-                                    localStorage.setItem("betaMessage", "shown");
-                                    setBetaMessage(false);
-                                }}>I understand, now close this</button>
+                                <button
+                                    className="text-crayola-350 bg-white py-3 px-4 rounded-lg leading-none w-fit"
+                                    onClick={() => {
+                                        localStorage.setItem(
+                                            "betaMessage",
+                                            "shown"
+                                        );
+                                        setBetaMessage(false);
+                                    }}
+                                >
+                                    I understand, now close this
+                                </button>
                                 <Link href="https://github.com/Nekos-API/Nekos-API">
-                                    <button className="text-white bg-crayola-300 py-3 px-4 rounded-lg leading-none w-fit">GitHub repository</button>
+                                    <button className="text-white bg-crayola-300 py-3 px-4 rounded-lg leading-none w-fit">
+                                        GitHub repository
+                                    </button>
                                 </Link>
                             </div>
                         </div>
@@ -119,7 +150,7 @@ export default function Home() {
                     </Link>{" "}
                     &middot;
                     <Link
-                        href="https://discord.gg/b9Fv3kEfXc"
+                        href="https://discord.gg/PgQnuM3YnM"
                         className="hover:underline"
                     >
                         Discord
@@ -177,10 +208,18 @@ function PopularImages() {
                         <div>Error</div>
                     ) : (
                         <>
-                            <div className={`${styles.imgsGridCol} imgs-grid-col--1`}></div>
-                            <div className={`${styles.imgsGridCol} imgs-grid-col--2`}></div>
-                            <div className={`${styles.imgsGridCol} imgs-grid-col--3 hidden sm:block`}></div>
-                            <div className={`${styles.imgsGridCol} imgs-grid-col--4 hidden lg:block`}></div>
+                            <div
+                                className={`${styles.imgsGridCol} imgs-grid-col--1`}
+                            ></div>
+                            <div
+                                className={`${styles.imgsGridCol} imgs-grid-col--2`}
+                            ></div>
+                            <div
+                                className={`${styles.imgsGridCol} imgs-grid-col--3 hidden sm:block`}
+                            ></div>
+                            <div
+                                className={`${styles.imgsGridCol} imgs-grid-col--4 hidden lg:block`}
+                            ></div>
                             {data.data.map((value, index) => {
                                 return (
                                     <ImageComponent
