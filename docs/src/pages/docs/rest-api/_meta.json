@@ -4,5 +4,9 @@
     "images": "Images",
     "artists": "Artists",
     "characters": "Characters",
-    "categories": "Categories"
+    "categories": "Categories",
+    "users": "Users",
+    "lists": "Lists",
+    "applications": "Applications",
+    "webhooks": "Webhooks"
 }
