@@ -1,7 +1,331 @@
-import { Callout } from 'nextra-theme-docs';
+import { Callout } from "nextra-theme-docs";
+import dedent from "dedent-js";
+
+import { APIRequest } from "../../../../components/apirequest";
+import {
+    stringify,
+    user_public_schema,
+    user_private_schema,
+    pagination,
+    resource,
+} from "../../../../constants/schemas";
 
 # User Resource
 
 <Callout>
-    We're still working on this page. You can help us by editing it on our GitHub repo (click the **Edit this page** button below the table of contents).
+    We're still working on this page. You can help us by editing it on our
+    GitHub repo (click the **Edit this page** button below the table of
+    contents).
 </Callout>
+
+<Callout type="info">
+    Authorization is not documented here! Go to
+    [Authorization](/docs/rest-api/authorization) to learn how to get an access
+    token.
+</Callout>
+
+## Search for a User
+
+<APIRequest
+    endpoint="/users"
+    title="Search for a user"
+    description="Search for a user using a variety of different filters."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "include",
+            type: "List of strings",
+            description:
+                "The related resources to include in the response.\n\nPossible values: `discord`, `liked-images`, `saved-images`, `followed`, `following`, `followed-artists`, `followed-characters`, `followed-categories`",
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(pagination([user_public_schema])),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+## Get logged in user
+
+<APIRequest
+    endpoint="/users/@me"
+    title="Get logged in user"
+    description="Get the user that is currently logged in."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "include",
+            type: "List of strings",
+            description:
+                "The related resources to include in the response.\n\nPossible values: `discord`, `liked-images`, `saved-images`, `followed`, `following`, `followed-artists`, `followed-characters`, `followed-categories`",
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource(user_private_schema)),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+## Upload a new profile avatar
+
+<APIRequest
+    method="POST"
+    endpoint="/users/@me/avatar"
+    title="Upload a new profile avatar"
+    description="Upload a new avatar image for the logged in user. Max 2MB files are allowed in `jpeg`, `png`, `webp`, `jfif`, `avif`, `bmp`."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+    ]}
+    parameters={[]}
+    responses={[
+        {
+            code: 204,
+            name: "Success",
+            description: "The request was completed successfully.",
+        },
+        {
+            code: 400,
+            name: "Unauthorized",
+            description: "You don't have permission to update this file.",
+        },
+        {
+            code: 400,
+            name: "File size exceeded",
+            description: "The image file uploaded is too big (max 2MB).",
+        },
+        {
+            code: 400,
+            name: "Invalid file format",
+            description: "The image file format is not supported.",
+        },
+    ]}
+/>
+
+## Get a user by it's ID
+
+<APIRequest
+    endpoint="/users/:id"
+    title="Get a user by it's ID"
+    description="Get a user's details by it's resource ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "include",
+            type: "List of strings",
+            description:
+                "The related resources to include in the response.\n\nPossible values: `discord`, `liked-images`, `saved-images`, `followed`, `following`, `followed-artists`, `followed-characters`, `followed-categories`",
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+        {
+            name: "id",
+            description: "The ID user's ID.",
+            required: true,
+            location: "path",
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource(user_public_schema)),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+## Update a user's details
+
+<APIRequest
+    method="PATCH"
+    endpoint="/users/:id"
+    title="Update a user's details"
+    description="Update a user's details by it's resource ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            description: "The ID of the user.",
+            required: true,
+            location: "path",
+        },
+        {
+            name: "type",
+            type: "Literal 'user'",
+            description: "The resource type. Must be set to 'user'.",
+            required: true,
+        },
+        {
+            name: "attributes.username",
+            type: "String",
+            description: "The updated username of the user.",
+            required: false,
+        },
+        {
+            name: "attributes.name.first",
+            type: "String?",
+            description: "The updated first name of the user.",
+            required: false,
+        },
+        {
+            name: "attributes.name.last",
+            type: "String?",
+            description: "The updated last name of the user.",
+            required: false,
+        },
+        {
+            name: "attributes.nickname",
+            type: "String?",
+            description: "The updated nickname of the user.",
+            required: false,
+        },
+        {
+            name: "attributes.biography",
+            type: "String?",
+            description: "The updated biography of the user.",
+            required: false,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource(user_private_schema)),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+<APIRequest
+    method="PATCH"
+    endpoint="/users/@me"
+    title="Update the logged in user's details"
+    description="Update the logged in user's details."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "type",
+            type: "Literal 'user'",
+            description: "The resource type. Must be set to 'user'.",
+            required: true,
+        },
+        {
+            name: "attributes.username",
+            type: "String",
+            description: "The updated username of the user.",
+            required: false,
+        },
+        {
+            name: "attributes.name.first",
+            type: "String?",
+            description: "The updated first name of the user.",
+            required: false,
+        },
+        {
+            name: "attributes.name.last",
+            type: "String?",
+            description: "The updated last name of the user.",
+            required: false,
+        },
+        {
+            name: "attributes.nickname",
+            type: "String?",
+            description: "The updated nickname of the user.",
+            required: false,
+        },
+        {
+            name: "attributes.biography",
+            type: "String?",
+            description: "The updated biography of the user.",
+            required: false,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource(user_private_schema)),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>

@@ -357,7 +357,7 @@ class UserRelationshipsView(views.RelationshipView):
         Verifies that the request is not trying to access private
         endpoints.
         """
-        if related_field in ["saved-images"]:
+        if related_field in ["saved-images", "discord"]:
             if not request.user.is_authenticated:
                 raise exceptions.NotAuthenticated()
             elif str(request.user.pk) != str(pk):
