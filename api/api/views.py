@@ -10,7 +10,6 @@ from django_ratelimit.decorators import ratelimit
 # Create your views here.
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="get")
 class EndpointsView(APIView):
     """
     Endpoint: /v2

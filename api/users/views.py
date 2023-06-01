@@ -79,12 +79,6 @@ def validate_recaptcha(request) -> bool:
     return r.json()["success"]
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_related")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="update")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="follow")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unfollow")
 class UserView(views.ModelViewSet):
     queryset = User.objects.all()
     select_for_includes = {"discord": ["discord"]}
@@ -297,7 +291,6 @@ class UserAdminViewSet(ViewSet):
         )
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="5/m"), name="put")
 class UserAvatarUploadView(APIView):
     """
     This view handles the user avatar image upload.
@@ -337,7 +330,6 @@ class UserAvatarUploadView(APIView):
         return HttpResponse("", status=204)
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="get")
 class UserRelationshipsView(views.RelationshipView):
     queryset = User.objects.all()
 
@@ -367,8 +359,12 @@ class UserRelationshipsView(views.RelationshipView):
 
         return super().get(request, pk=pk, related_field=related_field, *args, **kwargs)
 
+    def get_permissions(self):
+        if self.request.method != "GET":
+            return [permissions.IsAdminUser]
+        return []
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="post")
+
 class AuthorizationWithCaptchaView(AuthorizationView):
     def post(self, request, *args, **kwargs):
         """

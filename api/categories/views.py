@@ -14,11 +14,6 @@ from .serializers import CategorySerializer
 # Create your views here.
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_related")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="follow")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unfollow")
 class CategoryViewSet(views.ModelViewSet):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
@@ -92,6 +87,10 @@ class CategoryViewSet(views.ModelViewSet):
         return HttpResponse("", status=204)
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="get")
 class CategoryRelationshipsView(views.RelationshipView):
     queryset = Category.objects.all()
+
+    def get_permissions(self):
+        if self.request.method != "GET":
+            return [permissions.IsAdminUser]
+        return []

@@ -431,6 +431,11 @@ class ImageRelationshipsView(views.RelationshipView):
             verification_status=Image.VerificationStatus.VERIFIED
         )
 
+    def get_permissions(self):
+        if self.request.method != "GET":
+            return [permissions.IsAdminUser]
+        return []
+
 
 class ImageEmbedView(View):
     @method_decorator(xframe_options_exempt)

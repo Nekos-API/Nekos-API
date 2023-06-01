@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 
-from rest_framework import serializers, permissions
+from rest_framework import serializers, permissions, exceptions
 from rest_framework.response import Response
 from rest_framework_json_api import views
 
@@ -18,16 +18,6 @@ from .serializers import ListSerializer
 # Create your views here.
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_related")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="create")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="update")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="delete")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="follow")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unfollow")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="add_images")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="remove_images")
 class ListViewSet(views.ModelViewSet):
     queryset = List.objects.all()
     serializer_class = ListSerializer
@@ -124,6 +114,29 @@ class ListViewSet(views.ModelViewSet):
         return HttpResponse("", status=204)
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="get")
 class ListRelationshipsView(views.RelationshipView):
     queryset = List.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated and not request.user.is_superuser:
+            obj = self.get_object()
+            if obj.user != request.user:
+                raise exceptions.PermissionDenied()
+
+        return super().post(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and not request.user.is_superuser:
+            obj = self.get_object()
+            if obj.user != request.user:
+                raise exceptions.PermissionDenied()
+
+        return super().patch(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        if request.user.is_authenticated and not request.user.is_superuser:
+            obj = self.get_object()
+            if obj.user != request.user:
+                raise exceptions.PermissionDenied()
+
+        return super().delete(request, *args, **kwargs)

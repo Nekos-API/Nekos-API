@@ -154,3 +154,8 @@ class GifRelationshipsView(views.RelationshipView):
         if self.request.user.is_authenticated and self.request.user.is_staff:
             return Gif.objects.all()
         return Gif.objects.filter(verification_status=Gif.VerificationStatus.VERIFIED)
+
+    def get_permissions(self):
+        if self.request.method != "GET":
+            return [permissions.IsAdminUser]
+        return []

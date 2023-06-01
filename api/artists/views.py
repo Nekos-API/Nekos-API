@@ -14,11 +14,6 @@ from .serializers import ArtistSerializer
 # Create your views here.
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_related")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="follow")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unfollow")
 class ArtistViewSet(views.ModelViewSet):
     serializer_class = ArtistSerializer
     queryset = Artist.objects.all()
@@ -91,6 +86,10 @@ class ArtistViewSet(views.ModelViewSet):
         return HttpResponse("", status=204)
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="get")
 class ArtistRelationshipsView(views.RelationshipView):
     queryset = Artist.objects.all()
+
+    def get_permissions(self):
+        if self.request.method != "GET":
+            return [permissions.IsAdminUser]
+        return []

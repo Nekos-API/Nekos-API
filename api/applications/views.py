@@ -17,11 +17,6 @@ from .serializers import ApplicationSerializer, ApplicationWithSecretSerializer
 # Create your views here.
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="update")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="create")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="delete")
 class ApplicationView(views.ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
@@ -98,7 +93,6 @@ class ApplicationView(views.ModelViewSet):
         return HttpResponse("", status=204)
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="5/m"), name="put")
 class UploadApplicationIconView(APIView):
     """
     This view handles application icon upload.

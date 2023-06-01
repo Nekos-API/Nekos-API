@@ -12,12 +12,6 @@ from webhooks.serializers import WebhookSerializer
 # Create your views here.
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_related")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="update")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="delete")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="create")
 class WebhookViewSet(views.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = WebhookSerializer
@@ -39,7 +33,6 @@ class WebhookViewSet(views.ModelViewSet):
         return Response(data="", status=204)
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="get")
 class WebhookRelationshipsView(views.RelationshipView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = WebhookSerializer
@@ -48,3 +41,8 @@ class WebhookRelationshipsView(views.RelationshipView):
         if self.request.user.is_superuser:
             return Webhook.objects.all()
         return Webhook.objects.filter(user=self.request.user)
+
+    def get_permissions(self):
+        if self.request.method != "GET":
+            return [permissions.IsAdminUser]
+        return []

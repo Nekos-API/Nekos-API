@@ -8,8 +8,8 @@ from .models import List
 class ListAdmin(admin.ModelAdmin):
     list_display = ("name", "user", "is_private")
     list_filter = ("is_private",)
-    filter_horizontal = ("images",)
     raw_id_fields = ("user",)
+    autocomplete_fields = ("images",)
 
 
 admin.site.register(List, ListAdmin)
