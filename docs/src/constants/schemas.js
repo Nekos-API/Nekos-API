@@ -32,6 +32,11 @@ export const discord_ref = {
     id: "String",
 };
 
+export const list_ref = {
+    type: "list",
+    id: "String"
+}
+
 export const user_public_schema = {
     type: "user",
     id: "UUID",
@@ -56,9 +61,9 @@ export const user_public_schema = {
             },
             data: [user_ref],
             links: {
-                self: "https://api.nekosapi.com/v2/users/<uuid:pk>/relationships/following",
+                self: "https://api.nekosapi.com/v2/users/:id/relationships/following",
                 related:
-                    "https://api.nekosapi.com/v2/users/<uuid:pk>/following",
+                    "https://api.nekosapi.com/v2/users/:id/following",
             },
         },
         followers: {
@@ -67,9 +72,9 @@ export const user_public_schema = {
             },
             data: [user_ref],
             links: {
-                self: "https://api.nekosapi.com/v2/users/<uuid:pk>/relationships/followers",
+                self: "https://api.nekosapi.com/v2/users/:id/relationships/followers",
                 related:
-                    "https://api.nekosapi.com/v2/users/<uuid:pk>/followers",
+                    "https://api.nekosapi.com/v2/users/:id/followers",
             },
         },
         followedArtists: {
@@ -78,9 +83,9 @@ export const user_public_schema = {
             },
             data: [artist_ref],
             links: {
-                self: "https://api.nekosapi.com/v2/users/<uuid:pk>/relationships/followed-artists",
+                self: "https://api.nekosapi.com/v2/users/:id/relationships/followed-artists",
                 related:
-                    "https://api.nekosapi.com/v2/users/<uuid:pk>/followed-artists",
+                    "https://api.nekosapi.com/v2/users/:id/followed-artists",
             },
         },
         followedCharacters: {
@@ -89,9 +94,9 @@ export const user_public_schema = {
             },
             data: [character_ref],
             links: {
-                self: "https://api.nekosapi.com/v2/users/<uuid:pk>/relationships/followed-characters",
+                self: "https://api.nekosapi.com/v2/users/:id/relationships/followed-characters",
                 related:
-                    "https://api.nekosapi.com/v2/users/<uuid:pk>/followed-characters",
+                    "https://api.nekosapi.com/v2/users/:id/followed-characters",
             },
         },
         followedCategories: {
@@ -100,9 +105,9 @@ export const user_public_schema = {
             },
             data: [category_ref],
             links: {
-                self: "https://api.nekosapi.com/v2/users/<uuid:pk>/relationships/followed-categories",
+                self: "https://api.nekosapi.com/v2/users/:id/relationships/followed-categories",
                 related:
-                    "https://api.nekosapi.com/v2/users/<uuid:pk>/followed-categories",
+                    "https://api.nekosapi.com/v2/users/:id/followed-categories",
             },
         },
         likedImages: {
@@ -111,14 +116,14 @@ export const user_public_schema = {
             },
             data: [image_ref],
             links: {
-                self: "https://api.nekosapi.com/v2/users/<uuid:pk>/relationships/liked-images",
+                self: "https://api.nekosapi.com/v2/users/:id/relationships/liked-images",
                 related:
-                    "https://api.nekosapi.com/v2/users/<uuid:pk>/liked-images",
+                    "https://api.nekosapi.com/v2/users/:id/liked-images",
             },
         },
     },
     links: {
-        self: "https://api.nekosapi.com/v2/users/<uuid:pk>",
+        self: "https://api.nekosapi.com/v2/users/:id",
     },
 };
 
@@ -152,9 +157,9 @@ export const user_private_schema = {
             },
             data: [user_ref],
             links: {
-                self: "https://api.nekosapi.com/v2/users/<uuid:pk>/relationships/following",
+                self: "https://api.nekosapi.com/v2/users/:id/relationships/following",
                 related:
-                    "https://api.nekosapi.com/v2/users/<uuid:pk>/following",
+                    "https://api.nekosapi.com/v2/users/:id/following",
             },
         },
         followers: {
@@ -163,9 +168,9 @@ export const user_private_schema = {
             },
             data: [user_ref],
             links: {
-                self: "https://api.nekosapi.com/v2/users/<uuid:pk>/relationships/followers",
+                self: "https://api.nekosapi.com/v2/users/:id/relationships/followers",
                 related:
-                    "https://api.nekosapi.com/v2/users/<uuid:pk>/followers",
+                    "https://api.nekosapi.com/v2/users/:id/followers",
             },
         },
         followedArtists: {
@@ -174,9 +179,9 @@ export const user_private_schema = {
             },
             data: [artist_ref],
             links: {
-                self: "https://api.nekosapi.com/v2/users/<uuid:pk>/relationships/followed-artists",
+                self: "https://api.nekosapi.com/v2/users/:id/relationships/followed-artists",
                 related:
-                    "https://api.nekosapi.com/v2/users/<uuid:pk>/followed-artists",
+                    "https://api.nekosapi.com/v2/users/:id/followed-artists",
             },
         },
         followedCharacters: {
@@ -185,9 +190,9 @@ export const user_private_schema = {
             },
             data: [character_ref],
             links: {
-                self: "https://api.nekosapi.com/v2/users/<uuid:pk>/relationships/followed-characters",
+                self: "https://api.nekosapi.com/v2/users/:id/relationships/followed-characters",
                 related:
-                    "https://api.nekosapi.com/v2/users/<uuid:pk>/followed-characters",
+                    "https://api.nekosapi.com/v2/users/:id/followed-characters",
             },
         },
         followedCategories: {
@@ -196,9 +201,9 @@ export const user_private_schema = {
             },
             data: [category_ref],
             links: {
-                self: "https://api.nekosapi.com/v2/users/<uuid:pk>/relationships/followed-categories",
+                self: "https://api.nekosapi.com/v2/users/:id/relationships/followed-categories",
                 related:
-                    "https://api.nekosapi.com/v2/users/<uuid:pk>/followed-categories",
+                    "https://api.nekosapi.com/v2/users/:id/followed-categories",
             },
         },
         likedImages: {
@@ -207,9 +212,9 @@ export const user_private_schema = {
             },
             data: [image_ref],
             links: {
-                self: "https://api.nekosapi.com/v2/users/<uuid:pk>/relationships/liked-images",
+                self: "https://api.nekosapi.com/v2/users/:id/relationships/liked-images",
                 related:
-                    "https://api.nekosapi.com/v2/users/<uuid:pk>/liked-images",
+                    "https://api.nekosapi.com/v2/users/:id/liked-images",
             },
         },
         savedImages: {
@@ -218,21 +223,21 @@ export const user_private_schema = {
             },
             data: [image_ref],
             links: {
-                self: "https://api.nekosapi.com/v2/users/<uuid:pk>/relationships/saved-images",
+                self: "https://api.nekosapi.com/v2/users/:id/relationships/saved-images",
                 related:
-                    "https://api.nekosapi.com/v2/users/<uuid:pk>/saved-images",
+                    "https://api.nekosapi.com/v2/users/:id/saved-images",
             },
         },
         discord: {
             links: {
-                self: "https://api.nekosapi.com/v2/users/<uuid:pk>/relationships/discord",
-                related: "https://api.nekosapi.com/v2/users/<uuid:pk>/discord",
+                self: "https://api.nekosapi.com/v2/users/:id/relationships/discord",
+                related: "https://api.nekosapi.com/v2/users/:id/discord",
             },
             data: discord_ref,
         },
     },
     links: {
-        self: "https://api.nekosapi.com/v2/users/<uuid:pk>",
+        self: "https://api.nekosapi.com/v2/users/:id",
     },
 };
 
@@ -425,13 +430,10 @@ export const category_schema = {
             meta: {
                 count: "Integer",
             },
-            data: [
-                image_ref
-            ],
+            data: [image_ref],
             links: {
                 self: "https://api.nekosapi.com/v2/categories/:id/relationships/images",
-                related:
-                    "https://api.nekosapi.com/v2/categories/:id/images",
+                related: "https://api.nekosapi.com/v2/categories/:id/images",
             },
         },
         followers: {
@@ -441,13 +443,63 @@ export const category_schema = {
             data: [user_ref],
             links: {
                 self: "https://api.nekosapi.com/v2/categories/:id/relationships/followers",
-                related:
-                    "https://api.nekosapi.com/v2/categories/:id/followers",
+                related: "https://api.nekosapi.com/v2/categories/:id/followers",
             },
         },
     },
     links: {
         self: "https://api.nekosapi.com/v2/categories/:id",
+    },
+};
+
+export const list_schema = {
+    type: "list",
+    id: "UUID",
+    attributes: {
+        name: "String",
+        description: "String?",
+        isPrivate: "Boolean",
+        timestamps: {
+            created: "ISO 8601",
+            updated: "ISO 8601",
+        },
+    },
+    relationships: {
+        user: {
+            links: {
+                self: "https://api.nekosapi.com/v2/lists/:id/relationships/user",
+                related:
+                    "https://api.nekosapi.com/v2/lists/:id/user",
+            },
+            data: user_ref,
+        },
+        images: {
+            meta: {
+                count: "Integer",
+            },
+            data: [image_ref],
+            links: {
+                self: "https://api.nekosapi.com/v2/lists/:id/relationships/images",
+                related:
+                    "https://api.nekosapi.com/v2/lists/:id/images",
+            },
+        },
+        followers: {
+            meta: {
+                count: "Integer",
+            },
+            data: [
+                user_ref
+            ],
+            links: {
+                self: "https://api.nekosapi.com/v2/lists/:id/relationships/followers",
+                related:
+                    "https://api.nekosapi.com/v2/lists/:id/followers",
+            },
+        },
+    },
+    links: {
+        self: "https://api.nekosapi.com/v2/lists/:id",
     },
 };
 

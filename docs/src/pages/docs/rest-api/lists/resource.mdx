@@ -1,7 +1,273 @@
-import { Callout } from 'nextra-theme-docs';
+import { Callout } from "nextra-theme-docs";
+
+import { APIRequest } from "../../../../components/apirequest";
+import {
+    stringify,
+    list_schema,
+    pagination,
+    resource,
+} from "../../../../constants/schemas";
 
 # List Resource
 
-<Callout>
-    We're still working on this page. You can help us by editing it on our GitHub repo (click the **Edit this page** button below the table of contents).
+<Callout type="info">
+    Authorization is not documented here! Go to
+    [Authorization](/docs/rest-api/authorization) to learn how to get an access
+    token.
 </Callout>
+
+## Search for a list
+
+<APIRequest
+    endpoint="/lists"
+    title="Search for a list"
+    description="Search for a list using a variety of different filters."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "include",
+            type: "List of strings",
+            description:
+                "The related resources to include in the response.\n\nPossible values: `images`, `followers`, `user`",
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(pagination([list_schema])),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+## Create a new list
+
+<APIRequest
+    method="POST"
+    endpoint="/lists"
+    title="Create a new list"
+    description="Create a new list owned by the logged in user."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID",
+            description: "The ID of the list.",
+            required: true,
+        },
+        {
+            name: "type",
+            type: "Literal 'list'",
+            description: "The resource type. Must be set to 'list'.",
+            required: true,
+        },
+        {
+            name: "attributes.name",
+            type: "String",
+            description: "The name of the list.",
+            required: true,
+        },
+        {
+            name: "attributes.description",
+            type: "String",
+            description: "The description of the list.",
+            required: false,
+        },
+        {
+            name: "attributes.isPrivate",
+            type: "Boolean",
+            description: "Indicates whether the list is private or not.",
+            required: true,
+        },
+        {
+            name: "relationships.images.data[]",
+            type: "Array",
+            description:
+                "The images the list will contain. Can be updated later.",
+            required: false,
+        },
+        {
+            name: "relationships.images.data[].type",
+            type: "Literal 'image'",
+            description: "The type of the resource. In this case, `image`.",
+            required: true,
+        },
+        {
+            name: "relationships.images.data[].id",
+            type: "UUID",
+            description: "The ID of the image to add to the list.",
+            required: true,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource(list_schema)),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+## Get a list by it's ID
+
+<APIRequest
+    endpoint="/lists/:id"
+    title="Get a list by it's ID"
+    description="Get a list by it's ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: false,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID",
+            description: "The ID of the list.",
+            required: true,
+            location: "path",
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource(list_schema)),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+## Update a list by it's ID
+
+<APIRequest
+    endpoint="/lists/:id"
+    title="Update a list by it's ID"
+    description="Update a list by it's ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: false,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID",
+            description: "The ID of the list.",
+            required: true,
+            location: "path",
+        },
+        {
+            name: "id",
+            type: "UUID",
+            description: "The ID of the list.",
+            required: true,
+        },
+        {
+            name: "type",
+            type: "Literal 'list'",
+            description: "The resource type. Must be set to 'list'.",
+            required: true,
+        },
+        {
+            name: "attributes.name",
+            type: "String",
+            description: "The updated name of the list.",
+            required: false,
+        },
+        {
+            name: "attributes.description",
+            type: "String",
+            description: "The updated description of the list.",
+            required: false,
+        },
+        {
+            name: "attributes.isPrivate",
+            type: "Boolean",
+            description:
+                "Indicates whether the list should be updated as private or public.",
+            required: false,
+        },
+        {
+            name: "relationships.images.data[]",
+            type: "Array",
+            description:
+                "The images the list will contain. Can be updated later.",
+            required: false,
+        },
+        {
+            name: "relationships.images.data[].type",
+            type: "Literal 'image'",
+            description: "The type of the resource. In this case, `image`.",
+            required: true,
+        },
+        {
+            name: "relationships.images.data[].id",
+            type: "UUID",
+            description: "The ID of the image to add to the list.",
+            required: true,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource(list_schema)),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>

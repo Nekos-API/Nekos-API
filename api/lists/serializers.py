@@ -42,6 +42,7 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
         queryset=User.objects,
         related_link_view_name="list-related",
         self_link_view_name="list-relationships",
+        read_only=True
     )
     images = relations.ResourceRelatedField(
         queryset=Image.objects,
