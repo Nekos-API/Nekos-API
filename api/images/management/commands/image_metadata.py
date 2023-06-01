@@ -11,7 +11,7 @@ class Command(BaseCommand):
         Loads metadata to images
         """
 
-        images = Image.objects.filter(Q(mimetype__isnull=True) | Q(file_size__isnull=True)).exclude(Q(file__isnull=True) | Q(file=""))
+        images = Image.objects.filter(Q(mimetype__isnull=True) or Q(file_size__isnull=True)).exclude(Q(file__isnull=True) or Q(file=""))
         
         total_images = images.count()
         j = 1

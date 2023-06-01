@@ -56,7 +56,7 @@ class Image(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     file = ResizedImageField(
-        upload_to=FilePattern(filename_pattern="uploads/images/{uuid:base32}{ext}")
+        upload_to=FilePattern(filename_pattern="images/{uuid:base32}{ext}")
     )
 
     title = models.CharField(max_length=100)

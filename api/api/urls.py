@@ -23,9 +23,10 @@ urlpatterns = [
     path("v2/", include("users.urls")),
     path("v2/", include("applications.urls")),
     path("v2/", include("webhooks.urls")),
+    path("v2/", include("gifs.urls")),
 ]
 
 handler400 = error_400
 handler403 = error_403
 handler404 = error_404
-# handler500 = error_500
+handler500 = error_500

@@ -24,20 +24,6 @@ from .serializers import ImageSerializer
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="list")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_related")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="retrieve_random")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="create")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="update")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="delete")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="like")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unlike")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="save")
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="unsave")
-@method_decorator(
-    ratelimit(group="api", key="ip", rate="3/s"), name="verification_status"
-)
 class ImagesViewSet(views.ModelViewSet):
     serializer_class = ImageSerializer
     filterset_fields = {
@@ -56,7 +42,7 @@ class ImagesViewSet(views.ModelViewSet):
         "height": ("exact", "lt", "lte", "gt", "gte"),
         "width": ("exact", "lt", "lte", "gt", "gte"),
         "aspect_ratio": ("exact", "startswith", "endswith", "regex"),
-        "orientation": ("iexact", "isnull"),
+        "orientation": ("exact", "iexact", "isnull"),
         "is_original": ("exact", "isnull"),
         "verification_status": (
             "exact",
@@ -79,6 +65,83 @@ class ImagesViewSet(views.ModelViewSet):
             "iregex",
         ),
         "source_url": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "isnull",
+            "regex",
+            "iregex",
+        ),
+        "artist__name": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "isnull",
+            "regex",
+            "iregex",
+        ),
+        "categories__name": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "isnull",
+            "regex",
+            "iregex",
+        ),
+        "characters__first_name": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "isnull",
+            "regex",
+            "iregex",
+        ),
+        "characters__last_name": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "isnull",
+            "regex",
+            "iregex",
+        ),
+        "characters__gender": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "isnull",
+            "regex",
+            "iregex",
+        ),
+        "characters__species": (
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+            "isnull",
+            "regex",
+            "iregex",
+        ),
+        "characters__nationality": (
             "exact",
             "iexact",
             "contains",
@@ -298,7 +361,6 @@ class ImagesViewSet(views.ModelViewSet):
         return HttpResponse("", status=204)
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="5/m"), name="put")
 class UploadImageFileView(APIView):
     """
     This view handles the image file upload.
@@ -361,7 +423,6 @@ class UploadImageFileView(APIView):
         return HttpResponse("", status=204)
 
 
-@method_decorator(ratelimit(group="api", key="ip", rate="3/s"), name="get")
 class ImageRelationshipsView(views.RelationshipView):
     def get_queryset(self, *args, **kwargs):
         if self.request.user.is_authenticated and self.request.user.is_staff:
@@ -372,7 +433,6 @@ class ImageRelationshipsView(views.RelationshipView):
 
 
 class ImageEmbedView(View):
-
     @method_decorator(xframe_options_exempt)
     def get(self, request, pk):
         """
