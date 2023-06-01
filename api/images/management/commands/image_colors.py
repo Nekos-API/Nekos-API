@@ -16,8 +16,8 @@ class Command(BaseCommand):
         Sets the color palette of an image.
         """
         images = Image.objects.filter(
-            Q(dominant_color__isnull=True) | Q(palette__isnull=True)
-        ).exclude(Q(file="") | Q(file__isnull=True))
+            Q(dominant_color__isnull=True) or Q(palette__isnull=True)
+        ).exclude(Q(file="") or Q(file__isnull=True))
         total_images = images.count()
 
         j = 1

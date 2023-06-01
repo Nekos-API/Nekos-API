@@ -30,7 +30,7 @@ def get_aspect_ratio(height: int, width: int):
 class Command(BaseCommand):
     def handle(self, *args, **options):
         images = Image.objects.filter(height=0, width=0).exclude(
-            Q(file="") | Q(file=None)
+            Q(file="") or Q(file=None)
         )
         total_images = images.count()
 

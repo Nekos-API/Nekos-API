@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "users.sso.apps.SsoConfig",
     "applications.apps.ApplicationsConfig",
     "webhooks.apps.WebhooksConfig",
+    "gifs.apps.GifsConfig",
     # Third party apps
     "rest_framework",
     "oauth2_provider",
@@ -69,8 +70,9 @@ INSTALLED_APPS = [
     "django_ratelimit",
     "django_resized",
     "django_cleanup.apps.CleanupConfig",
-    "django_bunny_storage",
+    "django_bunny",
     "logentry_admin",
+    "thumbnails",
 ]
 
 MIDDLEWARE = [
@@ -105,6 +107,28 @@ DJANGORESIZED_DEFAULT_KEEP_META = True
 DJANGORESIZED_DEFAULT_FORCE_FORMAT = "WEBP"
 DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {"WEBP": ".webp"}
 DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False
+
+THUMBNAILS = {
+    "METADATA": {
+        "PREFIX": "thumbs",
+        "BACKEND": "thumbnails.backends.metadata.RedisBackend",
+        "db": 0,
+        "port": int(os.getenv("REDIS_PORT")),
+        "host": os.getenv("REDIS_HOST"),
+        "username": os.getenv("REDIS_USERNAME"),
+        "password": os.getenv("REDIS_PASSWORD"),
+    },
+    "STORAGE": {
+        "BACKEND": "django_bunny.storage.BunnyStorage",
+    },
+    "SIZES": {
+        "consistent": {
+            "PROCESSORS": [
+                {"PATH": "nekos_api.processors.gif_resize", "aspect_ratio": "16/9"}
+            ]
+        }
+    },
+}
 
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -170,12 +194,12 @@ CHANNEL_LAYERS = {
     },
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'localhost'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "localhost"
 EMAIL_PORT = 25
 EMAIL_USE_TLS = False
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
 
 
 # Database
@@ -200,8 +224,8 @@ CACHES = {
 }
 
 STORAGES = {
-    "default": {"BACKEND": "nekos_api.storage.Storage"},
-    "staticfiles": {"BACKEND": "nekos_api.storage.Storage"}
+    "default": {"BACKEND": "django_bunny.storage.BunnyStorage"},
+    "staticfiles": {"BACKEND": "django_bunny.storage.BunnyStorage"},
 }
 
 
@@ -298,6 +322,7 @@ MEDIA_URL = "https://cdn.nekosapi.com/"
 BUNNY_USERNAME = os.getenv("BUNNY_USERNAME")
 BUNNY_PASSWORD = os.getenv("BUNNY_PASSWORD")
 BUNNY_REGION = os.getenv("BUNNY_ZONE")
+# BUNNY_HOSTNAME = os.getenv("BUNNY_HOSTNAME")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
