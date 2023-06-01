@@ -18,7 +18,7 @@ urlpatterns = [
     path(
         "lists/<uuid:pk>/images",
         ListViewSet.as_view(
-            {"get": "retrieve_related", "post": "add_images", "delete": "remove_images"}
+            {"get": "retrieve_related"}
         ),
         name="list-images-list",
         kwargs={"related_field": "images"},

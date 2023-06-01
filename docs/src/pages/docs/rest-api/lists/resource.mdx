@@ -271,3 +271,75 @@ import {
         },
     ]}
 />
+
+## Follow a list
+
+<APIRequest
+    method="POST"
+    endpoint="/lists/:id/follow"
+    title="Follow a list"
+    description="Follows a list by its ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID",
+            description: "The list's ID.",
+            required: true,
+            location: "path",
+        },
+    ]}
+    responses={[
+        {
+            code: 204,
+            name: "Success",
+            description: "The request was completed successfully.",
+        },
+    ]}
+/>
+
+<APIRequest
+    method="DELETE"
+    endpoint="/lists/:id/follow"
+    title="Unfollow a list"
+    description="Unfollows a list by its ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID",
+            description: "The list's ID.",
+            required: true,
+            location: "path",
+        },
+    ]}
+    responses={[
+        {
+            code: 204,
+            name: "Success",
+            description: "The request was completed successfully.",
+        },
+    ]}
+/>
