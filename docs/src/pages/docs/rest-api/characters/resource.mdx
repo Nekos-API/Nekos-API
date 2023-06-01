@@ -2,6 +2,20 @@ import { Callout } from "nextra-theme-docs";
 import dedent from "dedent-js";
 
 import { APIRequest } from "../../../../components/apirequest";
+import {
+    resource,
+    stringify,
+    image_ref,
+    image_schema,
+    artist_ref,
+    artist_schema,
+    character_ref,
+    character_schema,
+    category_ref,
+    category_schema,
+    user_ref,
+    user_public_schema,
+} from "../../../../constants/schemas";
 
 # Character resource
 
@@ -33,7 +47,8 @@ import { APIRequest } from "../../../../components/apirequest";
         {
             name: "filter[firstName]",
             type: "String",
-            description: "Returns characters whose first name matches the exact specified value.",
+            description:
+                "Returns characters whose first name matches the exact specified value.",
         },
         {
             name: "filter[firstName.iexact]",
@@ -80,7 +95,8 @@ import { APIRequest } from "../../../../components/apirequest";
         {
             name: "filter[lastName]",
             type: "String",
-            description: "Returns characters whose last name matches the exact specified value.",
+            description:
+                "Returns characters whose last name matches the exact specified value.",
         },
         {
             name: "filter[lastName.iexact]",
@@ -127,7 +143,8 @@ import { APIRequest } from "../../../../components/apirequest";
         {
             name: "filter[description]",
             type: "String",
-            description: "Returns characters whose description matches the exact specified value.",
+            description:
+                "Returns characters whose description matches the exact specified value.",
         },
         {
             name: "filter[description.iexact]",
@@ -174,7 +191,8 @@ import { APIRequest } from "../../../../components/apirequest";
         {
             name: "filter[gender]",
             type: "String",
-            description: "Returns characters whose gender matches the exact specified value.",
+            description:
+                "Returns characters whose gender matches the exact specified value.",
         },
         {
             name: "filter[gender.iexact]",
@@ -221,7 +239,8 @@ import { APIRequest } from "../../../../components/apirequest";
         {
             name: "filter[species]",
             type: "String",
-            description: "Returns characters whose species matches the exact specified value.",
+            description:
+                "Returns characters whose species matches the exact specified value.",
         },
         {
             name: "filter[species.iexact]",
@@ -268,7 +287,8 @@ import { APIRequest } from "../../../../components/apirequest";
         {
             name: "filter[nationality]",
             type: "String",
-            description: "Returns characters whose nationality matches the exact specified value.",
+            description:
+                "Returns characters whose nationality matches the exact specified value.",
         },
         {
             name: "filter[nationality.iexact]",
@@ -315,72 +335,76 @@ import { APIRequest } from "../../../../components/apirequest";
         {
             name: "filter[createdAt]",
             type: "ISO 8601",
-            description: "Returns characters created at a certain date and time."
+            description:
+                "Returns characters created at a certain date and time.",
         },
         {
             name: "filter[createdAt.second]",
             type: "Number (0-59)",
-            description: "Returns characters created at a specific second."
+            description: "Returns characters created at a specific second.",
         },
         {
             name: "filter[createdAt.minute]",
             type: "Number (0-59)",
-            description: "Returns characters created at a specific minute."
+            description: "Returns characters created at a specific minute.",
         },
         {
             name: "filter[createdAt.hour]",
             type: "Number (0-23)",
-            description: "Returns characters created at a specific hour."
+            description: "Returns characters created at a specific hour.",
         },
         {
             name: "filter[createdAt.day]",
             type: "Number (1-31)",
-            description: "Returns characters created at a specific day of the month."
+            description:
+                "Returns characters created at a specific day of the month.",
         },
         {
             name: "filter[createdAt.month]",
             type: "Number (1-12)",
-            description: "Returns characters created during a specific month."
+            description: "Returns characters created during a specific month.",
         },
         {
             name: "filter[createdAt.year]",
             type: "Number (0-2023)",
-            description: "Returns characters created during a spcific year."
+            description: "Returns characters created during a spcific year.",
         },
         {
             name: "filter[updatedAt]",
             type: "ISO 8601",
-            description: "Returns characters created at a certain date and time."
+            description:
+                "Returns characters created at a certain date and time.",
         },
         {
             name: "filter[updatedAt.second]",
             type: "Number (0-59)",
-            description: "Returns characters created at a specific second."
+            description: "Returns characters created at a specific second.",
         },
         {
             name: "filter[updatedAt.minute]",
             type: "Number (0-59)",
-            description: "Returns characters created at a specific minute."
+            description: "Returns characters created at a specific minute.",
         },
         {
             name: "filter[updatedAt.hour]",
             type: "Number (0-23)",
-            description: "Returns characters created at a specific hour."
+            description: "Returns characters created at a specific hour.",
         },
         {
             name: "filter[updatedAt.day]",
             type: "Number (1-31)",
-            description: "Returns characters created at a specific day of the month."
+            description:
+                "Returns characters created at a specific day of the month.",
         },
         {
             name: "filter[updatedAt.month]",
             type: "Number (1-12)",
-            description: "Returns characters created during a specific month."
+            description: "Returns characters created during a specific month.",
         },
         {
             name: "filter[updatedAt.year]",
             type: "Number (0-2023)",
-            description: "Returns characters created during a spcific year."
+            description: "Returns characters created during a spcific year.",
         },
     ]}
     responses={[
@@ -389,92 +413,13 @@ import { APIRequest } from "../../../../components/apirequest";
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: dedent`
-                {
-                    "links": {
-                        "first": "https://api.nekosapi.com/v2/characters",
-                        "last": "https://api.nekosapi.com/v2/characters?page%5Blimit%5D=10&page%5Boffset%5D=30",
-                        "next": "https://api.nekosapi.com/v2/characters?page%5Blimit%5D=10&page%5Boffset%5D=10",
-                        "prev": null
-                    },
-                    "data": [
-                        {
-                            "type": "character",
-                            "id": "6106713f-2275-4208-be91-bcba1fabbbad",
-                            "attributes": {
-                                "name": {
-                                    "first": "Miku",
-                                    "last": "Hatsune",
-                                    "aliases": []
-                                },
-                                "description": "16-year-old virtual idol with long turquoise twintails.",
-                                "gender": "Female",
-                                "species": "Human",
-                                "ages": [
-                                    16
-                                ],
-                                "birthDate": "August 31st",
-                                "nationality": "Japanese",
-                                "occupations": [
-                                    "Virtual idol"
-                                ],
-                                "timestamps": {
-                                    "created": "2023-01-27T02:10:08.994000Z",
-                                    "updated": "2023-01-27T02:10:08.994000Z"
-                                }
-                            },
-                            "relationships": {
-                                "images": {
-                                    "meta": {
-                                        "count": 2
-                                    },
-                                    "data": [
-                                        {
-                                            "type": "image",
-                                            "id": "ffa04b68-6cec-430e-9361-7e400dad3ab2"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "7a05b000-f3ad-4c57-a71d-a8b50776b70d"
-                                        }
-                                    ],
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/characters/6106713f-2275-4208-be91-bcba1fabbbad/relationships/images",
-                                        "related": "https://api.nekosapi.com/v2/characters/6106713f-2275-4208-be91-bcba1fabbbad/images"
-                                    }
-                                },
-                                "followers": {
-                                    "meta": {
-                                        "count": 0
-                                    },
-                                    "data": [],
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/characters/6106713f-2275-4208-be91-bcba1fabbbad/relationships/followers",
-                                        "related": "https://api.nekosapi.com/v2/characters/6106713f-2275-4208-be91-bcba1fabbbad/followers"
-                                    }
-                                }
-                            },
-                            "links": {
-                                "self": "https://api.nekosapi.com/v2/characters/6106713f-2275-4208-be91-bcba1fabbbad"
-                            }
-                        }
-                    ],
-                    "meta": {
-                        "pagination": {
-                            "count": 34,
-                            "limit": 10,
-                            "offset": 0
-                        }
-                    }
-                }
-                `,
+                code: stringify(pagination([character_schema])),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
         },
     ]}
 />
-
 
 ## Get a character by its ID
 
@@ -510,73 +455,9 @@ import { APIRequest } from "../../../../components/apirequest";
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: dedent`
-                {
-                    "data": {
-                        "type": "character",
-                        "id": "4ec7cb86-8fb4-46d6-a889-06038085f22b",
-                        "attributes": {
-                            "name": {
-                                "first": "Ai",
-                                "last": "Hayasaka",
-                                "aliases": [
-                                    "Smithee A. Herthaka-chan"
-                                ]
-                            },
-                            "description": "Ai is a beautiful, young girl with blonde hair that is usually tied up at the left side of her head with a blue scrunchie and blue-eyes. She alters her appearance and choice of clothing to suit different roles and carry out her duties as Kaguya's maid.",
-                            "gender": "Female",
-                            "species": "Human",
-                            "ages": [
-                                18
-                            ],
-                            "birthDate": "2nd April",
-                            "nationality": "Japanese",
-                            "occupations": [
-                                "Shinomiya Group Employee",
-                                "maid of Kaguya shinomiya"
-                            ],
-                            "timestamps": {
-                                "created": "2023-02-20T14:03:37.151814Z",
-                                "updated": "2023-04-04T00:47:50.908622Z"
-                            }
-                        },
-                        "relationships": {
-                            "images": {
-                                "meta": {
-                                    "count": 1
-                                },
-                                "data": [
-                                    {
-                                        "type": "image",
-                                        "id": "fea72209-1204-4250-bbfa-cb162c00b345"
-                                    }
-                                ],
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/characters/4ec7cb86-8fb4-46d6-a889-06038085f22b/relationships/images",
-                                    "related": "https://api.nekosapi.com/v2/characters/4ec7cb86-8fb4-46d6-a889-06038085f22b/images"
-                                }
-                            },
-                            "followers": {
-                                "meta": {
-                                    "count": 0
-                                },
-                                "data": [],
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/characters/4ec7cb86-8fb4-46d6-a889-06038085f22b/relationships/followers",
-                                    "related": "https://api.nekosapi.com/v2/characters/4ec7cb86-8fb4-46d6-a889-06038085f22b/followers"
-                                }
-                            }
-                        },
-                        "links": {
-                            "self": "https://api.nekosapi.com/v2/characters/4ec7cb86-8fb4-46d6-a889-06038085f22b"
-                        }
-                    }
-                }
-                `,
+                code: stringify(resource(character_schema)),
                 language: "JSON",
-                headers: [
-                    "Content-Type: application/vnd.api+json",
-                ],
+                headers: ["Content-Type: application/vnd.api+json"],
             },
         },
     ]}

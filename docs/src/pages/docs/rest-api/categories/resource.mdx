@@ -2,6 +2,20 @@ import { Callout } from "nextra-theme-docs";
 import dedent from "dedent-js";
 
 import { APIRequest } from "../../../../components/apirequest";
+import {
+    resource,
+    stringify,
+    image_ref,
+    image_schema,
+    artist_ref,
+    artist_schema,
+    character_ref,
+    character_schema,
+    category_ref,
+    category_schema,
+    user_ref,
+    user_public_schema,
+} from "../../../../constants/schemas";
 
 # Category resource
 
@@ -33,7 +47,8 @@ import { APIRequest } from "../../../../components/apirequest";
         {
             name: "filter[name]",
             type: "String",
-            description: "Returns characters whose first name matches the exact specified value.",
+            description:
+                "Returns characters whose first name matches the exact specified value.",
         },
         {
             name: "filter[name.iexact]",
@@ -80,72 +95,76 @@ import { APIRequest } from "../../../../components/apirequest";
         {
             name: "filter[createdAt]",
             type: "ISO 8601",
-            description: "Returns characters created at a certain date and time."
+            description:
+                "Returns characters created at a certain date and time.",
         },
         {
             name: "filter[createdAt.second]",
             type: "Number (0-59)",
-            description: "Returns characters created at a specific second."
+            description: "Returns characters created at a specific second.",
         },
         {
             name: "filter[createdAt.minute]",
             type: "Number (0-59)",
-            description: "Returns characters created at a specific minute."
+            description: "Returns characters created at a specific minute.",
         },
         {
             name: "filter[createdAt.hour]",
             type: "Number (0-23)",
-            description: "Returns characters created at a specific hour."
+            description: "Returns characters created at a specific hour.",
         },
         {
             name: "filter[createdAt.day]",
             type: "Number (1-31)",
-            description: "Returns characters created at a specific day of the month."
+            description:
+                "Returns characters created at a specific day of the month.",
         },
         {
             name: "filter[createdAt.month]",
             type: "Number (1-12)",
-            description: "Returns characters created during a specific month."
+            description: "Returns characters created during a specific month.",
         },
         {
             name: "filter[createdAt.year]",
             type: "Number (0-2023)",
-            description: "Returns characters created during a spcific year."
+            description: "Returns characters created during a spcific year.",
         },
         {
             name: "filter[updatedAt]",
             type: "ISO 8601",
-            description: "Returns characters created at a certain date and time."
+            description:
+                "Returns characters created at a certain date and time.",
         },
         {
             name: "filter[updatedAt.second]",
             type: "Number (0-59)",
-            description: "Returns characters created at a specific second."
+            description: "Returns characters created at a specific second.",
         },
         {
             name: "filter[updatedAt.minute]",
             type: "Number (0-59)",
-            description: "Returns characters created at a specific minute."
+            description: "Returns characters created at a specific minute.",
         },
         {
             name: "filter[updatedAt.hour]",
             type: "Number (0-23)",
-            description: "Returns characters created at a specific hour."
+            description: "Returns characters created at a specific hour.",
         },
         {
             name: "filter[updatedAt.day]",
             type: "Number (1-31)",
-            description: "Returns characters created at a specific day of the month."
+            description:
+                "Returns characters created at a specific day of the month.",
         },
         {
             name: "filter[updatedAt.month]",
             type: "Number (1-12)",
-            description: "Returns characters created during a specific month."
+            description: "Returns characters created during a specific month.",
         },
         {
             name: "filter[updatedAt.year]",
             type: "Number (0-2023)",
-            description: "Returns characters created during a spcific year."
+            description: "Returns characters created during a spcific year.",
         },
     ]}
     responses={[
@@ -154,144 +173,13 @@ import { APIRequest } from "../../../../components/apirequest";
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: dedent`
-                {
-                    "links": {
-                        "first": "https://api.nekosapi.com/v2/categories?page%5Blimit%5D=1",
-                        "last": "https://api.nekosapi.com/v2/categories?page%5Blimit%5D=1&page%5Boffset%5D=14",
-                        "next": "https://api.nekosapi.com/v2/categories?page%5Blimit%5D=1&page%5Boffset%5D=1",
-                        "prev": null
-                    },
-                    "data": [
-                        {
-                            "type": "category",
-                            "id": "60304e04-6b0b-4930-a3dc-ba8d9e36d160",
-                            "attributes": {
-                                "name": "Illustration",
-                                "description": "The image is an illustration.",
-                                "sub": "format",
-                                "isNsfw": false,
-                                "timestamps": {
-                                    "created": "2023-01-26T04:35:57.105000Z",
-                                    "updated": "2023-01-26T04:35:57.105000Z"
-                                }
-                            },
-                            "relationships": {
-                                "images": {
-                                    "meta": {
-                                        "count": 18
-                                    },
-                                    "data": [
-                                        {
-                                            "type": "image",
-                                            "id": "ffe9c34d-ae51-4b2a-8ad2-d47fcbbd3c22"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "ff7e0f68-dd76-4689-82dd-1c1427399dc9"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "feddfcd7-a898-45aa-acf9-a5e99603d128"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "fea6d9f0-cdcc-4c4d-bf9c-26497edac5fa"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "fea2211a-7d0a-4f53-868d-f888549d198f"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "fe74c18b-c0bf-432c-a8cb-ae314b760a27"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "ffdc3cff-ee50-4cfd-8f4a-de3ff9cc4985"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "fdc4e4f8-e14a-4611-8569-93e7ca718127"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "f60d68ac-0ab8-45f7-9f7b-b1b7fa037bbc"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "f60cb06c-dcd4-4047-a55c-c71cd123daf1"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "ffae063f-c63f-49e9-8bf1-afcfe281ee9e"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "ffac1a31-754a-4534-8c2f-6249c3bb4ed5"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "fe789e14-d438-47e2-9146-051c25a04ccd"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "feb6aa1d-f5f2-4e3d-b7a0-689af6b3cd98"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "ff6788e9-9fc1-4c94-8701-5ff2bb0a7af5"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "7a05b000-f3ad-4c57-a71d-a8b50776b70d"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "6a2e6ea6-2976-40df-9dd2-22d6c4590cfd"
-                                        },
-                                        {
-                                            "type": "image",
-                                            "id": "e54a044b-b71d-46ce-87e6-390447def884"
-                                        }
-                                    ],
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160/relationships/images",
-                                        "related": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160/images"
-                                    }
-                                },
-                                "followers": {
-                                    "meta": {
-                                        "count": 0
-                                    },
-                                    "data": [],
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160/relationships/followers",
-                                        "related": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160/followers"
-                                    }
-                                }
-                            },
-                            "links": {
-                                "self": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160"
-                            }
-                        }
-                    ],
-                    "meta": {
-                        "pagination": {
-                            "count": 14,
-                            "limit": 1,
-                            "offset": 0
-                        }
-                    }
-                }
-                `,
+                code: stringify(pagination([category_schema])),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
         },
     ]}
 />
-
 
 ## Get a category by its ID
 
@@ -327,58 +215,9 @@ import { APIRequest } from "../../../../components/apirequest";
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: dedent`
-                {
-                    "data": {
-                        "type": "category",
-                        "id": "60304e04-6b0b-4930-a3dc-ba8d9e36d160",
-                        "attributes": {
-                            "name": "Illustration",
-                            "description": "The image is an illustration.",
-                            "sub": "format",
-                            "isNsfw": false,
-                            "timestamps": {
-                                "created": "2023-01-26T04:35:57.105000Z",
-                                "updated": "2023-01-26T04:35:57.105000Z"
-                            }
-                        },
-                        "relationships": {
-                            "images": {
-                                "meta": {
-                                    "count": 18
-                                },
-                                "data": [
-                                    {
-                                        "type": "image",
-                                        "id": "ffe9c34d-ae51-4b2a-8ad2-d47fcbbd3c22"
-                                    }
-                                ],
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160/relationships/images",
-                                    "related": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160/images"
-                                }
-                            },
-                            "followers": {
-                                "meta": {
-                                    "count": 0
-                                },
-                                "data": [],
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160/relationships/followers",
-                                    "related": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160/followers"
-                                }
-                            }
-                        },
-                        "links": {
-                            "self": "https://api.nekosapi.com/v2/categories/60304e04-6b0b-4930-a3dc-ba8d9e36d160"
-                        }
-                    }
-                }
-                `,
+                code: stringify(resource(category_schema)),
                 language: "JSON",
-                headers: [
-                    "Content-Type: application/vnd.api+json",
-                ],
+                headers: ["Content-Type: application/vnd.api+json"],
             },
         },
     ]}

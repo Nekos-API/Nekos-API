@@ -41,9 +41,9 @@ export const user_public_schema = {
         biography: "String?",
         avatarImage: "URL?",
         permissions: {
-            isActive: "Bool",
-            isStaff: "Bool",
-            isSuperuser: "Bool",
+            isActive: "Boolean",
+            isStaff: "Boolean",
+            isSuperuser: "Boolean",
         },
         timestamps: {
             joined: "ISO 8601",
@@ -137,9 +137,9 @@ export const user_private_schema = {
         email: "String",
         secretKey: "String",
         permissions: {
-            isActive: "Bool",
-            isStaff: "Bool",
-            isSuperuser: "Bool",
+            isActive: "Boolean",
+            isStaff: "Boolean",
+            isSuperuser: "Boolean",
         },
         timestamps: {
             joined: "ISO 8601",
@@ -236,6 +236,221 @@ export const user_private_schema = {
     },
 };
 
+export const image_schema = {
+    type: "image",
+    id: "UUID",
+    attributes: {
+        file: "URL",
+        title: "String",
+        colors: {
+            dominant: "String?",
+            palette: ["String?"],
+        },
+        source: {
+            name: "String?",
+            url: "URL?",
+        },
+        dimens: {
+            height: "Integer?",
+            width: "Integer?",
+            aspectRatio: "String?",
+            orientation: "String?",
+        },
+        isOriginal: "Boolean",
+        verificationStatus: "String",
+        ageRating: "String?",
+        metadata: {
+            mimetype: "String?",
+            fileSize: "Integer?",
+        },
+        timestamps: {
+            created: "ISO 8601",
+            updated: "ISO 8601",
+        },
+    },
+    relationships: {
+        uploader: {
+            links: {
+                self: "https://api.nekosapi.com/v2/images/:id/relationships/uploader",
+                related: "https://api.nekosapi.com/v2/images/:id/uploader",
+            },
+            data: user_ref,
+        },
+        artist: {
+            links: {
+                self: "https://api.nekosapi.com/v2/images/:id/relationships/artist",
+                related: "https://api.nekosapi.com/v2/images/:id/artist",
+            },
+            data: artist_ref,
+        },
+        categories: {
+            meta: {
+                count: "Integer",
+            },
+            data: [category_ref],
+            links: {
+                self: "https://api.nekosapi.com/v2/images/:id/relationships/categories",
+                related: "https://api.nekosapi.com/v2/images/:id/categories",
+            },
+        },
+        characters: {
+            meta: {
+                count: "Integer",
+            },
+            data: [character_ref],
+            links: {
+                self: "https://api.nekosapi.com/v2/images/:id/relationships/characters",
+                related: "https://api.nekosapi.com/v2/images/:id/characters",
+            },
+        },
+        likedBy: {
+            meta: {
+                count: "Integer",
+            },
+            data: [user_ref],
+            links: {
+                self: "https://api.nekosapi.com/v2/images/:id/relationships/liked-by",
+                related: "https://api.nekosapi.com/v2/images/:id/liked-by",
+            },
+        },
+    },
+    links: {
+        self: "https://api.nekosapi.com/v2/images/:id",
+    },
+};
+
+export const artist_schema = {
+    type: "artist",
+    id: "UUID",
+    attributes: {
+        name: "String",
+        aliases: ["String"],
+        imageUrl: "URL?",
+        officialLinks: ["URL"],
+        timestamps: {
+            created: "ISO 8601",
+            updated: "ISO 8601",
+        },
+    },
+    relationships: {
+        images: {
+            meta: {
+                count: "Integer",
+            },
+            data: [image_ref],
+            links: {
+                self: "https://api.nekosapi.com/v2/artists/:id/relationships/images",
+                related: "https://api.nekosapi.com/v2/artists/:id/images",
+            },
+        },
+        followers: {
+            meta: {
+                count: "Integer",
+            },
+            data: [user_ref],
+            links: {
+                self: "https://api.nekosapi.com/v2/artists/:id/relationships/followers",
+                related: "https://api.nekosapi.com/v2/artists/:id/followers",
+            },
+        },
+    },
+    links: {
+        self: "https://api.nekosapi.com/v2/artists/:id",
+    },
+};
+
+export const character_schema = {
+    type: "character",
+    id: "UUID",
+    attributes: {
+        name: {
+            first: "String?",
+            last: "String?",
+            aliases: ["String"],
+        },
+        description: "String?",
+        gender: "String?",
+        species: "String?",
+        ages: ["Integer"],
+        birthDate: "String?",
+        nationality: "String?",
+        occupations: ["String"],
+        timestamps: {
+            created: "ISO 8601",
+            updated: "ISO 8601",
+        },
+    },
+    relationships: {
+        images: {
+            meta: {
+                count: "Integer",
+            },
+            data: [image_ref],
+            links: {
+                self: "https://api.nekosapi.com/v2/characters/:id/relationships/images",
+                related: "https://api.nekosapi.com/v2/characters/:id/images",
+            },
+        },
+        followers: {
+            meta: {
+                count: "Integer",
+            },
+            data: [user_ref],
+            links: {
+                self: "https://api.nekosapi.com/v2/characters/:id/relationships/followers",
+                related: "https://api.nekosapi.com/v2/characters/:id/followers",
+            },
+        },
+    },
+    links: {
+        self: "https://api.nekosapi.com/v2/characters/:id",
+    },
+};
+
+export const category_schema = {
+    type: "category",
+    id: "UUID",
+    attributes: {
+        name: "String",
+        description: "String",
+        sub: "String",
+        isNsfw: "Boolean",
+        timestamps: {
+            created: "ISO 8601",
+            updated: "ISO 8601",
+        },
+    },
+    relationships: {
+        images: {
+            meta: {
+                count: "Integer",
+            },
+            data: [
+                image_ref
+            ],
+            links: {
+                self: "https://api.nekosapi.com/v2/categories/:id/relationships/images",
+                related:
+                    "https://api.nekosapi.com/v2/categories/:id/images",
+            },
+        },
+        followers: {
+            meta: {
+                count: "Integer",
+            },
+            data: [user_ref],
+            links: {
+                self: "https://api.nekosapi.com/v2/categories/:id/relationships/followers",
+                related:
+                    "https://api.nekosapi.com/v2/categories/:id/followers",
+            },
+        },
+    },
+    links: {
+        self: "https://api.nekosapi.com/v2/categories/:id",
+    },
+};
+
 export const pagination = (items, included = []) => {
     return {
         links: {
@@ -258,6 +473,6 @@ export const pagination = (items, included = []) => {
 
 export const resource = (data) => {
     return {
-        data: data
-    }
-}
+        data: data,
+    };
+};

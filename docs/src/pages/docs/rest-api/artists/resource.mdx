@@ -2,6 +2,20 @@ import { Callout } from "nextra-theme-docs";
 import dedent from "dedent-js";
 
 import { APIRequest } from "../../../../components/apirequest";
+import {
+    resource,
+    stringify,
+    image_ref,
+    image_schema,
+    artist_ref,
+    artist_schema,
+    character_ref,
+    character_schema,
+    category_ref,
+    category_schema,
+    user_ref,
+    user_public_schema,
+} from "../../../../constants/schemas";
 
 # Artist resource
 
@@ -156,60 +170,7 @@ import { APIRequest } from "../../../../components/apirequest";
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: dedent`
-                {
-                    "links": {
-                        "first": "https://api.nekosapi.com/v2/artists",
-                        "last": "https://api.nekosapi.com/v2/artists?page%5Blimit%5D=10",
-                        "next": null,
-                        "prev": null
-                    },
-                    "data": [
-                        {
-                            "type": "artist",
-                            "id": "500c5ecf-8d83-4333-8f0f-207941aaa552",
-                            "attributes": {
-                                "name": "さんぱち",
-                                "aliases": [
-                                    "hatizyuusan"
-                                ],
-                                "imageUrl": "https://pbs.twimg.com/profile_images/1538894198732357633/kRwkCnLb_400x400.jpg",
-                                "officialLinks": [
-                                    "https://twitter.com/hatizyuusan"
-                                ],
-                                "timestamps": {
-                                    "created": "2023-02-10T05:45:09.534379Z",
-                                    "updated": "2023-02-10T05:45:10.185431Z"
-                                }
-                            },
-                            "relationships": {
-                                "images": {
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/relationships/images",
-                                        "related": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/images"
-                                    }
-                                },
-                                "followers": {
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/relationships/followers",
-                                        "related": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/followers"
-                                    }
-                                }
-                            },
-                            "links": {
-                                "self": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552"
-                            }
-                        }
-                    ],
-                    "meta": {
-                        "pagination": {
-                            "count": 1,
-                            "limit": 10,
-                            "offset": 0
-                        }
-                    }
-                }
-                `,
+                code: stringify(pagination([artist_schema])),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
@@ -251,45 +212,7 @@ import { APIRequest } from "../../../../components/apirequest";
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: dedent`
-                {
-                    "data": {
-                        "type": "artist",
-                        "id": "500c5ecf-8d83-4333-8f0f-207941aaa552",
-                        "attributes": {
-                            "name": "さんぱち",
-                            "aliases": [
-                                "hatizyuusan"
-                            ],
-                            "imageUrl": "https://pbs.twimg.com/profile_images/1538894198732357633/kRwkCnLb_400x400.jpg",
-                            "officialLinks": [
-                                "https://twitter.com/hatizyuusan"
-                            ],
-                            "timestamps": {
-                                "created": "2023-02-10T05:45:09.534379Z",
-                                "updated": "2023-02-10T05:45:10.185431Z"
-                            }
-                        },
-                        "relationships": {
-                            "images": {
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/relationships/images",
-                                    "related": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/images"
-                                }
-                            },
-                            "followers": {
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/relationships/followers",
-                                    "related": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552/followers"
-                                }
-                            }
-                        },
-                        "links": {
-                            "self": "https://api.nekosapi.com/v2/artists/500c5ecf-8d83-4333-8f0f-207941aaa552"
-                        }
-                    }
-                }
-                `,
+                code: stringify(resource(artist_schema)),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },

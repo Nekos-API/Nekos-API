@@ -2,6 +2,20 @@ import dedent from "dedent-js";
 import { Callout } from "nextra-theme-docs";
 
 import { APIRequest } from "../../../../components/apirequest";
+import {
+    resource,
+    stringify,
+    image_ref,
+    image_schema,
+    artist_ref,
+    artist_schema,
+    character_ref,
+    character_schema,
+    category_ref,
+    category_schema,
+    user_ref,
+    user_public_schema,
+} from "../../../../constants/schemas";
 
 # Relationships
 
@@ -40,179 +54,7 @@ These endpoints return resources related to the main character resource, such as
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: dedent`
-                {
-                    "data": [
-                        {
-                            "type": "image",
-                            "id": "6a2e6ea6-2976-40df-9dd2-22d6c4590cfd",
-                            "attributes": {
-                                "file": "https://cdn.nekosapi.com/uploads/images/7RHBXOFEPVDKVFBN4BY4UVRGPE.webp",
-                                "title": "Uploaded by pimako0292 - FOMLo31aAAQ0ZpM.jpg",
-                                "colors": {
-                                "dominant": "#8f94a3",
-                                "palette": [
-                                    "#91919f",
-                                    "#27242c",
-                                    "#e6e5e2",
-                                    "#4f383a",
-                                    "#bbd5de",
-                                    "#515b72",
-                                    "#615048",
-                                    "#acbfd8",
-                                    "#3c6c60"
-                                ]
-                                },
-                                "source": {
-                                    "name": "Pixiv",
-                                    "url": "https://www.pixiv.net/member_illust.php?mode=medium&illust_id=88958523"
-                                },
-                                "dimens": {
-                                    "height": 547,
-                                    "width": 426,
-                                    "aspectRatio": "426:547",
-                                    "orientation": "portrait"
-                                },
-                                "isOriginal": false,
-                                "verificationStatus": "verified",
-                                "ageRating": "questionable",
-                                "metadata": {
-                                    "mimetype": "image/webp",
-                                    "fileSize": 103344
-                                },
-                                "timestamps": {
-                                    "created": "2023-02-20T06:44:41.092298Z",
-                                    "updated": "2023-04-04T21:29:04.865574Z"
-                                }
-                            },
-                            "relationships": {
-                                "uploader": {
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd/relationships/uploader",
-                                        "related": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd/uploader"
-                                    },
-                                    "data": {
-                                        "type": "user",
-                                        "id": "8fad93cd-4a9c-4e71-b21f-6eb4efebb3db"
-                                    }
-                                },
-                                "artist": {
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd/relationships/character",
-                                        "related": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd/character"
-                                    },
-                                    "data": {
-                                        "type": "artist",
-                                        "id": "7603139f-6855-40a4-bb6c-da85684b09db"
-                                    }
-                                },
-                                "categories": {
-                                    "meta": {
-                                        "count": 3
-                                    },
-                                    "data": [
-                                        {
-                                            "type": "category",
-                                            "id": "60304e04-6b0b-4930-a3dc-ba8d9e36d160"
-                                        },
-                                        {
-                                            "type": "category",
-                                            "id": "82f2f32c-78ea-4f66-aeaf-59c60a6cbdf8"
-                                        },
-                                        {
-                                            "type": "category",
-                                            "id": "e901d3cb-016c-4629-88db-19829e018977"
-                                        }
-                                    ],
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd/relationships/categories",
-                                        "related": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd/categories"
-                                    }
-                                },
-                                "characters": {
-                                    "meta": {
-                                        "count": 0
-                                    },
-                                    "data": [
-
-                                    ],
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd/relationships/characters",
-                                        "related": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd/characters"
-                                    }
-                                },
-                                "likedBy": {
-                                    "meta": {
-                                        "count": 0
-                                    },
-                                    "data": [
-
-                                    ],
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd/relationships/liked-by",
-                                        "related": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd/liked-by"
-                                    }
-                                }
-                            },
-                            "links": {
-                                "self": "https://api.nekosapi.com/v2/images/6a2e6ea6-2976-40df-9dd2-22d6c4590cfd"
-                            }
-                        }
-                    ],
-                    "included": [
-                        {
-                            "type": "artist",
-                            "id": "7603139f-6855-40a4-bb6c-da85684b09db",
-                            "attributes": {
-                                "name": "エキナ",
-                                "aliases": [
-                                    "Ekina"
-                                ],
-                                "imageUrl": "https://i.pximg.net/user-profile/img/2019/10/27/00/51/59/16465496_c6b257703fbba4c4336bcfc83abb05ae_170.jpg",
-                                "officialLinks": [
-                                    "https://www.pixiv.net/users/25555102"
-                                ],
-                                "timestamps": {
-                                    "created": "2023-04-04T21:28:25.675900Z",
-                                    "updated": "2023-04-04T21:28:25.675917Z"
-                                }
-                            },
-                            "relationships": {
-                                "images": {
-                                    "meta": {
-                                        "count": 1
-                                    },
-                                    "data": [
-                                        {
-                                            "type": "image",
-                                            "id": "6a2e6ea6-2976-40df-9dd2-22d6c4590cfd"
-                                        }
-                                    ],
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/characters/7603139f-6855-40a4-bb6c-da85684b09db/relationships/images",
-                                        "related": "https://api.nekosapi.com/v2/characters/7603139f-6855-40a4-bb6c-da85684b09db/images"
-                                    }
-                                },
-                                "followers": {
-                                    "meta": {
-                                        "count": 0
-                                    },
-                                    "data": [
-
-                                    ],
-                                    "links": {
-                                        "self": "https://api.nekosapi.com/v2/characters/7603139f-6855-40a4-bb6c-da85684b09db/relationships/followers",
-                                        "related": "https://api.nekosapi.com/v2/characters/7603139f-6855-40a4-bb6c-da85684b09db/followers"
-                                    }
-                                }
-                            },
-                            "links": {
-                                "self": "https://api.nekosapi.com/v2/characters/7603139f-6855-40a4-bb6c-da85684b09db"
-                            }
-                        }
-                    ]
-                }
-                `,
+                code: stringify(resource([image_schema])),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
@@ -247,14 +89,7 @@ These endpoints return resources related to the main character resource, such as
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: dedent`
-                {
-                    "data": {
-                        "type": "image",
-                        "id": "4acc3444-528f-4f9a-b275-927e32c78441"
-                    }
-                }
-                `,
+                code: stringify(resource([image_ref])),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
@@ -265,11 +100,7 @@ These endpoints return resources related to the main character resource, such as
             description:
                 "The request was completed successfully but the character has no related images",
             example: {
-                code: dedent`
-                {
-                    "data": []
-                }
-                `,
+                code: stringify(resource([])),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
@@ -305,110 +136,7 @@ These endpoints return resources related to the main character resource, such as
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: dedent`
-                {
-                    "data":[
-                        {
-                            "type":"user",
-                            "id":"8fad93cd-4a9c-4e71-b21f-6eb4efebb3db",
-                            "attributes":{
-                                "username":"Nekidev",
-                                "nickname":"Neki",
-                                "biography":"",
-                                "avatarImage":"https://cdn.nekosapi.com/uploads/user/avatar/L7PSX2YOY5CG5K67JJJZRCNRVY.webp",
-                                "timestamps":{
-                                    "joined":"2023-01-29T09:04:52Z"
-                                },
-                                "permissions":{
-                                    "isActive":true,
-                                    "isStaff":true,
-                                    "isSuperuser":true
-                                }
-                            },
-                            "relationships":{
-                                "following":{
-                                    "meta":{
-                                        "count":0
-                                    },
-                                    "data":[
-                                        
-                                    ],
-                                    "links":{
-                                        "self":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/following",
-                                        "related":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/following"
-                                    }
-                                },
-                                "followers":{
-                                    "meta":{
-                                        "count":0
-                                    },
-                                    "data":[
-                                        
-                                    ],
-                                    "links":{
-                                        "self":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followers",
-                                        "related":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followers"
-                                    }
-                                },
-                                "followedArtists":{
-                                    "meta":{
-                                        "count":1
-                                    },
-                                    "data":[
-                                        {
-                                            "type":"artist",
-                                            "id":"500c5ecf-8d83-4333-8f0f-207941aaa552"
-                                        }
-                                    ],
-                                    "links":{
-                                        "self":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-artists",
-                                        "related":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-artists"
-                                    }
-                                },
-                                "followedCharacters":{
-                                    "meta":{
-                                        "count":0
-                                    },
-                                    "data":[
-                                        
-                                    ],
-                                    "links":{
-                                        "self":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-characters",
-                                        "related":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-characters"
-                                    }
-                                },
-                                "followedCategories":{
-                                    "meta":{
-                                        "count":0
-                                    },
-                                    "data":[
-                                        
-                                    ],
-                                    "links":{
-                                        "self":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-categories",
-                                        "related":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-categories"
-                                    }
-                                },
-                                "followedLists":{
-                                    "meta":{
-                                        "count":0
-                                    },
-                                    "data":[
-                                        
-                                    ],
-                                    "links":{
-                                        "self":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/relationships/followed-lists",
-                                        "related":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db/followed-lists"
-                                    }
-                                }
-                            },
-                            "links":{
-                                "self":"https://api.nekosapi.com/v2/users/8fad93cd-4a9c-4e71-b21f-6eb4efebb3db"
-                            }
-                        }
-                    ]
-                }
-                `,
+                code: stringify(resource([user_public_schema])),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
@@ -442,14 +170,7 @@ These endpoints return resources related to the main character resource, such as
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: dedent`
-                {
-                    "data": {
-                        "type": "user",
-                        "id": "4acc3444-528f-4f9a-b275-927e32c78441"
-                    }
-                }
-                `,
+                code: stringify(resource([user_ref])),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },

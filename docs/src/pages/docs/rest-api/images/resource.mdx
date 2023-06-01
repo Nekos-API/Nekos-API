@@ -2,6 +2,20 @@ import { Callout } from "nextra-theme-docs";
 import dedent from "dedent-js";
 
 import { APIRequest } from "../../../../components/apirequest";
+import {
+    resource,
+    stringify,
+    image_ref,
+    image_schema,
+    artist_ref,
+    artist_schema,
+    character_ref,
+    character_schema,
+    category_ref,
+    category_schema,
+    user_ref,
+    user_public_schema,
+} from "../../../../constants/schemas";
 
 # Image resource
 
@@ -379,116 +393,7 @@ import { APIRequest } from "../../../../components/apirequest";
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: dedent`
-                    {
-                        "links": {
-                            "first": "https://api.nekosapi.com/v2/images?filter%5BverificationStatus%5D=verified",
-                            "last": "https://api.nekosapi.com/v2/images?filter%5BverificationStatus%5D=verified&page%5Blimit%5D=10",
-                            "next": null,
-                            "prev": null
-                        },
-                        "data": [
-                            {
-                                "type": "image",
-                                "id": "001a0c73-b9c6-498b-8b81-69fc3e527185",
-                                "attributes": {
-                                    "file": "https://cdn.nekosapi.com/uploads/images/ZQFIROLL75DLFCZHGE5BGH7IZM.webp",
-                                    "title": "Lumine and Paimon at the beach",
-                                    "colors": {
-                                        "dominant": "#ffffff",
-                                        "palette": [
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff"
-                                        ]
-                                    },
-                                    "source": {
-                                        "name": null,
-                                        "url": null
-                                    },
-                                    "dimens": {
-                                        "height": 0,
-                                        "width": 0,
-                                        "aspectRatio": null
-                                    },
-                                    "isOriginal": false,
-                                    "verificationStatus": "verified",
-                                    "ageRating": "questionable",
-                                    "timestamps": {
-                                        "created": "2023-02-13T06:43:01.214358Z",
-                                        "updated": "2023-02-13T19:24:49.493057Z"
-                                    }
-                                },
-                                "relationships": {
-                                    "uploader": {
-                                        "links": {
-                                            "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/uploader",
-                                            "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/uploader"
-                                        },
-                                        "data": {
-                                            "type": "user",
-                                            "id": "8fad93cd-4a9c-4e71-b21f-6eb4efebb3db"
-                                        }
-                                    },
-                                    "artist": {
-                                        "links": {
-                                            "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/artist",
-                                            "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/artist"
-                                        },
-                                        "data": null
-                                    },
-                                    "categories": {
-                                        "meta": {
-                                            "count": 0
-                                        },
-                                        "data": [],
-                                        "links": {
-                                            "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/categories",
-                                            "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/categories"
-                                        }
-                                    },
-                                    "characters": {
-                                        "meta": {
-                                            "count": 0
-                                        },
-                                        "data": [],
-                                        "links": {
-                                            "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/characters",
-                                            "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/characters"
-                                        }
-                                    },
-                                    "likedBy": {
-                                        "meta": {
-                                            "count": 0
-                                        },
-                                        "data": [],
-                                        "links": {
-                                            "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/liked-by",
-                                            "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/liked-by"
-                                        }
-                                    }
-                                },
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185"
-                                }
-                            }
-                        ],
-                        "meta": {
-                            "pagination": {
-                                "count": 1,
-                                "limit": 10,
-                                "offset": 0
-                            }
-                        }
-                    }
-                `,
+                code: stringify(pagination([image_schema])),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
@@ -530,101 +435,7 @@ import { APIRequest } from "../../../../components/apirequest";
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: dedent`
-                {
-                    "data": {
-                        "type": "image",
-                        "id": "001a0c73-b9c6-498b-8b81-69fc3e527185",
-                        "attributes": {
-                            "file": "https://cdn.nekosapi.com/uploads/images/ZQFIROLL75DLFCZHGE5BGH7IZM.webp",
-                            "title": "Lumine and Paimon at the beach",
-                            "colors": {
-                                "dominant": "#ffffff",
-                                "palette": [
-                                    "#ffffff",
-                                    "#ffffff",
-                                    "#ffffff",
-                                    "#ffffff",
-                                    "#ffffff",
-                                    "#ffffff",
-                                    "#ffffff",
-                                    "#ffffff",
-                                    "#ffffff",
-                                    "#ffffff"
-                                ]
-                            },
-                            "source": {
-                                "name": "Pixiv",
-                                "url": "https://pixiv.net/some-url"
-                            },
-                            "dimens": {
-                                "height": 0,
-                                "width": 0,
-                                "aspectRatio": "3:4"
-                            },
-                            "isOriginal": false,
-                            "verificationStatus": "verified",
-                            "ageRating": "questionable",
-                            "timestamps": {
-                                "created": "2023-02-13T06:43:01.214358Z",
-                                "updated": "2023-02-13T19:24:49.493057Z"
-                            }
-                        },
-                        "relationships": {
-                            "uploader": {
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/uploader",
-                                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/uploader"
-                                },
-                                "data": {
-                                    "type": "user",
-                                    "id": "8fad93cd-4a9c-4e71-b21f-6eb4efebb3db"
-                                }
-                            },
-                            "artist": {
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/artist",
-                                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/artist"
-                                },
-                                "data": null
-                            },
-                            "categories": {
-                                "meta": {
-                                    "count": 0
-                                },
-                                "data": [],
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/categories",
-                                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/categories"
-                                }
-                            },
-                            "characters": {
-                                "meta": {
-                                    "count": 0
-                                },
-                                "data": [],
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/characters",
-                                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/characters"
-                                }
-                            },
-                            "likedBy": {
-                                "meta": {
-                                    "count": 0
-                                },
-                                "data": [],
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/liked-by",
-                                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/liked-by"
-                                }
-                            }
-                        },
-                        "links": {
-                            "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185"
-                        }
-                    }
-                }
-                `,
+                code: stringify(resource(image_schema)),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
@@ -1031,116 +842,7 @@ import { APIRequest } from "../../../../components/apirequest";
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: dedent`
-                    {
-                        "links": {
-                            "first": "https://api.nekosapi.com/v2/images?filter%5BverificationStatus%5D=verified",
-                            "last": "https://api.nekosapi.com/v2/images?filter%5BverificationStatus%5D=verified&page%5Blimit%5D=10",
-                            "next": null,
-                            "prev": null
-                        },
-                        "data": [
-                            {
-                                "type": "image",
-                                "id": "001a0c73-b9c6-498b-8b81-69fc3e527185",
-                                "attributes": {
-                                    "file": "https://cdn.nekosapi.com/uploads/images/ZQFIROLL75DLFCZHGE5BGH7IZM.webp",
-                                    "title": "Lumine and Paimon at the beach",
-                                    "colors": {
-                                        "dominant": "#ffffff",
-                                        "palette": [
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff",
-                                            "#ffffff"
-                                        ]
-                                    },
-                                    "source": {
-                                        "name": null,
-                                        "url": null
-                                    },
-                                    "dimens": {
-                                        "height": 0,
-                                        "width": 0,
-                                        "aspectRatio": null
-                                    },
-                                    "isOriginal": false,
-                                    "verificationStatus": "verified",
-                                    "ageRating": "questionable",
-                                    "timestamps": {
-                                        "created": "2023-02-13T06:43:01.214358Z",
-                                        "updated": "2023-02-13T19:24:49.493057Z"
-                                    }
-                                },
-                                "relationships": {
-                                    "uploader": {
-                                        "links": {
-                                            "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/uploader",
-                                            "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/uploader"
-                                        },
-                                        "data": {
-                                            "type": "user",
-                                            "id": "8fad93cd-4a9c-4e71-b21f-6eb4efebb3db"
-                                        }
-                                    },
-                                    "artist": {
-                                        "links": {
-                                            "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/artist",
-                                            "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/artist"
-                                        },
-                                        "data": null
-                                    },
-                                    "categories": {
-                                        "meta": {
-                                            "count": 0
-                                        },
-                                        "data": [],
-                                        "links": {
-                                            "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/categories",
-                                            "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/categories"
-                                        }
-                                    },
-                                    "characters": {
-                                        "meta": {
-                                            "count": 0
-                                        },
-                                        "data": [],
-                                        "links": {
-                                            "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/characters",
-                                            "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/characters"
-                                        }
-                                    },
-                                    "likedBy": {
-                                        "meta": {
-                                            "count": 0
-                                        },
-                                        "data": [],
-                                        "links": {
-                                            "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/liked-by",
-                                            "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/liked-by"
-                                        }
-                                    }
-                                },
-                                "links": {
-                                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185"
-                                }
-                            }
-                        ],
-                        "meta": {
-                            "pagination": {
-                                "count": 1,
-                                "limit": 10,
-                                "offset": 0
-                            }
-                        }
-                    }
-                `,
+                code: stringify(resource(image_schema)),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
@@ -1553,101 +1255,6 @@ import { APIRequest } from "../../../../components/apirequest";
 
 ## Upload an image
 
-export const code3 = `
-{
-    "data": {
-        "type": "image",
-        "attributes": {
-            "file": null,
-            "title": "Lumine and Paimon at the beach",
-            "colors": {
-                "dominant": "#ffffff",
-                "palette": [
-                    "#ffffff",
-                    "#ffffff",
-                    "#ffffff",
-                    "#ffffff",
-                    "#ffffff",
-                    "#ffffff",
-                    "#ffffff",
-                    "#ffffff",
-                    "#ffffff",
-                    "#ffffff"
-                ]
-            },
-            "source": {
-                "name": null,
-                "url": null
-            },
-            "dimens": {
-                "height": 0,
-                "width": 0,
-                "aspectRatio": null
-            },
-            "isOriginal": false,
-            "verificationStatus": "not_reviewed",
-            "ageRating": null,
-            "timestamps": {
-                "created": "2023-02-13T06:43:01.214358Z",
-                "updated": "2023-02-13T19:24:49.493057Z"
-            }
-        },
-        "relationships": {
-            "uploader": {
-                "links": {
-                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/uploader",
-                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/uploader"
-                },
-                "data": {
-                    "type": "user",
-                    "id": "8fad93cd-4a9c-4e71-b21f-6eb4efebb3db"
-                }
-            },
-            "artist": {
-                "links": {
-                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/artist",
-                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/artist"
-                },
-                "data": null
-            },
-            "categories": {
-                "meta": {
-                    "count": 0
-                },
-                "data": [],
-                "links": {
-                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/categories",
-                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/categories"
-                }
-            },
-            "characters": {
-                "meta": {
-                    "count": 0
-                },
-                "data": [],
-                "links": {
-                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/characters",
-                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/characters"
-                }
-            },
-            "likedBy": {
-                "meta": {
-                    "count": 0
-                },
-                "data": [],
-                "links": {
-                    "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/liked-by",
-                    "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/liked-by"
-                }
-            }
-        },
-        "links": {
-            "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185"
-        }
-    },
-}
-`.trim();
-
 <APIRequest
     method="POST"
     endpoint="/images"
@@ -1757,12 +1364,9 @@ export const code3 = `
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: code3,
+                code: stringify(resource(image_schema)),
                 language: "JSON",
-                headers: [
-                    "application/vnd.api+json",
-                    `${code3.split("\n").length} lines`,
-                ],
+                headers: ["Content-Type: application/vnd.api+json"],
             },
         },
     ]}
@@ -1939,99 +1543,7 @@ export const code3 = `
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: dedent`
-                {
-                    "type": "image",
-                    "id": "001a0c73-b9c6-498b-8b81-69fc3e527185",
-                    "attributes": {
-                        "file": null,
-                        "title": "Lumine and Paimon at the beach",
-                        "colors": {
-                            "dominant": "#ffffff",
-                            "palette": [
-                                "#ffffff",
-                                "#ffffff",
-                                "#ffffff",
-                                "#ffffff",
-                                "#ffffff",
-                                "#ffffff",
-                                "#ffffff",
-                                "#ffffff",
-                                "#ffffff",
-                                "#ffffff"
-                            ]
-                        },
-                        "source": {
-                            "name": null,
-                            "url": null
-                        },
-                        "dimens": {
-                            "height": 0,
-                            "width": 0,
-                            "aspectRatio": null
-                        },
-                        "isOriginal": false,
-                        "verificationStatus": "not_reviewed",
-                        "ageRating": null,
-                        "timestamps": {
-                            "created": "2023-02-13T06:43:01.214358Z",
-                            "updated": "2023-02-13T19:24:49.493057Z"
-                        }
-                    },
-                    "relationships": {
-                        "uploader": {
-                            "links": {
-                                "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/uploader",
-                                "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/uploader"
-                            },
-                            "data": {
-                                "type": "user",
-                                "id": "8fad93cd-4a9c-4e71-b21f-6eb4efebb3db"
-                            }
-                        },
-                        "artist": {
-                            "links": {
-                                "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/artist",
-                                "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/artist"
-                            },
-                            "data": null
-                        },
-                        "categories": {
-                            "meta": {
-                                "count": 0
-                            },
-                            "data": [],
-                            "links": {
-                                "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/categories",
-                                "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/categories"
-                            }
-                        },
-                        "characters": {
-                            "meta": {
-                                "count": 0
-                            },
-                            "data": [],
-                            "links": {
-                                "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/characters",
-                                "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/characters"
-                            }
-                        },
-                        "likedBy": {
-                            "meta": {
-                                "count": 0
-                            },
-                            "data": [],
-                            "links": {
-                                "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/relationships/liked-by",
-                                "related": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185/liked-by"
-                            }
-                        }
-                    },
-                    "links": {
-                        "self": "https://api.nekosapi.com/v2/images/001a0c73-b9c6-498b-8b81-69fc3e527185"
-                    }
-                }
-                `,
+                code: stringify(resource(image_schema)),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
