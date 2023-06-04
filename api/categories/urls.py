@@ -11,11 +11,6 @@ urlpatterns = [
         name="category-detail",
     ),
     path(
-        "categories/<uuid:pk>/follow",
-        CategoryViewSet.as_view({"post": "follow", "delete": "unfollow"}),
-        name="category-follow",
-    ),
-    path(
         r"categories/<uuid:pk>/<related_field>",
         CategoryViewSet.as_view({"get": "retrieve_related"}),
         name="category-related",

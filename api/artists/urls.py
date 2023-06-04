@@ -11,11 +11,6 @@ urlpatterns = [
         name="artist-detail",
     ),
     path(
-        "artists/<uuid:pk>/follow",
-        ArtistViewSet.as_view({"post": "follow", "delete": "unfollow"}),
-        name="artist-follow",
-    ),
-    path(
         r"artists/<uuid:pk>/<related_field>",
         ArtistViewSet.as_view({"get": "retrieve_related"}),
         name="artist-related",

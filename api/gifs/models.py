@@ -75,6 +75,7 @@ class Gif(models.Model):
         null=True,
         blank=True,
         help_text="The image's sfw-ness.",
+        db_index=True
     )
 
     verification_status = models.CharField(
@@ -84,6 +85,7 @@ class Gif(models.Model):
         null=False,
         blank=False,
         help_text="The image's verification status.",
+        db_index=True
     )
 
     duration = models.FloatField(null=True, blank=True)
@@ -93,6 +95,7 @@ class Gif(models.Model):
         blank=True,
         default=list,
         help_text=f"{', '.join(e[1] for e in Emotion.choices)}",
+        db_index=True
     )
 
     source_name = models.CharField(
@@ -191,6 +194,7 @@ class Reaction(models.Model):
         max_length=100,
         help_text="Keep it neutral (?). For example, <b>Wave</b> but not <b>Waving</b>.",
         unique=True,
+        db_index=True
     )
 
     is_nsfw = models.BooleanField(

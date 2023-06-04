@@ -1,0 +1,569 @@
+import { Callout } from "nextra-theme-docs";
+
+import { APIRequest } from "../../../../components/apirequest";
+import {
+    resource,
+    stringify,
+    pagination,
+    image_ref,
+    image_schema,
+    artist_ref,
+    artist_schema,
+    character_ref,
+    character_schema,
+    category_ref,
+    category_schema,
+    user_ref,
+    user_public_schema,
+    gif_ref,
+    gif_schema,
+    reaction_ref,
+    reaction_schema,
+} from "../../../../constants/schemas";
+
+# GIF Resource
+
+<Callout type="warning">
+    GIFs is still a beta feature. It may break and things might not work as
+    expected. If you find a bug, please report it in our Discord server.
+</Callout>
+
+export const gif_filters = [
+    {
+        name: "filter[reactions.name.exact]",
+        type: "String",
+        description:
+            "Returns all GIFs where the reaction name matches the specified value (case-sensitive)",
+    },
+    {
+        name: "filter[reactions.name.iexact]",
+        type: "String",
+        description:
+            "Returns all GIFs where the reaction name matches the specified value (case-insensitive)",
+    },
+    {
+        name: "filter[reactions.name.contains]",
+        type: "String",
+        description:
+            "Returns all GIFs where the reaction name contains the specified value (case-sensitive)",
+    },
+    {
+        name: "filter[reactions.name.icontains]",
+        type: "String",
+        description:
+            "Returns all GIFs where the reaction name contains the specified value (case-insensitive)",
+    },
+    {
+        name: "filter[reactions.name.startswith]",
+        type: "String",
+        description:
+            "Returns all GIFs where the reaction name starts with the specified value (case-sensitive)",
+    },
+    {
+        name: "filter[reactions.name.endswith]",
+        type: "String",
+        description:
+            "Returns all GIFs where the reaction name ends with the specified value (case-sensitive)",
+    },
+    {
+        name: "filter[reactions.name.regex]",
+        type: "POSIX RegEx",
+        description:
+            "Returns all GIFs where the reaction name matches the specified POSIX regular expression",
+    },
+    {
+        name: "filter[reactions.name.iregex]",
+        type: "POSIX RegEx",
+        description:
+            "Returns all GIFs where the reaction name matches the specified case-insensitive POSIX regular expression",
+    },
+    {
+        name: "filter[isSpoiler.exact]",
+        type: "Boolean",
+        description: "Returns all GIFs with the exact specified spoiler status",
+    },
+    {
+        name: "filter[ageRating.exact]",
+        type: "String",
+        description: "Returns all GIFs with the exact specified age rating",
+    },
+    {
+        name: "filter[ageRating.iexact]",
+        type: "String",
+        description:
+            "Returns all GIFs with the exact specified age rating (case-insensitive)",
+    },
+    {
+        name: "filter[ageRating.in]",
+        type: "List of String",
+        description:
+            "Returns all GIFs with age rating matching any of the specified values",
+    },
+    {
+        name: "filter[ageRating.isnull]",
+        type: "Boolean",
+        description: "Returns all GIFs where the age rating is null",
+    },
+    {
+        name: "filter[ageRating.regex]",
+        type: "POSIX RegEx",
+        description:
+            "Returns all GIFs where the age rating matches the specified POSIX regular expression",
+    },
+    {
+        name: "filter[ageRating.iregex]",
+        type: "POSIX RegEx",
+        description:
+            "Returns all GIFs where the age rating matches the specified case-insensitive POSIX regular expression",
+    },
+    {
+        name: "filter[height.exact]",
+        type: "Integer",
+        description: "Returns all GIFs with the exact specified height",
+    },
+    {
+        name: "filter[height.lt]",
+        type: "Integer",
+        description:
+            "Returns all GIFs with height less than the specified value",
+    },
+    {
+        name: "filter[height.lte]",
+        type: "Integer",
+        description:
+            "Returns all GIFs with height less than or equal to the specified value",
+    },
+    {
+        name: "filter[height.gt]",
+        type: "Integer",
+        description:
+            "Returns all GIFs with height greater than the specified value",
+    },
+    {
+        name: "filter[height.gte]",
+        type: "Integer",
+        description:
+            "Returns all GIFs with height greater than or equal to the specified value",
+    },
+    {
+        name: "filter[width.exact]",
+        type: "Integer",
+        description: "Returns all GIFs with the exact specified width",
+    },
+    {
+        name: "filter[width.lt]",
+        type: "Integer",
+        description:
+            "Returns all GIFs with width less than the specified value",
+    },
+    {
+        name: "filter[width.lte]",
+        type: "Integer",
+        description:
+            "Returns all GIFs with width less than or equal to the specified value",
+    },
+    {
+        name: "filter[width.gt]",
+        type: "Integer",
+        description:
+            "Returns all GIFs with width greater than the specified value",
+    },
+    {
+        name: "filter[width.gte]",
+        type: "Integer",
+        description:
+            "Returns all GIFs with width greater than or equal to the specified value",
+    },
+    {
+        name: "filter[aspectRatio.exact]",
+        type: "String",
+        description: "Returns all GIFs with the exact specified aspect ratio",
+    },
+    {
+        name: "filter[aspectRatio.startswith]",
+        type: "String",
+        description:
+            "Returns all GIFs with the aspect ratio starting with the specified value",
+    },
+    {
+        name: "filter[aspectRatio.endswith]",
+        type: "String",
+        description:
+            "Returns all GIFs with the aspect ratio ending with the specified value",
+    },
+    {
+        name: "filter[aspectRatio.regex]",
+        type: "POSIX RegEx",
+        description:
+            "Returns all GIFs where the aspect ratio matches the specified POSIX regular expression",
+    },
+    {
+        name: "filter[orientation.iexact]",
+        type: "String",
+        description:
+            "Returns all GIFs with the exact specified orientation (case-insensitive)",
+    },
+    {
+        name: "filter[orientation.isnull]",
+        type: "Boolean",
+        description: "Returns all GIFs where the orientation is null",
+    },
+    {
+        name: "filter[verificationStatus.exact]",
+        type: "String",
+        description:
+            "Returns all GIFs with the exact specified verification status",
+    },
+    {
+        name: "filter[verificationStatus.iexact]",
+        type: "String",
+        description:
+            "Returns all GIFs with the exact specified verification status (case-insensitive)",
+    },
+    {
+        name: "filter[verificationStatus.in]",
+        type: "List of String",
+        description:
+            "Returns all GIFs with verification status matching any of the specified values",
+    },
+    {
+        name: "filter[verificationStatus.contains]",
+        type: "String",
+        description:
+            "Returns all GIFs where the verification status contains the specified value (case-sensitive)",
+    },
+    {
+        name: "filter[verificationStatus.icontains]",
+        type: "String",
+        description:
+            "Returns all GIFs where the verification status contains the specified value (case-insensitive)",
+    },
+    {
+        name: "filter[verificationStatus.regex]",
+        type: "POSIX RegEx",
+        description:
+            "Returns all GIFs where the verification status matches the specified POSIX regular expression",
+    },
+    {
+        name: "filter[verificationStatus.iregex]",
+        type: "POSIX RegEx",
+        description:
+            "Returns all GIFs where the verification status matches the specified case-insensitive POSIX regular expression",
+    },
+    {
+        name: "filter[sourceName.exact]",
+        type: "String",
+        description: "Returns all GIFs with the exact specified source name",
+    },
+    {
+        name: "filter[sourceName.iexact]",
+        type: "String",
+        description:
+            "Returns all GIFs with the exact specified source name (case-insensitive)",
+    },
+    {
+        name: "filter[sourceName.contains]",
+        type: "String",
+        description:
+            "Returns all GIFs where the source name contains the specified value (case-sensitive)",
+    },
+    {
+        name: "filter[sourceName.icontains]",
+        type: "String",
+        description:
+            "Returns all GIFs where the source name contains the specified value (case-insensitive)",
+    },
+    {
+        name: "filter[sourceName.startswith]",
+        type: "String",
+        description:
+            "Returns all GIFs where the source name starts with the specified value (case-sensitive)",
+    },
+    {
+        name: "filter[sourceName.endswith]",
+        type: "String",
+        description:
+            "Returns all GIFs where the source name ends with the specified value (case-sensitive)",
+    },
+    {
+        name: "filter[sourceName.isnull]",
+        type: "Boolean",
+        description: "Returns all GIFs where the source name is null",
+    },
+    {
+        name: "filter[sourceName.regex]",
+        type: "POSIX RegEx",
+        description:
+            "Returns all GIFs where the source name matches the specified POSIX regular expression",
+    },
+    {
+        name: "filter[sourceName.iregex]",
+        type: "POSIX RegEx",
+        description:
+            "Returns all GIFs where the source name matches the specified case-insensitive POSIX regular expression",
+    },
+    {
+        name: "filter[sourceUrl.exact]",
+        type: "String",
+        description: "Returns all GIFs with the exact specified source URL",
+    },
+    {
+        name: "filter[sourceUrl.iexact]",
+        type: "String",
+        description:
+            "Returns all GIFs with the exact specified source URL (case-insensitive)",
+    },
+    {
+        name: "filter[sourceUrl.contains]",
+        type: "String",
+        description:
+            "Returns all GIFs where the source URL contains the specified value (case-sensitive)",
+    },
+    {
+        name: "filter[sourceUrl.icontains]",
+        type: "String",
+        description:
+            "Returns all GIFs where the source URL contains the specified value (case-insensitive)",
+    },
+    {
+        name: "filter[sourceUrl.startswith]",
+        type: "String",
+        description:
+            "Returns all GIFs where the source URL starts with the specified value (case-sensitive)",
+    },
+    {
+        name: "filter[sourceUrl.endswith]",
+        type: "String",
+        description:
+            "Returns all GIFs where the source URL ends with the specified value (case-sensitive)",
+    },
+    {
+        name: "filter[sourceUrl.isnull]",
+        type: "Boolean",
+        description: "Returns all GIFs where the source URL is null",
+    },
+    {
+        name: "filter[sourceUrl.regex]",
+        type: "POSIX RegEx",
+        description:
+            "Returns all GIFs where the source URL matches the specified POSIX regular expression",
+    },
+    {
+        name: "filter[sourceUrl.iregex]",
+        type: "POSIX RegEx",
+        description:
+            "Returns all GIFs where the source URL matches the specified case-insensitive POSIX regular expression",
+    },
+];
+
+## Search for a GIF
+
+<APIRequest
+    endpoint="/gifs"
+    title="Search for a GIF"
+    description="Search for a GIF using a variety of different filters."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "include",
+            type: "List of strings",
+            description:
+                "The related resources to include in the response.\n\nPossible values: `uploader`, `reactions`, `characters`, `categories`",
+        },
+        {
+            name: "sort",
+            type: "List of strings",
+            description:
+                "The order in which to sort the response.\n\nPossible values: `created-at`, `updated-at`, `height`, `width`, `age-rating`, `is-spoiler`, `verification-status`, `frames`, `duration`, `file-size`, `-created-at`, `-updated-at`, `-height`, `-width`, `-age-rating`, `-is-spoiler`, `-verification-status`, `-frames`, `-duration`, `-file-size`",
+        },
+        ...gif_filters,
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(pagination([gif_schema], [reaction_schema])),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+## Get a GIF by it's ID
+
+<APIRequest
+    endpoint="/gifs/:id"
+    title="Get a GIF by it's ID"
+    description="Get a GIF by it's ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            description: "The ID of the image resource.",
+            type: "UUID",
+            required: true,
+            location: "path",
+        },
+        {
+            name: "include",
+            type: "List of strings",
+            description:
+                "The related resources to include in the response.\n\nPossible values: `uploader`, `reactions`, `characters`, `categories`",
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource(gif_schema, [reaction_schema])),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+## Get a GIF's file redirect by it's ID
+
+<APIRequest
+    endpoint="/gifs/:id/file"
+    title="Get a random GIF's file redirect"
+    description="Get a random GIF's file redirect."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            description: "The ID of the image resource.",
+            type: "UUID",
+            required: true,
+            location: "path",
+        },
+    ]}
+    responses={[
+        {
+            code: 307,
+            name: "Success",
+            description: "The request was completed successfully.",
+        },
+    ]}
+/>
+
+## Get a random GIF
+
+<APIRequest
+    endpoint="/gifs/random"
+    title="Get a random GIF"
+    description="Get a random GIF."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "include",
+            type: "List of strings",
+            description:
+                "The related resources to include in the response.\n\nPossible values: `uploader`, `reactions`, `characters`, `categories`",
+        },
+        ...gif_filters,
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource(gif_schema, [reaction_schema])),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+## Get a random GIF's file redirect
+
+<APIRequest
+    endpoint="/gifs/random/file"
+    title="Get a random GIF's file redirect"
+    description="Get a random GIF's file redirect."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[...gif_filters]}
+    responses={[
+        {
+            code: 307,
+            name: "Success",
+            description: "The request was completed successfully.",
+        },
+    ]}
+/>
+
+## Update a GIF's verification status
+
+<APIRequest
+    method="POST"
+    endpoint="/gifs/:id/verification"
+    title="Update a GIF's verfication status"
+    description="Update a GIF's verification status by the GIF's ID. Only admin users can use this endpoint."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID v4",
+            description: "The GIF's ID.",
+            location: "path",
+            required: true,
+        },
+        {
+            name: "status",
+            type: "List of strings",
+            description:
+                "The new verification status.\nPossible values: not_reviewed,declined,on_review,verified",
+        },
+    ]}
+    responses={[
+        {
+            code: 204,
+            name: "Success",
+            description: "The request was completed successfully.",
+        },
+    ]}
+/>

@@ -39,52 +39,6 @@ class ArtistViewSet(views.ModelViewSet):
         "updated_at": ("exact", "second", "minute", "hour", "day", "month", "year"),
     }
 
-    @permission_classes([permissions.IsAuthenticated])
-    def follow(self, request, *args, **kwargs):
-        """
-        Follow the artist.
-        """
-
-        artist = self.get_object()
-
-        if artist.followers.filter(pk=request.user.pk).exists():
-            raise serializers.ValidationError(
-                {
-                    "id": "artist_already_followed",
-                    "detail": "You are already following this artist.",
-                    "source": {
-                        "pointer": "/data",
-                    },
-                }
-            )
-
-        request.user.followed_artists.add(artist)
-
-        return HttpResponse("", status=204)
-
-    @permission_classes([permissions.IsAuthenticated])
-    def unfollow(self, request, *args, **kwargs):
-        """
-        Follow the artist.
-        """
-
-        artist = self.get_object()
-
-        if not artist.followers.filter(pk=request.user.pk).exists():
-            raise serializers.ValidationError(
-                {
-                    "id": "artist_not_followed",
-                    "detail": "You are not following this artist.",
-                    "source": {
-                        "pointer": "/data",
-                    },
-                }
-            )
-
-        request.user.followed_artists.remove(artist)
-
-        return HttpResponse("", status=204)
-
 
 class ArtistRelationshipsView(views.RelationshipView):
     queryset = Artist.objects.all()

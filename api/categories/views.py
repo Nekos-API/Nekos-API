@@ -40,52 +40,6 @@ class CategoryViewSet(views.ModelViewSet):
 
     prefetch_for_includes = {"followers": ["followers"], "images": ["images"]}
 
-    @permission_classes([permissions.IsAuthenticated])
-    def follow(self, request, *args, **kwargs):
-        """
-        Follow the artist.
-        """
-
-        category = self.get_object()
-
-        if category.followers.filter(pk=request.user.pk).exists():
-            raise serializers.ValidationError(
-                {
-                    "id": "category_already_followed",
-                    "detail": "You are already following this category.",
-                    "source": {
-                        "pointer": "/data",
-                    },
-                }
-            )
-
-        request.user.followed_categories.add(category)
-
-        return HttpResponse("", status=204)
-
-    @permission_classes([permissions.IsAuthenticated])
-    def unfollow(self, request, *args, **kwargs):
-        """
-        Follow the artist.
-        """
-
-        category = self.get_object()
-
-        if not category.followers.filter(pk=request.user.pk).exists():
-            raise serializers.ValidationError(
-                {
-                    "id": "category_not_followed",
-                    "detail": "You are not following this category.",
-                    "source": {
-                        "pointer": "/data",
-                    },
-                }
-            )
-
-        request.user.followed_categories.remove(category)
-
-        return HttpResponse("", status=204)
-
 
 class CategoryRelationshipsView(views.RelationshipView):
     queryset = Category.objects.all()

@@ -386,3 +386,235 @@ These endpoints return resources related to the main image resource, such as it'
         },
     ]}
 />
+
+## Like an image
+
+<APIRequest
+    method="PATCH"
+    endpoint="/users/:user-id/relationships/liked-images"
+    title="Like an image"
+    description="Like an image."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "user-id",
+            type: "UUID v4",
+            description: "The logged in user's ID.",
+            location: "path",
+            required: true,
+        },
+        {
+            name: "data[].type",
+            type: "Literal 'image'",
+            description: "The resource type.",
+            required: true,
+        },
+        {
+            name: "data[].id",
+            type: "UUID v4",
+            description: "The image's ID.",
+            required: true,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource([image_ref])),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+<APIRequest
+    method="DELETE"
+    endpoint="/users/:user-id/relationships/liked-images"
+    title="Unlike an image"
+    description="Unlike an image."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "user-id",
+            type: "UUID v4",
+            description: "The logged in user's ID.",
+            location: "path",
+            required: true,
+        },
+        {
+            name: "data[].type",
+            type: "Literal 'image'",
+            description: "The resource type.",
+            required: true,
+        },
+        {
+            name: "data[].id",
+            type: "UUID v4",
+            description: "The image's ID.",
+            required: true,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource([image_ref])),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+## Save an image
+
+<APIRequest
+    method="PATCH"
+    endpoint="/users/:user-id/relationships/saved-images"
+    title="Save an image"
+    description="Save an image."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "user-id",
+            type: "UUID v4",
+            description: "The logged in user's ID.",
+            location: "path",
+            required: true,
+        },
+        {
+            name: "data[].type",
+            type: "Literal 'image'",
+            description: "The resource type.",
+            required: true,
+        },
+        {
+            name: "data[].id",
+            type: "UUID v4",
+            description: "The image's ID.",
+            required: true,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource([image_ref])),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+<APIRequest
+    method="DELETE"
+    endpoint="/users/:user-id/relationships/saved-images"
+    title="Unsave an image"
+    description="Unsave an image."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "user-id",
+            type: "UUID v4",
+            description: "The logged in user's ID.",
+            location: "path",
+            required: true,
+        },
+        {
+            name: "data[].type",
+            type: "Literal 'image'",
+            description: "The resource type.",
+            required: true,
+        },
+        {
+            name: "data[].id",
+            type: "UUID v4",
+            description: "The image's ID.",
+            required: true,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource([image_ref])),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>

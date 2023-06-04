@@ -280,6 +280,11 @@ These endpoints return resources related to the user resource, such as it's save
             description: "application/vnd.api+json",
             required: true,
         },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
     ]}
     parameters={[
         {
@@ -312,6 +317,11 @@ These endpoints return resources related to the user resource, such as it's save
         {
             name: "Accept",
             description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
             required: true,
         },
     ]}

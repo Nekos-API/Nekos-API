@@ -39,16 +39,6 @@ urlpatterns = [
         name="image-file-upload",
     ),
     path(
-        r"images/<uuid:pk>/like",
-        ImagesViewSet.as_view({"post": "like", "delete": "unlike"}),
-        name="image-like",
-    ),
-    path(
-        r"images/<uuid:pk>/save",
-        ImagesViewSet.as_view({"post": "save", "delete": "unsave"}),
-        name="image-save",
-    ),
-    path(
         r"images/<uuid:pk>/verification",
         ImagesViewSet.as_view({"post": "verification_status"}),
         name="image-verification",

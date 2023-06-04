@@ -117,26 +117,26 @@ class ListViewSet(views.ModelViewSet):
 class ListRelationshipsView(views.RelationshipView):
     queryset = List.objects.all()
 
-    def post(self, request, *args, **kwargs):
-        if request.user.is_authenticated and not request.user.is_superuser:
+    def check_write_permission(self):
+        """
+        Check wether the current user has write permission or not. Raises
+        `PermissionDenied` error in case the user does not have it.
+        """
+        if self.request.user.is_authenticated and not self.request.user.is_superuser:
+            if self.kwargs.get("related_field") != "images":
+                raise exceptions.PermissionDenied()
             obj = self.get_object()
-            if obj.user != request.user:
+            if obj.user != self.request.user:
                 raise exceptions.PermissionDenied()
 
+    def post(self, request, *args, **kwargs):
+        self.check_write_permission()
         return super().post(request, *args, **kwargs)
 
     def patch(self, request, *args, **kwargs):
-        if request.user.is_authenticated and not request.user.is_superuser:
-            obj = self.get_object()
-            if obj.user != request.user:
-                raise exceptions.PermissionDenied()
-
+        self.check_write_permission()
         return super().patch(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
-        if request.user.is_authenticated and not request.user.is_superuser:
-            obj = self.get_object()
-            if obj.user != request.user:
-                raise exceptions.PermissionDenied()
-
+        self.check_write_permission()
         return super().delete(request, *args, **kwargs)

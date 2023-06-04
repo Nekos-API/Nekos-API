@@ -343,6 +343,18 @@ class UserRelationshipsView(views.RelationshipView):
             raise exceptions.NotAuthenticated()
         else:
             return User.objects.get(pk=self.kwargs.get("pk"))
+        
+    def check_write_permission(self):
+        """
+        Check wether the current user has write permission or not. Raises
+        `PermissionDenied` error in case the user does not have it.
+        """
+        if self.request.user.is_authenticated and not self.request.user.is_superuser:
+            if self.kwargs.get("related_field") not in ["liked-images", "saved-images", "followed-characters", "followed-artists", "followed-categories", "followed-lists", "following"]:
+                raise exceptions.PermissionDenied()
+            user = self.get_object()
+            if user != self.request.user:
+                raise exceptions.PermissionDenied()
 
     def get(self, request, pk, related_field, *args, **kwargs):
         """
@@ -353,15 +365,25 @@ class UserRelationshipsView(views.RelationshipView):
             if not request.user.is_authenticated:
                 raise exceptions.NotAuthenticated()
             elif str(request.user.pk) != str(pk):
-                raise serializers.ValidationError(
-                    detail="You cannot see this information.", code="forbidden"
-                )
+                raise exceptions.PermissionDenied()
 
         return super().get(request, pk=pk, related_field=related_field, *args, **kwargs)
 
+    def post(self, *args, **kwargs):
+        self.check_write_permission()
+        return super().post(*args, **kwargs)
+
+    def patch(self, *args, **kwargs):
+        self.check_write_permission()
+        return super().patch(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        self.check_write_permission()
+        return super().delete(*args, **kwargs)
+
     def get_permissions(self):
         if self.request.method != "GET":
-            return [permissions.IsAdminUser]
+            return [permissions.IsAuthenticated]
         return []
 
 

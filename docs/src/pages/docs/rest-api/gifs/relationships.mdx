@@ -15,23 +15,25 @@ import {
     category_schema,
     user_ref,
     user_public_schema,
+    reaction_ref,
+    reaction_schema,
 } from "../../../../constants/schemas";
 
 # Relationships
 
-These endpoints return resources related to the main character resource, such as it's images or its followers.
+These endpoints return resources related to the main image resource, such as it's artist, it's uploader or it's categories.
 
 <Callout type="warning">
     None of these endpoints supports pagination. They all return all resources
     at once, which whill probaby cause the request to be <b>extremely slow</b>.
 </Callout>
 
-## Get a character's images
+## Get a GIF's uploader
 
 <APIRequest
-    endpoint="/characters/:id/images"
-    title="Get a character's images by the character's ID"
-    description="Get a character's images resources by the character's ID."
+    endpoint="/gifs/:id/uploader"
+    title="Get a GIF's uploader by the GIF's ID"
+    description="Get a GIF's uploader resource by the GIF's ID."
     headers={[
         {
             name: "Accept",
@@ -43,7 +45,7 @@ These endpoints return resources related to the main character resource, such as
         {
             name: "id",
             type: "UUID v4",
-            description: "The character's ID.",
+            description: "The GIF's ID.",
             location: "path",
             required: true,
         },
@@ -54,19 +56,18 @@ These endpoints return resources related to the main character resource, such as
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: stringify(resource([image_schema])),
+                code: stringify(resource(user_public_schema)),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
         },
     ]}
-
 />
 
 <APIRequest
-    endpoint="/characters/:id/relationships/images"
-    title="Get a character's image relationships by the character's ID"
-    description="Get a character's images relationship by the character's ID."
+    endpoint="/gifs/:id/relationships/uploader"
+    title="Get a GIF's uploader relationship by the GIF's ID"
+    description="Get a GIF's uploader relationship by the GIF's ID."
     headers={[
         {
             name: "Accept",
@@ -78,7 +79,7 @@ These endpoints return resources related to the main character resource, such as
         {
             name: "id",
             type: "UUID v4",
-            description: "The character's ID.",
+            description: "The GIF's ID.",
             location: "path",
             required: true,
         },
@@ -89,18 +90,7 @@ These endpoints return resources related to the main character resource, such as
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: stringify(resource([image_ref])),
-                language: "JSON",
-                headers: ["Content-Type: application/vnd.api+json"],
-            },
-        },
-        {
-            code: 200,
-            name: "Success, no resource",
-            description:
-                "The request was completed successfully but the character has no related images",
-            example: {
-                code: stringify(resource([])),
+                code: stringify(resource(user_ref)),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
@@ -108,12 +98,12 @@ These endpoints return resources related to the main character resource, such as
     ]}
 />
 
-## Get a character's followers
+## Get a GIF's reactions
 
 <APIRequest
-    endpoint="/characters/:id/followers"
-    title="Get a character's followers by the character's ID"
-    description="Get a character's follower resources by the character's ID."
+    endpoint="/gifs/:id/reactions"
+    title="Get a GIF's reactions by the GIF's ID"
+    description="Get a GIF's reaction resources by the GIF's ID."
     headers={[
         {
             name: "Accept",
@@ -125,7 +115,7 @@ These endpoints return resources related to the main character resource, such as
         {
             name: "id",
             type: "UUID v4",
-            description: "The character's ID.",
+            description: "The GIF's ID.",
             location: "path",
             required: true,
         },
@@ -136,7 +126,7 @@ These endpoints return resources related to the main character resource, such as
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: stringify(resource([user_public_schema])),
+                code: stringify(resource([reaction_schema])),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
@@ -145,9 +135,9 @@ These endpoints return resources related to the main character resource, such as
 />
 
 <APIRequest
-    endpoint="/characters/:id/relationships/followers"
-    title="Get a character's follower relationships by the character's ID"
-    description="Get a character's follower relationships by the character's ID."
+    endpoint="/gifs/:id/relationships/reactions"
+    title="Get a GIF's reaction relationships by the GIF's ID"
+    description="Get a GIF's reaction relationships by the GIF's ID."
     headers={[
         {
             name: "Accept",
@@ -159,7 +149,7 @@ These endpoints return resources related to the main character resource, such as
         {
             name: "id",
             type: "UUID v4",
-            description: "The character's ID.",
+            description: "The GIF's ID.",
             location: "path",
             required: true,
         },
@@ -170,7 +160,7 @@ These endpoints return resources related to the main character resource, such as
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: stringify(resource([user_ref])),
+                code: stringify(resource([reaction_ref])),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
@@ -178,48 +168,59 @@ These endpoints return resources related to the main character resource, such as
     ]}
 />
 
-## Follow a character
+## Get a GIF's characters
 
 <APIRequest
-    method="PATCH"
-    endpoint="/users/:user-id/relationships/followed-characters"
-    title="Follow a character"
-    description="Follow a character."
+    endpoint="/gifs/:id/characters"
+    title="Get a GIF's characters by the GIF's ID"
+    description="Get a GIF's character resources by the GIF's ID."
     headers={[
         {
             name: "Accept",
             description: "application/vnd.api+json",
             required: true,
         },
+    ]}
+    parameters={[
         {
-            name: "Content-Type",
-            description: "application/vnd.api+json",
+            name: "id",
+            type: "UUID v4",
+            description: "The GIF's ID.",
+            location: "path",
             required: true,
         },
+    ]}
+    responses={[
         {
-            name: "Authorization",
-            description: "Bearer &lt;access-token&gt;",
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource([character_schema])),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+<APIRequest
+    endpoint="/gifs/:id/relationships/characters"
+    title="Get a GIF's character relationships by the GIF's ID"
+    description="Get a GIF's character relationships by the GIF's ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
             required: true,
         },
     ]}
     parameters={[
         {
-            name: "user-id",
+            name: "id",
             type: "UUID v4",
-            description: "The logged in user's ID.",
+            description: "The GIF's ID.",
             location: "path",
-            required: true,
-        },
-        {
-            name: "data[].type",
-            type: "Literal 'character'",
-            description: "The resource type.",
-            required: true,
-        },
-        {
-            name: "data[].id",
-            type: "UUID v4",
-            description: "The character's ID.",
             required: true,
         },
     ]}
@@ -237,46 +238,25 @@ These endpoints return resources related to the main character resource, such as
     ]}
 />
 
+## Get a GIF's categories
+
 <APIRequest
-    method="DELETE"
-    endpoint="/users/:user-id/relationships/followed-characters"
-    title="Follow a character"
-    description="Follow a character."
+    endpoint="/gifs/:id/categories"
+    title="Get a GIF's categories by the GIF's ID"
+    description="Get a GIF's character resources by the GIF's ID."
     headers={[
         {
             name: "Accept",
             description: "application/vnd.api+json",
             required: true,
         },
-        {
-            name: "Content-Type",
-            description: "application/vnd.api+json",
-            required: true,
-        },
-        {
-            name: "Authorization",
-            description: "Bearer &lt;access-token&gt;",
-            required: true,
-        },
     ]}
     parameters={[
         {
-            name: "user-id",
+            name: "id",
             type: "UUID v4",
-            description: "The logged in user's ID.",
+            description: "The GIF's ID.",
             location: "path",
-            required: true,
-        },
-        {
-            name: "data[].type",
-            type: "Literal 'character'",
-            description: "The resource type.",
-            required: true,
-        },
-        {
-            name: "data[].id",
-            type: "UUID v4",
-            description: "The character's ID.",
             required: true,
         },
     ]}
@@ -286,7 +266,41 @@ These endpoints return resources related to the main character resource, such as
             name: "Success",
             description: "The request was completed successfully.",
             example: {
-                code: stringify(resource([character_ref])),
+                code: stringify(resource([category_schema])),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+<APIRequest
+    endpoint="/gifs/:id/relationships/categories"
+    title="Get a GIF's category relationships by the GIF's ID"
+    description="Get a GIF's category relationships by the GIF's ID."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID v4",
+            description: "The GIF's ID.",
+            location: "path",
+            required: true,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource([category_ref])),
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },

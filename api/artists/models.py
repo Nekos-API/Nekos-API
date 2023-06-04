@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.db.models.functions import Lower
 from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
@@ -13,6 +14,11 @@ class Artist(models.Model):
 
     class JSONAPIMeta:
         resource_name = "artist"
+
+    class Meta:
+        indexes = [
+            models.Index(Lower("name").desc(), name="artist_name_index")
+        ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, null=False)
 

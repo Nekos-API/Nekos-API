@@ -1,5 +1,4 @@
 import { Callout } from "nextra-theme-docs";
-import dedent from "dedent-js";
 
 import { APIRequest } from "../../../../components/apirequest";
 import {
@@ -220,88 +219,6 @@ import {
                 language: "JSON",
                 headers: ["Content-Type: application/vnd.api+json"],
             },
-        },
-    ]}
-/>
-
-## Follow a category
-
-<APIRequest
-    method="POST"
-    endpoint="/categories/:id/follow"
-    title="Follow a category"
-    description="Follows a category by its ID."
-    headers={[
-        {
-            name: "Accept",
-            description: "application/vnd.api+json",
-            required: true,
-        },
-        {
-            name: "Content-Type",
-            description: "application/vnd.api+json",
-            required: true,
-        },
-        {
-            name: "Authorization",
-            description: "Bearer &lt;access-token&gt;",
-            required: true,
-        },
-    ]}
-    parameters={[
-        {
-            name: "id",
-            type: "UUID",
-            description: "The category's ID.",
-            required: true,
-            location: "path",
-        },
-    ]}
-    responses={[
-        {
-            code: 204,
-            name: "Success",
-            description: "The request was completed successfully.",
-        },
-    ]}
-/>
-
-<APIRequest
-    method="DELETE"
-    endpoint="/categories/:id/follow"
-    title="Unfollow a category"
-    description="Unfollows a category by its ID."
-    headers={[
-        {
-            name: "Accept",
-            description: "application/vnd.api+json",
-            required: true,
-        },
-        {
-            name: "Content-Type",
-            description: "application/vnd.api+json",
-            required: true,
-        },
-        {
-            name: "Authorization",
-            description: "Bearer &lt;access-token&gt;",
-            required: true,
-        },
-    ]}
-    parameters={[
-        {
-            name: "id",
-            type: "UUID",
-            description: "The category's ID.",
-            required: true,
-            location: "path",
-        },
-    ]}
-    responses={[
-        {
-            code: 204,
-            name: "Success",
-            description: "The request was completed successfully.",
         },
     ]}
 />

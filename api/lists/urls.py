@@ -11,19 +11,6 @@ urlpatterns = [
         name="list-detail",
     ),
     path(
-        "lists/<uuid:pk>/follow",
-        ListViewSet.as_view({"post": "follow", "delete": "unfollow"}),
-        name="list-follow",
-    ),
-    path(
-        "lists/<uuid:pk>/images",
-        ListViewSet.as_view(
-            {"get": "retrieve_related"}
-        ),
-        name="list-images-list",
-        kwargs={"related_field": "images"},
-    ),
-    path(
         "lists/<uuid:pk>/<related_field>",
         ListViewSet.as_view({"get": "retrieve_related"}),
         name="list-related",

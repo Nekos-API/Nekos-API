@@ -1,9 +1,12 @@
-export function stringify(json) {
-    return JSON.stringify(json, null, 4);
-}
+export const stringify = (json) => (JSON.stringify(json, null, 4));
 
 export const image_ref = {
     type: "image",
+    id: "UUID",
+};
+
+export const gif_ref = {
+    type: "gif",
     id: "UUID",
 };
 
@@ -34,8 +37,13 @@ export const discord_ref = {
 
 export const list_ref = {
     type: "list",
-    id: "String"
-}
+    id: "String",
+};
+
+export const reaction_ref = {
+    type: "reaction",
+    id: "UUID",
+};
 
 export const user_public_schema = {
     type: "user",
@@ -62,8 +70,7 @@ export const user_public_schema = {
             data: [user_ref],
             links: {
                 self: "https://api.nekosapi.com/v2/users/:id/relationships/following",
-                related:
-                    "https://api.nekosapi.com/v2/users/:id/following",
+                related: "https://api.nekosapi.com/v2/users/:id/following",
             },
         },
         followers: {
@@ -73,8 +80,7 @@ export const user_public_schema = {
             data: [user_ref],
             links: {
                 self: "https://api.nekosapi.com/v2/users/:id/relationships/followers",
-                related:
-                    "https://api.nekosapi.com/v2/users/:id/followers",
+                related: "https://api.nekosapi.com/v2/users/:id/followers",
             },
         },
         followedArtists: {
@@ -117,8 +123,7 @@ export const user_public_schema = {
             data: [image_ref],
             links: {
                 self: "https://api.nekosapi.com/v2/users/:id/relationships/liked-images",
-                related:
-                    "https://api.nekosapi.com/v2/users/:id/liked-images",
+                related: "https://api.nekosapi.com/v2/users/:id/liked-images",
             },
         },
     },
@@ -158,8 +163,7 @@ export const user_private_schema = {
             data: [user_ref],
             links: {
                 self: "https://api.nekosapi.com/v2/users/:id/relationships/following",
-                related:
-                    "https://api.nekosapi.com/v2/users/:id/following",
+                related: "https://api.nekosapi.com/v2/users/:id/following",
             },
         },
         followers: {
@@ -169,8 +173,7 @@ export const user_private_schema = {
             data: [user_ref],
             links: {
                 self: "https://api.nekosapi.com/v2/users/:id/relationships/followers",
-                related:
-                    "https://api.nekosapi.com/v2/users/:id/followers",
+                related: "https://api.nekosapi.com/v2/users/:id/followers",
             },
         },
         followedArtists: {
@@ -213,8 +216,7 @@ export const user_private_schema = {
             data: [image_ref],
             links: {
                 self: "https://api.nekosapi.com/v2/users/:id/relationships/liked-images",
-                related:
-                    "https://api.nekosapi.com/v2/users/:id/liked-images",
+                related: "https://api.nekosapi.com/v2/users/:id/liked-images",
             },
         },
         savedImages: {
@@ -224,8 +226,7 @@ export const user_private_schema = {
             data: [image_ref],
             links: {
                 self: "https://api.nekosapi.com/v2/users/:id/relationships/saved-images",
-                related:
-                    "https://api.nekosapi.com/v2/users/:id/saved-images",
+                related: "https://api.nekosapi.com/v2/users/:id/saved-images",
             },
         },
         discord: {
@@ -468,8 +469,7 @@ export const list_schema = {
         user: {
             links: {
                 self: "https://api.nekosapi.com/v2/lists/:id/relationships/user",
-                related:
-                    "https://api.nekosapi.com/v2/lists/:id/user",
+                related: "https://api.nekosapi.com/v2/lists/:id/user",
             },
             data: user_ref,
         },
@@ -480,21 +480,17 @@ export const list_schema = {
             data: [image_ref],
             links: {
                 self: "https://api.nekosapi.com/v2/lists/:id/relationships/images",
-                related:
-                    "https://api.nekosapi.com/v2/lists/:id/images",
+                related: "https://api.nekosapi.com/v2/lists/:id/images",
             },
         },
         followers: {
             meta: {
                 count: "Integer",
             },
-            data: [
-                user_ref
-            ],
+            data: [user_ref],
             links: {
                 self: "https://api.nekosapi.com/v2/lists/:id/relationships/followers",
-                related:
-                    "https://api.nekosapi.com/v2/lists/:id/followers",
+                related: "https://api.nekosapi.com/v2/lists/:id/followers",
             },
         },
     },
@@ -503,28 +499,129 @@ export const list_schema = {
     },
 };
 
-export const pagination = (items, included = []) => {
-    return {
-        links: {
-            first: "URL",
-            last: "URL",
-            next: "URL?",
-            prev: "URL?",
-        },
-        data: items,
-        included: included,
-        meta: {
-            pagination: {
-                count: "Integer",
-                limit: "Integer",
-                offset: "Integer",
+export const gif_schema = {
+    type: "gif",
+    id: "UUID",
+    attributes: {
+        files: {
+            original: {
+                url: "URL",
+                dimens: {
+                    width: "Integer?",
+                    height: "Integer?",
+                    aspectRatio: "String?",
+                    orientation: "String?",
+                },
+                metadata: {
+                    mimetype: "String?",
+                    size: "Integer?",
+                    frames: "Integer?",
+                    duration: "String?",
+                },
+            },
+            consistent: {
+                url: "URL",
+                dimens: {
+                    width: "Integer?",
+                    height: "Integer",
+                    aspectRatio: "16:9",
+                    orientation: "landscape",
+                },
+                metadata: {
+                    mimetype: "String",
+                    size: "Integer?",
+                    frames: "Integer?",
+                    duration: "String?",
+                },
             },
         },
-    };
+        text: "String?",
+        colors: {
+            dominant: "String?",
+            palette: ["String"],
+        },
+        source: {
+            name: "String?",
+            url: "URL?",
+        },
+        verificationStatus: "String?",
+        ageRating: "String",
+        isSpoiler: "Boolean",
+        emotions: ["String"],
+        timestamps: {
+            created: "ISO 8601",
+            updated: "ISO 8601",
+        },
+    },
+    relationships: {
+        reactions: {
+            meta: {
+                count: "Integer?",
+            },
+            data: [reaction_ref],
+            links: {
+                self: "https://api.nekosapi.com/v2/gifs/:id/relationships/reactions",
+                related: "https://api.nekosapi.com/v2/gifs/:id/reactions",
+            },
+        },
+        characters: {
+            meta: {
+                count: "Integer",
+            },
+            data: [character_ref],
+            links: {
+                self: "https://api.nekosapi.com/v2/gifs/:id/relationships/characters",
+                related: "https://api.nekosapi.com/v2/gifs/:id/characters",
+            },
+        },
+        categories: {
+            meta: {
+                count: "Integer",
+            },
+            data: [category_ref],
+            links: {
+                self: "https://api.nekosapi.com/v2/gifs/:id/relationships/categories",
+                related: "https://api.nekosapi.com/v2/gifs/:id/categories",
+            },
+        },
+        uploader: {
+            links: {
+                self: "https://api.nekosapi.com/v2/gifs/:id/relationships/uploader",
+                related: "https://api.nekosapi.com/v2/gifs/:id/uploader",
+            },
+            data: user_ref,
+        },
+    },
+    links: {
+        self: "https://api.nekosapi.com/v2/gifs/:id",
+    },
 };
 
-export const resource = (data) => {
-    return {
-        data: data,
-    };
+export const reaction_schema = {
+    type: "reaction",
+    id: "UUID",
+    attributes: {
+        name: "String",
+        isNsfw: "Boolean",
+    },
 };
+
+export const pagination = (items, included) => ({
+    links: {
+        first: "URL",
+        last: "URL",
+        next: "URL?",
+        prev: "URL?",
+    },
+    data: items,
+    included,
+    meta: {
+        pagination: {
+            count: "Integer",
+            limit: "Integer",
+            offset: "Integer",
+        },
+    },
+});
+
+export const resource = (data, included) => ({ data, included });

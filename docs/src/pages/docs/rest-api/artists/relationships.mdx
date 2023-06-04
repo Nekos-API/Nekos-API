@@ -177,3 +177,119 @@ These endpoints return resources related to the main artist resource, such as it
         },
     ]}
 />
+
+## Follow an artist
+
+<APIRequest
+    method="PATCH"
+    endpoint="/users/:user-id/relationships/followed-artists"
+    title="Follow an artist"
+    description="Follow an artist."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "user-id",
+            type: "UUID v4",
+            description: "The logged in user's ID.",
+            location: "path",
+            required: true,
+        },
+        {
+            name: "data[].type",
+            type: "Literal 'artist'",
+            description: "The resource type.",
+            required: true,
+        },
+        {
+            name: "data[].id",
+            type: "UUID v4",
+            description: "The artist's ID.",
+            required: true,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource([artist_ref])),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>
+
+<APIRequest
+    method="DELETE"
+    endpoint="/users/:user-id/relationships/followed-artists"
+    title="Follow an artist"
+    description="Follow an artist."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "user-id",
+            type: "UUID v4",
+            description: "The logged in user's ID.",
+            location: "path",
+            required: true,
+        },
+        {
+            name: "data[].type",
+            type: "Literal 'artist'",
+            description: "The resource type.",
+            required: true,
+        },
+        {
+            name: "data[].id",
+            type: "UUID v4",
+            description: "The artist's ID.",
+            required: true,
+        },
+    ]}
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+            example: {
+                code: stringify(resource([artist_ref])),
+                language: "JSON",
+                headers: ["Content-Type: application/vnd.api+json"],
+            },
+        },
+    ]}
+/>

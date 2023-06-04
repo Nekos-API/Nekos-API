@@ -194,6 +194,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             )
 
             request.session["discord_state"] = state
+            request.session.modified = True
 
             response = HttpResponseRedirect(authorization_url)
 
@@ -210,6 +211,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             )
 
             request.session["google_state"] = state
+            request.session.modified = True
 
             response = HttpResponseRedirect(authorization_url)
 
@@ -223,6 +225,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             authorization_url, state = github.authorization_url(authorization_base_url)
 
             request.session["github_state"] = state
+            request.session.modified = True
 
             response = HttpResponseRedirect(authorization_url)
 
@@ -307,7 +310,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
         if user.avatar_image is None:
             # The user has no avatar, so the one from Discord is used instead.
             avatar_req = urllib.request.Request(
-                user_avatar, headers={"User-Agent": "Nekos API"}
+                user_avatar, headers={"User-Agent": "Mozilla/5.0 (Linux; U; Linux x86_64; en-US) AppleWebKit/603.3 (KHTML, like Gecko) Chrome/50.0.3198.376 Safari/537"}
             )
 
             img_temp = NamedTemporaryFile(delete=True)

@@ -106,52 +106,6 @@ class CharacterViewSet(views.ReadOnlyModelViewSet):
         "updated_at": ("exact", "second", "minute", "hour", "day", "month", "year"),
     }
 
-    @permission_classes([permissions.IsAuthenticated])
-    def follow(self, request, *args, **kwargs):
-        """
-        Follow the artist.
-        """
-
-        character = self.get_object()
-
-        if character.followers.filter(pk=request.user.pk).exists():
-            raise serializers.ValidationError(
-                {
-                    "id": "character_already_followed",
-                    "detail": "You are already following this character.",
-                    "source": {
-                        "pointer": "/data",
-                    },
-                }
-            )
-
-        request.user.followed_characters.add(character)
-
-        return HttpResponse("", status=204)
-
-    @permission_classes([permissions.IsAuthenticated])
-    def unfollow(self, request, *args, **kwargs):
-        """
-        Follow the artist.
-        """
-
-        character = self.get_object()
-
-        if not character.followers.filter(pk=request.user.pk).exists():
-            raise serializers.ValidationError(
-                {
-                    "id": "character_not_followed",
-                    "detail": "You are not following this character.",
-                    "source": {
-                        "pointer": "/data",
-                    },
-                }
-            )
-
-        request.user.followed_characters.remove(character)
-
-        return HttpResponse("", status=204)
-
 
 class CharacterRelationshipsView(views.RelationshipView):
     queryset = Character.objects.all()
