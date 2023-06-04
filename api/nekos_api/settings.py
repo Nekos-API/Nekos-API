@@ -207,12 +207,17 @@ EMAIL_HOST_PASSWORD = ""
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "dj_db_conn_pool.backends.postgresql",
         "NAME": os.getenv("PGDATABASE"),
         "USER": os.getenv("PGUSER"),
         "PASSWORD": os.getenv("PGPASSWORD"),
         "HOST": os.getenv("PGHOST"),
         "PORT": "5432",
+        'POOL_OPTIONS' : {
+            'POOL_SIZE': 5,
+            'MAX_OVERFLOW': 10,
+            'RECYCLE': 12 * 60 * 60
+        }
     }
 }
 

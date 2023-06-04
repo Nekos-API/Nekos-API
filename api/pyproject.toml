@@ -41,6 +41,7 @@ NudeNet = "^2.0.9"
 django-bunny = "^1.0.5"
 django-thumbnails = "^0.7.0"
 django-pictures = "^1.1.0"
+django-db-connection-pool = {extras = ["postgresql"], version = "^1.2.3"}
 
 
 [build-system]
