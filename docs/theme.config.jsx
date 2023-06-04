@@ -83,10 +83,10 @@ export default {
         "link": "https://discord.gg/PgQnuM3YnM"
     },
     banner: {
-        "key": "WebSockets-API-released",
+        "key": "GIFs-released",
         "text": (
-            <Link href="/docs/websockets" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", gap: ".5rem" }}>
-                ✨ <span className="font-mono">WebSockets API</span> is live! Click on this banner to learn more ✨
+            <Link href="/docs/rest-api/gifs/resource" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", gap: ".5rem" }}>
+                ✨ Nekos API is now serving reaction GIFs! Click on this banner to learn more ✨
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" style={{ height: "1rem", width: "1rem" }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
