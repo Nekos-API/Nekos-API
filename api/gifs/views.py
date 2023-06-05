@@ -1,4 +1,8 @@
+import secrets
+
 from django.shortcuts import render
+from django.db.models import Q
+from django.contrib.contenttypes.models import ContentType
 
 from rest_framework import permissions
 from rest_framework_json_api import views
@@ -9,6 +13,9 @@ from .models import Gif
 from .serializers import GifSerializer
 
 # Create your views here.
+
+
+gif_ct = ContentType.objects.get_for_model(Gif)
 
 
 class GifViewSet(views.ModelViewSet):
@@ -104,13 +111,40 @@ class GifViewSet(views.ModelViewSet):
         Returns a random gif object.
         """
 
-        qs = self.filter_queryset(self.get_queryset())
+        if "token" in request.GET:
+            if not re.match(r"^[\w-]{,50}$", request.GET["token"]):
+                raise serializers.ValidationError(
+                    detail="Token must be up to 50 characters long and URL safe.",
+                    code="invalid_shared_resource_token",
+                )
 
-        return Response(
-            GifSerializer(
-                qs[secrets.randbelow(qs.count())], context={"request": request}
-            ).data
-        )
+            shared_resource_token = SharedResourceToken.objects.filter(
+                token=request.GET["token"], content_type=gif_ct
+            ).first()
+
+            if shared_resource_token is None:
+                qs = self.filter_queryset(self.get_queryset())
+                gif = qs[secrets.randbelow(len(qs))]
+
+                shared_resource_token = SharedResourceToken.objects.create(
+                    token=request.GET["token"],
+                    content_type=gif_ct,
+                    object_id=gif.id,
+                )
+
+            else:
+                gif = shared_resource_token.resource
+
+            return Response(GifSerializer(gif, context={"request": request}).data)
+
+        else:
+            qs = self.filter_queryset(self.get_queryset())
+
+            return Response(
+                GifSerializer(
+                    qs[secrets.randbelow(len(qs))], context={"request": request}
+                ).data
+            )
 
     def retrieve_file(self, request, *args, **kwargs):
         """
@@ -132,11 +166,39 @@ class GifViewSet(views.ModelViewSet):
         Returns a redirect to a random gif's gif URL.
         """
 
-        qs = self.filter_queryset(self.get_queryset().exclude(file=None))
+        if "token" in request.GET:
+            if not re.match(r"^[\w-]{,50}$", request.GET["token"]):
+                raise serializers.ValidationError(
+                    detail="Token must be up to 50 characters long and URL safe.",
+                    code="invalid_shared_resource_token",
+                )
 
-        gif = qs[secrets.randbelow(qs.count())]
+            shared_resource_token = SharedResourceToken.objects.filter(
+                token=request.GET["token"], content_type=gif_ct
+            ).first()
 
-        return HttpResponseRedirect(gif.file.url, status=307)
+            if shared_resource_token is None:
+                qs = self.filter_queryset(
+                    self.get_queryset().exclude(Q(file=None) | Q(file=""))
+                )
+                gif = qs[secrets.randbelow(len(qs))]
+
+                shared_resource_token = SharedResourceToken.objects.create(
+                    token=request.GET["token"],
+                    content_type=gif_ct,
+                    object_id=gif.id,
+                )
+
+            else:
+                gif = shared_resource_token.resource
+
+            return HttpResponseRedirect(gif.file.url, status=307)
+
+        else:
+            qs = self.filter_queryset(
+                self.get_queryset().exclude(Q(file=None) | Q(file=""))
+            )
+            return HttpResponseRedirect(qs[secrets.randbelow(len(qs))], status=307)
 
     @permission_classes([permissions.IsAuthenticated, permissions.IsAdminUser])
     def verification_status(self, request, pk):

@@ -491,6 +491,11 @@ export const gif_filters = [
             description:
                 "The related resources to include in the response.\n\nPossible values: `uploader`, `reactions`, `characters`, `categories`",
         },
+        {
+            name: "token",
+            type: "String",
+            description: "An up to 50 characters long URL safe string that identifies that specific random query. Every request with the same token will return the same response for 1 month."
+        },
         ...gif_filters,
     ]}
     responses={[
@@ -518,6 +523,11 @@ export const gif_filters = [
             name: "Accept",
             description: "application/vnd.api+json",
             required: true,
+        },
+        {
+            name: "token",
+            type: "String",
+            description: "An up to 50 characters long URL safe string that identifies that specific random query. Every request with the same token will return the same response for 1 month."
         },
     ]}
     parameters={[...gif_filters]}

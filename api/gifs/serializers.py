@@ -3,6 +3,7 @@ Note: in nested serializers (ColorsSerializer, SourceSerializer, etc.) field
 camelization does not work. You'll have to manually change the field names to
 keep the responses consistent.
 """
+from urllib.parse import urlparse
 
 from django.core.files.storage import default_storage
 
@@ -48,6 +49,16 @@ def calculate_aspect(size: tuple, ar_size: tuple) -> tuple:
         return size
 
 
+def get_thumbnail_url(url: str, variation: str) -> str:
+    """
+    Returns the GIF's thumbnail URL without querying Redis.
+    """
+    parsed_url = urlparse(url)
+    new_path = f"/thumbnails{parsed_url.path.rsplit('/', 1)[0]}/{parsed_url.path.rsplit('/', 1)[1].split('.', 1)[0]}_{variation}.{parsed_url.path.rsplit('/', 1)[1].split('.', 1)[1]}"
+
+    return f"{parsed_url.scheme}://{parsed_url.netloc}{new_path}"
+
+
 class FilesSerializer(serializers.Serializer):
     def to_representation(self, instance):
         return {
@@ -63,11 +74,11 @@ class FilesSerializer(serializers.Serializer):
                     "mimetype": instance.mimetype,
                     "size": instance.file_size,
                     "frames": instance.frames,
-                    "duration": instance.duration
+                    "duration": instance.duration,
                 },
             },
             "consistent": {
-                "url": instance.file.thumbnails.consistent.url,
+                "url": get_thumbnail_url(instance.file.url, "consistent"),
                 "dimens": {
                     "width": calculate_aspect(
                         (instance.width, instance.height), (16, 9)
@@ -82,7 +93,7 @@ class FilesSerializer(serializers.Serializer):
                     "mimetype": "image/gif",
                     "size": None,
                     "frames": instance.frames,
-                    "duration": instance.duration
+                    "duration": instance.duration,
                 },
             },
         }
@@ -96,11 +107,14 @@ class ColorsSerializer(serializers.Serializer):
         """
         Parses r,g,b db array to hex color code
         """
-        return [(
-            "#{:02x}{:02x}{:02x}".format(*color)
-            if color
-            else None
-        ) for color in obj.palette] if obj.palette else []
+        return (
+            [
+                ("#{:02x}{:02x}{:02x}".format(*color) if color else None)
+                for color in obj.palette
+            ]
+            if obj.palette
+            else []
+        )
 
     def get_dominant(self, obj):
         """
@@ -155,7 +169,7 @@ class GifSerializer(serializers.ModelSerializer):
             "characters",
             "categories",
             "uploader",
-            "url"
+            "url",
         ]
 
     class JSONAPIMeta:

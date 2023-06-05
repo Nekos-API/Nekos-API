@@ -493,6 +493,12 @@ export const image_filters = [
             description:
                 "The related resources to include in the response.\n\nPossible values: `uploader`, `artist`, `categories`, `characters`, `liked-by`",
         },
+        {
+            name: "token",
+            type: "String",
+            description:
+                "An up to 50 characters long URL safe string that identifies that specific random query. Every request with the same token will return the same response for 1 month.",
+        },
         ...image_filters,
     ]}
     responses={[
@@ -515,7 +521,15 @@ export const image_filters = [
     endpoint="/images/random/file"
     title="Get a random image's file redirect"
     description="Get a redirect to a random image's CDN file URL. Useful to embed a random image in markdown files like a README or a GitHub description."
-    parameters={[...image_filters]}
+    parameters={[
+        {
+            name: "token",
+            type: "String",
+            description:
+                "An up to 50 characters long URL safe string that identifies that specific random query. Every request with the same token will return the same response for 1 month.",
+        },
+        ...image_filters,
+    ]}
     responses={[
         {
             code: 302,

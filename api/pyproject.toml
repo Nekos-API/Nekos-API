@@ -35,13 +35,13 @@ validators = "^0.20.0"
 tldextract = "^3.4.0"
 dnspython = "^2.3.0"
 requests-threads = "^0.1.1"
-djangorestframework-jsonapi = {git = "https://github.com/django-json-api/django-rest-framework-json-api.git"}
 grequests = "^0.6.0"
 NudeNet = "^2.0.9"
 django-bunny = "^1.0.5"
 django-thumbnails = "^0.7.0"
 django-pictures = "^1.1.0"
 django-db-connection-pool = {extras = ["postgresql"], version = "^1.2.3"}
+djangorestframework-jsonapi = {git = "https://github.com/django-json-api/django-rest-framework-json-api.git"}
 
 
 [build-system]

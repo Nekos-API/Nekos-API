@@ -163,7 +163,7 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_FILTER_BACKENDS": (
         "rest_framework.filters.SearchFilter",
-        "rest_framework_json_api.filters.QueryParameterValidationFilter",
+        "nekos_api.filters.QueryParameterValidation",
         "rest_framework_json_api.filters.OrderingFilter",
         "rest_framework_json_api.django_filters.DjangoFilterBackend",
     ),
@@ -331,7 +331,7 @@ BUNNY_REGION = os.getenv("BUNNY_ZONE")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-API_VERSION = "2.0.0-Alpha.1"
+API_VERSION = "2.1.0"
 
 
 PROTECTED_API_TOKEN = os.getenv("PROTECTED_API_TOKEN")

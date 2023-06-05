@@ -1,8 +1,11 @@
+import re
+
 import secrets
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
+from django.db.models import Q
 from django.core.files import File
 from django.utils.decorators import method_decorator
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
@@ -16,12 +19,15 @@ from rest_framework_json_api import views, serializers
 
 from django_ratelimit.decorators import ratelimit
 
+from api.models import SharedResourceToken
+
 from utils.decorators import permission_classes
 
 from .models import Image
 from .serializers import ImageSerializer
 
-from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
+
+image_ct = ContentType.objects.get_for_model(Image)
 
 
 class ImagesViewSet(views.ModelViewSet):
@@ -172,7 +178,13 @@ class ImagesViewSet(views.ModelViewSet):
         "is_original",
         "verification_status",
     ]
-    search_fields = ["title"]
+    search_fields = [
+        "title",
+        "categories__name",
+        "artist__name",
+        "characters__first_name",
+        "characters__last_name",
+    ]
 
     def get_queryset(self, *args, **kwargs):
         if self.request.user.is_authenticated and self.request.user.is_staff:
@@ -186,13 +198,40 @@ class ImagesViewSet(views.ModelViewSet):
         Returns a random image object.
         """
 
-        qs = self.filter_queryset(self.get_queryset())
+        if "token" in request.GET:
+            if not re.match(r"^[\w-]{,50}$", request.GET["token"]):
+                raise serializers.ValidationError(
+                    detail="Token must be up to 50 characters long and URL safe.",
+                    code="invalid_shared_resource_token",
+                )
 
-        return Response(
-            ImageSerializer(
-                qs[secrets.randbelow(qs.count())], context={"request": request}
-            ).data
-        )
+            shared_resource_token = SharedResourceToken.objects.filter(
+                token=request.GET["token"], content_type=image_ct
+            ).first()
+
+            if shared_resource_token is None:
+                qs = self.filter_queryset(self.get_queryset())
+                image = qs[secrets.randbelow(len(qs))]
+
+                shared_resource_token = SharedResourceToken.objects.create(
+                    token=request.GET["token"],
+                    content_type=image_ct,
+                    object_id=image.id,
+                )
+
+            else:
+                image = shared_resource_token.resource
+
+            return Response(ImageSerializer(image, context={"request": request}).data)
+
+        else:
+            qs = self.filter_queryset(self.get_queryset())
+
+            return Response(
+                ImageSerializer(
+                    qs[secrets.randbelow(len(qs))], context={"request": request}
+                ).data
+            )
 
     def retrieve_file(self, request, *args, **kwargs):
         """
@@ -214,11 +253,39 @@ class ImagesViewSet(views.ModelViewSet):
         Returns a redirect to a random image's image URL.
         """
 
-        qs = self.filter_queryset(self.get_queryset().exclude(file=None))
+        if "token" in request.GET:
+            if not re.match(r"^[\w-]{,50}$", request.GET["token"]):
+                raise serializers.ValidationError(
+                    detail="Token must be up to 50 characters long and URL safe.",
+                    code="invalid_shared_resource_token",
+                )
 
-        image = qs[secrets.randbelow(qs.count())]
+            shared_resource_token = SharedResourceToken.objects.filter(
+                token=request.GET["token"], content_type=image_ct
+            ).first()
 
-        return HttpResponseRedirect(image.file.url, status=307)
+            if shared_resource_token is None:
+                qs = self.filter_queryset(
+                    self.get_queryset().exclude(Q(file=None) | Q(file=""))
+                )
+                image = qs[secrets.randbelow(len(qs))]
+
+                shared_resource_token = SharedResourceToken.objects.create(
+                    token=request.GET["token"],
+                    content_type=image_ct,
+                    object_id=image.id,
+                )
+
+            else:
+                image = shared_resource_token.resource
+
+            return HttpResponseRedirect(image.file.url, status=307)
+
+        else:
+            qs = self.filter_queryset(
+                self.get_queryset().exclude(Q(file=None) | Q(file=""))
+            )
+            return HttpResponseRedirect(qs[secrets.randbelow(len(qs))], status=307)
 
     @permission_classes([permissions.IsAuthenticated])
     def create(self, request, *args, **kwargs):
