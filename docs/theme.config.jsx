@@ -35,7 +35,7 @@ export default {
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem" }}>
                 <img src="/branding/logo/logo.png" alt="Logo" width={32} height={32} />
                 <span>Nekos API</span>
-                <div className="font-mono p-1 rounded border dark:border-neutral-700 dark:bg-neutral-800 border-neutral-200 bg-neutral-100 text-sm leading-none h-fit">v2.0.0</div>
+                <div className="hidden md:block font-mono p-1 rounded border dark:border-neutral-700 dark:bg-neutral-800 border-neutral-200 bg-neutral-100 text-sm leading-none h-fit">v2.1.0</div>
             </div>
         )
     },
