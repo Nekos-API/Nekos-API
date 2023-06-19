@@ -1,6 +1,6 @@
 from django.urls import path
 
-from oauth2_provider.views import TokenView, RevokeTokenView, UserInfoView
+from oauth2_provider.views import TokenView, RevokeTokenView, UserInfoView, ConnectDiscoveryInfoView
 
 from .views import (
     UserView,
@@ -53,4 +53,5 @@ urlpatterns = [
     path("auth/token", TokenView.as_view(), name="token"),
     path("auth/token/revoke", RevokeTokenView.as_view(), name="revoke-token"),
     path("auth/userinfo", UserInfoView.as_view(), name="userinfo"),
+    path("auth/.well-known/openid-configuration", ConnectDiscoveryInfoView.as_view(), name="connect-discovery"),
 ]
