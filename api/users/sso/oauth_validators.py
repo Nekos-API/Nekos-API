@@ -1,4 +1,4 @@
-import hashlib, urllib
+import hashlib, urllib.parse
 
 from oauth2_provider.oauth2_validators import OAuth2Validator
 
@@ -20,5 +20,5 @@ class NekosAPIOAuth2Validator(OAuth2Validator):
             "profile_image": "https://www.gravatar.com/avatar/"
             + hashlib.md5(request.user.email.lower().encode()).hexdigest()
             + "?"
-            + urllib.urlencode({"d": "identicon"}),
+            + urllib.parse.urlencode({"d": "identicon"}),
         }
