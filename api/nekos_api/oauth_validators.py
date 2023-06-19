@@ -25,3 +25,8 @@ class NekosAPIOAuth2Validator(OAuth2Validator):
             "is_staff": request.user.is_staff,
             "is_superuser": request.user.is_superuser,
         }
+
+    def get_userinfo_claims(self, request):
+        claims = super().get_userinfo_claims(request)
+        claims.update(self.get_additional_claims(request))
+        return claims
