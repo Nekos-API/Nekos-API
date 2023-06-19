@@ -1,6 +1,6 @@
 from django.urls import path
 
-from oauth2_provider.views import TokenView, RevokeTokenView
+from oauth2_provider.views import TokenView, RevokeTokenView, UserInfoView
 
 from .views import (
     UserView,
@@ -52,4 +52,5 @@ urlpatterns = [
     path("auth/authorize", AuthorizationWithCaptchaView.as_view(), name="authorize"),
     path("auth/token", TokenView.as_view(), name="token"),
     path("auth/token/revoke", RevokeTokenView.as_view(), name="revoke-token"),
+    path("auth/userinfo", UserInfoView.as_view(), name="userinfo"),
 ]
