@@ -1,6 +1,13 @@
 from django.urls import path
 
-from oauth2_provider.views import TokenView, RevokeTokenView, UserInfoView, ConnectDiscoveryInfoView
+from oauth2_provider.views import (
+    TokenView,
+    RevokeTokenView,
+    UserInfoView,
+    ConnectDiscoveryInfoView,
+    JwksInfoView,
+    IntrospectTokenView,
+)
 
 from .views import (
     UserView,
@@ -51,7 +58,13 @@ urlpatterns = [
     path("auth/signup", UserView.as_view({"post": "signup"})),
     path("auth/authorize", AuthorizationWithCaptchaView.as_view(), name="authorize"),
     path("auth/token", TokenView.as_view(), name="token"),
+    path("auth/introspect", IntrospectTokenView.as_view(), name="introspect"),
     path("auth/token/revoke", RevokeTokenView.as_view(), name="revoke-token"),
-    path("auth/userinfo", UserInfoView.as_view(), name="userinfo"),
-    path("auth/.well-known/openid-configuration", ConnectDiscoveryInfoView.as_view(), name="connect-discovery"),
+    path("auth/userinfo", UserInfoView.as_view(), name="user-info"),
+    path("auth/.well-known/jwks-info.json", JwksInfoView.as_view(), name="jwks-info"),
+    path(
+        "auth/.well-known/openid-configuration",
+        ConnectDiscoveryInfoView.as_view(),
+        name="oidc-connect-discovery-info",
+    ),
 ]

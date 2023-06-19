@@ -10,12 +10,15 @@ import secrets
 
 import json
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.conf import settings
+from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.core.files import File
+from django.views.generic import View
 from django.contrib.auth import login
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework import exceptions, permissions, parsers
 from rest_framework.response import Response
@@ -24,9 +27,13 @@ from rest_framework.viewsets import ViewSet
 from rest_framework_json_api import views, serializers
 
 from oauth2_provider.models import AccessToken, RefreshToken
+from oauth2_provider.settings import oauth2_settings
 from oauth2_provider.views import AuthorizationView
+from oauth2_provider.views.mixins import OAuthLibMixin, OIDCOnlyMixin
 
 from oauthlib import common
+
+from jwcrypto import jwk
 
 from django_ratelimit.decorators import ratelimit
 
@@ -249,7 +256,6 @@ class UserView(views.ModelViewSet):
 
 
 class UserAdminViewSet(ViewSet):
-
     @permission_classes([permissions.IsAdminUser])
     def create_token(self, request, pk):
         """
@@ -343,14 +349,22 @@ class UserRelationshipsView(views.RelationshipView):
             raise exceptions.NotAuthenticated()
         else:
             return User.objects.get(pk=self.kwargs.get("pk"))
-        
+
     def check_write_permission(self):
         """
         Check wether the current user has write permission or not. Raises
         `PermissionDenied` error in case the user does not have it.
         """
         if self.request.user.is_authenticated and not self.request.user.is_superuser:
-            if self.kwargs.get("related_field") not in ["liked-images", "saved-images", "followed-characters", "followed-artists", "followed-categories", "followed-lists", "following"]:
+            if self.kwargs.get("related_field") not in [
+                "liked-images",
+                "saved-images",
+                "followed-characters",
+                "followed-artists",
+                "followed-categories",
+                "followed-lists",
+                "following",
+            ]:
                 raise exceptions.PermissionDenied()
             user = self.get_object()
             if user != self.request.user:
@@ -397,3 +411,57 @@ class AuthorizationWithCaptchaView(AuthorizationView):
             return self.get(request, *args, **kwargs)
 
         return super().post(request, *args, **kwargs)
+
+
+class ConnectDiscoveryInfoView(OIDCOnlyMixin, View):
+    """
+    View used to show oidc provider configuration information
+    """
+
+    def get(self, request, *args, **kwargs):
+        issuer_url = oauth2_settings.OIDC_ISS_ENDPOINT
+
+        if not issuer_url:
+            issuer_url = oauth2_settings.oidc_issuer(request)
+            authorization_endpoint = request.build_absolute_uri(
+                reverse("authorize")
+            )
+            token_endpoint = request.build_absolute_uri(
+                reverse("token")
+            )
+            userinfo_endpoint = (
+                oauth2_settings.OIDC_USERINFO_ENDPOINT
+                or request.build_absolute_uri(reverse("user-info"))
+            )
+            jwks_uri = request.build_absolute_uri(reverse("jwks-info"))
+        else:
+            authorization_endpoint = "{}{}".format(
+                issuer_url, reverse("authorize")
+            )
+            token_endpoint = "{}{}".format(issuer_url, reverse("token"))
+            userinfo_endpoint = oauth2_settings.OIDC_USERINFO_ENDPOINT or "{}{}".format(
+                issuer_url, reverse("user-info")
+            )
+            jwks_uri = "{}{}".format(issuer_url, reverse("jwks-info"))
+        signing_algorithms = [Application.HS256_ALGORITHM]
+        if oauth2_settings.OIDC_RSA_PRIVATE_KEY:
+            signing_algorithms = [
+                Application.RS256_ALGORITHM,
+                Application.HS256_ALGORITHM,
+            ]
+        data = {
+            "issuer": issuer_url,
+            "authorization_endpoint": authorization_endpoint,
+            "token_endpoint": token_endpoint,
+            "userinfo_endpoint": userinfo_endpoint,
+            "jwks_uri": jwks_uri,
+            "response_types_supported": oauth2_settings.OIDC_RESPONSE_TYPES_SUPPORTED,
+            "subject_types_supported": oauth2_settings.OIDC_SUBJECT_TYPES_SUPPORTED,
+            "id_token_signing_alg_values_supported": signing_algorithms,
+            "token_endpoint_auth_methods_supported": (
+                oauth2_settings.OIDC_TOKEN_ENDPOINT_AUTH_METHODS_SUPPORTED
+            ),
+        }
+        response = JsonResponse(data)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
