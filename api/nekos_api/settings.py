@@ -295,6 +295,7 @@ OAUTH2_PROVIDER = {
     ],
     "OIDC_ENABLED": True,
     "OIDC_RSA_PRIVATE_KEY": os.getenv("OIDC_RSA_PRIVATE_KEY"),
+    "OAUTH2_VALIDATOR_CLASS": "users.sso.oauth_validators.NekosAPIOAuth2Validator",
     # "OAUTH2_BACKEND_CLASS": "oauth2_provider.oauth2_backends.JSONOAuthLibCore",
     "REFRESH_TOKEN_EXPIRE_SECONDS": timedelta(weeks=4),
 }
