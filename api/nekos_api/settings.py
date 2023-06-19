@@ -257,6 +257,10 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
 
+oidc_f = open(os.path.join(BASE_DIR, "oidc.key"))
+oidc_key = oidc_f.read().strip()
+oidc_f.close()
+
 OAUTH2_PROVIDER = {
     "SCOPES": {
         "oidc": "OpenID Connect",
@@ -294,7 +298,7 @@ OAUTH2_PROVIDER = {
         "account:public:retrieve",
     ],
     "OIDC_ENABLED": True,
-    "OIDC_RSA_PRIVATE_KEY": open(os.path.join(BASE_DIR, "oidc.key")).read(),
+    "OIDC_RSA_PRIVATE_KEY": oidc_key,
     "OAUTH2_VALIDATOR_CLASS": "users.sso.oauth_validators.NekosAPIOAuth2Validator",
     # "OAUTH2_BACKEND_CLASS": "oauth2_provider.oauth2_backends.JSONOAuthLibCore",
     "REFRESH_TOKEN_EXPIRE_SECONDS": timedelta(weeks=4),
