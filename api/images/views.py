@@ -27,9 +27,6 @@ from .models import Image
 from .serializers import ImageSerializer
 
 
-image_ct = ContentType.objects.get_for_model(Image)
-
-
 class ImagesViewSet(views.ModelViewSet):
     serializer_class = ImageSerializer
     filterset_fields = {
@@ -205,6 +202,7 @@ class ImagesViewSet(views.ModelViewSet):
                     code="invalid_shared_resource_token",
                 )
 
+            image_ct = ContentType.objects.get_for_model(Image)
             shared_resource_token = SharedResourceToken.objects.filter(
                 token=request.GET["token"], content_type=image_ct
             ).first()
@@ -260,6 +258,7 @@ class ImagesViewSet(views.ModelViewSet):
                     code="invalid_shared_resource_token",
                 )
 
+            image_ct = ContentType.objects.get_for_model(Image)
             shared_resource_token = SharedResourceToken.objects.filter(
                 token=request.GET["token"], content_type=image_ct
             ).first()
