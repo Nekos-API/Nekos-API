@@ -15,10 +15,13 @@ class NekosAPIOAuth2Validator(OAuth2Validator):
         :rtype: dict
         """
         return {
-            "sub": str(request.user.pk),
             "username": str(request.user.username),
+            "display_name": str(request.user.nickname),
             "profile_image": "https://www.gravatar.com/avatar/"
             + hashlib.md5(request.user.email.lower().encode()).hexdigest()
             + "?"
             + urllib.parse.urlencode({"d": "identicon"}),
+            "is_active": request.user.is_active,
+            "is_staff": request.user.is_staff,
+            "is_superuser": request.user.is_superuser,
         }

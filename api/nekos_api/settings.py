@@ -299,7 +299,7 @@ OAUTH2_PROVIDER = {
     ],
     "OIDC_ENABLED": True,
     "OIDC_RSA_PRIVATE_KEY": oidc_key,
-    "OAUTH2_VALIDATOR_CLASS": "users.sso.oauth_validators.NekosAPIOAuth2Validator",
+    "OAUTH2_VALIDATOR_CLASS": "nekos_api.oauth_validators.NekosAPIOAuth2Validator",
     # "OAUTH2_BACKEND_CLASS": "oauth2_provider.oauth2_backends.JSONOAuthLibCore",
     "REFRESH_TOKEN_EXPIRE_SECONDS": timedelta(weeks=4),
     "OIDC_ISS_ENDPOINT": "https://api.nekosapi.com"
