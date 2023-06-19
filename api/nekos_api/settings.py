@@ -292,7 +292,7 @@ OAUTH2_PROVIDER = {
     "DEFAULT_SCOPES": [
         "account:public:retrieve",
     ],
-    "OAUTH2_BACKEND_CLASS": "oauth2_provider.oauth2_backends.JSONOAuthLibCore",
+    # "OAUTH2_BACKEND_CLASS": "oauth2_provider.oauth2_backends.JSONOAuthLibCore",
     "REFRESH_TOKEN_EXPIRE_SECONDS": timedelta(weeks=4),
 }
 
