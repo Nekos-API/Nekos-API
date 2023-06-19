@@ -15,9 +15,6 @@ from .serializers import GifSerializer
 # Create your views here.
 
 
-gif_ct = ContentType.objects.get_for_model(Gif)
-
-
 class GifViewSet(views.ModelViewSet):
     serializer_class = GifSerializer
 
@@ -118,6 +115,7 @@ class GifViewSet(views.ModelViewSet):
                     code="invalid_shared_resource_token",
                 )
 
+            gif_ct = ContentType.objects.get_for_model(Gif)
             shared_resource_token = SharedResourceToken.objects.filter(
                 token=request.GET["token"], content_type=gif_ct
             ).first()
@@ -173,6 +171,7 @@ class GifViewSet(views.ModelViewSet):
                     code="invalid_shared_resource_token",
                 )
 
+            gif_ct = ContentType.objects.get_for_model(Gif)
             shared_resource_token = SharedResourceToken.objects.filter(
                 token=request.GET["token"], content_type=gif_ct
             ).first()
