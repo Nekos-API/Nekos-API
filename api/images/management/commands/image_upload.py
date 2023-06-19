@@ -9,18 +9,19 @@ from artists.models import Artist
 
 
 class Command(BaseCommand):
-    help = "Uploads all images from the `upload/` folder in the project's root"
+    help = "Uploads all images from the `uploads/` folder in the project's root"
 
     def add_arguments(self, parser):
         parser.add_argument("uploader", help="The uploader's username")
         parser.add_argument("--artist", help="The artist's name", default="")
+        parser.add_argument("--start", help="The number of GIFs to skip", type=int)
 
     def handle(self, *args, **options):
         """
         Uploads the images.
         """
 
-        total = len(list(os.scandir("./upload/")))
+        total = len(list(os.scandir("./uploads/")))
 
         i = 0
 
@@ -31,8 +32,11 @@ class Command(BaseCommand):
             f"Uploading {total} images{'' if not artist else f' by {artist.name}'} in the name of user {uploader.username}...\n"
         )
 
-        for image in os.scandir("./upload/"):
+        for image in os.scandir("./uploads/"):
             i += 1
+
+            if options["start"] is not None and i < options["start"]:
+                continue
 
             if Image.objects.filter(
                 title=f"Uploaded by {uploader.username} - {image.name}"[:100]

@@ -13,7 +13,7 @@ from users.models import User
 
 
 class Command(BaseCommand):
-    help = "Uploads all gifs from the `upload/` folder in the project's root"
+    help = "Uploads all gifs from the `uploads/` folder in the project's root"
 
     def add_arguments(self, parser):
         parser.add_argument("uploader", help="The uploader's username")
@@ -24,7 +24,7 @@ class Command(BaseCommand):
         Uploads the images.
         """
 
-        total = len(list(os.scandir("./upload/")))
+        total = len(list(os.scandir("./uploads/")))
 
         i = 0
 
@@ -34,11 +34,11 @@ class Command(BaseCommand):
             f"Uploading {total} gifs in the name of user {uploader.username}...\n"
         )
 
-        for gif in os.scandir("./upload/"):
+        for gif in os.scandir("./uploads/"):
             if gif.name.endswith('.json'):
                 continue
 
-            if i < options["start"]:
+            if options["start"] is not None and i < options["start"]:
                 i += 1
                 continue
 
