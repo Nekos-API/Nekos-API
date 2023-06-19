@@ -4,7 +4,6 @@ from oauth2_provider.views import (
     TokenView,
     RevokeTokenView,
     UserInfoView,
-    ConnectDiscoveryInfoView,
     JwksInfoView,
     IntrospectTokenView,
 )
@@ -14,6 +13,7 @@ from .views import (
     UserRelationshipsView,
     UserAvatarUploadView,
     AuthorizationWithCaptchaView,
+    ConnectDiscoveryInfoView,
     UserAdminViewSet,
 )
 
