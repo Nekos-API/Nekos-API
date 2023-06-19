@@ -18,7 +18,7 @@ class NekosAPIOAuth2Validator(OAuth2Validator):
             "sub": str(request.user.pk),
             "username": str(request.user.username),
             "profile_image": "https://www.gravatar.com/avatar/"
-            + hashlib.md5(request.user.email.lower()).hexdigest()
+            + hashlib.md5(request.user.email.lower().encode()).hexdigest()
             + "?"
             + urllib.urlencode({"d": "identicon"}),
         }
