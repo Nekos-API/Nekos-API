@@ -263,7 +263,7 @@ oidc_f.close()
 
 OAUTH2_PROVIDER = {
     "SCOPES": {
-        "oidc": "OpenID Connect",
+        "openid": "OpenID Connect",
         "account:public:retrieve": "Access your public information",
         "account:public:update": "Update your public information",
         "account:email:retrieve": "Access your email address",
