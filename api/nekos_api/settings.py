@@ -302,7 +302,6 @@ OAUTH2_PROVIDER = {
     "OAUTH2_VALIDATOR_CLASS": "users.sso.oauth_validators.NekosAPIOAuth2Validator",
     # "OAUTH2_BACKEND_CLASS": "oauth2_provider.oauth2_backends.JSONOAuthLibCore",
     "REFRESH_TOKEN_EXPIRE_SECONDS": timedelta(weeks=4),
-    "OIDC_USERINFO_ENDPOINT": "userinfo",
     "OIDC_ISS_ENDPOINT": "https://sso.nekosapi.com"
 }
 
