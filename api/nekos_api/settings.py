@@ -259,6 +259,7 @@ AUTHENTICATION_BACKENDS = [
 
 OAUTH2_PROVIDER = {
     "SCOPES": {
+        "oidc": "OpenID Connect",
         "account:public:retrieve": "Access your public information",
         "account:public:update": "Update your public information",
         "account:email:retrieve": "Access your email address",
@@ -292,6 +293,8 @@ OAUTH2_PROVIDER = {
     "DEFAULT_SCOPES": [
         "account:public:retrieve",
     ],
+    "OIDC_ENABLED": True,
+    "OIDC_RSA_PRIVATE_KEY": os.getenv("OIDC_RSA_PRIVATE_KEY"),
     # "OAUTH2_BACKEND_CLASS": "oauth2_provider.oauth2_backends.JSONOAuthLibCore",
     "REFRESH_TOKEN_EXPIRE_SECONDS": timedelta(weeks=4),
 }
