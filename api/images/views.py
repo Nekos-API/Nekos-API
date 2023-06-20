@@ -284,7 +284,7 @@ class ImagesViewSet(views.ModelViewSet):
             qs = self.filter_queryset(
                 self.get_queryset().exclude(Q(file=None) | Q(file=""))
             )
-            return HttpResponseRedirect(qs[secrets.randbelow(len(qs))], status=307)
+            return HttpResponseRedirect(qs[secrets.randbelow(len(qs))].file.url, status=307)
 
     @permission_classes([permissions.IsAuthenticated])
     def create(self, request, *args, **kwargs):
