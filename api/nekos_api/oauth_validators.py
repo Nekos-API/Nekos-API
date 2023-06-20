@@ -18,8 +18,8 @@ class NekosAPIOAuth2Validator(OAuth2Validator):
         """
         return {
             "username": str(request.user.username),
-            "display_name": str(request.user.nickname),
-            "profile_image": "https://www.gravatar.com/avatar/"
+            "nickname": str(request.user.nickname),
+            "avatar_image": "https://www.gravatar.com/avatar/"
             + hashlib.md5(request.user.email.lower().encode()).hexdigest()
             + "?"
             + urllib.parse.urlencode({"d": "identicon"}),
