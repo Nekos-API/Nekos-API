@@ -35,7 +35,7 @@ export default {
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem" }}>
                 <img src="/branding/logo/logo.png" alt="Logo" width={32} height={32} />
                 <span>Nekos API</span>
-                <div className="hidden md:block font-mono p-1 rounded border dark:border-neutral-700 dark:bg-neutral-800 border-neutral-200 bg-neutral-100 text-sm leading-none h-fit">v2.1.0</div>
+                <div className="hidden md:block font-mono p-1 rounded border dark:border-neutral-700 dark:bg-neutral-800 border-neutral-200 bg-neutral-100 text-sm leading-none h-fit">{process.env.NEXT_PUBLIC_NEKOS_API_VERSION}</div>
             </div>
         )
     },
@@ -85,8 +85,8 @@ export default {
     banner: {
         "key": "GIFs-released",
         "text": (
-            <Link href="/docs/rest-api/gifs/resource" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", gap: ".5rem" }}>
-                ✨ Nekos API is now serving reaction GIFs! Click on this banner to learn more ✨
+            <Link href="https://nekos.land/" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", gap: ".5rem" }}>
+                ✨ Nekos.Land is now live! Get random images and interact with the API from your browser. ✨
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" style={{ height: "1rem", width: "1rem" }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>

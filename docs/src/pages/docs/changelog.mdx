@@ -6,6 +6,18 @@ Nekos API does not follow a strict semantic versioning. Although there are many 
 
 ## Log
 
+### `v2.2.0`
+
+> June 23, 2023
+
+- `Added`: `user` object in `meta` object in image resurce objects with `liked` and `saved` attributes.
+- `Added`: `user` object in `meta` object in list resource objects with `isFollowing` attribute.
+- `Added`: `user` object in `meta` object in artist resource objects with `isFollowing` attribute.
+- `Added`: `user` object in `meta` object in category resource objects with `isFollowing` attribute.
+- `Added`: `user` object in `meta` object in character resource objects with `isFollowing` attribute.
+- `Changed`: Renamed `user` to `owner` in list resource.
+- `Fixed`: Permission checking for write operations in user and lists endpoints. 
+
 ### `v2.1.1`
 
 > June 18, 2023

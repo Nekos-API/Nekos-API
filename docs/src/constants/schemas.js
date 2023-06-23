@@ -1,4 +1,4 @@
-export const stringify = (json) => (JSON.stringify(json, null, 4));
+export const stringify = (json) => JSON.stringify(json, null, 4);
 
 export const image_ref = {
     type: "image",
@@ -127,6 +127,12 @@ export const user_public_schema = {
             },
         },
     },
+    meta: {
+        user: {
+            isFollowing: "Boolean?",
+            isBeingFollowed: "Boolean?",
+        },
+    },
     links: {
         self: "https://api.nekosapi.com/v2/users/:id",
     },
@@ -237,6 +243,12 @@ export const user_private_schema = {
             data: discord_ref,
         },
     },
+    meta: {
+        user: {
+            isFollowing: "Boolean?",
+            isBeingFollowed: "Boolean?",
+        },
+    },
     links: {
         self: "https://api.nekosapi.com/v2/users/:id",
     },
@@ -320,6 +332,12 @@ export const image_schema = {
             },
         },
     },
+    meta: {
+        user: {
+            liked: "Boolean?",
+            saved: "Boolean?",
+        },
+    },
     links: {
         self: "https://api.nekosapi.com/v2/images/:id",
     },
@@ -358,6 +376,11 @@ export const artist_schema = {
                 self: "https://api.nekosapi.com/v2/artists/:id/relationships/followers",
                 related: "https://api.nekosapi.com/v2/artists/:id/followers",
             },
+        },
+    },
+    meta: {
+        user: {
+            isFollowing: "Boolean?",
         },
     },
     links: {
@@ -408,6 +431,11 @@ export const character_schema = {
             },
         },
     },
+    meta: {
+        user: {
+            isFollowing: "Boolean?",
+        },
+    },
     links: {
         self: "https://api.nekosapi.com/v2/characters/:id",
     },
@@ -446,6 +474,11 @@ export const category_schema = {
                 self: "https://api.nekosapi.com/v2/categories/:id/relationships/followers",
                 related: "https://api.nekosapi.com/v2/categories/:id/followers",
             },
+        },
+    },
+    meta: {
+        user: {
+            isFollowing: "Boolean?",
         },
     },
     links: {
@@ -492,6 +525,11 @@ export const list_schema = {
                 self: "https://api.nekosapi.com/v2/lists/:id/relationships/followers",
                 related: "https://api.nekosapi.com/v2/lists/:id/followers",
             },
+        },
+    },
+    meta: {
+        user: {
+            isFollowing: "Boolean?",
         },
     },
     links: {

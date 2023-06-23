@@ -111,6 +111,7 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
             "categories",
             "characters",
             "liked_by",
+            "user",
             "url",
         ]
         extra_kwargs = {
@@ -118,6 +119,9 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
             "verification_status": {"read_only": True},
             "file": {"read_only": True},
         }
+        meta_fields = [
+            "user"
+        ]
 
     class JSONAPIMeta:
         included_resources = ["artist"]
@@ -177,3 +181,21 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
         related_link_view_name="image-related",
         self_link_view_name="image-relationships",
     )
+
+    user = serializers.SerializerMethodField(method_name="get_user_meta")
+
+    def get_user_meta(self, obj):
+        """
+        Returns metadata related to the user, e.g. isFollowing.
+        """
+        if self.context["request"].user.is_authenticated:
+            liked_by_pks = list(obj.liked_by.values_list("pk", flat=True))
+            saved_by_pks = list(obj.saved_by.values_list("pk", flat=True))
+            return {
+                "liked": self.context["request"].user.pk in liked_by_pks,
+                "saved": self.context["request"].user.pk in saved_by_pks,
+            }
+        return {
+            "liked": None,
+            "saved": None
+        }

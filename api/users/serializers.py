@@ -53,12 +53,14 @@ class UserPublicSerializer(serializers.HyperlinkedModelSerializer):
             "followed_characters",
             "followed_categories",
             "followed_lists",
+            "user",
             "url",
         ]
         extra_kwargs = {
             "avatar_image": {"read_only": True},
             "permissions": {"read_only": True},
         }
+        meta_fields = ["user"]
 
     def username_validator(value):
         if len(value) < 4:
@@ -112,6 +114,18 @@ class UserPublicSerializer(serializers.HyperlinkedModelSerializer):
         self_link_view_name="user-relationships",
     )
 
+    user = serializers.SerializerMethodField(method_name="get_user_meta")
+
+    def get_user_meta(self, obj):
+        if self.context["request"].user.is_authenticated:
+            follower_pks = list(obj.followers.values_list("pk", flat=True))
+            following_pks = list(obj.following.values_list("pk", flat=True))
+            return {
+                "isFollowing": self.context["request"].user.pk in follower_pks,
+                "isBeingFollowed": self.context["request"].user.pk in following_pks,
+            }
+        return {"isFollowing": None, "isBeingFollowed": None}
+
 
 class UserPrivateSerializer(UserPublicSerializer):
     included_serializers = {
@@ -144,6 +158,7 @@ class UserPrivateSerializer(UserPublicSerializer):
             "liked_images",
             "saved_images",
             "discord",
+            "user",
             "url",
         ]
         extra_kwargs = {
@@ -151,6 +166,7 @@ class UserPrivateSerializer(UserPublicSerializer):
             "permissions": {"read_only": True},
             "secret_key": {"read_only": True},
         }
+        meta_fields = ["user"]
 
     name = NameSerializer(source="*", required=False)
     email = serializers.EmailField(required=False)

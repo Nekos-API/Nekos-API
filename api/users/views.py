@@ -369,6 +369,7 @@ class UserRelationshipsView(views.RelationshipView):
             user = self.get_object()
             if user != self.request.user:
                 raise exceptions.PermissionDenied()
+        raise exceptions.PermissionDenied()
 
     def get(self, request, pk, related_field, *args, **kwargs):
         """

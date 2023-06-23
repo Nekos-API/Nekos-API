@@ -30,6 +30,10 @@ class ArtistSerializer(serializers.HyperlinkedModelSerializer):
             "followers",
             "url",
             "timestamps",
+            "user"
+        ]
+        meta_fields = [
+            "user"
         ]
 
     name = serializers.CharField()
@@ -48,3 +52,18 @@ class ArtistSerializer(serializers.HyperlinkedModelSerializer):
         self_link_view_name="artist-relationships",
     )
     timestamps = TimestampsSerializer(source="*")
+
+    user = serializers.SerializerMethodField(method_name="get_user_meta")
+
+    def get_user_meta(self, obj):
+        """
+        Returns metadata related to the user, e.g. isFollowing.
+        """
+        if self.context["request"].user.is_authenticated:
+            follower_pks = list(obj.followers.values_list("pk", flat=True))
+            return {
+                "isFollowing": self.context["request"].user.pk in follower_pks
+            }
+        return {
+            "isFollowing": None
+        }

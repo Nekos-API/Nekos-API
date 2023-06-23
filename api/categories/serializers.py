@@ -28,8 +28,10 @@ class CategorySerializer(serializers.ModelSerializer):
             "timestamps",
             "images",
             "followers",
+            "user",
             "url",
         ]
+        meta_fields = ["user"]
 
     sub = serializers.CharField(source="type")
     timestamps = TimestampsSerializer(source="*")
@@ -45,3 +47,14 @@ class CategorySerializer(serializers.ModelSerializer):
         related_link_view_name="category-related",
         self_link_view_name="category-relationships",
     )
+
+    user = serializers.SerializerMethodField(method_name="get_user_meta")
+
+    def get_user_meta(self, obj):
+        """
+        Returns metadata related to the user, e.g. isFollowing.
+        """
+        if self.context["request"].user.is_authenticated:
+            follower_pks = list(obj.followers.values_list("pk", flat=True))
+            return {"isFollowing": self.context["request"].user.pk in follower_pks}
+        return {"isFollowing": None}
