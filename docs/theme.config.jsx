@@ -83,7 +83,7 @@ export default {
         "link": "https://discord.gg/PgQnuM3YnM"
     },
     banner: {
-        "key": "GIFs-released",
+        "key": "nekos.land-released",
         "text": (
             <Link href="https://nekos.land/" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", gap: ".5rem" }}>
                 ✨ Nekos.Land is now live! Get random images and interact with the API from your browser. ✨
