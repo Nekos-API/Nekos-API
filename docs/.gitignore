@@ -135,6 +135,3 @@ db/config/config.*
 
 # Turborepo
 .turbo
-
-# OpenID Connect
-oidc.key

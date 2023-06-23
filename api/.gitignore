@@ -138,3 +138,6 @@ static/
 
 uploads/
 ai_tmp_imgs/
+
+# OpenID Connect
+oidc.key
