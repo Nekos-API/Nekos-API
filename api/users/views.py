@@ -336,7 +336,7 @@ class UserAvatarUploadView(APIView):
         return HttpResponse("", status=204)
 
 
-class UserRelationshipsView(views.RelationshipView):
+class UserRelationshipsView(views.RelationshipView, APIView):
     queryset = User.objects.all()
 
     def get_object(self):
