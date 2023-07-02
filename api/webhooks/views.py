@@ -13,7 +13,7 @@ from webhooks.serializers import WebhookSerializer
 
 
 class WebhookViewSet(views.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated()]
     serializer_class = WebhookSerializer
 
     def get_queryset(self):
@@ -34,7 +34,7 @@ class WebhookViewSet(views.ModelViewSet):
 
 
 class WebhookRelationshipsView(views.RelationshipView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated()]
     serializer_class = WebhookSerializer
 
     def get_queryset(self):

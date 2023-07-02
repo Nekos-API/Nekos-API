@@ -147,7 +147,7 @@ class UserView(views.ModelViewSet):
 
         return Response(UserPrivateSerializer(data=user))
 
-    @permission_classes([permissions.IsAuthenticated])
+    @permission_classes([permissions.IsAuthenticated()])
     def update(self, request, *args, **kwargs):
         """
         Edit a user.
@@ -186,7 +186,7 @@ class UserView(views.ModelViewSet):
             request, pk=pk, related_field=related_field, *args, **kwargs
         )
 
-    @permission_classes([permissions.IsAuthenticated])
+    @permission_classes([permissions.IsAuthenticated()])
     def follow(self, request, *args, **kwargs):
         """
         Follow a user.
@@ -220,7 +220,7 @@ class UserView(views.ModelViewSet):
 
         return HttpResponse("", status=204)
 
-    @permission_classes([permissions.IsAuthenticated])
+    @permission_classes([permissions.IsAuthenticated()])
     def unfollow(self, request, *args, **kwargs):
         """
         Unfollow a user.
@@ -303,7 +303,7 @@ class UserAvatarUploadView(APIView):
     """
 
     parser_classes = [parsers.MultiPartParser]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated()]
 
     def put(self, request):
         """
@@ -399,7 +399,7 @@ class UserRelationshipsView(views.RelationshipView):
 
     def get_permissions(self):
         if self.request.method != "GET":
-            return [permissions.IsAuthenticated]
+            return [permissions.IsAuthenticated()]
         return []
 
 
@@ -425,21 +425,15 @@ class ConnectDiscoveryInfoView(OIDCOnlyMixin, View):
 
         if not issuer_url:
             issuer_url = oauth2_settings.oidc_issuer(request)
-            authorization_endpoint = request.build_absolute_uri(
-                reverse("authorize")
-            )
-            token_endpoint = request.build_absolute_uri(
-                reverse("token")
-            )
+            authorization_endpoint = request.build_absolute_uri(reverse("authorize"))
+            token_endpoint = request.build_absolute_uri(reverse("token"))
             userinfo_endpoint = (
                 oauth2_settings.OIDC_USERINFO_ENDPOINT
                 or request.build_absolute_uri(reverse("user-info"))
             )
             jwks_uri = request.build_absolute_uri(reverse("jwks-info"))
         else:
-            authorization_endpoint = "{}{}".format(
-                issuer_url, reverse("authorize")
-            )
+            authorization_endpoint = "{}{}".format(issuer_url, reverse("authorize"))
             token_endpoint = "{}{}".format(issuer_url, reverse("token"))
             userinfo_endpoint = oauth2_settings.OIDC_USERINFO_ENDPOINT or "{}{}".format(
                 issuer_url, reverse("user-info")

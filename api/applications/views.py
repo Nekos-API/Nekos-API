@@ -20,7 +20,7 @@ from .serializers import ApplicationSerializer, ApplicationWithSecretSerializer
 class ApplicationView(views.ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated()]
 
     def get_queryset(self, *args, **kwargs):
         return Application.objects.filter(user=self.request.user)
@@ -99,7 +99,7 @@ class UploadApplicationIconView(APIView):
     """
 
     parser_classes = [parsers.MultiPartParser]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated()]
 
     def get_object(self) -> Application:
         """
