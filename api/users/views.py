@@ -336,7 +336,7 @@ class UserAvatarUploadView(APIView):
         return HttpResponse("", status=204)
 
 
-class UserRelationshipsView(views.RelationshipView, APIView):
+class UserRelationshipsView(views.RelationshipView):
     queryset = User.objects.all()
 
     def get_object(self):
@@ -369,7 +369,8 @@ class UserRelationshipsView(views.RelationshipView, APIView):
             user = self.get_object()
             if user != self.request.user:
                 raise exceptions.PermissionDenied()
-        raise exceptions.PermissionDenied()
+        else:
+            raise exceptions.PermissionDenied()
 
     def get(self, request, pk, related_field, *args, **kwargs):
         """
@@ -384,32 +385,17 @@ class UserRelationshipsView(views.RelationshipView, APIView):
 
         return super().get(request, pk=pk, related_field=related_field, *args, **kwargs)
 
-    @method_decorator(csrf_exempt)
-    def post(self, request, pk, related_field, *args, **kwargs):
+    def post(self, *args, **kwargs):
         self.check_write_permission()
+        return super().post(*args, **kwargs)
 
-        if related_field == "discord":
-            raise exceptions.PermissionDenied()
-
-        return super().post(request, pk, related_field, *args, **kwargs)
-
-    @method_decorator(csrf_exempt)
-    def patch(self, request, pk, related_field, *args, **kwargs):
+    def patch(self, *args, **kwargs):
         self.check_write_permission()
+        return super().patch(*args, **kwargs)
 
-        if related_field == "discord":
-            raise exceptions.PermissionDenied()
-
-        return super().patch(request, pk, related_field, *args, **kwargs)
-    
-    @method_decorator(csrf_exempt)
-    def delete(self, request, pk, related_field, *args, **kwargs):
+    def delete(self, *args, **kwargs):
         self.check_write_permission()
-
-        if related_field == "discord":
-            raise exceptions.PermissionDenied()
-
-        return super().delete(request, pk, related_field, *args, **kwargs)
+        return super().delete(*args, **kwargs)
 
     def get_permissions(self):
         if self.request.method != "GET":
