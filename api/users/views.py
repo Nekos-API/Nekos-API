@@ -384,17 +384,32 @@ class UserRelationshipsView(views.RelationshipView):
 
         return super().get(request, pk=pk, related_field=related_field, *args, **kwargs)
 
-    def post(self, *args, **kwargs):
+    @method_decorator(csrf_exempt)
+    def post(self, request, pk, related_field, *args, **kwargs):
         self.check_write_permission()
-        return super().post(*args, **kwargs)
 
-    def patch(self, *args, **kwargs):
-        self.check_write_permission()
-        return super().patch(*args, **kwargs)
+        if related_field == "discord":
+            raise exceptions.PermissionDenied()
 
-    def delete(self, *args, **kwargs):
+        return super().post(request, pk, related_field, *args, **kwargs)
+
+    @method_decorator(csrf_exempt)
+    def patch(self, request, pk, related_field, *args, **kwargs):
         self.check_write_permission()
-        return super().delete(*args, **kwargs)
+
+        if related_field == "discord":
+            raise exceptions.PermissionDenied()
+
+        return super().patch(request, pk, related_field, *args, **kwargs)
+    
+    @method_decorator(csrf_exempt)
+    def delete(self, request, pk, related_field, *args, **kwargs):
+        self.check_write_permission()
+
+        if related_field == "discord":
+            raise exceptions.PermissionDenied()
+
+        return super().delete(request, pk, related_field, *args, **kwargs)
 
     def get_permissions(self):
         if self.request.method != "GET":
