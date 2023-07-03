@@ -340,7 +340,7 @@ BUNNY_REGION = os.getenv("BUNNY_ZONE")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-API_VERSION = "2.2.0"
+API_VERSION = "2.2.1"
 
 
 PROTECTED_API_TOKEN = os.getenv("PROTECTED_API_TOKEN")
