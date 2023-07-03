@@ -128,7 +128,8 @@ class ListRelationshipsView(views.RelationshipView):
             obj = self.get_object()
             if obj.user != self.request.user:
                 raise exceptions.PermissionDenied()
-        raise exceptions.PermissionDenied()
+        elif not self.request.user.is_authenticated:
+            raise exceptions.PermissionDenied()
 
     def post(self, request, *args, **kwargs):
         self.check_write_permission()
