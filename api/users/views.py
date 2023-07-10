@@ -147,7 +147,7 @@ class UserView(views.ModelViewSet):
 
         return Response(UserPrivateSerializer(data=user))
 
-    @permission_classes([permissions.IsAuthenticated()])
+    @permission_classes([permissions.IsAuthenticated])
     def update(self, request, *args, **kwargs):
         """
         Edit a user.
@@ -186,7 +186,7 @@ class UserView(views.ModelViewSet):
             request, pk=pk, related_field=related_field, *args, **kwargs
         )
 
-    @permission_classes([permissions.IsAuthenticated()])
+    @permission_classes([permissions.IsAuthenticated])
     def follow(self, request, *args, **kwargs):
         """
         Follow a user.
@@ -220,7 +220,7 @@ class UserView(views.ModelViewSet):
 
         return HttpResponse("", status=204)
 
-    @permission_classes([permissions.IsAuthenticated()])
+    @permission_classes([permissions.IsAuthenticated])
     def unfollow(self, request, *args, **kwargs):
         """
         Unfollow a user.

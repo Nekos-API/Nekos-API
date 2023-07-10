@@ -288,7 +288,7 @@ class ImagesViewSet(views.ModelViewSet):
                 qs[secrets.randbelow(len(qs))].file.url, status=307
             )
 
-    @permission_classes([permissions.IsAuthenticated()])
+    @permission_classes([permissions.IsAuthenticated])
     def create(self, request, *args, **kwargs):
         """
         Creates a new unverified image.
@@ -302,7 +302,7 @@ class ImagesViewSet(views.ModelViewSet):
 
         return super().create(request, *args, **kwargs)
 
-    @permission_classes([permissions.IsAuthenticated()])
+    @permission_classes([permissions.IsAuthenticated])
     def update(self, request, *args, **kwargs):
         """
         Updates an existent image.
@@ -321,7 +321,7 @@ class ImagesViewSet(views.ModelViewSet):
 
         return super().update(request, *args, **kwargs)
 
-    @permission_classes([permissions.IsAuthenticated()])
+    @permission_classes([permissions.IsAuthenticated])
     def delete(self, request, pk):
         """
         Delete an image.
