@@ -40,7 +40,7 @@ urlpatterns = [
     ),
     path(
         r"images/<uuid:pk>/verification",
-        ImagesViewSet.as_view({"post": "verification_status"}),
+        ImagesViewSet.as_view({"patch": "verification_status"}),
         name="image-verification",
     ),
     path("images/<uuid:pk>/embed", ImageEmbedView.as_view(), name="image-embed"),
