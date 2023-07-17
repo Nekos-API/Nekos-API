@@ -49,4 +49,12 @@ export default [
         name: "SLIME",
         contributions: ["Deno library maintainer"],
     },
+    {
+        id: "1024451282041311262",
+        name: "Celeste Mysterios",
+        contributions: [
+            "Content moderator",
+            "Nekos.Land bug finder"
+        ]
+    }
 ];
