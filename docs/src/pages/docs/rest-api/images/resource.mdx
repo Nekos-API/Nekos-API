@@ -919,3 +919,45 @@ export const image_filters = [
         },
     ]}
 />
+
+## Report an image
+
+<APIRequest
+    method="POST"
+    endpoint="/images/:id/report"
+    title="Report an image"
+    description="Reports an image to the API content moderators."
+    headers={[
+        {
+            name: "Accept",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Content-Type",
+            description: "application/vnd.api+json",
+            required: true,
+        },
+        {
+            name: "Authorization",
+            description: "Bearer &lt;access-token&gt;",
+            required: true,
+        },
+    ]}
+    parameters={[
+        {
+            name: "id",
+            type: "UUID",
+            description: "The image's ID.",
+            required: true,
+            location: "path",
+        },
+    ]}
+    responses={[
+        {
+            code: 204,
+            name: "Success",
+            description: "The request was completed successfully.",
+        },
+    ]}
+/>

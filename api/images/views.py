@@ -1,6 +1,4 @@
-import re
-
-import secrets
+import os, re, secrets, json, hashlib, urllib.parse
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -18,6 +16,8 @@ from rest_framework.response import Response
 from rest_framework_json_api import views, serializers
 
 from django_ratelimit.decorators import ratelimit
+
+import requests
 
 from api.models import SharedResourceToken
 
@@ -359,6 +359,60 @@ class ImagesViewSet(views.ModelViewSet):
         )
 
         return Response(ImageSerializer(image, context={"request": request}).data)
+
+    @permission_classes([permissions.IsAuthenticated])
+    def report(self, request, pk):
+        """
+        Report an image.
+        """
+
+        image = get_object_or_404(Image, pk=pk)
+        user = request.user
+
+        report_body = {}
+        user_data = {}
+
+        if user.discord is None:
+            report_body = json.dumps(
+                {
+                    "imageID": str(pk),
+                    "user": {"id": str(user.id), "from": "nekos-api"},
+                    "error": True,
+                },
+                indent=4
+            )
+            user_data = {
+                "username": user.username,
+                "avatar_url": "https://www.gravatar.com/avatar/"
+                + hashlib.md5(request.user.email.lower().encode()).hexdigest()
+                + "?"
+                + urllib.parse.urlencode({"d": "identicon"}),
+            }
+        else:
+            report_body = json.dumps(
+                {
+                    "imageID": str(pk),
+                    "user": {"id": str(user.discord.id), "from": "discord"},
+                    "error": True,
+                },
+                indent=4
+            )
+            user_data = {
+                "username": user.username,
+                "avatar_url": f"https://nekosapi.com/api/discord/avatar?user_id={user.discord.id}"
+            }
+            print(user.discord.id)
+
+        r = requests.post(
+            os.getenv("DISCORD_IMAGE_REPORT_WEBHOOK_URL"),
+            json={
+                "content": f"There is an issue with this image in Nekos.Land:\n```json\n{report_body}\n```",
+                "username": f"{user_data['username']} (Nekos API)",
+                "avatar_url": user_data["avatar_url"],
+            },
+        )
+
+        return HttpResponse("", status=204)
 
 
 class UploadImageFileView(APIView):

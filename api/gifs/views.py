@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 
 from rest_framework import permissions
-from rest_framework_json_api import views
+from rest_framework_json_api import views, serializers
 
 from utils.decorators import permission_classes
 

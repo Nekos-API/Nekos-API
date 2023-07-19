@@ -45,6 +45,11 @@ urlpatterns = [
     ),
     path("images/<uuid:pk>/embed", ImageEmbedView.as_view(), name="image-embed"),
     path(
+        r"images/<uuid:pk>/report",
+        ImagesViewSet.as_view({"post": "report"}),
+        name="image-report",
+    ),
+    path(
         r"images/<uuid:pk>/<related_field>",
         ImagesViewSet.as_view({"get": "retrieve_related"}),
         name="image-related",
