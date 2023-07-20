@@ -37,7 +37,7 @@ dnspython = "^2.3.0"
 requests-threads = "^0.1.1"
 grequests = "^0.6.0"
 NudeNet = "^2.0.9"
-django-bunny = "^1.0.5"
+django-bunny = "^1.1.1"
 django-thumbnails = "^0.7.0"
 django-pictures = "^1.1.0"
 django-db-connection-pool = {extras = ["postgresql"], version = "^1.2.3"}

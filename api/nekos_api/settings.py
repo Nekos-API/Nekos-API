@@ -213,11 +213,7 @@ DATABASES = {
         "PASSWORD": os.getenv("PGPASSWORD"),
         "HOST": os.getenv("PGHOST"),
         "PORT": "5432",
-        'POOL_OPTIONS' : {
-            'POOL_SIZE': 5,
-            'MAX_OVERFLOW': 10,
-            'RECYCLE': 12 * 60 * 60
-        }
+        "POOL_OPTIONS": {"POOL_SIZE": 5, "MAX_OVERFLOW": 10, "RECYCLE": 12 * 60 * 60},
     }
 }
 
@@ -230,7 +226,10 @@ CACHES = {
 
 STORAGES = {
     "default": {"BACKEND": "django_bunny.storage.BunnyStorage"},
-    "staticfiles": {"BACKEND": "django_bunny.storage.BunnyStorage"},
+    "staticfiles": {
+        "BACKEND": "django_bunny.storage.BunnyStorage",
+        "OPTIONS": {"base_dir": "static/", "password": os.getenv("BUNNY_PASSWORD")},
+    },
 }
 
 
@@ -302,7 +301,7 @@ OAUTH2_PROVIDER = {
     "OAUTH2_VALIDATOR_CLASS": "nekos_api.oauth_validators.NekosAPIOAuth2Validator",
     # "OAUTH2_BACKEND_CLASS": "oauth2_provider.oauth2_backends.JSONOAuthLibCore",
     "REFRESH_TOKEN_EXPIRE_SECONDS": timedelta(weeks=4),
-    "OIDC_ISS_ENDPOINT": "https://api.nekosapi.com"
+    "OIDC_ISS_ENDPOINT": "https://api.nekosapi.com",
 }
 
 OAUTH2_PROVIDER_APPLICATION_MODEL = "applications.Application"

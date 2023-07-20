@@ -29,7 +29,8 @@ class Command(BaseCommand):
                 ending="\r",
             )
 
-            ct = ColorThief(io.BytesIO(requests.get(image.file.url).content))
+            f = io.BytesIO(requests.get(image.file.url).content)
+            ct = ColorThief(f)
 
             self.stdout.write(
                 self.style.WARNING("LOADING: DOMINANT")
@@ -52,6 +53,7 @@ class Command(BaseCommand):
             image.dominant_color = list(dominant)
             image.palette = list(palette)
             image.save()
+            f.close()
 
             self.stdout.write(
                 self.style.SUCCESS("SUCCESS")
