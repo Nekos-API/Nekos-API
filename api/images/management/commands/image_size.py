@@ -57,6 +57,7 @@ class Command(BaseCommand):
             image.aspect_ratio = get_aspect_ratio(image.height, image.width)
 
             image.save()
+            f.close()
 
             self.stdout.write(
                 self.style.SUCCESS("SUCCESS")
