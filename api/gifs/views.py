@@ -122,7 +122,11 @@ class GifViewSet(views.ModelViewSet):
 
             if shared_resource_token is None:
                 qs = self.filter_queryset(self.get_queryset())
-                gif = qs[secrets.randbelow(len(qs))]
+                gif = Gif.objects.get(
+                    pk=qs.values_list("pk", flat=True)[
+                        secrets.randbelow(len(qs.values_list("pk", flat=True)))
+                    ]
+                )
 
                 shared_resource_token = SharedResourceToken.objects.create(
                     token=request.GET["token"],
@@ -137,12 +141,13 @@ class GifViewSet(views.ModelViewSet):
 
         else:
             qs = self.filter_queryset(self.get_queryset())
-
-            return Response(
-                GifSerializer(
-                    qs[secrets.randbelow(len(qs))], context={"request": request}
-                ).data
+            gif = Gif.objects.get(
+                pk=qs.values_list("pk", flat=True)[
+                    secrets.randbelow(len(qs.values_list("pk", flat=True)))
+                ]
             )
+
+            return Response(GifSerializer(gif, context={"request": request}).data)
 
     def retrieve_file(self, request, *args, **kwargs):
         """
@@ -180,7 +185,11 @@ class GifViewSet(views.ModelViewSet):
                 qs = self.filter_queryset(
                     self.get_queryset().exclude(Q(file=None) | Q(file=""))
                 )
-                gif = qs[secrets.randbelow(len(qs))]
+                gif = Gif.objects.get(
+                    pk=qs.values_list("pk", flat=True)[
+                        secrets.randbelow(len(qs.values_list("pk", flat=True)))
+                    ]
+                )
 
                 shared_resource_token = SharedResourceToken.objects.create(
                     token=request.GET["token"],
@@ -197,7 +206,13 @@ class GifViewSet(views.ModelViewSet):
             qs = self.filter_queryset(
                 self.get_queryset().exclude(Q(file=None) | Q(file=""))
             )
-            return HttpResponseRedirect(qs[secrets.randbelow(len(qs))].file.url, status=307)
+            gif = Gif.objects.get(
+                pk=qs.values_list("pk", flat=True)[
+                    secrets.randbelow(len(qs.values_list("pk", flat=True)))
+                ]
+            )
+
+            return HttpResponseRedirect(gif.file.url, status=307)
 
     @permission_classes([permissions.IsAuthenticated, permissions.IsAdminUser])
     def verification_status(self, request, pk):

@@ -209,7 +209,11 @@ class ImagesViewSet(views.ModelViewSet):
 
             if shared_resource_token is None:
                 qs = self.filter_queryset(self.get_queryset())
-                image = qs[secrets.randbelow(len(qs))]
+                image = Image.objects.get(
+                    pk=qs.values_list("pk", flat=True)[
+                        secrets.randbelow(len(qs.values_list("pk", flat=True)))
+                    ]
+                )
 
                 shared_resource_token = SharedResourceToken.objects.create(
                     token=request.GET["token"],
@@ -224,12 +228,13 @@ class ImagesViewSet(views.ModelViewSet):
 
         else:
             qs = self.filter_queryset(self.get_queryset())
-
-            return Response(
-                ImageSerializer(
-                    qs[secrets.randbelow(len(qs))], context={"request": request}
-                ).data
+            image = Image.objects.get(
+                pk=qs.values_list("pk", flat=True)[
+                    secrets.randbelow(len(qs.values_list("pk", flat=True)))
+                ]
             )
+
+            return Response(ImageSerializer(image, context={"request": request}).data)
 
     def retrieve_file(self, request, *args, **kwargs):
         """
@@ -267,7 +272,11 @@ class ImagesViewSet(views.ModelViewSet):
                 qs = self.filter_queryset(
                     self.get_queryset().exclude(Q(file=None) | Q(file=""))
                 )
-                image = qs[secrets.randbelow(len(qs))]
+                image = Image.objects.get(
+                    pk=qs.values_list("pk", flat=True)[
+                        secrets.randbelow(len(qs.values_list("pk", flat=True)))
+                    ]
+                )
 
                 shared_resource_token = SharedResourceToken.objects.create(
                     token=request.GET["token"],
@@ -284,9 +293,13 @@ class ImagesViewSet(views.ModelViewSet):
             qs = self.filter_queryset(
                 self.get_queryset().exclude(Q(file=None) | Q(file=""))
             )
-            return HttpResponseRedirect(
-                qs[secrets.randbelow(len(qs))].file.url, status=307
+            image = Image.objects.get(
+                pk=qs.values_list("pk", flat=True)[
+                    secrets.randbelow(len(qs.values_list("pk", flat=True)))
+                ]
             )
+
+            return HttpResponseRedirect(image.file.url, status=307)
 
     @permission_classes([permissions.IsAuthenticated])
     def create(self, request, *args, **kwargs):
@@ -371,7 +384,7 @@ class ImagesViewSet(views.ModelViewSet):
 
         report_body = {}
         user_data = {}
-        
+
         # This also checks that the reason is not empty since empty strings
         # validate to False
         reason = (
@@ -418,7 +431,8 @@ class ImagesViewSet(views.ModelViewSet):
         r = requests.post(
             os.getenv("DISCORD_IMAGE_REPORT_WEBHOOK_URL"),
             json={
-                "content": f"There is an issue with this image in Nekos.Land:\n```json\n{report_body}\n```" + (f"\nReason:\n> {reason.strip()}" if reason else ""),
+                "content": f"There is an issue with this image in Nekos.Land:\n```json\n{report_body}\n```"
+                + (f"\nReason:\n> {reason.strip()}" if reason else ""),
                 "username": f"{user_data['username']} (Nekos API)",
                 "avatar_url": user_data["avatar_url"],
             },
