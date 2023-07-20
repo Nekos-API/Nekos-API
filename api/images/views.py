@@ -371,6 +371,18 @@ class ImagesViewSet(views.ModelViewSet):
 
         report_body = {}
         user_data = {}
+        
+        # This also checks that the reason is not empty since empty strings
+        # validate to False
+        reason = (
+            request.GET.get("reason", None) if request.GET.get("reason", None) else None
+        )
+
+        if reason and len(reason.strip()) > 200:
+            raise serializers.ValidationError(
+                detail="Reason must be less than 200 characters",
+                code="reason_too_long",
+            )
 
         if user.discord is None:
             report_body = json.dumps(
@@ -379,7 +391,7 @@ class ImagesViewSet(views.ModelViewSet):
                     "user": {"id": str(user.id), "from": "nekos-api"},
                     "error": True,
                 },
-                indent=4
+                indent=4,
             )
             user_data = {
                 "username": user.username,
@@ -395,18 +407,18 @@ class ImagesViewSet(views.ModelViewSet):
                     "user": {"id": str(user.discord.id), "from": "discord"},
                     "error": True,
                 },
-                indent=4
+                indent=4,
             )
             user_data = {
                 "username": user.username,
-                "avatar_url": f"https://nekosapi.com/api/discord/avatar?user_id={user.discord.id}"
+                "avatar_url": f"https://nekosapi.com/api/discord/avatar?user_id={user.discord.id}",
             }
             print(user.discord.id)
 
         r = requests.post(
             os.getenv("DISCORD_IMAGE_REPORT_WEBHOOK_URL"),
             json={
-                "content": f"There is an issue with this image in Nekos.Land:\n```json\n{report_body}\n```",
+                "content": f"There is an issue with this image in Nekos.Land:\n```json\n{report_body}\n```\nReason:\n> {reason.strip()}",
                 "username": f"{user_data['username']} (Nekos API)",
                 "avatar_url": user_data["avatar_url"],
             },

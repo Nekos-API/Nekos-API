@@ -952,12 +952,22 @@ export const image_filters = [
             required: true,
             location: "path",
         },
+        {
+            name: "reason",
+            type: "String",
+            description: "The reason of the report. Max length: 200",
+        },
     ]}
     responses={[
         {
             code: 204,
             name: "Success",
             description: "The request was completed successfully.",
+        },
+        {
+            code: 400,
+            name: "Reason too long",
+            description: "The reason of the report is too long.",
         },
     ]}
 />
