@@ -99,7 +99,25 @@ class UserView(views.ModelViewSet):
         "followed_categories": ["followed_categories"],
         "followed_lists": ["followed_lists"],
     }
-    filterset_fields = {"discord__id": ["exact"]}
+    filterset_fields = {
+        "discord__id": ["exact"],
+        "username": [
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+        ],
+        "nickname": [
+            "exact",
+            "iexact",
+            "contains",
+            "icontains",
+            "startswith",
+            "endswith",
+        ],
+    }
 
     def get_serializer_class(self):
         if (

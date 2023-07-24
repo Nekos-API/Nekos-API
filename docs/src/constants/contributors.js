@@ -47,14 +47,11 @@ export default [
     {
         id: "814512313084149804",
         name: "SLIME",
-        contributions: ["Deno library maintainer"],
+        contributions: ["Deno library maintainer", "Content Moderator"],
     },
     {
         id: "1024451282041311262",
         name: "Celeste Mysterios",
-        contributions: [
-            "Content moderator",
-            "Nekos.Land bug finder"
-        ]
-    }
+        contributions: ["Content moderator", "Nekos.Land bug finder"],
+    },
 ];

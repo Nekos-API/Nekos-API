@@ -37,6 +37,71 @@ import {
             description:
                 "The related resources to include in the response.\n\nPossible values: `discord`, `liked-images`, `saved-images`, `followed`, `following`, `followed-artists`, `followed-characters`, `followed-categories`",
         },
+        {
+            name: "filters[discord.id]",
+            type: "Discord ID",
+            description: "Search for a user by it's Discord ID. Only available for administrators."
+        },
+        {
+            name: "filters[username]",
+            type: "String",
+            description: "Filters users by their username (case-sensitive)."
+        },
+        {
+            name: "filters[username.iexact]",
+            type: "String",
+            description: "Filters users by their username (case-insensitive)."
+        },
+        {
+            name: "filters[username.contains]",
+            type: "String",
+            description: "Returns all the users who contain a certain string in their usernames (case-sensitive)."
+        },
+        {
+            name: "filters[username.icontains]",
+            type: "String",
+            description: "Returns all the users who contain a certain string in their usernames (case-insensitive)."
+        },
+        {
+            name: "filters[username.startswith]",
+            type: "String",
+            description: "Returns all the users whose username starts with a certain string (case-sensitive)."
+        },
+        {
+            name: "filters[username.endswith]",
+            type: "String",
+            description: "Returns all the users whose username ends with a certain string (case-sensitive)."
+        },
+        {
+            name: "filters[nickname]",
+            type: "String",
+            description: "Filters users by their nickname (case-sensitive)."
+        },
+        {
+            name: "filters[nickname.iexact]",
+            type: "String",
+            description: "Filters users by their nickname (case-insensitive)."
+        },
+        {
+            name: "filters[nickname.contains]",
+            type: "String",
+            description: "Returns all the users who contain a certain string in their nicknames (case-sensitive)."
+        },
+        {
+            name: "filters[nickname.icontains]",
+            type: "String",
+            description: "Returns all the users who contain a certain string in their nicknames (case-insensitive)."
+        },
+        {
+            name: "filters[nickname.startswith]",
+            type: "String",
+            description: "Returns all the users whose nickname starts with a certain string (case-sensitive)."
+        },
+        {
+            name: "filters[nickname.endswith]",
+            type: "String",
+            description: "Returns all the users whose nickname ends with a certain string (case-sensitive)."
+        },
     ]}
     responses={[
         {

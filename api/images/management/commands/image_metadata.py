@@ -5,14 +5,17 @@ import requests
 
 from images.models import Image
 
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
         """
         Loads metadata to images
         """
 
-        images = Image.objects.filter(Q(mimetype__isnull=True) or Q(file_size__isnull=True)).exclude(Q(file__isnull=True) or Q(file=""))
-        
+        images = Image.objects.filter(
+            Q(mimetype__isnull=True) or Q(file_size__isnull=True)
+        ).exclude(Q(file="") or Q(file__isnull=True))
+
         total_images = images.count()
         j = 1
 
@@ -27,11 +30,11 @@ class Command(BaseCommand):
 
             content_type = r.headers.get("Content-Type")
             file_size = r.headers.get("Content-Length")
-            
+
             image.mimetype = content_type
             image.file_size = file_size
             image.save()
-            
+
             self.stdout.write(
                 self.style.SUCCESS("SUCCESS")
                 + f" - {image.id} - {content_type} - {file_size} bytes - ({j}/{total_images})"
