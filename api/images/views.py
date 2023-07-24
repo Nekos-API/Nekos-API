@@ -426,7 +426,6 @@ class ImagesViewSet(views.ModelViewSet):
                 "username": user.username,
                 "avatar_url": f"https://nekosapi.com/api/discord/avatar?user_id={user.discord.id}",
             }
-            print(user.discord.id)
 
         r = requests.post(
             os.getenv("DISCORD_IMAGE_REPORT_WEBHOOK_URL"),

@@ -87,7 +87,6 @@ def validate_recaptcha(request) -> bool:
 
 
 class UserView(views.ModelViewSet):
-    queryset = User.objects.all()
     select_for_includes = {"discord": ["discord"]}
     prefetch_for_includes = {
         "liked_images": ["liked_images"],
@@ -119,19 +118,20 @@ class UserView(views.ModelViewSet):
         ],
     }
 
-    def get_serializer_class(self):
-        if (
-            (self.request.user.is_authenticated and self.kwargs.get("pk") == "@me")
-            or (
-                self.request.user.is_authenticated
-                and str(self.kwargs.get("pk")) == str(self.request.user.id)
-            )
-            or (self.request.user.is_authenticated and self.request.user.is_superuser)
-        ):
-            return UserPrivateSerializer
-        return UserPublicSerializer
+    def get_queryset(self):
+        return User.objects.all()
 
-    def get_object(self):
+    def get_serializer_class(self, *args, **kwargs):
+        try:
+            if self.request.user.is_authenticated:
+                if self.request.user.is_superuser or self.kwargs.get("pk") == "@me":
+                    return UserPrivateSerializer
+            return UserPublicSerializer
+        except Exception as exc:
+            print(exc)
+            return UserPublicSerializer
+
+    def get_object(self, *args, **kwargs):
         if (self.request.user.is_authenticated and self.kwargs.get("pk") == "@me") or (
             self.request.user.is_authenticated
             and self.kwargs.get("pk") == str(self.request.user.id)
@@ -140,7 +140,7 @@ class UserView(views.ModelViewSet):
         elif not self.request.user.is_authenticated and self.kwargs.get("pk") == "@me":
             raise exceptions.NotAuthenticated()
         else:
-            return User.objects.get(pk=self.kwargs.get("pk"))
+            return self.get_queryset().get(pk=self.kwargs.get("pk"))
 
     def signup(self, request):
         """
@@ -204,74 +204,6 @@ class UserView(views.ModelViewSet):
             request, pk=pk, related_field=related_field, *args, **kwargs
         )
 
-    @permission_classes([permissions.IsAuthenticated])
-    def follow(self, request, *args, **kwargs):
-        """
-        Follow a user.
-        """
-
-        user = self.get_object()
-
-        if user == request.user:
-            raise serializers.ValidationError(
-                {
-                    "id": "self_follow_forbidden",
-                    "detail": "You followed yourself. Wait, you cannot.",
-                    "source": {
-                        "pointer": "/data",
-                    },
-                }
-            )
-
-        if user.followers.filter(pk=request.user.pk).exists():
-            raise serializers.ValidationError(
-                {
-                    "id": "user_already_followed",
-                    "detail": "You are already following the user.",
-                    "source": {
-                        "pointer": "/data",
-                    },
-                }
-            )
-
-        request.user.following.add(user)
-
-        return HttpResponse("", status=204)
-
-    @permission_classes([permissions.IsAuthenticated])
-    def unfollow(self, request, *args, **kwargs):
-        """
-        Unfollow a user.
-        """
-
-        user = self.get_object()
-
-        if user == request.user:
-            raise serializers.ValidationError(
-                {
-                    "id": "self_follow_forbidden",
-                    "detail": "You cannot unfollow yourself.",
-                    "source": {
-                        "pointer": "/data",
-                    },
-                }
-            )
-
-        if not user.followers.filter(pk=request.user.pk).exists():
-            raise serializers.ValidationError(
-                {
-                    "id": "user_not_followed",
-                    "detail": "You are not following this user.",
-                    "source": {
-                        "pointer": "/data",
-                    },
-                }
-            )
-
-        request.user.following.remove(user)
-
-        return HttpResponse("", status=204)
-
 
 class UserAdminViewSet(ViewSet):
     @permission_classes([permissions.IsAdminUser])
@@ -321,7 +253,7 @@ class UserAvatarUploadView(APIView):
     """
 
     parser_classes = [parsers.MultiPartParser]
-    permission_classes = [permissions.IsAuthenticated()]
+    permission_classes = [permissions.IsAuthenticated]
 
     def put(self, request):
         """

@@ -81,7 +81,7 @@ class UserPublicSerializer(serializers.HyperlinkedModelSerializer):
                 code="invalid_characters",
             )
 
-    username = serializers.CharField(required=False)
+    username = serializers.CharField(required=False, validators=[username_validator])
     permissions = PermissionsSerializer(source="*", read_only=True)
     timestamps = TimestampsSerializer(source="*", read_only=True)
     following = relations.ResourceRelatedField(

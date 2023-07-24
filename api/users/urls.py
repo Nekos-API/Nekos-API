@@ -36,11 +36,6 @@ urlpatterns = [
         name="user-detail",
     ),
     path(
-        "users/<uuid:pk>/follow",
-        UserView.as_view({"post": "follow", "delete": "unfollow"}),
-        name="user-follow",
-    ),
-    path(
         "users/<uuid:pk>/token",
         UserAdminViewSet.as_view({"get": "create_token"}),
         name="user-create-token",
