@@ -17,7 +17,7 @@ export default [
     },
     {
         id: "140788173885276160",
-        name: "Catalysm",
+        name: "Cata",
         contributions: ["Partner", "Donator", "JS Library maintainer"],
     },
     {
