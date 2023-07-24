@@ -1,3 +1,5 @@
+import re
+
 from rest_framework_json_api import serializers, relations
 
 from images.models import Image
@@ -68,10 +70,15 @@ class UserPublicSerializer(serializers.HyperlinkedModelSerializer):
                 detail="The username cannot be shorten than 4 characters.",
                 code="username_too_short",
             )
-        elif len(value) > 16:
+        elif len(value) > 32:
             raise serializers.ValidationError(
-                detail="The username cannot be longer than 16 characters (which is anyways too long for a username).",
+                detail="The username cannot be longer than 32 characters (which is anyways too long for a username).",
                 code="username_too_long",
+            )
+        elif re.match(r"^([0-9]|[a-z]|_|\.)+$", value) is None:
+            raise serializers.ValidationError(
+                detail="The username contains invalid characters.",
+                code="invalid_characters",
             )
 
     username = serializers.CharField(required=False)

@@ -718,31 +718,6 @@ django = ">=3.0"
 pytz = "*"
 
 [[package]]
-name = "djangorestframework-jsonapi"
-version = "6.0.0"
-description = "A Django REST framework API adapter for the JSON:API spec."
-optional = false
-python-versions = ">=3.7"
-files = []
-develop = false
-
-[package.dependencies]
-django = ">=3.2"
-djangorestframework = ">=3.13"
-inflection = ">=0.5.0"
-
-[package.extras]
-django-filter = ["django-filter (>=2.4)"]
-django-polymorphic = ["django-polymorphic (>=3.0)"]
-openapi = ["pyyaml (>=5.4)", "uritemplate (>=3.0.1)"]
-
-[package.source]
-type = "git"
-url = "https://github.com/django-json-api/django-rest-framework-json-api.git"
-reference = "HEAD"
-resolved_reference = "ac8ffe22f0bcc639e9f128ede15e59bf95e5e081"
-
-[[package]]
 name = "dnspython"
 version = "2.3.0"
 description = "DNS toolkit"
@@ -1046,17 +1021,6 @@ files = [
 [package.extras]
 mypy = ["click (>=6.0)", "mypy (==0.812)", "twisted (>=16.4.0)"]
 scripts = ["click (>=6.0)", "twisted (>=16.4.0)"]
-
-[[package]]
-name = "inflection"
-version = "0.5.1"
-description = "A port of Ruby on Rails inflector to Python"
-optional = false
-python-versions = ">=3.5"
-files = [
-    {file = "inflection-0.5.1-py2.py3-none-any.whl", hash = "sha256:f38b2b640938a4f35ade69ac3d053042959b62a0f1076a5bbaa1b9526605a8a2"},
-    {file = "inflection-0.5.1.tar.gz", hash = "sha256:1a29730d366e996aaacffb2f1f1cb9593dc38e2ddd30c91250c6dde09ea9b417"},
-]
 
 [[package]]
 name = "jwcrypto"
@@ -2520,4 +2484,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<4.0"
-content-hash = "43201fd2fac66922e6e71157a4f2bbe4e0a8d32d72bb0d0e7a21fedf65b28909"
+content-hash = "41d98f7fe7e739a0b52119ce416ac63b43f25a153813a9dc8c7b011ec1ffb2e6"

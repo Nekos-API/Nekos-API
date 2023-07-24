@@ -159,7 +159,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": (
         "rest_framework.parsers.FormParser",
         "rest_framework.parsers.MultiPartParser",
-        "nekos_api.parsers.FixedJSONParser",
+        "rest_framework_json_api.parsers.JSONParser",
     ),
     "DEFAULT_FILTER_BACKENDS": (
         "rest_framework.filters.SearchFilter",
