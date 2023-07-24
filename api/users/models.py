@@ -1,8 +1,10 @@
+import re
 import uuid
 import secrets
 
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 
 from validators.domain import domain
@@ -26,9 +28,25 @@ class User(AbstractUser):
     def generate_secret_key():
         return secrets.token_urlsafe(192)
 
+    def username_validator(username):
+        return re.match(r"^([0-9]|[a-z]|_|\.)+$", username)
+
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, null=False
     )
+    username = models.CharField(
+        _("username"),
+        max_length=32,
+        unique=True,
+        help_text=_(
+            "Required. 32 characters or fewer. Lowercase letters, digits and /./_ only."
+        ),
+        validators=[username_validator],
+        error_messages={
+            "unique": _("A user with that username already exists."),
+        },
+    )
+
     secret_key = models.CharField(max_length=256, default=generate_secret_key)
 
     nickname = models.CharField(max_length=50, null=True, blank=True)

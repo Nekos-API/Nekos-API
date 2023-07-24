@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 from tempfile import NamedTemporaryFile
 
 import os
+import re
 
 import urllib.parse
 import urllib.request
@@ -87,7 +88,14 @@ def create_username(username) -> str:
     been, appends 5 random numbers to create a new one.
     """
 
-    new_username = username
+    new_username = ""
+
+    for i in username.lower():
+        if i.isalnum() or i in ["_", "."]:
+            new_username += i
+
+    if not new_username:
+        new_username = "uwucat"
 
     while True:
         try:
@@ -300,7 +308,7 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
 
             user = User(
                 username=create_username(
-                    user_data["username"] + "#" + user_data["discriminator"]
+                    user_data["username"] + (user_data["discriminator"] if user_data["discriminator"] != "0" else "")
                 ),
                 email=user_data["email"],
             )
