@@ -457,13 +457,13 @@ dev = ["PyTest", "PyTest-Cov", "bump2version (<1)", "sphinx (<2)", "tox"]
 
 [[package]]
 name = "django"
-version = "4.2.1"
+version = "4.2.3"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "Django-4.2.1-py3-none-any.whl", hash = "sha256:066b6debb5ac335458d2a713ed995570536c8b59a580005acb0732378d5eb1ee"},
-    {file = "Django-4.2.1.tar.gz", hash = "sha256:7efa6b1f781a6119a10ac94b4794ded90db8accbe7802281cd26f8664ffed59c"},
+    {file = "Django-4.2.3-py3-none-any.whl", hash = "sha256:f7c7852a5ac5a3da5a8d5b35cc6168f31b605971441798dac845f17ca8028039"},
+    {file = "Django-4.2.3.tar.gz", hash = "sha256:45a747e1c5b3d6df1b141b1481e193b033fd1fdbda3ff52677dc81afdaacbaed"},
 ]
 
 [package.dependencies]
@@ -491,13 +491,13 @@ django-colorfield = ">=0.8.0,<1.0.0"
 
 [[package]]
 name = "django-bunny"
-version = "1.1.0"
+version = "1.1.3"
 description = "A django storage for bunny.net"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "django_bunny-1.1.0-py3-none-any.whl", hash = "sha256:63273af38950e242369a6f730deabe6dc16ff90cabe1f9822c00c59e5cc0a388"},
-    {file = "django_bunny-1.1.0.tar.gz", hash = "sha256:1622432456e0f8dfa3820e172f910d3c43ae0d0bff436fbe69c7f2ec3ee674bb"},
+    {file = "django_bunny-1.1.3-py3-none-any.whl", hash = "sha256:c3a0cb36794ec762e62fe1fc29cb6d0914fc0be3c119e38e94ff952c52cf10bb"},
+    {file = "django_bunny-1.1.3.tar.gz", hash = "sha256:4c9c67837d9711c3ac1104d3b0a79b120fc6bd11f39e6f2f048d63de22dd86c2"},
 ]
 
 [package.dependencies]
@@ -2520,4 +2520,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<4.0"
-content-hash = "81e73fc317c4dd0436e5efa69922780ad61457b3fd4b940a7d642dc384acf751"
+content-hash = "43201fd2fac66922e6e71157a4f2bbe4e0a8d32d72bb0d0e7a21fedf65b28909"

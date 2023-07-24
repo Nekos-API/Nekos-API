@@ -159,7 +159,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": (
         "rest_framework.parsers.FormParser",
         "rest_framework.parsers.MultiPartParser",
-        "rest_framework_json_api.parsers.JSONParser",
+        "nekos_api.parsers.FixedJSONParser",
     ),
     "DEFAULT_FILTER_BACKENDS": (
         "rest_framework.filters.SearchFilter",
@@ -213,7 +213,7 @@ DATABASES = {
         "PASSWORD": os.getenv("PGPASSWORD"),
         "HOST": os.getenv("PGHOST"),
         "PORT": "5432",
-        "POOL_OPTIONS": {"POOL_SIZE": 5, "MAX_OVERFLOW": 10, "RECYCLE": 12 * 60 * 60},
+        "POOL_OPTIONS": {"POOL_SIZE": 1, "MAX_OVERFLOW": 2, "RECYCLE": 12 * 60 * 60},
     }
 }
 
@@ -355,6 +355,28 @@ if DEBUG:
         f"sso.{os.getenv('BASE_DOMAIN')}",
         os.getenv("BASE_DOMAIN"),
     ]
+
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+            },
+        },
+        "root": {
+            "handlers": ["console"],
+            "level": "INFO",
+        },
+        "loggers": {
+            "django": {
+                "handlers": ["console"],
+                "level": "INFO",
+                "propagate": True,
+            },
+        },
+    }
+
 else:
     LOGIN_URL = f"https://sso.{os.getenv('BASE_DOMAIN')}/login"
 
@@ -364,24 +386,23 @@ else:
         f"admin.{os.getenv('BASE_DOMAIN')}",
     ]
 
-
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+            },
         },
-    },
-    "root": {
-        "handlers": ["console"],
-        "level": "INFO",
-    },
-    "loggers": {
-        "django": {
+        "root": {
             "handlers": ["console"],
-            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
-            "propagate": False,
-        }
-    },
-}
+            "level": "INFO",
+        },
+        "loggers": {
+            "django": {
+                "handlers": ["console"],
+                "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+                "propagate": False,
+            }
+        },
+    }
