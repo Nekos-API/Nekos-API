@@ -19,7 +19,7 @@ class Application(AbstractApplication):
         size=[1024, 1024],
         crop=["middle", "center"],
         upload_to=FilePattern(
-            filename_pattern="uploads/applications/icons/{uuid:base32}{ext}"
+            filename_pattern="applications/icons/{uuid:base32}{ext}"
         ),
         blank=True,
         null=True,

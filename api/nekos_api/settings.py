@@ -213,7 +213,7 @@ DATABASES = {
         "PASSWORD": os.getenv("PGPASSWORD"),
         "HOST": os.getenv("PGHOST"),
         "PORT": "5432",
-        "POOL_OPTIONS": {"POOL_SIZE": 1, "MAX_OVERFLOW": 2, "RECYCLE": 12 * 60 * 60},
+        "POOL_OPTIONS": {"POOL_SIZE": 5, "MAX_OVERFLOW": 10, "RECYCLE": 12 * 60 * 60},
     }
 }
 

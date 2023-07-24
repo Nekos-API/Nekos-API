@@ -29,21 +29,20 @@ class User(AbstractUser):
         return secrets.token_urlsafe(192)
 
     def username_validator(username):
-        return re.match(r"^([0-9]|[a-z]|_|\.)+$", username) and len(username) >= 4
+        if not re.match(r"^([0-9]|[a-z]|_|\.)+$", username) and len(username) >= 4:
+            raise ValidationError("Invalid username.")
 
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, null=False
     )
     username = models.CharField(
-        _("username"),
+        "username",
         max_length=32,
         unique=True,
-        help_text=_(
-            "Required. 32 characters or fewer. Lowercase letters, digits and /./_ only."
-        ),
+        help_text="Required. 32 characters or fewer. Lowercase letters, digits and /./_ only.",
         validators=[username_validator],
         error_messages={
-            "unique": _("A user with that username already exists."),
+            "unique": "A user with that username already exists.",
         },
     )
 
@@ -57,7 +56,7 @@ class User(AbstractUser):
         size=[512, 512],
         crop=["middle", "center"],
         upload_to=FilePattern(
-            filename_pattern="uploads/user/avatar/{uuid:base32}{ext}"
+            filename_pattern="user/avatar/{uuid:base32}{ext}"
         ),
         blank=True,
         null=True,
