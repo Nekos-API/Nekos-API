@@ -204,6 +204,11 @@ class UserView(views.ModelViewSet):
             request, pk=pk, related_field=related_field, *args, **kwargs
         )
 
+    def get_permissions(self):
+        if self.request.method != "GET":
+            return [permissions.IsAuthenticated()]
+        return []
+
 
 class UserAdminViewSet(ViewSet):
     @permission_classes([permissions.IsAdminUser])
