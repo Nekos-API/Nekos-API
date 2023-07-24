@@ -29,7 +29,7 @@ class User(AbstractUser):
         return secrets.token_urlsafe(192)
 
     def username_validator(username):
-        return re.match(r"^([0-9]|[a-z]|_|\.)+$", username)
+        return re.match(r"^([0-9]|[a-z]|_|\.)+$", username) and len(username) >= 4
 
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, null=False
