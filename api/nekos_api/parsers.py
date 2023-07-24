@@ -10,6 +10,7 @@ class FixedJSONParser(JSONParser):
         Parses the incoming bytestream as JSON and returns the resulting data.
         """
         try:
-            return json.loads(stream.read())
+            result = json.loads(stream.read())
+            return self.parse_data(result, parser_context)
         except ValueError as exc:
             raise ParseError("JSON parse error - %s" % str(exc))
