@@ -253,8 +253,6 @@ You can use any of the multiple possible values for the `lookup` component of a 
 | `lte`        | Matches lower than or equal to a value                                          | Number                           | `filter[height.lte]=1000`               |
 | `startswith` | Matches attributes starting with a value                                        | String                           | `filter[name.startswith]=Hatsu`         |
 | `endswith`   | Matches attributes ending with a value                                          | String                           | `filter[name.endswith]=Hatsu`           |
-| `regex`      | Matches attributes that match a PostgreSQL regular expression                   | String                           | `filter[name.regex]=^([a-z]+)$`         |
-| `iregex`     | Matches attributes that match a PostgreSQL regular expression, case insensitive | String                           | `filter[name.iregex]=^([a-z]+)$`        |
 | `day`        | Matches date type attributes with a specific day number                         | Number between `1` and `31`      | `filter[createdAt.day]=15`              |
 | `month`      | Matches date type attributes with a specific month                              | Number between `1` and `12`      | `filter[createdAt.month]=3`             |
 | `year`       | Matches date type attributes with a specific year                               | Number matching `(1\|2)[0-9]{3}` | `filter[createdAt.year]=2022`           |

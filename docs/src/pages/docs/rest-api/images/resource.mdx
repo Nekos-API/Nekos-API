@@ -39,18 +39,6 @@ export const image_filters = [
             "Returns images in the ID array (coma-separated. e.g. `first-uuid,second-uuid`).",
     },
     {
-        name: "filter[id.regex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns images with IDs matching the **POSIX RegEx** specified.",
-    },
-    {
-        name: "filter[id.iregex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns images with IDs matching the **POSIX RegEx** specified (case-insensitive).",
-    },
-    {
         name: "filter[title]",
         type: "String",
         description: "Returns images matching the exact specified value.",
@@ -86,18 +74,6 @@ export const image_filters = [
             "Returns images where the title ends with the specified value.",
     },
     {
-        name: "filter[title.regex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns images where the title matches the specified **POSIX RegEx**.",
-    },
-    {
-        name: "filter[title.iregex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns images where the title matches the specified **POSIX RegEx** (case-insensitive).",
-    },
-    {
         name: "filter[ageRating]",
         type: "(Enum) String",
         description:
@@ -120,18 +96,6 @@ export const image_filters = [
         type: "Boolean",
         description:
             "Returns images with an unspecified age rating.\n\nPossible values: `true`, `false`",
-    },
-    {
-        name: "filter[ageRating.regex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns images where the age rating matches the **POSIX RegEx**.",
-    },
-    {
-        name: "filter[ageRating.iregex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns images where the age rating matches the **POSIX RegEx** (case-insensitive).",
     },
     {
         name: "filter[height]",
@@ -251,18 +215,6 @@ export const image_filters = [
             "Returns images where the verification status contains the specified value (case-insensitive).",
     },
     {
-        name: "filter[verificationStatus.regex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns images where the verification status matches the specified **POSIX RegEx**.",
-    },
-    {
-        name: "filter[verificationStatus.iregex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns images where the verification status matches the specified **POSIX RegEx** (case-insensitive).",
-    },
-    {
         name: "filter[sourceName]",
         type: "String",
         description: "Returns images with the specified source name.",
@@ -304,18 +256,6 @@ export const image_filters = [
             "Returns images with an unspecified (or not if false) source name.\n\nPossible values: `true`, `false`",
     },
     {
-        name: "filter[sourceName.regex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns images where the source name matches the specified **POSIX RegEx**.",
-    },
-    {
-        name: "filter[sourceName.iregex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns images where the source name matches the specified **POSIX RegEx** (case-insensitive).",
-    },
-    {
         name: "filter[sourceUrl]",
         type: "String",
         description: "Returns images with the specified source URL.",
@@ -355,18 +295,6 @@ export const image_filters = [
         type: "String",
         description:
             "Returns images with an unspecified (or not if false) source URL.\n\nPossible values: `true`, `false`",
-    },
-    {
-        name: "filter[sourceUrl.regex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns images where the source URL matches the specified **POSIX RegEx**.",
-    },
-    {
-        name: "filter[sourceUrl.iregex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns images where the source URL matches the specified **POSIX RegEx** (case-insensitive).",
     },
 ];
 

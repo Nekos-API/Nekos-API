@@ -31,8 +31,6 @@ class CategoryViewSet(views.ModelViewSet):
             "in",
             "startswith",
             "endswith",
-            "regex",
-            "iregex",
         ),
         "created_at": ("exact", "second", "minute", "hour", "day", "month", "year"),
         "updated_at": ("exact", "second", "minute", "hour", "day", "month", "year"),

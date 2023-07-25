@@ -66,18 +66,6 @@ export const gif_filters = [
             "Returns all GIFs where the reaction name ends with the specified value (case-sensitive)",
     },
     {
-        name: "filter[reactions.name.regex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns all GIFs where the reaction name matches the specified POSIX regular expression",
-    },
-    {
-        name: "filter[reactions.name.iregex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns all GIFs where the reaction name matches the specified case-insensitive POSIX regular expression",
-    },
-    {
         name: "filter[isSpoiler.exact]",
         type: "Boolean",
         description: "Returns all GIFs with the exact specified spoiler status",
@@ -103,18 +91,6 @@ export const gif_filters = [
         name: "filter[ageRating.isnull]",
         type: "Boolean",
         description: "Returns all GIFs where the age rating is null",
-    },
-    {
-        name: "filter[ageRating.regex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns all GIFs where the age rating matches the specified POSIX regular expression",
-    },
-    {
-        name: "filter[ageRating.iregex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns all GIFs where the age rating matches the specified case-insensitive POSIX regular expression",
     },
     {
         name: "filter[height.exact]",
@@ -239,18 +215,6 @@ export const gif_filters = [
             "Returns all GIFs where the verification status contains the specified value (case-insensitive)",
     },
     {
-        name: "filter[verificationStatus.regex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns all GIFs where the verification status matches the specified POSIX regular expression",
-    },
-    {
-        name: "filter[verificationStatus.iregex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns all GIFs where the verification status matches the specified case-insensitive POSIX regular expression",
-    },
-    {
         name: "filter[sourceName.exact]",
         type: "String",
         description: "Returns all GIFs with the exact specified source name",
@@ -291,18 +255,6 @@ export const gif_filters = [
         description: "Returns all GIFs where the source name is null",
     },
     {
-        name: "filter[sourceName.regex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns all GIFs where the source name matches the specified POSIX regular expression",
-    },
-    {
-        name: "filter[sourceName.iregex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns all GIFs where the source name matches the specified case-insensitive POSIX regular expression",
-    },
-    {
         name: "filter[sourceUrl.exact]",
         type: "String",
         description: "Returns all GIFs with the exact specified source URL",
@@ -341,18 +293,6 @@ export const gif_filters = [
         name: "filter[sourceUrl.isnull]",
         type: "Boolean",
         description: "Returns all GIFs where the source URL is null",
-    },
-    {
-        name: "filter[sourceUrl.regex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns all GIFs where the source URL matches the specified POSIX regular expression",
-    },
-    {
-        name: "filter[sourceUrl.iregex]",
-        type: "POSIX RegEx",
-        description:
-            "Returns all GIFs where the source URL matches the specified case-insensitive POSIX regular expression",
     },
 ];
 

@@ -26,8 +26,6 @@ class GifViewSet(views.ModelViewSet):
             "icontains",
             "startswith",
             "endswith",
-            "regex",
-            "iregex",
         ),
         "categories__name": (
             "exact",
@@ -37,10 +35,9 @@ class GifViewSet(views.ModelViewSet):
             "startswith",
             "endswith",
             "regex",
-            "iregex",
         ),
         "is_spoiler": ("exact",),
-        "age_rating": ("exact", "iexact", "in", "isnull", "regex", "iregex"),
+        "age_rating": ("exact", "iexact", "in", "isnull",),
         "height": ("exact", "lt", "lte", "gt", "gte"),
         "width": ("exact", "lt", "lte", "gt", "gte"),
         "aspect_ratio": ("exact", "startswith", "endswith", "regex"),
@@ -51,8 +48,6 @@ class GifViewSet(views.ModelViewSet):
             "in",
             "contains",
             "icontains",
-            "regex",
-            "iregex",
         ),
         "source_name": (
             "exact",
@@ -62,8 +57,6 @@ class GifViewSet(views.ModelViewSet):
             "startswith",
             "endswith",
             "isnull",
-            "regex",
-            "iregex",
         ),
         "source_url": (
             "exact",
@@ -73,8 +66,6 @@ class GifViewSet(views.ModelViewSet):
             "startswith",
             "endswith",
             "isnull",
-            "regex",
-            "iregex",
         ),
     }
     select_for_includes = {
