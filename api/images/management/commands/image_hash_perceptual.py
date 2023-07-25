@@ -36,8 +36,7 @@ class Command(BaseCommand):
 
             self.stdout.write(
                 self.style.WARNING("LOADING: PERCEPTUAL")
-                + f" - {image.id} - {image.height}x{image.width} - ({j}/{total_images})"
-                + " " * 10,
+                + f" - {image.id} - {image.height}x{image.width} - ({j}/{total_images})",
                 ending="\r",
             )
 
@@ -50,6 +49,5 @@ class Command(BaseCommand):
             self.stdout.write(
                 self.style.SUCCESS("SUCCESS")
                 + f" - {image.id} - {image.hash_perceptual} - ({j}/{total_images})"
-                + " " * 10
             )
             j += 1
