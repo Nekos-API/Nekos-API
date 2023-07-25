@@ -280,6 +280,9 @@ export const image_schema = {
         metadata: {
             mimetype: "String?",
             fileSize: "Integer?",
+            hashes: {
+                perceptual: "String?"
+            }
         },
         timestamps: {
             created: "ISO 8601",

@@ -30,7 +30,7 @@ from .serializers import ImageSerializer
 class ImagesViewSet(views.ModelViewSet):
     serializer_class = ImageSerializer
     filterset_fields = {
-        "id": ("exact", "in", "regex", "iregex"),
+        "id": ("exact", "in",),
         "title": (
             "exact",
             "iexact",
@@ -38,10 +38,8 @@ class ImagesViewSet(views.ModelViewSet):
             "icontains",
             "startswith",
             "endswith",
-            "regex",
-            "iregex",
         ),
-        "age_rating": ("exact", "iexact", "in", "isnull", "regex", "iregex"),
+        "age_rating": ("exact", "iexact", "in", "isnull",),
         "height": ("exact", "lt", "lte", "gt", "gte"),
         "width": ("exact", "lt", "lte", "gt", "gte"),
         "aspect_ratio": ("exact", "startswith", "endswith", "regex"),
@@ -53,8 +51,6 @@ class ImagesViewSet(views.ModelViewSet):
             "in",
             "contains",
             "icontains",
-            "regex",
-            "iregex",
         ),
         "source_name": (
             "exact",
@@ -64,8 +60,6 @@ class ImagesViewSet(views.ModelViewSet):
             "startswith",
             "endswith",
             "isnull",
-            "regex",
-            "iregex",
         ),
         "source_url": (
             "exact",
@@ -75,8 +69,6 @@ class ImagesViewSet(views.ModelViewSet):
             "startswith",
             "endswith",
             "isnull",
-            "regex",
-            "iregex",
         ),
         "artist__name": (
             "exact",
@@ -86,8 +78,6 @@ class ImagesViewSet(views.ModelViewSet):
             "startswith",
             "endswith",
             "isnull",
-            "regex",
-            "iregex",
         ),
         "categories__name": (
             "exact",
@@ -97,8 +87,6 @@ class ImagesViewSet(views.ModelViewSet):
             "startswith",
             "endswith",
             "isnull",
-            "regex",
-            "iregex",
         ),
         "characters__first_name": (
             "exact",
@@ -108,8 +96,6 @@ class ImagesViewSet(views.ModelViewSet):
             "startswith",
             "endswith",
             "isnull",
-            "regex",
-            "iregex",
         ),
         "characters__last_name": (
             "exact",
@@ -119,8 +105,6 @@ class ImagesViewSet(views.ModelViewSet):
             "startswith",
             "endswith",
             "isnull",
-            "regex",
-            "iregex",
         ),
         "characters__gender": (
             "exact",
@@ -130,8 +114,6 @@ class ImagesViewSet(views.ModelViewSet):
             "startswith",
             "endswith",
             "isnull",
-            "regex",
-            "iregex",
         ),
         "characters__species": (
             "exact",
@@ -141,8 +123,6 @@ class ImagesViewSet(views.ModelViewSet):
             "startswith",
             "endswith",
             "isnull",
-            "regex",
-            "iregex",
         ),
         "characters__nationality": (
             "exact",
@@ -152,8 +132,6 @@ class ImagesViewSet(views.ModelViewSet):
             "startswith",
             "endswith",
             "isnull",
-            "regex",
-            "iregex",
         ),
     }
     select_for_includes = {

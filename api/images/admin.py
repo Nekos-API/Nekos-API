@@ -26,6 +26,7 @@ class ImageAdmin(admin.ModelAdmin):
     readonly_fields = ('height', 'width', 'aspect_ratio', 'palette', 'dominant_color', 'mimetype', 'file_size')
     search_fields = ('title', 'uploader__username', 'artist__name', 'artist__aliases')
     autocomplete_fields = ('characters', 'categories')
+    readonly_fields = ("hash_perceptual",)
     actions = [verify_images, unverify_images]
 
 

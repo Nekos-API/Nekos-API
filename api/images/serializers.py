@@ -26,11 +26,14 @@ class ColorsSerializer(serializers.Serializer):
         """
         Parses r,g,b db array to hex color code
         """
-        return [(
-            "#{:02x}{:02x}{:02x}".format(*color)
-            if color
-            else None
-        ) for color in obj.palette] if obj.palette else []
+        return (
+            [
+                ("#{:02x}{:02x}{:02x}".format(*color) if color else None)
+                for color in obj.palette
+            ]
+            if obj.palette
+            else []
+        )
 
     def get_dominant(self, obj):
         """
@@ -63,12 +66,22 @@ class DimensionsSerializer(serializers.Serializer):
     orientation = serializers.CharField()
 
 
+class HashesSerializer(serializers.Serializer):
+    """
+    Serializes the image's hashes into an object.
+    """
+
+    perceptual = serializers.CharField(source="hash_perceptual", read_only=True)
+
+
 class MetadataSerializer(serializers.Serializer):
     """
     Serializes `mimetype` and `fileSize` into an object.
     """
+
     mimetype = serializers.CharField()
     fileSize = serializers.IntegerField(source="file_size")
+    hashes = HashesSerializer(source="*", read_only=True)
 
 
 class TimestampsSerializer(serializers.Serializer):
@@ -119,9 +132,7 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
             "verification_status": {"read_only": True},
             "file": {"read_only": True},
         }
-        meta_fields = [
-            "user"
-        ]
+        meta_fields = ["user"]
 
     class JSONAPIMeta:
         included_resources = ["artist"]
@@ -195,7 +206,4 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
                 "liked": self.context["request"].user.pk in liked_by_pks,
                 "saved": self.context["request"].user.pk in saved_by_pks,
             }
-        return {
-            "liked": None,
-            "saved": None
-        }
+        return {"liked": None, "saved": None}

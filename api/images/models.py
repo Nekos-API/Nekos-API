@@ -142,6 +142,14 @@ class Image(models.Model):
         blank=True
     )
 
+    hash_perceptual = models.CharField(
+        "Perceptual hash",
+        max_length=64,
+        null=True,
+        blank=True,
+        db_index=True,
+    )
+
     characters = models.ManyToManyField(
         "characters.Character", related_name="images", blank=True
     )
