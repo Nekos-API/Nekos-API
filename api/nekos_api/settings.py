@@ -339,7 +339,7 @@ BUNNY_REGION = os.getenv("BUNNY_ZONE")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-API_VERSION = "2.4.4"
+API_VERSION = "2.5.0"
 
 
 PROTECTED_API_TOKEN = os.getenv("PROTECTED_API_TOKEN")
@@ -355,27 +355,6 @@ if DEBUG:
         f"sso.{os.getenv('BASE_DOMAIN')}",
         os.getenv("BASE_DOMAIN"),
     ]
-
-    LOGGING = {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "handlers": {
-            "console": {
-                "class": "logging.StreamHandler",
-            },
-        },
-        "root": {
-            "handlers": ["console"],
-            "level": "INFO",
-        },
-        "loggers": {
-            "django": {
-                "handlers": ["console"],
-                "level": "INFO",
-                "propagate": True,
-            },
-        },
-    }
 
 else:
     LOGIN_URL = f"https://sso.{os.getenv('BASE_DOMAIN')}/login"
