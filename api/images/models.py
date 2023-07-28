@@ -47,11 +47,7 @@ class Image(models.Model):
 
     def validate_rgb_value(value):
         if value not in range(0, 256):
-            raise ValidationError(
-                detail="This is not a valid RGB value (0-255)",
-                code="invalid_rgb_value",
-                params={"value": value},
-            )
+            raise ValidationError("This is not a valid RGB value (0-255)")
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
@@ -84,10 +80,7 @@ class Image(models.Model):
         blank=True,
     )
     orientation = models.CharField(
-        max_length=9,
-        blank=True,
-        null=True,
-        choices=Orientation.choices
+        max_length=9, blank=True, null=True, choices=Orientation.choices
     )
 
     source_url = models.URLField(
@@ -135,11 +128,11 @@ class Image(models.Model):
             size=3,
             null=False,
             blank=False,
-            validators=[validate_rgb_value]
+            validators=[validate_rgb_value],
         ),
         size=10,
         null=True,
-        blank=True
+        blank=True,
     )
 
     hash_perceptual = models.CharField(
@@ -165,15 +158,10 @@ class Image(models.Model):
     )
 
     mimetype = models.CharField(
-        max_length=11,
-        null=True,
-        blank=True,
-        help_text="The image's file format."
+        max_length=11, null=True, blank=True, help_text="The image's file format."
     )
     file_size = models.PositiveIntegerField(
-        null=True,
-        blank=True,
-        help_text="The file size in bytes of the image file."
+        null=True, blank=True, help_text="The file size in bytes of the image file."
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -197,7 +185,7 @@ class ImageSourceResult(models.Model):
     )
 
     status = models.SmallIntegerField(default=400)
-    
+
     title = models.CharField(max_length=256, null=True, blank=True)
     similarity = models.FloatField()
     ext_urls = ArrayField(models.URLField(max_length=500), blank=True, null=True)
@@ -209,6 +197,4 @@ class ImageSourceResult(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return (
-            f"Query from SauceNAO for {self.image.id} (Status code: {self.status})"
-        )
+        return f"Query from SauceNAO for {self.image.id} (Status code: {self.status})"
