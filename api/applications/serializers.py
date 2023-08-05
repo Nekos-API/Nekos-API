@@ -40,6 +40,7 @@ class ApplicationSerializer(serializers.ModelSerializer):
             "redirect_uris",
             "client_type",
             "authorization_grant_type",
+            "algorithm",
             "skip_authorization",
             "timestamps",
         ]
@@ -54,7 +55,17 @@ class ApplicationSerializer(serializers.ModelSerializer):
 
     # Allow only authorization-code applications
     authorization_grant_type = serializers.ChoiceField(
-        choices=(("authorization-code", "Authorization code"),), required=True
+        choices=(
+            Application.GRANT_TYPES[0],
+            Application.GRANT_TYPES[3],
+        ),
+        required=True,
+    )
+    algorithm = serializers.ChoiceField(
+        choices=(
+            Application.ALGORITHM_TYPES[0],
+            Application.ALGORITHM_TYPES[1]
+        ), required=True
     )
 
     credentials = ClientIdSerializer(source="*", read_only=True)

@@ -2,7 +2,7 @@ from django.core.files import File
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 
-from rest_framework import permissions, parsers
+from rest_framework import permissions, parsers, exceptions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_json_api import views, serializers
@@ -11,33 +11,41 @@ from django_ratelimit.decorators import ratelimit
 
 from PIL import Image
 
-from .models import Application
-from .serializers import ApplicationSerializer, ApplicationWithSecretSerializer
+from nekos_api.permissions import IsUserAuthenticated, IsAppAuthenticated
+
+from applications.models import Application
+from applications.serializers import (
+    ApplicationSerializer,
+    ApplicationWithSecretSerializer,
+)
+
+from utils.decorators import permission_classes
 
 # Create your views here.
 
 
 class ApplicationView(views.ModelViewSet):
-    queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
-    permission_classes = [permissions.IsAuthenticated()]
 
     def get_queryset(self, *args, **kwargs):
-        return Application.objects.filter(user=self.request.user)
+        if IsAppAuthenticated().has_permission(self.request, self):
+            return Application.objects.filter(pk=self.request.auth.application.pk)
+        elif IsUserAuthenticated().has_permission(self.request, self):
+            return Application.objects.filter(user=self.request.user)
+        else:
+            raise exceptions.NotAuthenticated()
 
     def get_object(self):
-        obj = super().get_object()
+        if IsAppAuthenticated().has_permission(self.request, self):
+            if self.kwargs.get("pk") == "@me":
+                return self.request.auth.application
+            return super().get_object()
+        elif IsUserAuthenticated().has_permission(self.request, self):
+            return super().get_object()
+        else:
+            raise exceptions.NotAuthenticated()
 
-        # Applications are only visible by their owners and by superusers
-        # (administrators)
-        if obj.user != self.request.user and not self.request.user.is_superuser:
-            raise serializers.ValidationError(
-                detail="You don't have permission to manage this application.",
-                code="forbidden",
-            )
-
-        return obj
-
+    @permission_classes([IsUserAuthenticated])
     def create(self, request):
         """
         Creates an application. By default, users are limited to 10
@@ -64,7 +72,6 @@ class ApplicationView(views.ModelViewSet):
         # authorization grant type is also set to `authorization-code`
         instance = serializer.create(serializer.validated_data)
         instance.user = request.user
-        instance.authorization_grant_type = "authorization-code"
 
         # Save the client secret before hashing so that it can be returned to
         # the user.
@@ -81,6 +88,14 @@ class ApplicationView(views.ModelViewSet):
 
         return Response(serializer.data)
 
+    @permission_classes([IsUserAuthenticated])
+    def update(self, request, pk):
+        """
+        Update an application.
+        """
+        return super().update(request, pk)
+
+    @permission_classes([IsUserAuthenticated])
     def delete(self, request, pk):
         """
         Delete an application.
@@ -92,6 +107,9 @@ class ApplicationView(views.ModelViewSet):
 
         return HttpResponse("", status=204)
 
+    def get_permissions(self):
+        return [permissions.OR(IsUserAuthenticated(), IsAppAuthenticated())]
+
 
 class UploadApplicationIconView(APIView):
     """
@@ -99,14 +117,22 @@ class UploadApplicationIconView(APIView):
     """
 
     parser_classes = [parsers.MultiPartParser]
-    permission_classes = [permissions.IsAuthenticated()]
+    permission_classes = [IsUserAuthenticated()]
+
+    def get_queryset(self, *args, **kwargs):
+        if IsAppAuthenticated().has_permission(self.request, self):
+            return Application.objects.filter(pk=self.request.auth.application.pk)
+        elif IsUserAuthenticated().has_permission(self.request, self):
+            return Application.objects.filter(user=self.request.user)
+        else:
+            raise exceptions.NotAuthenticated()
 
     def get_object(self) -> Application:
         """
         Returns an Application object.
         """
 
-        app = Application.objects.get(pk=int(self.kwargs.get("pk")))
+        app = self.get_queryset().get(pk=int(self.kwargs.get("pk")))
 
         if app.user != self.request.user and not self.request.user.is_superuser:
             raise serializers.ValidationError(

@@ -5,12 +5,15 @@ from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 
 from rest_framework import permissions
+from rest_framework.response import Response
 from rest_framework_json_api import views, serializers
 
 from utils.decorators import permission_classes
 
-from .models import Gif
-from .serializers import GifSerializer
+from nekos_api.permissions import IsUserAuthenticated
+
+from gifs.models import Gif
+from gifs.serializers import GifSerializer
 
 # Create your views here.
 
@@ -205,7 +208,7 @@ class GifViewSet(views.ModelViewSet):
 
             return HttpResponseRedirect(gif.file.url, status=307)
 
-    @permission_classes([permissions.IsAuthenticated, permissions.IsAdminUser])
+    @permission_classes([IsUserAuthenticated, permissions.IsAdminUser])
     def verification_status(self, request, pk):
         """
         Verify a gif.

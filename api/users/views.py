@@ -48,6 +48,8 @@ from utils.decorators import permission_classes
 
 from applications.models import Application
 
+from nekos_api.permissions import IsUserAuthenticated
+
 from .models import User, DiscordUser
 from .serializers import UserPublicSerializer, UserPrivateSerializer
 
@@ -165,7 +167,7 @@ class UserView(views.ModelViewSet):
 
         return Response(UserPrivateSerializer(data=user))
 
-    @permission_classes([permissions.IsAuthenticated])
+    @permission_classes([IsUserAuthenticated])
     def update(self, request, *args, **kwargs):
         """
         Edit a user.
@@ -206,7 +208,7 @@ class UserView(views.ModelViewSet):
 
     def get_permissions(self):
         if self.request.method != "GET":
-            return [permissions.IsAuthenticated()]
+            return [IsUserAuthenticated()]
         return []
 
 
@@ -258,7 +260,7 @@ class UserAvatarUploadView(APIView):
     """
 
     parser_classes = [parsers.MultiPartParser]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsUserAuthenticated]
 
     def put(self, request):
         """
@@ -354,7 +356,7 @@ class UserRelationshipsView(views.RelationshipView):
 
     def get_permissions(self):
         if self.request.method != "GET":
-            return [permissions.IsAuthenticated()]
+            return [IsUserAuthenticated()]
         return []
 
 

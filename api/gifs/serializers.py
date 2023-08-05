@@ -21,82 +21,18 @@ from users.serializers import UserPublicSerializer
 from .models import Gif, Reaction
 
 
-def calculate_aspect(size: tuple, ar_size: tuple) -> tuple:
-    """
-    Returns a cropped size.
-    """
-
-    if size[0] in [0, None] or size[1] in [0, None]:
-        return (0, 0)
-
-    new_aspect_ratio = ar_size[0] / ar_size[1]
-    current_aspect_ratio = size[0] / size[1]
-
-    if new_aspect_ratio < current_aspect_ratio:
-        # The new aspect ratio is wider than the current one.
-        new_size = (size[1] / ar_size[0] * ar_size[1], size[1])
-
-        return new_size
-
-    elif new_aspect_ratio > current_aspect_ratio:
-        # The new aspect ratio is taller than the current one.
-        new_size = (size[0], size[0] / ar_size[0] * ar_size[1])
-
-        return new_size
-
-    else:
-        # No modifications need to be done.
-        return size
+class DimensSerializer(serializers.Serializer):
+    width = serializers.IntegerField()
+    height = serializers.IntegerField()
+    aspectRatio = serializers.FloatField(source="aspect_ratio")
+    orientation = serializers.CharField()
 
 
-def get_thumbnail_url(url: str, variation: str) -> str:
-    """
-    Returns the GIF's thumbnail URL without querying Redis.
-    """
-    parsed_url = urlparse(url)
-    new_path = f"/thumbnails{parsed_url.path.rsplit('/', 1)[0]}/{parsed_url.path.rsplit('/', 1)[1].split('.', 1)[0]}_{variation}.{parsed_url.path.rsplit('/', 1)[1].split('.', 1)[1]}"
-
-    return f"{parsed_url.scheme}://{parsed_url.netloc}{new_path}"
-
-
-class FilesSerializer(serializers.Serializer):
-    def to_representation(self, instance):
-        return {
-            "original": {
-                "url": instance.file.url,
-                "dimens": {
-                    "width": instance.width,
-                    "height": instance.height,
-                    "aspectRatio": instance.aspect_ratio,
-                    "orientation": instance.orientation,
-                },
-                "metadata": {
-                    "mimetype": instance.mimetype,
-                    "size": instance.file_size,
-                    "frames": instance.frames,
-                    "duration": instance.duration,
-                },
-            },
-            "consistent": {
-                "url": get_thumbnail_url(instance.file.url, "consistent"),
-                "dimens": {
-                    "width": calculate_aspect(
-                        (instance.width, instance.height), (16, 9)
-                    )[0],
-                    "height": calculate_aspect(
-                        (instance.width, instance.height), (16, 9)
-                    )[1],
-                    "aspectRatio": "16:9",
-                    "orientation": "landscape",
-                },
-                "metadata": {
-                    "mimetype": "image/gif",
-                    "size": None,
-                    "frames": instance.frames,
-                    "duration": instance.duration,
-                },
-            },
-        }
+class MetadataSerializer(serializers.Serializer):
+    mimetype = serializers.CharField()
+    size = serializers.IntegerField(source="file_size")
+    frames = serializers.IntegerField()
+    duration = serializers.IntegerField()
 
 
 class ColorsSerializer(serializers.Serializer):
@@ -156,7 +92,7 @@ class GifSerializer(serializers.ModelSerializer):
     class Meta:
         model = Gif
         fields = [
-            "files",
+            "file",
             "text",
             "colors",
             "source",
@@ -164,6 +100,8 @@ class GifSerializer(serializers.ModelSerializer):
             "age_rating",
             "is_spoiler",
             "emotions",
+            "dimens",
+            "metadata",
             "timestamps",
             "reactions",
             "characters",
@@ -175,9 +113,10 @@ class GifSerializer(serializers.ModelSerializer):
     class JSONAPIMeta:
         included_resources = ["reactions"]
 
-    files = FilesSerializer(source="*")
     colors = ColorsSerializer(source="*")
     source = SourceSerializer(source="*")
+    dimens = DimensSerializer(source="*")
+    metadata = MetadataSerializer(source="*")
     timestamps = TimestampsSerializer(source="*")
 
     reactions = relations.ResourceRelatedField(

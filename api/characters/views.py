@@ -9,8 +9,8 @@ from django_ratelimit.decorators import ratelimit
 
 from utils.decorators import permission_classes
 
-from .models import Character
-from .serializers import CharacterSerializer
+from characters.models import Character
+from characters.serializers import CharacterSerializer
 
 # Create your views here.
 

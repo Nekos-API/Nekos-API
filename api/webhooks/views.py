@@ -6,6 +6,8 @@ from rest_framework_json_api import views
 
 from django_ratelimit.decorators import ratelimit
 
+from nekos_api.permissions import IsUserAuthenticated
+
 from webhooks.models import Webhook
 from webhooks.serializers import WebhookSerializer
 
@@ -13,7 +15,7 @@ from webhooks.serializers import WebhookSerializer
 
 
 class WebhookViewSet(views.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated()]
+    permission_classes = [IsUserAuthenticated()]
     serializer_class = WebhookSerializer
 
     def get_queryset(self):
@@ -34,7 +36,7 @@ class WebhookViewSet(views.ModelViewSet):
 
 
 class WebhookRelationshipsView(views.RelationshipView):
-    permission_classes = [permissions.IsAuthenticated()]
+    permission_classes = [IsUserAuthenticated()]
     serializer_class = WebhookSerializer
 
     def get_queryset(self):

@@ -12,6 +12,8 @@ from django_ratelimit.decorators import ratelimit
 
 from images.models import Image
 
+from nekos_api.permissions import IsUserAuthenticated
+
 from .models import List
 from .serializers import ListSerializer
 
@@ -27,14 +29,14 @@ class ListViewSet(views.ModelViewSet):
         "followers": ["followers"],
     }
 
-    @permission_classes([permissions.IsAuthenticated])
+    @permission_classes([IsUserAuthenticated])
     def create(self, request, *args, **kwargs):
         """
         Create a new list.
         """
         return super().create(request, *args, **kwargs)
 
-    @permission_classes([permissions.IsAuthenticated])
+    @permission_classes([IsUserAuthenticated])
     def update(self, request, *args, **kwargs):
         """
         Updates an existent image.
@@ -53,7 +55,7 @@ class ListViewSet(views.ModelViewSet):
 
         return super().update(request, *args, **kwargs)
 
-    @permission_classes([permissions.IsAuthenticated])
+    @permission_classes([IsUserAuthenticated])
     def delete(self, request, pk):
         """
         Delete an image.
@@ -72,7 +74,7 @@ class ListViewSet(views.ModelViewSet):
 
         return Response(data="", status=204)
 
-    @permission_classes([permissions.IsAuthenticated])
+    @permission_classes([IsUserAuthenticated])
     def follow(self, request, *args, **kwargs):
         """
         Add list to followed lists.
@@ -95,7 +97,7 @@ class ListViewSet(views.ModelViewSet):
 
         return HttpResponse("", status=204)
 
-    @permission_classes([permissions.IsAuthenticated])
+    @permission_classes([IsUserAuthenticated])
     def unfollow(self, request, *args, **kwargs):
         """
         Remove list from followed lists.

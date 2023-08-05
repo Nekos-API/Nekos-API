@@ -8,8 +8,8 @@ from django_ratelimit.decorators import ratelimit
 
 from utils.decorators import permission_classes
 
-from .models import Artist
-from .serializers import ArtistSerializer
+from artists.models import Artist
+from artists.serializers import ArtistSerializer
 
 # Create your views here.
 

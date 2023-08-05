@@ -108,28 +108,6 @@ DJANGORESIZED_DEFAULT_FORCE_FORMAT = "WEBP"
 DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {"WEBP": ".webp"}
 DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False
 
-THUMBNAILS = {
-    "METADATA": {
-        "PREFIX": "thumbs",
-        "BACKEND": "thumbnails.backends.metadata.RedisBackend",
-        "db": 0,
-        "port": int(os.getenv("REDIS_PORT")),
-        "host": os.getenv("REDIS_HOST"),
-        "username": os.getenv("REDIS_USERNAME"),
-        "password": os.getenv("REDIS_PASSWORD"),
-    },
-    "STORAGE": {
-        "BACKEND": "django_bunny.storage.BunnyStorage",
-    },
-    "SIZES": {
-        "consistent": {
-            "PROCESSORS": [
-                {"PATH": "nekos_api.processors.gif_resize", "aspect_ratio": "16/9"}
-            ]
-        }
-    },
-}
-
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 

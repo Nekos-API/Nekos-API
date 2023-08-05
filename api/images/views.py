@@ -23,6 +23,8 @@ from api.models import SharedResourceToken
 
 from utils.decorators import permission_classes
 
+from nekos_api.permissions import IsUserAuthenticated
+
 from .models import Image
 from .serializers import ImageSerializer
 
@@ -279,7 +281,7 @@ class ImagesViewSet(views.ModelViewSet):
 
             return HttpResponseRedirect(image.file.url, status=307)
 
-    @permission_classes([permissions.IsAuthenticated])
+    @permission_classes([IsUserAuthenticated])
     def create(self, request, *args, **kwargs):
         """
         Creates a new unverified image.
@@ -293,7 +295,7 @@ class ImagesViewSet(views.ModelViewSet):
 
         return super().create(request, *args, **kwargs)
 
-    @permission_classes([permissions.IsAuthenticated])
+    @permission_classes([IsUserAuthenticated])
     def update(self, request, *args, **kwargs):
         """
         Updates an existent image.
@@ -312,7 +314,7 @@ class ImagesViewSet(views.ModelViewSet):
 
         return super().update(request, *args, **kwargs)
 
-    @permission_classes([permissions.IsAuthenticated])
+    @permission_classes([IsUserAuthenticated])
     def delete(self, request, pk):
         """
         Delete an image.
@@ -331,7 +333,7 @@ class ImagesViewSet(views.ModelViewSet):
 
         return Response(data="", status=204)
 
-    @permission_classes([permissions.IsAuthenticated, permissions.IsAdminUser])
+    @permission_classes([IsUserAuthenticated, permissions.IsAdminUser])
     def verification_status(self, request, pk):
         """
         Verify an image.
@@ -351,7 +353,7 @@ class ImagesViewSet(views.ModelViewSet):
 
         return Response(ImageSerializer(image, context={"request": request}).data)
 
-    @permission_classes([permissions.IsAuthenticated])
+    @permission_classes([IsUserAuthenticated])
     def report(self, request, pk):
         """
         Report an image.
@@ -424,7 +426,7 @@ class UploadImageFileView(APIView):
     """
 
     parser_classes = [parsers.MultiPartParser]
-    permission_classes = [permissions.IsAuthenticated()]
+    permission_classes = [IsUserAuthenticated()]
 
     def get_object(self) -> Image:
         """

@@ -281,8 +281,8 @@ export const image_schema = {
             mimetype: "String?",
             fileSize: "Integer?",
             hashes: {
-                perceptual: "String?"
-            }
+                perceptual: "String?",
+            },
         },
         timestamps: {
             created: "ISO 8601",
@@ -544,37 +544,18 @@ export const gif_schema = {
     type: "gif",
     id: "UUID",
     attributes: {
-        files: {
-            original: {
-                url: "URL",
-                dimens: {
-                    width: "Integer?",
-                    height: "Integer?",
-                    aspectRatio: "String?",
-                    orientation: "String?",
-                },
-                metadata: {
-                    mimetype: "String?",
-                    size: "Integer?",
-                    frames: "Integer?",
-                    duration: "String?",
-                },
-            },
-            consistent: {
-                url: "URL",
-                dimens: {
-                    width: "Integer?",
-                    height: "Integer",
-                    aspectRatio: "16:9",
-                    orientation: "landscape",
-                },
-                metadata: {
-                    mimetype: "String",
-                    size: "Integer?",
-                    frames: "Integer?",
-                    duration: "String?",
-                },
-            },
+        file: "URL",
+        dimens: {
+            width: "Integer?",
+            height: "Integer",
+            aspectRatio: "16:9",
+            orientation: "landscape",
+        },
+        metadata: {
+            mimetype: "String",
+            size: "Integer?",
+            frames: "Integer?",
+            duration: "String?",
         },
         text: "String?",
         colors: {

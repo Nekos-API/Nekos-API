@@ -3,8 +3,6 @@ import uuid
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 
-from thumbnails.fields import ImageField
-
 from dynamic_filenames import FilePattern
 
 # Create your models here.
@@ -64,9 +62,8 @@ class Gif(models.Model):
         default=uuid.uuid4, null=False, editable=False, primary_key=True
     )
 
-    file = ImageField(
-        upload_to=FilePattern(filename_pattern="gifs/{uuid:base32}{ext}"),
-        pregenerated_sizes=["consistent"],
+    file = models.FileField(
+        upload_to=FilePattern(filename_pattern="gifs/{uuid:base32}{ext}")
     )
 
     age_rating = models.CharField(
@@ -75,7 +72,7 @@ class Gif(models.Model):
         null=True,
         blank=True,
         help_text="The image's sfw-ness.",
-        db_index=True
+        db_index=True,
     )
 
     verification_status = models.CharField(
@@ -85,7 +82,7 @@ class Gif(models.Model):
         null=False,
         blank=False,
         help_text="The image's verification status.",
-        db_index=True
+        db_index=True,
     )
 
     duration = models.FloatField(null=True, blank=True)
@@ -95,7 +92,7 @@ class Gif(models.Model):
         blank=True,
         default=list,
         help_text=f"{', '.join(e[1] for e in Emotion.choices)}",
-        db_index=True
+        db_index=True,
     )
 
     source_name = models.CharField(
@@ -161,9 +158,7 @@ class Gif(models.Model):
 
     is_spoiler = models.BooleanField(default=False)
 
-    reactions = models.ManyToManyField(
-        "gifs.Reaction", related_name="gifs", blank=True
-    )
+    reactions = models.ManyToManyField("gifs.Reaction", related_name="gifs", blank=True)
 
     categories = models.ManyToManyField(
         "categories.Category", related_name="gifs", blank=True
@@ -194,7 +189,7 @@ class Reaction(models.Model):
         max_length=100,
         help_text="Keep it neutral (?). For example, <b>Wave</b> but not <b>Waving</b>.",
         unique=True,
-        db_index=True
+        db_index=True,
     )
 
     is_nsfw = models.BooleanField(
