@@ -83,15 +83,16 @@ export default {
         "link": "https://discord.gg/PgQnuM3YnM"
     },
     banner: {
-        "key": "nekos.land-released",
+        "key": "join-our-discord-server",
         "text": (
-            <Link href="https://nekos.land/" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", gap: ".5rem" }}>
-                ✨ Nekos.Land is now live! Get random images and interact with the API from your browser. ✨
+            <Link href="https://discord.gg/PgQnuM3YnM" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", gap: ".5rem" }}>
+                ✨ Join our Discord community :) Click here to join ✨
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" style={{ height: "1rem", width: "1rem" }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
             </Link>
-        )
+        ),
+        "dismissible": false
     },
     footer: {
         text: () => {
