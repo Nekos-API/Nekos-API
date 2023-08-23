@@ -85,8 +85,8 @@ export default {
     banner: {
         "key": "join-our-discord-server",
         "text": (
-            <Link href="https://discord.gg/PgQnuM3YnM" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", gap: ".5rem" }}>
-                ✨ Join our Discord community :) ✨
+            <Link href="https://nekosauce.org" style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", gap: ".5rem" }}>
+                ✨ We're launching NekoSauce, an anime and manga sauce finder! If you like this project, please consider making a donation ✨
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" style={{ height: "1rem", width: "1rem" }}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
