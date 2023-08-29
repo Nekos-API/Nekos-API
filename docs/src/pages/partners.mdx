@@ -17,7 +17,7 @@ export function PartnerCard({
     isDiscordServer
 }) {
     return (
-        <div className="w-full rounded-lg overflow-hidden bg-white dark:bg-neutral-900 relative border dark:border-0 border-neutral-200 drop-shadow-md">
+        <div className="w-full rounded-lg overflow-hidden bg-white dark:bg-neutral-900 relative border dark:border-0 border-neutral-200 drop-shadow-md flex flex-col">
             {banner ? (
                 <div className="bg-neutral-700 h-32">
                     <img src={banner} className="h-32 w-full object-cover" />
@@ -32,11 +32,11 @@ export function PartnerCard({
                     }}
                 ></div>
             )}
-            <div className="relative p-4">
+            <div className="relative p-4 flex-1 flex flex-col">
                 <div className="bg-neutral-100 dark:bg-neutral-900 -mt-12 rounded-2xl border-[6px] border-neutral-200 dark:border-black overflow-hidden w-fit">
                     <img src={icon} className="h-12 w-12 object-cover" />
                 </div>
-                <div className="my-2">
+                <div className="my-2 flex-1">
                     <div className="font-medium text-xl leading-none text-neutral-900 dark:text-neutral-100">
                         {name}
                     </div>
@@ -172,10 +172,23 @@ export function PartnerCard({
             }
         ]}
     />
-    <div className="h-full w-full flex flex-col items-center justify-center border-[4px] border-dashed border-neutral-200 dark:border-neutral-800 rounded-xl aspect-square">
-        <PlusIcon className="h-8 w-8 stroke-neutral-600 dark:stroke-neutral-400" />
-        <div className="text-neutral-600 dark:text-neutral-400">
-            Your project here
-        </div>
-    </div>
+    <PartnerCard
+        icon="/imgs/partners/nyatastic/logo.png"
+        name="Nyatastic"
+        description="Nyatastic is a multipurpose catgirl bot created by Jhhspace Inc."
+        color="#717EA4"
+        links={[
+            {
+                link: "https://go.nekogirl.net/invite-nyatastic",
+                linkColor: "#DFBDD2",
+                textColor: "black",
+                linkText: "Invite Nyatastic"
+            },
+            {
+                link: "https://go.nekogirl.net/",
+                linkColor: "#5865F2",
+                textColor: "white",
+                linkText: "Visit their Discord server"
+            }
+        ]} />
 </div>
