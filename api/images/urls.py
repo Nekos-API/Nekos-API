@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic.base import RedirectView
 
 from .views import (
     ImagesViewSet,
@@ -59,4 +60,9 @@ urlpatterns = [
         ImageRelationshipsView.as_view(),
         name="image-relationships",
     ),
+    path(
+        "images.json",
+        RedirectView.as_view(url="https://cdn.nekosapi.com/images.json"),
+        name="images-json",
+    )
 ]

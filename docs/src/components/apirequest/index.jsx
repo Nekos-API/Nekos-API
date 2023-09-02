@@ -6,6 +6,7 @@ import styles from './index.module.css';
 
 export function APIRequest({
     method = "GET",
+    baseUrl = "https://api.nekosapi.com/v2",
     endpoint,
     title,
     description = "",
@@ -37,7 +38,7 @@ export function APIRequest({
                 <div className="flex flex-row items-center gap-2 leading-none">
                     <span className="text-sm font-bold text-[hsl(var(--nextra-primary-hue),100%,50%)]">{method}</span>
                     <span className='text-sm text-neutral-700 dark:text-neutral-200 font-mono'>
-                        <span className='text-neutral-400 dark:text-neutral-500 hidden lg:inline-block'>https://api.nekosapi.com/v2</span>
+                        <span className='text-neutral-400 dark:text-neutral-500 hidden lg:inline-block'>{baseUrl}</span>
                         <span className='text-neutral-400 dark:text-neutral-500 inline-block lg:hidden'>/v2</span>
                         <span>{endpoint.split("/").slice(1).map((value, index) => {
                             if (value.startsWith(":") && parameters.filter((value, index) => {

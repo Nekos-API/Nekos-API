@@ -899,3 +899,18 @@ export const image_filters = [
         },
     ]}
 />
+
+## `Images.json`
+
+<APIRequest
+    baseUrl="https://cdn.nekosapi.com"
+    endpoint="/images.json"
+    title="Get all image's metadata"
+    description="Returns a JSON file with metadata for all images in the API. It gets updated daily."
+    responses={[
+        {
+            code: 200,
+            name: "Success",
+            description: "The request was completed successfully.",
+        },
+    ]} />

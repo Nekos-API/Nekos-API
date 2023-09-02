@@ -43,6 +43,7 @@ django-pictures = "^1.1.0"
 django-db-connection-pool = {extras = ["postgresql"], version = "^1.2.3"}
 rich = "^13.4.2"
 imagehash = "^4.3.1"
+orjson = "^3.9.5"
 
 
 [build-system]
