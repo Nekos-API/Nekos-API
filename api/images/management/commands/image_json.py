@@ -35,7 +35,9 @@ class Command(BaseCommand):
                     ).prefetch_related("categories", "characters")
                 ],
                 "meta": {
-                    "count": Image.objects.count(),
+                    "count": Image.objects.filter(
+                        verification_status=Image.VerificationStatus.VERIFIED
+                    ).count(),
                     "updated": datetime.utcnow().isoformat(),
                 },
             }
