@@ -31,7 +31,7 @@ class Command(BaseCommand):
                         "artist": image.artist_id,
                     }
                     for image in Image.objects.filter(
-                        verfication_status=Image.VerificationStatus.VERIFIED
+                        verification_status=Image.VerificationStatus.VERIFIED
                     ).prefetch_related("categories", "characters")
                 ],
                 "meta": {
