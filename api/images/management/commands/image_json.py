@@ -43,6 +43,6 @@ class Command(BaseCommand):
 
         self.stdout.write("Uploading file to CDN...")
 
-        default_storage.save("images.json", io.BytesIO(payload.encode()))
+        default_storage.save("images.json", io.BytesIO(payload))
 
         self.stdout.write("Done! `images.json` has been saved.")
