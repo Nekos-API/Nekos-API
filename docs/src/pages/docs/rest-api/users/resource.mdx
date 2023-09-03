@@ -160,19 +160,14 @@ import {
 ## Upload a new profile avatar
 
 <APIRequest
-    method="POST"
+    method="PUT"
     endpoint="/users/@me/avatar"
     title="Upload a new profile avatar"
     description="Upload a new avatar image for the logged in user. Max 2MB files are allowed in `jpeg`, `png`, `webp`, `jfif`, `avif`, `bmp`."
     headers={[
         {
-            name: "Accept",
-            description: "application/vnd.api+json",
-            required: true,
-        },
-        {
             name: "Content-Type",
-            description: "application/vnd.api+json",
+            description: "multipart/form-data",
             required: true,
         },
         {
@@ -181,17 +176,19 @@ import {
             required: true,
         },
     ]}
-    parameters={[]}
+    parameters={[
+        {
+            name: "file",
+            type: "Image file",
+            required: true,
+            description: "The image file to upload.",
+        }
+    ]}
     responses={[
         {
             code: 204,
             name: "Success",
             description: "The request was completed successfully.",
-        },
-        {
-            code: 400,
-            name: "Unauthorized",
-            description: "You don't have permission to update this file.",
         },
         {
             code: 400,
@@ -202,6 +199,11 @@ import {
             code: 400,
             name: "Invalid file format",
             description: "The image file format is not supported.",
+        },
+        {
+            code: 401,
+            name: "Unauthorized",
+            description: "You don't have permission to update this file.",
         },
     ]}
 />
