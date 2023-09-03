@@ -50,7 +50,7 @@ export default [
     {
         id: "814512313084149804",
         name: "SLIME",
-        contributions: ["Deno library maintainer", "Content Moderator"],
+        contributions: ["Deno library maintainer", "Content Moderator", "Partner"],
     },
     {
         id: "1024451282041311262",
