@@ -28,6 +28,49 @@ const useUser = () => {
     }
 }
 
+const UserButton = () => {
+    const { user, error, isLoading } = useUser()
+
+    if (isLoading) return <div className="m-0.5 h-6 w-6 rounded-full border-2 border-[hsl(var(--nextra-primary-hue),100%,50%)] border-t-transparent animate-spin"></div>
+    if (error || (user && "errors" in user)) {
+        return (
+            <Popup
+                trigger={(
+                    <UserCircleIcon className="h-7 w-7" />
+                )}
+                triggerContainerClassName="flex flex-col items-center justify-center w-7 h-7 cursor-pointer"
+                alignment="bottom-right"
+                popupContainerClassName="pt-3"
+                initialAnim={{
+                    y: -5,
+                    opacity: 0
+                }}
+                animate={{
+                    y: 0,
+                    opacity: 1,
+                    transition: {
+                        duration: .1
+                    }
+                }}
+                exitAnim={{
+                    y: -5,
+                    opacity: 0,
+                    transition: {
+                        duration: .1
+                    }
+                }}
+            >
+                <div className="py-1 border border-neutral-700 rounded-lg bg-neutral-800 drop-shadow whitespace-nowrap flex flex-col">
+                    <Link href={process.env.NEXT_PUBLIC_NEKOS_API_AUTH_URL} className="nx-relative nx-hidden nx-w-full nx-select-none nx-whitespace-nowrap nx-text-gray-600 hover:nx-text-gray-900 dark:nx-text-gray-400 dark:hover:nx-text-gray-100 md:nx-inline-block nx-py-1.5 nx-transition-colors ltr:nx-pl-3 ltr:nx-pr-9 rtl:nx-pr-3 rtl:nx-pl-9">Log in</Link>
+                    <Link href="" className="nx-relative nx-hidden nx-w-full nx-select-none nx-whitespace-nowrap nx-text-gray-600 hover:nx-text-gray-900 dark:nx-text-gray-400 dark:hover:nx-text-gray-100 md:nx-inline-block nx-py-1.5 nx-transition-colors ltr:nx-pl-3 ltr:nx-pr-9 rtl:nx-pr-3 rtl:nx-pl-9">Sign up</Link>
+                </div>
+            </Popup>
+        )
+    }
+
+    return <img src={user.data.attributes.avatarImage} className="rounded-full object-cover h-7 w-7 min-w-7" />
+}
+
 
 export default {
     logo: () => {
@@ -160,47 +203,15 @@ export default {
     },
     navbar: {
         extraContent: () => {
-            const { user, error, isLoading } = useUser()
-
-            if (isLoading) return <div className="ml-2 m-0.5 h-6 w-6 rounded-full border-2 border-[hsl(var(--nextra-primary-hue),100%,50%)] border-t-transparent animate-spin"></div>
-            if (error || (user && "errors" in user)) {
-                return (
-                    <Popup
-                        trigger={(
-                            <UserCircleIcon className="h-7 w-7" />
-                        )}
-                        triggerContainerClassName="ml-1.5 flex flex-col items-center justify-center w-7 h-7 cursor-pointer"
-                        alignment="bottom-right"
-                        popupContainerClassName="pt-3"
-                        initialAnim={{
-                            y: -5,
-                            opacity: 0
-                        }}
-                        animate={{
-                            y: 0,
-                            opacity: 1,
-                            transition: {
-                                duration: .1
-                            }
-                        }}
-                        exitAnim={{
-                            y: -5,
-                            opacity: 0,
-                            transition: {
-                                duration: .1
-                            }
-                        }}
-                    >
-                        <div className="py-1 border border-neutral-700 rounded-lg bg-neutral-800 drop-shadow whitespace-nowrap flex flex-col">
-                            <Link href={process.env.NEXT_PUBLIC_NEKOS_API_AUTH_URL} className="nx-relative nx-hidden nx-w-full nx-select-none nx-whitespace-nowrap nx-text-gray-600 hover:nx-text-gray-900 dark:nx-text-gray-400 dark:hover:nx-text-gray-100 md:nx-inline-block nx-py-1.5 nx-transition-colors ltr:nx-pl-3 ltr:nx-pr-9 rtl:nx-pr-3 rtl:nx-pl-9">Log in</Link>
-                            <Link href="" className="nx-relative nx-hidden nx-w-full nx-select-none nx-whitespace-nowrap nx-text-gray-600 hover:nx-text-gray-900 dark:nx-text-gray-400 dark:hover:nx-text-gray-100 md:nx-inline-block nx-py-1.5 nx-transition-colors ltr:nx-pl-3 ltr:nx-pr-9 rtl:nx-pr-3 rtl:nx-pl-9">Sign up</Link>
-                        </div>
-                    </Popup>
-                )
-            }
-
-            return <div className="ml-1.5 min-w-7">
-                <img src={user.data.attributes.avatarImage} className="rounded-full object-cover h-7 w-7" />
+            return <div className="flex flex-row items-center gap-5 ml-1.5">
+                {/* <Link href="https://nekos.land" target="_blank">
+                    <svg width="648" height="648" viewBox="0 0 648 648" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="h-7 w-7">
+                        <g>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M62.3705 107.926C60.1685 99.1344 68.1344 91.1685 76.9264 93.3705L230.892 131.933C233.354 132.55 235.945 132.361 238.313 131.449C265.065 121.151 294.127 115.507 324.507 115.507C354.745 115.507 383.677 121.099 410.325 131.305C412.688 132.21 415.271 132.396 417.726 131.781L571.087 93.3705C579.879 91.1685 587.845 99.1344 585.643 107.926L547.472 260.329C546.848 262.818 547.048 265.438 547.986 267.827C558.651 294.987 564.507 324.563 564.507 355.507C564.507 488.055 457.055 555.507 324.507 555.507C191.958 555.507 84.5066 488.055 84.5066 355.507C84.5066 325.127 90.1513 296.065 100.449 269.313C101.361 266.945 101.55 264.354 100.933 261.892L62.3705 107.926ZM124.128 159.98C123.394 157.049 126.049 154.394 128.98 155.128L190.943 170.647C193.958 171.402 194.998 175.158 192.8 177.356L146.356 223.8C144.158 225.998 140.402 224.958 139.647 221.943L124.128 159.98ZM520.033 155.128C522.964 154.394 525.619 157.049 524.885 159.98L509.366 221.943C508.611 224.958 504.855 225.998 502.657 223.8L456.214 177.356C454.016 175.158 455.055 171.402 458.07 170.647L520.033 155.128Z" />
+                        </g>
+                    </svg>
+                </Link> */}
+                <UserButton />
             </div>
         }
     },
@@ -223,66 +234,68 @@ export default {
         toggleButton: true,
     },
     toc: {
-        extraContent: () => {
-            return (
-                <>
-                    <Script async={true} src="https://media.ethicalads.io/media/client/ethicalads.min.js" />
-                    <div id="ad-docs-toc-main">
-                        <div className="bordered" data-ea-publisher="nekosapicom" id="ad-docs-toc"></div>
-                    </div>
-                    <Script>{`
-                        const ad_container_main = document.getElementById("ad-docs-toc-main");
-                        const ad_container_alt = document.getElementById("ad-docs-toc-alt");
-                        const ad_element = document.getElementById("ad-docs-toc");
+        backToTop: false,
+        title: "On This UwU Page"
+        // extraContent: () => {
+        //     return (
+        //         <>
+        //             <Script async={true} src="https://media.ethicalads.io/media/client/ethicalads.min.js" />
+        //             <div id="ad-docs-toc-main">
+        //                 <div className="bordered" data-ea-publisher="nekosapicom" id="ad-docs-toc"></div>
+        //             </div>
+        //             <Script>{`
+        //                 const ad_container_main = document.getElementById("ad-docs-toc-main");
+        //                 const ad_container_alt = document.getElementById("ad-docs-toc-alt");
+        //                 const ad_element = document.getElementById("ad-docs-toc");
 
-                        function setAdTheme() {
-                            if (document.documentElement.className.includes("dark")) {
-                                ad_element.classList.add("dark");
-                            } else {
-                                ad_element.classList.remove("dark");
-                            }
-                        };
+        //                 function setAdTheme() {
+        //                     if (document.documentElement.className.includes("dark")) {
+        //                         ad_element.classList.add("dark");
+        //                     } else {
+        //                         ad_element.classList.remove("dark");
+        //                     }
+        //                 };
 
-                        function callback(mutationList, observer) {
-                            mutationList.forEach(function(mutation) {
-                                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                                    setAdTheme();
-                                }
-                            });
-                        };
-                        
-                        const observer = new MutationObserver(callback);
-                        observer.observe(document.documentElement, { attributes: true });
+        //                 function callback(mutationList, observer) {
+        //                     mutationList.forEach(function(mutation) {
+        //                         if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        //                             setAdTheme();
+        //                         }
+        //                     });
+        //                 };
 
-                        window.onresize = () => {
-                            if (window.innerWidth >= 1280 && ad_container_main.childElementCount == 0) {
-                                ad_container_main.appendChild(ad_element);
-                                ad_element.removeAttribute("data-ea-type");
-                                ad_element.querySelectorAll("img")[0].style.display = "block";
-                                ad_element.querySelectorAll(".ea-placement")[0].classList.add("ea-type-image")
-                                ad_element.querySelectorAll(".ea-placement")[0].classList.remove("ea-type-text")
-                            } else if (window.innerWidth < 1280 && ad_container_alt.childElementCount == 0) {
-                                ad_container_alt.appendChild(ad_element);
-                                ad_element.setAttribute("data-ea-type", "text");
-                                ad_element.querySelectorAll("img")[0].style.display = "none";
-                                ad_element.querySelectorAll(".ea-placement")[0].classList.add("ea-type-text")
-                                ad_element.querySelectorAll(".ea-placement")[0].classList.remove("ea-type-image")
-                            }
-                        };
+        //                 const observer = new MutationObserver(callback);
+        //                 observer.observe(document.documentElement, { attributes: true });
 
-                        window.onload = () => {
-                            setAdTheme();
-                            window.onresize();
-                        };
-                        window.onready = () => {
-                            setAdTheme();
-                            window.onresize();
-                        };
-                        setTimeout(window.onresize, 1000);
-                    `}</Script>
-                </>
-            )
-        }
+        //                 window.onresize = () => {
+        //                     if (window.innerWidth >= 1280 && ad_container_main.childElementCount == 0) {
+        //                         ad_container_main.appendChild(ad_element);
+        //                         ad_element.removeAttribute("data-ea-type");
+        //                         ad_element.querySelectorAll("img")[0].style.display = "block";
+        //                         ad_element.querySelectorAll(".ea-placement")[0].classList.add("ea-type-image")
+        //                         ad_element.querySelectorAll(".ea-placement")[0].classList.remove("ea-type-text")
+        //                     } else if (window.innerWidth < 1280 && ad_container_alt.childElementCount == 0) {
+        //                         ad_container_alt.appendChild(ad_element);
+        //                         ad_element.setAttribute("data-ea-type", "text");
+        //                         ad_element.querySelectorAll("img")[0].style.display = "none";
+        //                         ad_element.querySelectorAll(".ea-placement")[0].classList.add("ea-type-text")
+        //                         ad_element.querySelectorAll(".ea-placement")[0].classList.remove("ea-type-image")
+        //                     }
+        //                 };
+
+        //                 window.onload = () => {
+        //                     setAdTheme();
+        //                     window.onresize();
+        //                 };
+        //                 window.onready = () => {
+        //                     setAdTheme();
+        //                     window.onresize();
+        //                 };
+        //                 setTimeout(window.onresize, 1000);
+        //             `}</Script>
+        //         </>
+        //     )
+        // }
     },
     main: (children) => {
         return (
