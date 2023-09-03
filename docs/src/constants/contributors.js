@@ -8,6 +8,9 @@ export default [
             "Documentation writer",
             "Discord moderator",
             "Content moderator",
+            "Nekos.Land developer",
+            "Nekos.Land ES translator",
+            "NekoSauce developer"
         ],
     },
     {
