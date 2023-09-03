@@ -57,4 +57,9 @@ export default [
         name: "Celeste Mysterios",
         contributions: ["Content moderator", "Nekos.Land bug finder"],
     },
+    {
+        id: "898569996949676052",
+        name: "jhh",
+        contributions: ["Security issue report", "Partner"],
+    },
 ];
