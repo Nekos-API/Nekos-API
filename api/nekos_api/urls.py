@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 
+admin.site.login_template = "sso/redirect_to_login.html"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("api.urls")),

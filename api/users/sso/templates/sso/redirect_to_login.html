@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <title>Redirecting...</title>
+    </head>
+    <body>
+        Your session has expired. You're being redirected to the login page...
+        <script>
+            window.onload = () => {
+                self.location.href = "https://sso.nekosapi.com/login?next={{ request.GET.next|urlencode }}"
+            }
+        </script>
+    </body>
+</html>
