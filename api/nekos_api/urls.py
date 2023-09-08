@@ -18,6 +18,8 @@ from django.urls import path, include
 from django.conf import settings
 
 admin.site.login_template = "sso/redirect_to_login.html"
+admin.site.index_title = "Nekos API Administration"
+admin.site.site_url = "https://nekosapi.com/"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
