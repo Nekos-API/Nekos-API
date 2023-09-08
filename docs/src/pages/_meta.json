@@ -34,9 +34,6 @@
             "pagination": false
         }
     },
-    "guides": {
-        "display": "hidden"
-    },
     "donate": {
         "display": "hidden",
         "theme": {
