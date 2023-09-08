@@ -1,0 +1,82 @@
+import Link from "next/link";
+
+# Donate
+
+Hi! Thank you for considering making a donation :) . Currently, Nekos API is struggling to keep up with the costs of hosting and maintaining the API, so all help is appreciated.
+
+## Why are the server costs so high?
+
+The Nekos API project consists of three main sites: [Nekos API](https://nekosapi.com/), [Nekos.Land](https://nekos.land), and [NekoSauce](https://nekosauce.org). Nekos API is where you're right now; Nekos.Land is a tiny Nekos API web client; and NekoSauce is an anime art sauce finder, like SauceNAO or IQDB.
+
+This are all the costs of running this project:
+- Nekos API server: `3.95€/month`
+- Nekos API CDN: `0.64$/month` (storage) + up to `0.9$/month` (bandwidth)
+- Nekos API domain: `10.37$/year`
+- Nekos.Land domain: `30.00$/year` (probably won't be renewed next year because of it's high price)
+- NekoSauce server: `6.35€/month`
+- NekoSauce CDN: `0.22$/month` (storage) + unknown cost for bandwidth
+- NekoSauce domain: `13.00$/year`
+
+That makes a bit more than 12.06 USD per month. Thanks to the xꝏ awesome **Catadev** and **Vexuas** we can cover `10.88$` per month (PayPal + Patreon take fees so what we have is a bit less). Also, special thanks to **Tech1k (Beyondtoshi)** who made an initial donation of 25$ which is still being used to pay for the CDNs.
+
+## What makes each part important
+
+First of all, Nekos API's server. Nekos API is running on an 8gb RAM, 35gb CEPH storage, 2 vCores, and 1 TB network traffic VPS located at Frankfurt am Main, Germany. The server allows Nekos API to handle requests without delays even at the busiest times of the day, together with PostgreSQL and Redis.
+
+Images are served from Nekos API's CDN, which has a few servers distributed around the world and is powered by [Cloudflare](https://cloudflare.com) and [BunnyCDN](https://bunny.net). Together with Cloudflare's caching, Nekos API is able to serve images from the CDN all around the world in just a few milliseconds while reducing the CDN costs caused by the high traffic.
+
+Nekos.Land isn't 100% finished yet, it's still lacking some features but almost all core features are implemented (at least in the [beta version](https://beta.nekos.land)). Basically, it allows you to use the API from a client. Features like liking and saving images, following artists, or updating your profile/account settings are already available and released.
+
+NekoSauce is a relatively new project that was started because of the lack of metadata that Nekos API is serving. Almost no images have got categorized, the database has almost no artists nor characters, etc. NekoSauce will fix this issue because of the metadata that it provides for each sauce. Also, it returns the same standard keys for each sauce no matter what source they were taken from, so it's API is much easier to use than the current popular tools like [SauceNAO](https://saucenao.com) or [IQDB](https://iqdb.org).
+
+NekoSauce is running in a 12gb RAM, 50gb CEPH storage, 8 vCores, and 1 TB network traffic VPS located in Frankfurt am Main, Germany. Why does it need so much more resources than Nekos API? Because even when it's not responding to any requests, it's still making lots of calculations in the background, fetching new sources, creating hashes, etc. NekoSauce will not only be great as a standalone project, but will also provide lots of metadata to Nekos API, which is missing at the moment. NekoSauce is not open-sourced right now since it's not finished yet, but will be as soon as it is released and will be distributed with the MIT License.
+
+Each of these projects fullfills a purpose. Nekos API is the core of the API, Nekos.Land is a client, and NekoSauce is a metadata provider.
+
+## Perks
+
+Currently there isn't much that we can give you as a thank you since the idea of the project is to provide a 100% free service for everyone to use, share, and learn. By donating, you'll get beta access to NekoSauce and it's API for a month (you can do a recurring monthly donation if you want to continue having access to the beta version). Basically, your donation helps us cover the costs of running the API while giving you back as much as we can through NekoSauce.
+
+You'll also be added to our [contributors shoutout](/docs#contributors) section at the beginning of Nekos API's documentation, together with donator-only updates in our Discord server.
+
+## Where to donate?
+
+Nekos API is slowly running out of resources to keep the project alive. If you enjoy this project, use it for one of your apps, or would just like to contribute to it, you can make a donation. We'll be eternally grateful!
+
+<div className="mt-8 flex flex-row items-center gap-4 flex-wrap">
+    <Link
+        href="https://ko-fi.com/nekidev"
+        className="hover:opacity-80 transition"
+        target="_blank"
+    >
+        <img
+            src="https://storage.ko-fi.com/cdn/kofi5.png?v=3"
+            alt="Buy Me a Coffee at ko-fi.com"
+            style={{ height: "36px" }}
+        />
+    </Link>
+    <Link
+        href="https://patreon.com/nekidev"
+        className="hover:opacity-80 transition"
+        target="_blank"
+    >
+        <img
+            src="https://c5.patreon.com/external/logo/become_a_patron_button.png"
+            alt="Donate at Patreon.com"
+            style={{ height: "36px", borderRadius: "18px" }}
+        />
+    </Link>
+    <Link
+        href="https://www.buymeacoffee.com/nekidev"
+        className="hover:opacity-80 transition"
+        target="_blank"
+    >
+        <img
+            src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+            alt="Buy Me A Coffee"
+            style={{ height: "36px", borderRadius: "18px" }}
+        />
+    </Link>
+</div>
+
+All donations, no matter how big or small, are greatly appreciated! They really make the difference, and allow Nekos API to grow and be improved every day. Once again, thank you for your support!

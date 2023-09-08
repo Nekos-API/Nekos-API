@@ -21,6 +21,11 @@
         "href": "/about",
         "newWindow": false
     },
+    "donate": {
+        "title": "Donate",
+        "href": "/donate",
+        "newWindow": false
+    },
     "changelog": "Changelog",
     "other-projects": "Other Projects"
 }
