@@ -34,3 +34,4 @@ https://nekosapi.com/docs/terms-of-use
 https://nekosapi.com/docs/changelog
 https://nekosapi.com/about
 https://nekosapi.com/partners
+https://nekosapi.com/donate
