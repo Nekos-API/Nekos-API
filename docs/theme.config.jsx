@@ -265,76 +265,8 @@ export default {
         toggleButton: true,
     },
     toc: {
-        backToTop: false,
+        backToTop: true,
         title: "On This UwU Page"
-        // extraContent: () => {
-        //     return (
-        //         <>
-        //             <Script async={true} src="https://media.ethicalads.io/media/client/ethicalads.min.js" />
-        //             <div id="ad-docs-toc-main">
-        //                 <div className="bordered" data-ea-publisher="nekosapicom" id="ad-docs-toc"></div>
-        //             </div>
-        //             <Script>{`
-        //                 const ad_container_main = document.getElementById("ad-docs-toc-main");
-        //                 const ad_container_alt = document.getElementById("ad-docs-toc-alt");
-        //                 const ad_element = document.getElementById("ad-docs-toc");
-
-        //                 function setAdTheme() {
-        //                     if (document.documentElement.className.includes("dark")) {
-        //                         ad_element.classList.add("dark");
-        //                     } else {
-        //                         ad_element.classList.remove("dark");
-        //                     }
-        //                 };
-
-        //                 function callback(mutationList, observer) {
-        //                     mutationList.forEach(function(mutation) {
-        //                         if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-        //                             setAdTheme();
-        //                         }
-        //                     });
-        //                 };
-
-        //                 const observer = new MutationObserver(callback);
-        //                 observer.observe(document.documentElement, { attributes: true });
-
-        //                 window.onresize = () => {
-        //                     if (window.innerWidth >= 1280 && ad_container_main.childElementCount == 0) {
-        //                         ad_container_main.appendChild(ad_element);
-        //                         ad_element.removeAttribute("data-ea-type");
-        //                         ad_element.querySelectorAll("img")[0].style.display = "block";
-        //                         ad_element.querySelectorAll(".ea-placement")[0].classList.add("ea-type-image")
-        //                         ad_element.querySelectorAll(".ea-placement")[0].classList.remove("ea-type-text")
-        //                     } else if (window.innerWidth < 1280 && ad_container_alt.childElementCount == 0) {
-        //                         ad_container_alt.appendChild(ad_element);
-        //                         ad_element.setAttribute("data-ea-type", "text");
-        //                         ad_element.querySelectorAll("img")[0].style.display = "none";
-        //                         ad_element.querySelectorAll(".ea-placement")[0].classList.add("ea-type-text")
-        //                         ad_element.querySelectorAll(".ea-placement")[0].classList.remove("ea-type-image")
-        //                     }
-        //                 };
-
-        //                 window.onload = () => {
-        //                     setAdTheme();
-        //                     window.onresize();
-        //                 };
-        //                 window.onready = () => {
-        //                     setAdTheme();
-        //                     window.onresize();
-        //                 };
-        //                 setTimeout(window.onresize, 1000);
-        //             `}</Script>
-        //         </>
-        //     )
-        // }
-    },
-    main: (children) => {
-        return (
-            <>
-                {children.children}
-                <div id="ad-docs-toc-alt"></div>
-            </>
-        )
     },
     defaultShowCopyCode: true,
     nextThemes: {
@@ -444,5 +376,8 @@ export default {
                 </div>
             </div>
         )
+    },
+    editLink: {
+        text: "Edit this page on GitHub →"
     }
 }

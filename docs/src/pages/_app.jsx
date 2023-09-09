@@ -41,13 +41,13 @@ export default function NekosAPI({ Component, pageProps }) {
                 }
             >
                 <div className='flex flex-row items-center justify-between gap-x-8 gap-y-2 flex-wrap'>
-                    <Link href="https://nyeki.dev/">Nyeki.py</Link>
-                    <Link href="https://nekos.land/">Nekos.Land</Link>
-                    <Link href="https://nekosauce.org/">NekoSauce</Link>
-                    <Link href="https://github.com/Nekos-API/Nekos-API">GitHub</Link>
-                    <Link href="https://status.nekosapi.com/">Status</Link>
-                    <Link href="https://discord.gg/PgQnuM3YnM">Discord</Link>
-                    <Link href="/donate">Donate</Link>
+                    <Link className="hover:text-neutral-800 dark:hover:text-neutral-200" href="https://nyeki.dev/">Nyeki.py</Link>
+                    <Link className="hover:text-neutral-800 dark:hover:text-neutral-200" href="https://nekos.land/">Nekos.Land</Link>
+                    <Link className="hover:text-neutral-800 dark:hover:text-neutral-200" href="https://nekosauce.org/">NekoSauce</Link>
+                    <Link className="hover:text-neutral-800 dark:hover:text-neutral-200" href="https://github.com/Nekos-API/Nekos-API">GitHub</Link>
+                    <Link className="hover:text-neutral-800 dark:hover:text-neutral-200" href="https://status.nekosapi.com/">Status</Link>
+                    <Link className="hover:text-neutral-800 dark:hover:text-neutral-200" href="https://discord.gg/PgQnuM3YnM">Discord</Link>
+                    <Link className="hover:text-neutral-800 dark:hover:text-neutral-200" href="/donate">Donate</Link>
                 </div>
                 <div className='flex flex-row items-center gap-2 justify-between sm:justify-start'>
                     <span className="hidden sm:inline-block">Thanks to:</span>
