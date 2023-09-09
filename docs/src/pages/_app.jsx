@@ -49,8 +49,8 @@ export default function NekosAPI({ Component, pageProps }) {
                     <Link href="https://discord.gg/PgQnuM3YnM">Discord</Link>
                     <Link href="/donate">Donate</Link>
                 </div>
-                <div className='flex flex-row items-center gap-2'>
-                    Thanks to:
+                <div className='flex flex-row items-center gap-2 justify-between sm:justify-start'>
+                    <span className="hidden sm:inline-block">Thanks to:</span>
                     {contributors.map((contributor) => (
                         <Contributor
                             key={contributor.id}
