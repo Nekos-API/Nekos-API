@@ -1,6 +1,6 @@
-![Nekos API Banner](https://nekosapi.com/branding/banner.png)
-
 # Nekos API
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/G2G6I3GT1)
 
 Nekos API is an open-source, free and public anime images RESTful API (soon bringing GraphQL and WebSockets for webhooks) with more than 13k images and counting.
 
