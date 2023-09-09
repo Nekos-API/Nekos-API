@@ -64,8 +64,4 @@ As you may see, in this case the server does not depend on the client to send a 
 
 ## Why WebSockets
 
-Why does the API have 2 different protocols? Wouldn't it be easier for everyone to have just one protocol?
-
-The API is not intended to be beginner-friendly nor something "easy to use". The API tries to be as complete as possible, and we've reached a point where HTTP is no longer a good option. WebSockets are currently (kind of) a mirror for HTTP WebHooks. This is because WebHooks are only an option if you have a server or an IP exposed to the internet. This means that anything that is not a web server is left apart of realtime notifications.
-
-WebSockets bring a solution to this problem. You no longer need to open ports in your machine, set up any port forwarding, or buy/pay for a server. You can just connect to the API and subscribe to what you need to. This way mobile apps, desktop apps, and pretty much anything that has a WebSocket library can receive instant notifications from the API. That's why Nekos API's WebSocket API was created.
+Mainly, the WebSockets API was added to send realtime notifications and events to both the client and the server. This way you can get realtime notifications, events, messages, and anything instantly. The API also supports webhooks, but they're still a work in progress and not yet available.
