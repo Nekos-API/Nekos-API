@@ -32,7 +32,7 @@ const Contributor = ({ username, image, url }) => {
 
 export default function NekosAPI({ Component, pageProps }) {
     return (
-        <div className={asap.className + " overflow-x-hidden"}>
+        <div className={asap.className + " "}>
             <Component {...pageProps} />
             <hr className="dark:border-neutral-800" />
             <div
@@ -40,7 +40,7 @@ export default function NekosAPI({ Component, pageProps }) {
                     'mx-auto flex flex-col-reverse lg:flex-row w-full max-w-[90rem] lg:items-center justify-between py-2 text-gray-600 dark:text-gray-400 pl-[max(env(safe-area-inset-left),1.5rem)] pr-[max(env(safe-area-inset-right),1.5rem)] bg-gray-100 dark:bg-neutral-900 print:bg-transparent text-sm gap-8'
                 }
             >
-                <div className='flex flex-row items-center gap-x-8 gap-y-2 flex-wrap'>
+                <div className='flex flex-row items-center justify-between gap-x-8 gap-y-2 flex-wrap'>
                     <Link href="https://nyeki.dev/">Nyeki.py</Link>
                     <Link href="https://nekos.land/">Nekos.Land</Link>
                     <Link href="https://nekosauce.org/">NekoSauce</Link>
