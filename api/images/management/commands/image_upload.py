@@ -3,9 +3,14 @@ import os
 from django.core.files import File
 from django.core.management.base import BaseCommand, CommandError
 
+from PIL import ImageFile
+
 from images.models import Image
 from users.models import User
 from artists.models import Artist
+
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 class Command(BaseCommand):
