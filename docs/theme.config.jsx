@@ -1,15 +1,12 @@
 import React from "react"
 import { useRouter } from "next/router"
 import { useConfig } from "nextra-theme-docs"
-import { UserCircleIcon } from "@heroicons/react/24/outline"
+import { UserCircleIcon, ChevronDownIcon } from "@heroicons/react/24/outline"
 import useSWR from "swr"
 import CatIcon from "./src/components/icons/Cat";
-
 import Link from "next/link"
-import Script from "next/script"
 
 import Popup from "./src/components/popup"
-import contributors from "./src/constants/contributors"
 
 const userFetcher = (url) => fetch(`${process.env.NEXT_PUBLIC_API_BASE}${url}`, {
     credentials: "include",
@@ -72,16 +69,75 @@ const UserButton = () => {
 }
 
 
+function VersionOption({ label, stable = false, href }) {
+    return (
+        <Link href={href} className="rounded hover:bg-neutral-800 transition flex flex-row items-center gap-1 pr-1 leading-none text-sm font-mono">
+            {stable ? (
+                <div className="bg-blue-400/20 text-blue-400 rounded aspect-square h-4 w-4 text-center">
+                    S
+                </div>
+            ) : (
+                <div className="bg-yellow-400/20 text-yellow-400 rounded aspect-square h-4 w-4 text-center">
+                    D
+                </div>
+            )}
+            <span>{label}</span>
+        </Link>
+    )
+}
+
+
 export default {
     logo: () => {
         return (
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "1rem" }}>
-                <img src="/branding/logo/logo.png" alt="Logo" width={32} height={32} />
-                <span>Nekos API</span>
-                <div className="hidden md:block font-mono p-1 rounded border dark:border-neutral-700 dark:bg-neutral-800 border-neutral-200 bg-neutral-100 text-sm leading-none h-fit">{process.env.NEXT_PUBLIC_NEKOS_API_VERSION}</div>
+            <div className="flex items-center gap-4">
+                <Link className="flex flex-row items-center gap-4 hover:opacity-75" href="/">
+                    <img src="/branding/logo/logo.png" alt="Logo" width={32} height={32} />
+                    <span>Nekos API</span>
+                </Link>
+                <Popup
+                    trigger={(
+                        <button className="hidden md:flex flex-row items-center rounded transition hover:bg-neutral-900 border border-neutral-700">
+                            <div className="flex flex-row items-center gap-1 font-mono p-1 rounded border dark:border-neutral-700 dark:bg-neutral-800 border-neutral-200 bg-neutral-100 text-sm leading-none h-fit -my-px -ml-px">
+                                {process.env.NEXT_PUBLIC_NEKOS_API_VERSION}
+                            </div>
+                            <ChevronDownIcon className="h-6 w-6 p-1.5 -my-px" />
+                        </button>
+                    )}
+                    alignment="bottom-left"
+                    popupContainerClassName="pt-2"
+                    initialAnim={{
+                        y: -5,
+                        opacity: 0,
+                        transition: {
+                            duration: .1
+                        }
+                    }}
+                    animate={{
+                        y: 0,
+                        opacity: 1,
+                        transition: {
+                            duration: .1
+                        }
+                    }}
+                    exitAnim={{
+                        y: -5,
+                        opacity: 0,
+                        transition: {
+                            duration: .1
+                        }
+                    }}
+                >
+                    <div className="bg-neutral-900 border border-neutral-800 rounded p-1 flex flex-col gap-1">
+                        <VersionOption label={process.env.NEXT_PUBLIC_NEKOS_API_VERSION} href="" stable />
+                        <VersionOption label="v1.6.0" href="https://v1.nekosapi.com" />
+                        <VersionOption label="v0.3.0" href="https://v0.nekosapi.com" />
+                    </div>
+                </Popup>
             </div>
         )
     },
+    logoLink: false,
     project: {
         link: 'https://github.com/Nekos-API/Nekos-API',
     },
