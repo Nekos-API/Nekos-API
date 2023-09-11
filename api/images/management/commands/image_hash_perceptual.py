@@ -32,7 +32,15 @@ class Command(BaseCommand):
             )
 
             f = io.BytesIO(requests.get(image.file.url).content)
-            img = PIL.Image.open(f)
+            try:
+                img = PIL.Image.open(f)
+            except:
+                self.stdout.write(
+                    self.style.ERROR("ERROR")
+                    + f" - {image.id} - {image.height}x{image.width} - ({j}/{total_images})",
+                    ending="\r",
+                )
+                continue
 
             self.stdout.write(
                 self.style.WARNING("LOADING: PERCEPTUAL")
