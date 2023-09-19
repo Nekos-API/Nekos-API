@@ -4,7 +4,7 @@
 
 Nekos API is an open-source anime art API. It has CORS enabled and doesn't require authorization for it's main feaures.
 
-[Documentation](https://nekosapi.com/docs) • [Nekos.Land](https://nekos.land) • [Discord](https://discord.gg/w48Sk9X9UE)
+[Documentation](https://nekosapi.com/docs) • [Nekos.Land](https://nekos.land) • [Discord](https://discord.gg/w48Sk9X9UE) • [Donate](https://ko-fi.com/Nekidev)
 
 ## Features
 
