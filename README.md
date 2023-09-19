@@ -28,5 +28,6 @@ There are a few projects using Nekos API:
 
 1. [Nekos.Land](https://nekos.land): A web client for Nekos API, developed by the Nekos API team.
 2. [Nyatastic](https://go.nekogirl.net/invite-nyatastic): A multipurpose anime Discord bot.
+3. [Waifu List](https://github.com/Oreki-Dev/Waifu-List): An (almost) infinite gallery of anime art.
 
 *Psst! You can make a PR to add your project to this list :)*
