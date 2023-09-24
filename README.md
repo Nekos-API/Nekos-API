@@ -1,54 +1,33 @@
 # Nekos API
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/G2G6I3GT1)
+Nekos API is an open-source anime art API. It has CORS enabled and doesn't require authorization for it's main feaures.
 
-Nekos API is an open-source, free and public anime images RESTful API (soon bringing GraphQL and WebSockets for webhooks) with more than 13k images and counting.
+[Documentation](https://nekosapi.com/docs) • [Nekos.Land](https://nekos.land) • [Discord](https://discord.gg/w48Sk9X9UE) • [Donate](https://ko-fi.com/Nekidev)
 
-## Why Nekos API
+## Features
 
-There are many other APIs that serve anime images and even GIFs, but there are lots of reasons why you would prefer Nekos API over other similar projects:
+Nekos API has lots of cool features:
 
-- 100% free forever. You don't need to pay a cent to use the whole API and get thousands of images!
-- Open source. The code you see here is exactly what it's running on our server. There is not a single modification (ignoring .env files obviously).
-- Thousands of images. At the time of writing we are already serving +13400 images! We try to add even more regularly, so you probably won't find the same image twice (unless you store its ID).
-- Advanced API. Probably the most advanced anime images API out there. This may make it difficult to use for beginners, but once you learn how to use it you'll understand why we say this. Included resources, relationships, and embeddable API endpoints are just some of the features that only Nekos API provides.
-- Frequent updates. We bring updates almost weekly, so you'll never find out that what you need is not provided by the API.
-- 24/7 support on [our Discord server](https://discord.gg/PgQnuM3YnM). You'll find someone who wants to help you in our Discord server no matter how dumb or silly you think that your question is!
-- Officially supported API wrappers. Do you want something advanced, easy, and fast? Our official API wrappers will help you seamlessly integrate the API in your project!
+- **Advanced**: Nekos API is probably the most advanced anime art API out there.
+- **Thousands and thousands of art**: At the time of writing this, Nekos API has almost 40,000 images in it's database.
+- **Continuous development**: Nekos API is constantly releasing new updates, so you'll never run out of features to try out (XD?)
+- **Officially supported wrappers**: There are officially supported wrappers for Python, JS/TS, and Deno.
+- **Documentation**: The API is almost 100% documented (non-documented features are still not stable)
 
-## Documentation
+## Development
 
-The documentation can be found at [our website](https://nekosapi.com/docs/).
+Despite the fact that Nekos API is open source, it is not developed thinking on ease of set up. You can check the code to find all the env variables required, but you'll also need knowledge on Python with Django and PostgreSQL to be able to make it work correctly.
 
-## Development setup
+You'll also need a [Bunny](https://bunny.net) account and a storage + CDN to be able to host files.
 
-First, clone the repository:
+I'll eventually dockerize the project, but ATM it's not and it's not the easiest project to set up locally.
 
-```
-git clone https://github.com/Nekos-API/Nekos-API
-cd Nekos-API
-```
+## Projects using Nekos API
 
-Next, run this script in the root folder of the project. You'll need to have [Python 3](https://python.org), [Poetry](https://python-poetry.org), [Node.js](https://nodejs.org) and [pNPM](https://pnpm.io) installed to run it.
+There are a few projects using Nekos API:
 
-```
-cd api
-poetry shell
-poetry install
-deactivate
+1. [Nekos.Land](https://nekos.land): A web client for Nekos API, developed by the Nekos API team.
+2. [Nyatastic](https://go.nekogirl.net/invite-nyatastic): A multipurpose anime Discord bot.
+3. [Waifu List](https://github.com/Oreki-Dev/Waifu-List): An (almost) infinite gallery of anime art.
 
-cd ../docs
-pnpm install
-
-cd ../images-admin
-pnpm install
-
-cd ../website
-pnpm install
-
-cd ../
-```
-
-Now, you need to set up the environment variables for each subproject: `api`, `docs`, `images-admin`, and `website`. You don't need to set up those you won't use.
-
-Each folder has a documented `.env.example` file that you can use as a template. Check each folder's README and `.env.example` file for more information.
+*Psst! You can make a PR to add your project to this list :)*
