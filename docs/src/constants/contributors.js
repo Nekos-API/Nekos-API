@@ -10,7 +10,7 @@ export default [
             "Content moderator",
             "Nekos.Land developer",
             "Nekos.Land ES translator",
-            "NekoSauce developer"
+            "NekoSauce developer",
         ],
     },
     {
@@ -50,7 +50,11 @@ export default [
     {
         id: "814512313084149804",
         name: "SLIME",
-        contributions: ["Deno library maintainer", "Content Moderator", "Partner"],
+        contributions: [
+            "Deno library maintainer",
+            "Content Moderator",
+            "Partner",
+        ],
     },
     {
         id: "1024451282041311262",
@@ -60,6 +64,6 @@ export default [
     {
         id: "898569996949676052",
         name: "jhh",
-        contributions: ["Security issue report", "Partner"],
+        contributions: ["Security issue report", "Partner", "Donator"],
     },
 ];
