@@ -14,8 +14,8 @@ export default [
         ],
     },
     {
-        id: "420583786053369868",
-        name: "Beyondtoshi",
+        id: "741593236916666399",
+        name: "Tech1k",
         contributions: ["Donator"],
     },
     {
