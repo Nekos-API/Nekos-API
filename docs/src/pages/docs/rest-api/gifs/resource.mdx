@@ -23,9 +23,9 @@ import {
 
 # GIF Resource
 
-<Callout type="warning">
-    GIFs is still a beta feature. It may break and things might not work as
-    expected. If you find a bug, please report it in our Discord server.
+<Callout type="error">
+    GIFs serving has been paused until we finish verifying all images. If you
+    want to help us verifying images, please join our Discord server.
 </Callout>
 
 export const gif_filters = [
@@ -434,7 +434,8 @@ export const gif_filters = [
         {
             name: "token",
             type: "String",
-            description: "An up to 50 characters long URL safe string that identifies that specific random query. Every request with the same token will return the same response for 1 month."
+            description:
+                "An up to 50 characters long URL safe string that identifies that specific random query. Every request with the same token will return the same response for 1 month.",
         },
         ...gif_filters,
     ]}
@@ -467,7 +468,8 @@ export const gif_filters = [
         {
             name: "token",
             type: "String",
-            description: "An up to 50 characters long URL safe string that identifies that specific random query. Every request with the same token will return the same response for 1 month."
+            description:
+                "An up to 50 characters long URL safe string that identifies that specific random query. Every request with the same token will return the same response for 1 month.",
         },
     ]}
     parameters={[...gif_filters]}
