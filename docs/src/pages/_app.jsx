@@ -60,8 +60,8 @@ export default function NekosAPI({ Component, pageProps }) {
                         <Contributor
                             key={contributor.id}
                             username={contributor.name}
-                            image={`https://nekosapi.com/api/discord/avatar?user_id=${contributor.id}`}
-                            url={`https://discord.com/users/${contributor.id}`}
+                            image={contributor.id ? `https://nekosapi.com/api/discord/avatar?user_id=${contributor.id}` : contributor.imageUrl}
+                            url={contributor.link ? contributor.link : `https://discord.com/users/${contributor.id}`}
                         />
                     ))}
                 </div>

@@ -66,4 +66,12 @@ export default [
         name: "jhh",
         contributions: ["Security issue report", "Partner", "Donator"],
     },
+    {
+        imageUrl: "https://avatars.githubusercontent.com/u/54375789?v=4",
+        name: "Vanesca",
+        contributions: [
+            "Donator"
+        ],
+        link: "https://github.com/vanesca88"
+    }
 ];

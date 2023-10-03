@@ -29,11 +29,11 @@ We always welcome any kind of contributions! You can always fork our [GitHub rep
 
 The following users have contributed to the development of Nekos API:
 
-export const Contributor = ({ discordId, name, contributions }) => {
+export const Contributor = ({ discordId, name, contributions, link, imageUrl }) => {
     return (
-        <Link className="h-10 w-10 relative flex flex-col items-center" href={`https://discord.com/users/${discordId}`} target="_blank">
+        <Link className="h-10 w-10 relative flex flex-col items-center" href={link ? link : `https://discord.com/users/${discordId}`} target="_blank">
             <img
-                src={`/api/discord/avatar?user_id=${discordId}`}
+                src={imageUrl ? imageUrl : `/api/discord/avatar?user_id=${discordId}`}
                 className="h-10 w-10 rounded-full object-cover peer transition-all hover:scale-110"
             />
             <div className="absolute bottom-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 drop-shadow-md rounded mx-auto whitespace-nowrap flex flex-col items-center py-2 px-4 transition-all opacity-0 mb-0 peer-hover:opacity-100 peer-hover:mb-2 text-neutral-900 dark:text-[#f1f5f9] pointer-events-none after:absolute after:-bottom-1 after:left-0 after:right-0 after:mx-auto after:w-2 after:h-2 after:rotate-45 after:rounded-sm after:bg-white after:dark:bg-neutral-900 after:border after:border-neutral-200 after:dark:border-neutral-800 after:!border-t-transparent after:!border-l-transparent">
@@ -52,7 +52,9 @@ export const Contributor = ({ discordId, name, contributions }) => {
             discordId={value.id}
             name={value.name}
             contributions={value.contributions}
-            key={index} />
+            key={index}
+            link={value.link}
+            imageUrl={value.imageUrl} />
     })}
     <div className="text-sm text-[hsl(var(--nextra-primary-hue),100%,50%)] h-10 flex flex-col items-center justify-center">
         &plus; All our users
