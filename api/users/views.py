@@ -80,7 +80,7 @@ def validate_recaptcha(request) -> bool:
         + urllib.parse.urlencode(
             {
                 "response": request.POST.get("g-recaptcha-response"),
-                "secret": os.getenv("RECAPTCHA_SECRET_KEY"),
+                "secret": os.getenv("BACKEND_RECAPTCHA_SECRET_KEY"),
                 "remoteip": get_client_ip(request),
             }
         )

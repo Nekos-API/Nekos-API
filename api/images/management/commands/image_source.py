@@ -42,7 +42,7 @@ class Command(BaseCommand):
                         "output_type": 2,
                         "testmode": 1,
                         "numres": 16,
-                        "api_key": os.getenv("SAUCENAO_TOKEN"),
+                        "api_key": os.getenv("BACKEND_SAUCENAO_TOKEN"),
                     },
                     files=dict(file=f.content),
                 )

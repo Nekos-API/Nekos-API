@@ -42,10 +42,10 @@ def validate_next(url) -> bool:
     parsed_url = urlparse(url)
 
     if (
-        parsed_url.netloc.split(":")[0] != os.getenv("BASE_DOMAIN")
+        parsed_url.netloc.split(":")[0] != os.getenv("BACKEND_BASE_DOMAIN")
         and parsed_url.netloc != ""
         and not parsed_url.netloc.split(":")[0].endswith(
-            "." + os.getenv("BASE_DOMAIN", "nekosapi.com")
+            "." + os.getenv("BACKEND_BASE_DOMAIN", "nekosapi.com")
         )
     ):
         return False
@@ -74,7 +74,7 @@ def validate_recaptcha(request) -> bool:
         + urllib.parse.urlencode(
             {
                 "response": request.POST.get("g-recaptcha-response"),
-                "secret": os.getenv("RECAPTCHA_SECRET_KEY"),
+                "secret": os.getenv("BACKEND_RECAPTCHA_SECRET_KEY"),
                 "remoteip": get_client_ip(request),
             }
         )
@@ -115,7 +115,7 @@ def create_username(username) -> str:
 
 
 def get_next(session):
-    return session["next"] if "next" in session else "//" + os.getenv("BASE_DOMAIN", "nekosapi.com")
+    return session["next"] if "next" in session else "//" + os.getenv("BACKEND_BASE_DOMAIN", "nekosapi.com")
 
 
 @method_decorator(csrf_protect, name="post")
@@ -130,13 +130,13 @@ class LoginView(View):
             )
         elif not request.GET.get("next"):
             return HttpResponseRedirect(
-                "/login?next=//" + os.getenv("BASE_DOMAIN", "nekosapi.com")
+                "/login?next=//" + os.getenv("BACKEND_BASE_DOMAIN", "nekosapi.com")
             )
 
         return render(
             request,
             "sso/login.html",
-            context={"RECAPTCHA_SITE_KEY": os.getenv("RECAPTCHA_SITE_KEY")},
+            context={"RECAPTCHA_SITE_KEY": os.getenv("BACKEND_RECAPTCHA_SITE_KEY")},
         )
 
     def post(self, request):
@@ -191,9 +191,9 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
 
         if provider == "discord":
             authorization_base_url = "https://discord.com/api/oauth2/authorize"
-            scope = os.getenv("DISCORD_AUTH_SCOPE", "").split(" ")
-            redirect_uri = os.getenv("DISCORD_AUTH_REDIRECT_URI")
-            client_id = os.getenv("DISCORD_CLIENT_ID")
+            scope = os.getenv("BACKEND_DISCORD_AUTH_SCOPE", "").split(" ")
+            redirect_uri = os.getenv("BACKEND_DISCORD_AUTH_REDIRECT_URI")
+            client_id = os.getenv("BACKEND_DISCORD_CLIENT_ID")
 
             discord = OAuth2Session(client_id, scope=scope, redirect_uri=redirect_uri)
 
@@ -208,9 +208,9 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
 
         elif provider == "google":
             authorization_base_url = "https://accounts.google.com/o/oauth2/v2/auth"
-            scope = os.getenv("GOOGLE_AUTH_SCOPE", "").split(" ")
-            redirect_uri = os.getenv("GOOGLE_AUTH_REDIRECT_URI")
-            client_id = os.getenv("GOOGLE_CLIENT_ID")
+            scope = os.getenv("BACKEND_GOOGLE_AUTH_SCOPE", "").split(" ")
+            redirect_uri = os.getenv("BACKEND_GOOGLE_AUTH_REDIRECT_URI")
+            client_id = os.getenv("BACKEND_GOOGLE_CLIENT_ID")
 
             google = OAuth2Session(client_id, scope=scope, redirect_uri=redirect_uri)
 
@@ -225,8 +225,8 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
 
         elif provider == "github":
             authorization_base_url = "https://github.com/login/oauth/authorize"
-            client_id = os.getenv("GITHUB_CLIENT_ID")
-            scope = os.getenv("GITHUB_AUTH_SCOPE")
+            client_id = os.getenv("BACKEND_GITHUB_CLIENT_ID")
+            scope = os.getenv("BACKEND_GITHUB_AUTH_SCOPE")
 
             github = OAuth2Session(client_id, scope=scope)
 
@@ -261,10 +261,10 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
         # Get the access and refresh tokens
 
         token_url = "https://discord.com/api/v10/oauth2/token"
-        scope = os.getenv("DISCORD_AUTH_SCOPE", "").split(" ")
-        redirect_uri = os.getenv("DISCORD_AUTH_REDIRECT_URI")
-        client_id = os.getenv("DISCORD_CLIENT_ID")
-        client_secret = os.getenv("DISCORD_CLIENT_SECRET")
+        scope = os.getenv("BACKEND_DISCORD_AUTH_SCOPE", "").split(" ")
+        redirect_uri = os.getenv("BACKEND_DISCORD_AUTH_REDIRECT_URI")
+        client_id = os.getenv("BACKEND_DISCORD_CLIENT_ID")
+        client_secret = os.getenv("BACKEND_DISCORD_CLIENT_SECRET")
         state = request.session["discord_state"]
 
         # Create the client.
@@ -359,10 +359,10 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             )
 
         token_url = "https://www.googleapis.com/oauth2/v4/token"
-        scope = os.getenv("GOOGLE_AUTH_SCOPE", "").split(" ")
-        redirect_uri = os.getenv("GOOGLE_AUTH_REDIRECT_URI")
-        client_id = os.getenv("GOOGLE_CLIENT_ID")
-        client_secret = os.getenv("GOOGLE_CLIENT_SECRET")
+        scope = os.getenv("BACKEND_GOOGLE_AUTH_SCOPE", "").split(" ")
+        redirect_uri = os.getenv("BACKEND_GOOGLE_AUTH_REDIRECT_URI")
+        client_id = os.getenv("BACKEND_GOOGLE_CLIENT_ID")
+        client_secret = os.getenv("BACKEND_GOOGLE_CLIENT_SECRET")
         state = request.session["google_state"]
 
         # Create the client.
@@ -450,8 +450,8 @@ class ExternalAuthAPIViewSet(viewsets.ViewSet):
             )
 
         token_url = "https://github.com/login/oauth/access_token"
-        client_id = os.getenv("GITHUB_CLIENT_ID")
-        client_secret = os.getenv("GITHUB_CLIENT_SECRET")
+        client_id = os.getenv("BACKEND_GITHUB_CLIENT_ID")
+        client_secret = os.getenv("BACKEND_GITHUB_CLIENT_SECRET")
         state = request.session["github_state"]
 
         github = OAuth2Session(client_id, state=state)

@@ -12,10 +12,13 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write("Exporting database backup...")
 
-        subprocess.call(f"PGPASSWORD=\"{getsecret('DATABASE_PASSWORD')}\" pg_dump -U \"{os.getenv('DATABASE_USER')}\" -h {os.getenv('DATABASE_HOST')} -d \"{os.getenv('DATABASE_NAME')}\" -f nekosapi_dump.sql", shell=True)
-        
+        subprocess.call(
+            f"PGPASSWORD=\"{getsecret('DATABASE_PASSWORD')}\" pg_dump -U \"{os.getenv('DATABASE_USER')}\" -h {os.getenv('DATABASE_HOST')} -d \"{os.getenv('DATABASE_NAME')}\" -f nekosapi_dump.sql",
+            shell=True,
+        )
+
         self.stdout.write("Uploading backup to bunny...")
-        
+
         storage = BunnyStorage(
             username=os.getenv("BACKEND_BUNNY_PRIVATE_USERNAME"),
             password=os.getenv("BACKEND_BUNNY_PRIVATE_PASSWORD"),

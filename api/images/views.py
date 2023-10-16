@@ -408,7 +408,7 @@ class ImagesViewSet(views.ModelViewSet):
             }
 
         r = requests.post(
-            os.getenv("DISCORD_IMAGE_REPORT_WEBHOOK_URL"),
+            os.getenv("BACKEND_DISCORD_IMAGE_REPORT_WEBHOOK_URL"),
             json={
                 "content": f"There is an issue with this image in Nekos.Land:\n```json\n{report_body}\n```"
                 + (f"\nReason:\n> {reason.strip()}" if reason else ""),

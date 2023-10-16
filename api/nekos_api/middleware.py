@@ -32,10 +32,10 @@ class CorsMiddleware(object):
             if "Origin" in request.headers
             and (
                 parse.urlparse(request.headers["Origin"]).netloc.split(":")[0]
-                == os.getenv("BASE_DOMAIN")
+                == os.getenv("BACKEND_BASE_DOMAIN")
                 or parse.urlparse(request.headers["Origin"])
                 .netloc.split(":")[0]
-                .endswith("." + os.getenv("BASE_DOMAIN", "nekosapi.com"))
+                .endswith("." + os.getenv("BACKEND_BASE_DOMAIN", "nekosapi.com"))
             )
             else "*"
         )
@@ -46,10 +46,10 @@ class CorsMiddleware(object):
             if "Origin" in request.headers
             and (
                 parse.urlparse(request.headers["Origin"]).netloc.split(":")[0]
-                == os.getenv("BASE_DOMAIN")
+                == os.getenv("BACKEND_BASE_DOMAIN")
                 or parse.urlparse(request.headers["Origin"])
                 .netloc.split(":")[0]
-                .endswith("." + os.getenv("BASE_DOMAIN", "nekosapi.com"))
+                .endswith("." + os.getenv("BACKEND_BASE_DOMAIN", "nekosapi.com"))
             )
             else "false"
         )
@@ -79,7 +79,9 @@ class WebSocketHostMiddleware:
     def __call__(self, scope, *args, **kwargs):
         host = [h[1] for h in scope["headers"] if h[0] == b"host"][0]
 
-        if not (host.decode().split(":")[0] == "api." + os.getenv("BASE_DOMAIN")):
+        if not (
+            host.decode().split(":")[0] == "api." + os.getenv("BACKEND_BASE_DOMAIN")
+        ):
             raise Exception()
 
         return self.inner(scope, *args, **kwargs)
