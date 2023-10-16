@@ -5,10 +5,10 @@ services:
     build:
       context: ./api
       args:
-        BUNNY_USERNAME: ${BACKEND_BUNNY_USERNAME}
-        BUNNY_PASSWORD: ${BACKEND_BUNNY_PASSWORD}
-        BUNNY_REGION: ${BACKEND_BUNNY_REGION}
-        BUNNY_HOSTNAME: ${BACKEND_BUNNY_HOSTNAME}
+        BACKEND_BUNNY_USERNAME: ${BACKEND_BUNNY_USERNAME}
+        BACKEND_BUNNY_PASSWORD: ${BACKEND_BUNNY_PASSWORD}
+        BACKEND_BUNNY_ZONE: ${BACKEND_BUNNY_ZONE}
+        BACKEND_BUNNY_HOSTNAME: ${BACKEND_BUNNY_HOSTNAME}
     command: "/app/.venv/bin/python manage.py migrate && /app/.venv/bin/python /app/.venv/bin/gunicorn -b 0.0.0.0:8000 --workers 4 -k uvicorn.workers.UvicornWorker nekos_api.asgi:application"
     depends_on:
       - database
