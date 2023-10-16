@@ -1,0 +1,13 @@
+{
+    "errors": [
+      {
+        "status": "429",
+        "code": "rate_limit_exceeded",
+        "title": "Nyaa~! You've been nyam-nyammed by the Rate-Limiting Monster!",
+        "detail": "Oopsie-woopsie! It seems you've been owoverwhelmed by the sheer adowable demand for nyans! Our little nyantastic system can only handle so many cuddly requests per second. Please wait a while before unleashing your next nyan spree~",
+        "meta": {
+          "retryAfter": 600
+        }
+      }
+    ]
+  }
