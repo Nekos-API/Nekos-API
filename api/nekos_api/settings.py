@@ -187,7 +187,7 @@ EMAIL_HOST_PASSWORD = ""
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.backends.postgresql",
+        "ENGINE": "django.db.backends.postgresql",
         "NAME": os.getenv("DATABASE_NAME", "nekosapi"),
         "USER": os.getenv("DATABASE_USER", "nekosapi"),
         "PASSWORD": os.getenv("DATABASE_PASSWORD", "nekosapi"),
