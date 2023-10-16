@@ -211,11 +211,29 @@ STATIC_ROOT = "static/"
 
 MEDIA_URL = "https://cdn.nekosapi.com/"
 
+BUNNY_USERNAME = os.getenv("BACKEND_BUNNY_USERNAME")
+BUNNY_PASSWORD = os.getenv("BACKEND_BUNNY_PASSWORD")
+BUNNY_REGION = os.getenv("BACKEND_BUNNY_ZONE")
+# BUNNY_HOSTNAME = os.getenv("BACKEND_BUNNY_HOSTNAME")
+
 STORAGES = {
-    "default": {"BACKEND": "django_bunny.storage.BunnyStorage"},
+    "default": {
+        "BACKEND": "django_bunny.storage.BunnyStorage",
+        "OPTIONS": {
+            "username": BUNNY_USERNAME,
+            "password": BUNNY_PASSWORD,
+            "region": BUNNY_REGION,
+        },
+    },
     "staticfiles": {
         "BACKEND": "django_bunny.storage.BunnyStorage",
-        "OPTIONS": {"base_dir": "static/", "hostname": STATIC_URL},
+        "OPTIONS": {
+            "base_dir": "static/",
+            "hostname": STATIC_URL,
+            "username": BUNNY_USERNAME,
+            "password": BUNNY_PASSWORD,
+            "region": BUNNY_REGION,
+        },
     },
 }
 
