@@ -491,13 +491,13 @@ django-colorfield = ">=0.8.0,<1.0.0"
 
 [[package]]
 name = "django-bunny"
-version = "1.1.4"
+version = "1.1.6"
 description = "A django storage for bunny.net"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "django_bunny-1.1.4-py3-none-any.whl", hash = "sha256:eb36e97802d09e70ec6b5a506d7837a3ab7220525a303fbfbf65a2ff3d77b9fb"},
-    {file = "django_bunny-1.1.4.tar.gz", hash = "sha256:e6d45ae3a437433910ec37fb8690c891823b92fa9197de83cc8f2f81d6894fab"},
+    {file = "django_bunny-1.1.6-py3-none-any.whl", hash = "sha256:ccfd02286b7726284a94ee5991dfd116e040af703c5f578cad6be519a7e6b43b"},
+    {file = "django_bunny-1.1.6.tar.gz", hash = "sha256:753b29a8f56ab7cf985487a84e23047443fb450d241e7f11615ec963d83fd84a"},
 ]
 
 [package.dependencies]
