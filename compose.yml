@@ -61,6 +61,8 @@ services:
     secrets:
       - NGINX_CERT_CERTIFICATE
       - NGINX_CERT_PRIVATE_KEY
+    networks:
+      - bridge
     ports:
       - "[${NGINX_IP}]:443:443"
     restart: always
@@ -76,3 +78,6 @@ secrets:
 volumes:
   database:
   static:
+networks:
+  bridge:
+    external: true
