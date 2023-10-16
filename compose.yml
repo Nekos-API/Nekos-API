@@ -62,7 +62,7 @@ services:
       - NGINX_CERT_CERTIFICATE
       - NGINX_CERT_PRIVATE_KEY
     ports:
-      - "443:443"
+      - "[${NGINX_IP}]:443:443"
     restart: always
 secrets:
   BACKEND_SECRET_KEY:
