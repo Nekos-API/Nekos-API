@@ -21,6 +21,8 @@ import dotenv
 
 dotenv.load_dotenv()
 
+from nekos_api.utils import getsecret
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,10 +31,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = getsecret("BACKEND_SECRET_KEY", env_fallback=True)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "false").lower() == "true"
+DEBUG = os.getenv("BACKEND_DEBUG", "false").lower() == "true"
 
 
 # Application definition
@@ -98,7 +100,7 @@ DEFAULT_HOST = "admin" if not DEBUG else "api"
 
 SITE_ID = 1
 
-SESSION_COOKIE_DOMAIN = os.getenv("BASE_DOMAIN")
+SESSION_COOKIE_DOMAIN = os.getenv("BACKEND_BASE_DOMAIN")
 
 DJANGORESIZED_DEFAULT_SIZE = None
 DJANGORESIZED_DEFAULT_SCALE = None
@@ -185,13 +187,12 @@ EMAIL_HOST_PASSWORD = ""
 
 DATABASES = {
     "default": {
-        "ENGINE": "dj_db_conn_pool.backends.postgresql",
-        "NAME": os.getenv("PGDATABASE"),
-        "USER": os.getenv("PGUSER"),
-        "PASSWORD": os.getenv("PGPASSWORD"),
-        "HOST": os.getenv("PGHOST"),
+        "ENGINE": "django.backends.postgresql",
+        "NAME": os.getenv("DATABASE_NAME", "nekosapi"),
+        "USER": os.getenv("DATABASE_USER", "nekosapi"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD", "nekosapi"),
+        "HOST": os.getenv("DATABASE_HOST", "database"),
         "PORT": "5432",
-        "POOL_OPTIONS": {"POOL_SIZE": 5, "MAX_OVERFLOW": 10, "RECYCLE": 12 * 60 * 60},
     }
 }
 
@@ -310,37 +311,37 @@ USE_I18N = True
 USE_TZ = True
 
 
-BUNNY_USERNAME = os.getenv("BUNNY_USERNAME")
-BUNNY_PASSWORD = os.getenv("BUNNY_PASSWORD")
-BUNNY_REGION = os.getenv("BUNNY_ZONE")
-# BUNNY_HOSTNAME = os.getenv("BUNNY_HOSTNAME")
+BUNNY_USERNAME = os.getenv("BACKEND_BUNNY_USERNAME")
+BUNNY_PASSWORD = os.getenv("BACKEND_BUNNY_PASSWORD")
+BUNNY_REGION = os.getenv("BACKEND_BUNNY_ZONE")
+# BUNNY_HOSTNAME = os.getenv("BACKEND_BUNNY_HOSTNAME")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 API_VERSION = "2.5.0"
 
 
-PROTECTED_API_TOKEN = os.getenv("PROTECTED_API_TOKEN")
+PROTECTED_API_TOKEN = os.getenv("BACKEND_PROTECTED_API_TOKEN")
 
 
 if DEBUG:
-    LOGIN_URL = f"http://sso.{os.getenv('BASE_DOMAIN')}:8000/login"
+    LOGIN_URL = f"http://sso.{os.getenv('BACKEND_BASE_DOMAIN')}:8000/login"
 
     ALLOWED_HOSTS = [
         "localhost",
         "127.0.0.1",
-        f"api.{os.getenv('BASE_DOMAIN')}",
-        f"sso.{os.getenv('BASE_DOMAIN')}",
-        os.getenv("BASE_DOMAIN"),
+        f"api.{os.getenv('BACKEND_BASE_DOMAIN')}",
+        f"sso.{os.getenv('BACKEND_BASE_DOMAIN')}",
+        os.getenv("BACKEND_BASE_DOMAIN"),
     ]
 
 else:
-    LOGIN_URL = f"https://sso.{os.getenv('BASE_DOMAIN')}/login"
+    LOGIN_URL = f"https://sso.{os.getenv('BACKEND_BASE_DOMAIN')}/login"
 
     ALLOWED_HOSTS = [
-        f"api.{os.getenv('BASE_DOMAIN')}",
-        f"sso.{os.getenv('BASE_DOMAIN')}",
-        f"admin.{os.getenv('BASE_DOMAIN')}",
+        f"api.{os.getenv('BACKEND_BASE_DOMAIN')}",
+        f"sso.{os.getenv('BACKEND_BASE_DOMAIN')}",
+        f"admin.{os.getenv('BACKEND_BASE_DOMAIN')}",
     ]
 
     LOGGING = {
@@ -358,7 +359,7 @@ else:
         "loggers": {
             "django": {
                 "handlers": ["console"],
-                "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+                "level": os.getenv("BACKEND_DJANGO_LOG_LEVEL", "INFO"),
                 "propagate": False,
             }
         },
