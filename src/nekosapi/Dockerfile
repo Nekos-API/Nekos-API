@@ -1,9 +1,9 @@
-FROM python:3.12.0-alpine3.18
+FROM python:3.11-bookworm
 
 COPY . /app
 WORKDIR /app
 
-RUN apt update && apt install -y libpq-dev
+RUN apt update && apt install -y gcc libpq-dev
 
 RUN pip install poetry
 RUN poetry export --without-hashes --format=requirements.txt --output=requirements.txt

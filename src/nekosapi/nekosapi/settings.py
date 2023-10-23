@@ -12,13 +12,14 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
+import string
+import secrets
+
 import dotenv
 
 dotenv.load_dotenv()
 
 import os
-
-from nekosapi import utils
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +29,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = utils.getsecret("API_SECRET_KEY")
+SECRET_KEY = os.getenv(
+    "API_SECRET_KEY",
+    "".join([secrets.choice(string.ascii_letters + string.digits) for _ in range(50)]),
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("API_DEBUG", "false").lower() == "true"
@@ -90,7 +94,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.getenv("DATABASE_NAME", "nekosapi"),
         "USER": os.getenv("DATABASE_USER", "nekosapi"),
-        "PASSWORD": utils.getsecret("DATABASE_PASS", env_fallback=DEBUG),
+        "PASSWORD": os.getenv("DATABASE_PASS", "nekosapi"),
         "HOST": os.getenv("DATABASE_HOST", "database"),
         "PORT": os.getenv("DATABASE_PORT", "5432"),
     }
@@ -107,7 +111,7 @@ STORAGES = {
 }
 
 BUNNY_USERNAME = os.getenv("BUNNY_USERNAME", "nekosapi")
-BUNNY_PASSWORD = utils.getsecret("BUNNY_PASSWORD", env_fallback=DEBUG)
+BUNNY_PASSWORD = os.getenv("BUNNY_PASSWORD", "nekosapi")
 BUNNY_REGION = os.getenv("BUNNY_REGION", "la")
 BUNNY_HOSTNAME = os.getenv("BUNNY_HOSTNAME", "https://b-cdn.net")
 
@@ -147,7 +151,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "https://cdn.nekosapi.com/static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

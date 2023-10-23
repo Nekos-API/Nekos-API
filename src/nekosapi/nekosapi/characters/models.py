@@ -44,3 +44,6 @@ class Character(models.Model):
         null=True,
         help_text="An image that illustrates the character. Something like what you'd see as the image for a character in MAL or AniList.",
     )
+    
+    def __str__(self) -> str:
+        return self.name

@@ -45,7 +45,7 @@ class ImageAdmin(admin.ModelAdmin):
         "hash_md5",
         "hash_perceptual",
     )
-    filter_horizontal = ("tags",)
+    autocomplete_fields = ("tags", "characters")
     raw_id_fields = ("artist",)
 
 

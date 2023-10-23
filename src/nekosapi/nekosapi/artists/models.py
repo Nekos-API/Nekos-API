@@ -16,3 +16,6 @@ class Artist(models.Model):
     policy_repost = models.BooleanField(null=True)
     policy_credit = models.BooleanField(default=True)
     policy_ai = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return self.name

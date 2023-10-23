@@ -1,0 +1,31 @@
+version: "3.8"
+name: "nekosapi"
+services:
+  nekosapi:
+    build: ./src/nekosapi
+    env_file:
+      - .env
+    command: "/bin/sh -c '/app/run.sh'"
+    depends_on:
+      - database
+    restart: always
+  database:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME:-nekosapi}
+      - POSTGRES_USER=${DATABASE_USER:-nekosapi}
+      - POSTGRES_PASSWORD=${DATABASE_PASS:-nekosapi}
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    restart: always
+  nginx:
+    image: nginx:latest
+    ports:
+      - "${NGINX_PORT:-80}:80"
+    volumes:
+      - ./src/nekosapi/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - nekosapi
+    restart: always
+volumes:
+  postgres:
