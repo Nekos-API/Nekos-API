@@ -13,11 +13,11 @@ class Command(BaseCommand):
         parser.add_argument("api_token", type=str)
 
     def handle(self, api_token, *args, **options):
-        i = Image.objects.order_by("-id").first().id
+        i = getattr(Image.objects.order_by("-id").first(), "id", 0)
 
         while True:
             r = requests.get(
-                f"https://v2.nekosapi.com/v2/images?order=created_at&page[offset]={i * 25}",
+                f"https://v2.nekosapi.com/v2/images?order=created_at&page[offset]={i}",
                 headers={"Authorization": f"Bearer {api_token}"},
             )
             data = r.json()["data"]
@@ -39,4 +39,4 @@ class Command(BaseCommand):
                 self.stdout.write(f"Image {image.id} imported")
                 del image
 
-            i += 1
+                i += 1
