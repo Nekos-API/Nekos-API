@@ -104,7 +104,7 @@ class Image(models.Model):
 
     rating = models.CharField(choices=Rating.choices, max_length=12, null=True)
 
-    hash_md5 = models.CharField(max_length=32, null=True)
+    hash_md5 = models.CharField(max_length=32, null=True, unique=True)
     hash_perceptual = models.CharField(max_length=32, null=True)
 
     color_dominant = ArrayField(
