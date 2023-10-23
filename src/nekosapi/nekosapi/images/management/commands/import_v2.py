@@ -13,17 +13,17 @@ class Command(BaseCommand):
         parser.add_argument("api_token", type=str)
 
     def handle(self, api_token, *args, **options):
-        i = 0
+        i = Image.objects.order_by("-id").first().id
 
         while True:
             r = requests.get(
-                f"https://v2.nekosapi.com/v2/images?page[offset]={i * 25}",
+                f"https://v2.nekosapi.com/v2/images?order=created_at,page[offset]={i * 25}",
                 headers={"Authorization": f"Bearer {api_token}"},
             )
             data = r.json()["data"]
 
             for image in data:
-                image = Image.objects.create(
+                image = Image(
                     image=File(requests.get(image["attributes"]["file"]).content),
                     source=image["attributes"]["source"]["url"],
                     verification=Image.Verification.UNVERIFIED
@@ -35,6 +35,7 @@ class Command(BaseCommand):
                     if image["attributes"]["ageRating"] == "sfw"
                     else image["attributes"]["ageRating"],
                 )
+                image.save()
                 self.stdout.write(f"Image {image.id} imported")
                 del image
 
