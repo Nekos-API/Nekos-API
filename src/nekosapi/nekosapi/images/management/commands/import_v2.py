@@ -1,5 +1,6 @@
-from django.core.management.base import BaseCommand
+from django.db.utils import IntegrityError
 from django.core.files.base import ContentFile
+from django.core.management.base import BaseCommand
 
 import requests
 
@@ -35,8 +36,12 @@ class Command(BaseCommand):
                     else image["attributes"]["ageRating"],
                 )
                 im.image.save("image.webp", ContentFile(requests.get(image["attributes"]["file"]).content), save=True)
-                im.process()
-                self.stdout.write(f"Image {im.id} imported")
+                try:
+                    im.process()
+                    self.stdout.write(f"Image {im.id} imported")
+                except IntegrityError:
+                    im.delete()
+
                 del im
 
                 i += 1
