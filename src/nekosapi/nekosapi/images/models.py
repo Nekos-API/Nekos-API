@@ -141,41 +141,33 @@ class Image(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._image = self.image
+    def process(self):
+        file = self.image
+        image = PIL.Image.open(file)
 
-    def save(self, *args, **kwargs):
-        if self.image != self._image:
-            file = self.image
-            image = PIL.Image.open(file)
+        self.image = _to_webp(image)
+        self.sample = _make_sample(image, (360, None))
 
-            self.image = _to_webp(image)
-            self.sample = _make_sample(image, (360, None))
+        self.image_size = self.image.size
+        self.sample_size = self.sample.size
+        self.image_width = image.size[0]
+        self.image_height = image.size[1]
+        self.sample_width = self.sample.width
+        self.sample_height = self.sample.height
 
-            self.image_size = self.image.size
-            self.sample_size = self.sample.size
-            self.image_width = image.size[0]
-            self.image_height = image.size[1]
-            self.sample_width = self.sample.width
-            self.sample_height = self.sample.height
+        thief = ColorThief(file)
+        self.color_dominant = list(thief.get_color(quality=1))
+        self.color_palette = [
+            list(color) for color in thief.get_palette(color_count=10, quality=1)
+        ]
 
-            thief = ColorThief(file)
-            self.color_dominant = list(thief.get_color(quality=1))
-            self.color_palette = [
-                list(color) for color in thief.get_palette(color_count=10, quality=1)
-            ]
+        self.hash_md5 = hashlib.md5(file.read()).hexdigest()
+        self.hash_perceptual = str(imagehash.phash(image))
 
-            self.hash_md5 = hashlib.md5(file.read()).hexdigest()
-            self.hash_perceptual = str(imagehash.phash(image))
+        self.is_animated = image.is_animated
+        self.duration = image.n_frames if image.is_animated else None
 
-            self.is_animated = image.is_animated
-            self.duration = image.n_frames if image.is_animated else None
-
-            # Save the new image to allow the model to be saved again
-            self._image = self.image
-
-        super().save(*args, **kwargs)
+        self.save()
 
 
 class Tag(models.Model):
