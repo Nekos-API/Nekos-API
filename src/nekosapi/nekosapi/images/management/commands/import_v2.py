@@ -25,6 +25,8 @@ class Command(BaseCommand):
 
             for image in data:
                 im = Image.objects.create(
+                    id_v2=image["id"],
+                    image_v2=image["attributes"]["file"],
                     source=image["attributes"]["source"]["url"],
                     verification=Image.Verification.UNVERIFIED
                     if image["attributes"]["verificationStatus"] == "not_reviewed"
@@ -35,12 +37,6 @@ class Command(BaseCommand):
                     if image["attributes"]["ageRating"] == "sfw"
                     else image["attributes"]["ageRating"],
                 )
-                im.image.save("image.webp", ContentFile(requests.get(image["attributes"]["file"]).content), save=True)
-                im.save()
-                # try:
-                #     im.process()
-                # except IntegrityError:
-                #     im.delete()
 
                 self.stdout.write(f"Image {im.id} imported")
                 del im

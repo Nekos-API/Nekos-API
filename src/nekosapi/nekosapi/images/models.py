@@ -77,6 +77,9 @@ class Image(models.Model):
         BORDERLINE = "borderline", "Borderline"
         EXPLICIT = "explicit", "Explicit"
 
+    id_v2 = models.UUIDField(_("ID v2"), null=True)
+    image_v2 = models.URLField(_("Image URL v2"), null=True)
+
     image = models.ImageField(
         upload_to=FilePattern(filename_pattern="images/original/{uuid}{ext}"),
         null=True,
@@ -144,7 +147,7 @@ class Image(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def process(self):
-        file = BytesIO(requests.get(self.image.url).content)
+        file = BytesIO(requests.get(self.image_v2).content)
         image = PIL.Image.open(file)
 
         self.image = _to_webp(image)
