@@ -13,7 +13,7 @@ class Command(BaseCommand):
         parser.add_argument("api_token", type=str)
 
     def handle(self, api_token, *args, **options):
-        i = Image.objects.order_by("-id").first().id
+        i = getattr(Image.objects.order_by("-id").first(), "id", 0)
 
         while True:
             r = requests.get(
