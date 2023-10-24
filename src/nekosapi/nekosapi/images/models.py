@@ -77,8 +77,8 @@ class Image(models.Model):
         BORDERLINE = "borderline", "Borderline"
         EXPLICIT = "explicit", "Explicit"
 
-    id_v2 = models.UUIDField(_("ID v2"), null=True)
-    image_v2 = models.URLField(_("Image URL v2"), null=True)
+    id_v2 = models.UUIDField("ID v2", null=True)
+    image_v2 = models.URLField("Image URL v2", null=True)
 
     image = models.ImageField(
         upload_to=FilePattern(filename_pattern="images/original/{uuid}{ext}"),
