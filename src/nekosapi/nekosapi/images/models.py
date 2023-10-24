@@ -144,7 +144,7 @@ class Image(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def process(self):
-        file = requests.get(self.image.url, stream=True).raw
+        file = BytesIO(requests.get(self.image.url).content)
         image = PIL.Image.open(file)
 
         self.image = _to_webp(image)
@@ -157,12 +157,14 @@ class Image(models.Model):
         self.sample_width = self.sample.width
         self.sample_height = self.sample.height
 
+        file.seek(0)
         thief = ColorThief(file)
         self.color_dominant = list(thief.get_color(quality=1))
         self.color_palette = [
             list(color) for color in thief.get_palette(color_count=10, quality=1)
         ]
 
+        file.seek(0)
         self.hash_md5 = hashlib.md5(file.read()).hexdigest()
         self.hash_perceptual = str(imagehash.phash(image))
 
