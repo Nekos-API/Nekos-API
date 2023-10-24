@@ -38,10 +38,10 @@ class Command(BaseCommand):
                 im.image.save("image.webp", ContentFile(requests.get(image["attributes"]["file"]).content), save=True)
                 # try:
                 #     im.process()
-                #     self.stdout.write(f"Image {im.id} imported")
                 # except IntegrityError:
                 #     im.delete()
 
+                self.stdout.write(f"Image {im.id} imported")
                 del im
 
                 i += 1
