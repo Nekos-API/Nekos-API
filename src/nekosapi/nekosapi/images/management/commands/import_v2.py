@@ -36,6 +36,7 @@ class Command(BaseCommand):
                     else image["attributes"]["ageRating"],
                 )
                 im.image.save("image.webp", ContentFile(requests.get(image["attributes"]["file"]).content), save=True)
+                im.save()
                 # try:
                 #     im.process()
                 # except IntegrityError:
