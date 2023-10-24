@@ -36,11 +36,11 @@ class Command(BaseCommand):
                     else image["attributes"]["ageRating"],
                 )
                 im.image.save("image.webp", ContentFile(requests.get(image["attributes"]["file"]).content), save=True)
-                try:
-                    im.process()
-                    self.stdout.write(f"Image {im.id} imported")
-                except IntegrityError:
-                    im.delete()
+                # try:
+                #     im.process()
+                #     self.stdout.write(f"Image {im.id} imported")
+                # except IntegrityError:
+                #     im.delete()
 
                 del im
 
