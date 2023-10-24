@@ -14,6 +14,8 @@ import imagehash
 
 import PIL.Image
 
+import requests
+
 
 def _make_sample(im: PIL.Image, size: tuple) -> ImageFile:
     """Generate a sample/thumbnail image.
@@ -142,7 +144,7 @@ class Image(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def process(self):
-        file = self.image
+        file = requests.get(self.image.url).content
         image = PIL.Image.open(file)
 
         self.image = _to_webp(image)
