@@ -144,7 +144,7 @@ class Image(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def process(self):
-        file = requests.get(self.image.url).content
+        file = requests.get(self.image.url, stream=True).raw
         image = PIL.Image.open(file)
 
         self.image = _to_webp(image)
