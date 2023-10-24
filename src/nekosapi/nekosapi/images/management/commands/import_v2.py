@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from django.core.files import File
+from django.core.files.base import ContentFile
 
 import requests
 
@@ -34,7 +34,7 @@ class Command(BaseCommand):
                     if image["attributes"]["ageRating"] == "sfw"
                     else image["attributes"]["ageRating"],
                 )
-                im.image.save("image.webp", File(requests.get(image["attributes"]["file"]).content), save=False)
+                im.image.save("image.webp", ContentFile(requests.get(image["attributes"]["file"]).content), save=False)
                 im.process()
                 self.stdout.write(f"Image {im.id} imported")
                 del im
