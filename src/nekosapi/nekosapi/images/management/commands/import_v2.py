@@ -23,7 +23,7 @@ class Command(BaseCommand):
             data = r.json()["data"]
 
             for image in data:
-                image = Image.objects.create(
+                im = Image.objects.create(
                     source=image["attributes"]["source"]["url"],
                     verification=Image.Verification.UNVERIFIED
                     if image["attributes"]["verificationStatus"] == "not_reviewed"
@@ -34,9 +34,9 @@ class Command(BaseCommand):
                     if image["attributes"]["ageRating"] == "sfw"
                     else image["attributes"]["ageRating"],
                 )
-                image.image.save("image.webp", File(requests.get(image["attributes"]["file"]).content))
-                image.process()
-                self.stdout.write(f"Image {image.id} imported")
-                del image
+                im.image.save("image.webp", File(requests.get(image["attributes"]["file"]).content), save=False)
+                im.process()
+                self.stdout.write(f"Image {im.id} imported")
+                del im
 
                 i += 1
