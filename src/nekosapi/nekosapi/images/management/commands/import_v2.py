@@ -18,7 +18,7 @@ class Command(BaseCommand):
 
         while True:
             r = requests.get(
-                f"https://v2.nekosapi.com/v2/images?sort=created_at&page[offset]={i}",
+                f"https://v2.nekosapi.com/v2/images?sort=created_at&page[limit]=25&page[offset]={i}",
                 headers={"Authorization": f"Bearer {api_token}"},
             )
             data = r.json()["data"]
