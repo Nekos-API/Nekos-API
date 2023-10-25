@@ -33,13 +33,13 @@ class Command(BaseCommand):
                 )
             except IntegrityError:
                 if delete:
-                    image.delete()
                     self.stdout.write(
                         self.style.ERROR("DELETED")
                         + ": Failed to process image {} - {}".format(
                             image.id, image.hash_md5
                         )
                     )
+                    image.delete()
             except Exception as e:
                 self.stdout.write(
                     self.style.ERROR("ERROR")
