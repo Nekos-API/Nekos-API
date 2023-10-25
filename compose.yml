@@ -23,7 +23,7 @@ services:
     ports:
       - "${NGINX_PORT:-80}:80"
     volumes:
-      - ./src/nekosapi/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./src/api/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - api
     restart: always
