@@ -1,8 +1,8 @@
 version: "3.8"
 name: "nekosapi"
 services:
-  nekosapi:
-    build: ./src/nekosapi
+  api:
+    build: ./src/api
     env_file:
       - .env
     command: "/bin/sh -c '/app/run.sh'"
@@ -25,7 +25,7 @@ services:
     volumes:
       - ./src/nekosapi/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - nekosapi
+      - api
     restart: always
 volumes:
   postgres:

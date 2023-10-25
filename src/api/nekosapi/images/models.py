@@ -73,7 +73,7 @@ class Image(models.Model):
 
     class Rating(models.TextChoices):
         SAFE = "safe", "Safe"
-        QUESTIONABLE = "questionable", "Questionable"
+        SUGGESTIVE = "suggestive", "Suggestive"
         BORDERLINE = "borderline", "Borderline"
         EXPLICIT = "explicit", "Explicit"
 

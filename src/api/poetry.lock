@@ -211,6 +211,20 @@ files = [
 ]
 
 [[package]]
+name = "django-cors-headers"
+version = "4.3.0"
+description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django_cors_headers-4.3.0-py3-none-any.whl", hash = "sha256:bd36c7aea0d070e462f3383f0dc9ef717e5fdc2b10a99c98c285f16da84ffba2"},
+    {file = "django_cors_headers-4.3.0.tar.gz", hash = "sha256:25aabc94d4837678c1edf442c7f68a5f5fd151f6767b0e0b01c61a2179d02711"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+
+[[package]]
 name = "django-dynamic-filenames"
 version = "1.3.2"
 description = "Write advanced filename patterns using the Format String Syntax."
@@ -804,4 +818,4 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "b92b1fc7852ea08cb4e7546f06854e8851194f228a4fedda82512a4ff6fbe87a"
+content-hash = "3066455d42d912114d7bc50882369fe7e53d68ead7e21871a6e12376b3d2bc14"

@@ -38,6 +38,13 @@ SECRET_KEY = os.getenv(
 DEBUG = os.getenv("API_DEBUG", "false").lower() == "true"
 
 ALLOWED_HOSTS = os.getenv("API_ALLOWED_HOSTS", "127.0.0.1 localhost").split(" ")
+CSRF_TRUSTED_ORIGINS = map(
+    lambda x: f"https://{x}",
+    os.getenv("API_ALLOWED_HOSTS", "127.0.0.1 localhost").split(" "),
+) + map(
+    lambda x: f"http://{x}",
+    os.getenv("API_ALLOWED_HOSTS", "127.0.0.1 localhost").split(" "),
+)
 
 
 # Application definition
@@ -53,11 +60,13 @@ INSTALLED_APPS = [
     "nekosapi.artists.apps.ArtistsConfig",
     "nekosapi.characters.apps.CharactersConfig",
     "django_cleanup.apps.CleanupConfig",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -115,7 +124,9 @@ BUNNY_PASSWORD = os.getenv("BUNNY_PASSWORD", "nekosapi")
 BUNNY_REGION = os.getenv("BUNNY_REGION", "la")
 BUNNY_HOSTNAME = os.getenv("BUNNY_HOSTNAME", "https://b-cdn.net")
 
-NINJA_DOCS_VIEW = "redoc"
+NINJA_DOCS_VIEW = os.getenv("API_DOCS_VIEW", "redoc").lower()
+
+CORS_ALLOW_ALL_ORIGINS = os.getenv("API_CORS_ALLOW_ALL_ORIGINS", "true").lower() == "true"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
