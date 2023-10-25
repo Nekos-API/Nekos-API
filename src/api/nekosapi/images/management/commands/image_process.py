@@ -1,3 +1,4 @@
+from django.db.utils import IntegrityError
 from django.core.management.base import BaseCommand
 
 from nekosapi.images.models import Image
@@ -13,7 +14,7 @@ class Command(BaseCommand):
             action="store_true",
         )
 
-    def handle(self, *args, **options):
+    def handle(self, delete = False, *args, **options):
         qs = Image.objects.filter(image_height__isnull=True, image_width__isnull=True)
         count = qs.count()
 
@@ -30,6 +31,15 @@ class Command(BaseCommand):
                     self.style.SUCCESS("SUCCESS")
                     + ": Processed image {} - {}".format(image.id, image.hash_md5)
                 )
+            except IntegrityError:
+                if delete:
+                    image.delete()
+                    self.stdout.write(
+                        self.style.ERROR("DELETED")
+                        + ": Failed to process image {} - {}\n{}".format(
+                            image.id, image.hash_md5, e
+                        )
+                    )
             except Exception as e:
                 self.stdout.write(
                     self.style.ERROR("ERROR")
