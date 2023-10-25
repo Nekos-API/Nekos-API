@@ -9,7 +9,6 @@ class Command(BaseCommand):
             "--delete",
             help="Delete duplicates (using md5 hash)",
             action="store_true",
-            type=bool,
         )
 
     def handle(self, *args, **options):
