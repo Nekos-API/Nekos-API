@@ -1,5 +1,7 @@
 from django.core.management.base import BaseCommand
 
+from nekosapi.images.models import Image
+
 
 class Command(BaseCommand):
     help = "Process all unprocessed images"
@@ -23,6 +25,11 @@ class Command(BaseCommand):
             try:
                 image.process()
                 i += 1
+
+                self.stdout.write(
+                    self.style.SUCCESS("SUCCESS")
+                    + ": Processed image {} - {}".format(image.id, image.hash_md5)
+                )
             except Exception as e:
                 self.stdout.write(
                     self.style.ERROR("ERROR")
@@ -30,11 +37,6 @@ class Command(BaseCommand):
                         image.id, image.hash_md5, e
                     )
                 )
-
-            self.stdout.write(
-                self.style.SUCCESS("SUCCESS")
-                + ": Processed image {} - {}".format(image.id, image.hash_md5)
-            )
 
         self.stdout.write(
             self.style.SUCCESS("SUCCESS") + ": Processed {} images".format(i)
