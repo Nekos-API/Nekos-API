@@ -38,13 +38,11 @@ SECRET_KEY = os.getenv(
 DEBUG = os.getenv("API_DEBUG", "false").lower() == "true"
 
 ALLOWED_HOSTS = os.getenv("API_ALLOWED_HOSTS", "127.0.0.1 localhost").split(" ")
-CSRF_TRUSTED_ORIGINS = map(
-    lambda x: f"https://{x}",
-    os.getenv("API_ALLOWED_HOSTS", "127.0.0.1 localhost").split(" "),
-) + map(
-    lambda x: f"http://{x}",
-    os.getenv("API_ALLOWED_HOSTS", "127.0.0.1 localhost").split(" "),
-)
+CSRF_TRUSTED_ORIGINS = [
+    f"https://{host}" for host in os.getenv("API_ALLOWED_HOSTS", "127.0.0.1 localhost").split(" ")
+] + [
+    f"http://{host}" for host in os.getenv("API_ALLOWED_HOSTS", "127.0.0.1 localhost").split(" ")
+]
 
 
 # Application definition
