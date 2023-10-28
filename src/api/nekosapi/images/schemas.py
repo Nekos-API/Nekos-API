@@ -156,6 +156,9 @@ class TagSchema(Schema):
         description="A short description that says what the tag is and when it applies.",
     )
 
+    sub: str = Field(
+        ..., title="Subtype", description="The subtype of the tag (format, character, setting)."
+    )
     is_nsfw: bool = Field(
         ...,
         title="NSFW",

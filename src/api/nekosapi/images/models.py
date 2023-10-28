@@ -178,10 +178,16 @@ class Image(models.Model):
 
 
 class Tag(models.Model):
+    class Sub(models.TextChoices):
+        FORMAT = "format", "Format"
+        CHARACTER = "character", "Character"
+        SETTING = "setting", "Setting"
+
     id_v2 = models.UUIDField(null=True)
 
     name = models.CharField(max_length=255)
     description = models.TextField()
+    sub = models.CharField(choices=Sub.choices, max_length=9, default=Sub.FORMAT)
     is_nsfw = models.BooleanField(default=False)
 
     def __str__(self):
