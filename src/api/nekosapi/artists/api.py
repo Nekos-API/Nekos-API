@@ -2,6 +2,7 @@ from ninja import Router, Query
 from ninja.pagination import paginate
 
 from nekosapi.pagination import LimitOffsetPagination
+from nekosapi.artists.models import Artist
 from nekosapi.artists.schemas import ArtistSchema
 from nekosapi.artists.filters import ArtistFilterSchema
 
