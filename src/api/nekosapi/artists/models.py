@@ -5,6 +5,8 @@ from dynamic_filenames import FilePattern
 
 
 class Artist(models.Model):
+    id_v2 = models.UUIDField(null=True)
+
     name = models.TextField()
     image = models.ImageField(
         upload_to=FilePattern(filename_pattern="artists/original/{filename}{ext}"),

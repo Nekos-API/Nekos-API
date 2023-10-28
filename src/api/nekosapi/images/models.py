@@ -178,6 +178,8 @@ class Image(models.Model):
 
 
 class Tag(models.Model):
+    id_v2 = models.UUIDField(null=True)
+
     name = models.CharField(max_length=255)
     description = models.TextField()
     is_nsfw = models.BooleanField(default=False)

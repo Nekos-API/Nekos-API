@@ -3,6 +3,8 @@ from django.contrib.postgres.fields import ArrayField
 
 
 class Character(models.Model):
+    id_v2 = models.UUIDField(null=True)
+
     name = models.TextField(
         help_text="The character's complete name. Last name first, followed by a comma, followed by the first name."
     )
@@ -44,6 +46,6 @@ class Character(models.Model):
         null=True,
         help_text="An image that illustrates the character. Something like what you'd see as the image for a character in MAL or AniList.",
     )
-    
+
     def __str__(self) -> str:
         return self.name
