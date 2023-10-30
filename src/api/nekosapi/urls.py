@@ -19,6 +19,12 @@ from django.urls import path
 
 from nekosapi.api import api
 
+
+admin.site.site_title = "Nekos API"
+admin.site.site_header = "API administration"
+admin.site.index_title = "Administration / Nekos API"
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("v3/", api.urls),

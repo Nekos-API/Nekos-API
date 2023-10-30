@@ -1,0 +1,52 @@
+import { Tab, Tabs } from "nextra-theme-docs";
+
+# Search for an Image
+
+This endpoint allows you to search for an image, filtering by tags, characters, artists, etc.
+
+## Endpoint Details
+
+-   URL: `/v3/images`
+-   Method: `GET`
+-   Response: `JSON`
+
+## Parameters
+
+| Location | Name            | Type                                                      | Description                                                                                                    | Required |
+| -------- | --------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------- |
+| Query    | `rating`        | Array of strings [safe, suggestive, borderline, explicit] | The (age) rating of the image.                                                                                 | No       |
+| Query    | `is_original`   | Boolean                                                   | Whether the image's idea is original or it uses characters/settings/content from another place (not original). | No       |
+| Query    | `is_screenshot` | Boolean                                                   | Whether the image is a screenshot of an anime ep./manga page.                                                  | No       |
+| Query    | `is_flagged`    | Boolean                                                   | Whether the image is flagged by mods.                                                                          | No       |
+| Query    | `is_animated`   | Boolean                                                   | Whether the image is animated or not. This'll become useful in the future when we add GIFs.                    | No       |
+| Query    | `artist`        | Array of integers                                         | The artist's ID.                                                                                               | No       |
+| Query    | `character`     | Array of integers                                         | The character's ID.                                                                                            | No       |
+| Query    | `tag`           | Array of integers                                         | The tag's ID.                                                                                                  | No       |
+| Query    | `limit`         | Integer [1..100]                                          | The amount of images to return.                                                                                | No       |
+| Query    | `offset`        | Integer                                                   | The amount of images to skip.                                                                                  | No       |
+
+## Example Request
+
+<Tabs items={["Python 3", "JavaScript"]}>
+    <Tabs.Tab>
+        ```python filename="images.py" showLineNumbers
+        import requests
+
+        res = requests.get("https://api.nekosapi.com/v3/images")
+        res.raise_for_status()
+
+        data = res.json()
+        ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+        ```javascript filename="images.js" showLineNumbers
+        fetch("https://api.nekosapi.com/v3/images", {
+            method: "GET",
+        }).then(res => res.json())
+        .then(data => {
+            console.log(data);
+        })
+        ```
+    </Tabs.Tab>
+
+</Tabs>

@@ -9,6 +9,12 @@ class CharacterFilterSchema(FilterSchema):
         q=["name__icontains", "aliases__icontains", "description__icontains"],
         expression_operator="OR",
     )
+    age: Optional[list[int]] = Field(
+        None,
+        title="Age(s)",
+        description="One or more of the character's (official) ages.",
+        q="ages__in"
+    )
     gender: Optional[str] = Field(
         None,
         title="Gender",
@@ -27,9 +33,9 @@ class CharacterFilterSchema(FilterSchema):
         description="The character's nationality.",
         q="nationality__iexact",
     )
-    occupations: Optional[list[str]] = Field(
+    occupation: Optional[list[str]] = Field(
         None,
-        title="Occupations",
+        title="Occupation(s)",
         description="Occupations the character officially has/has officially had.",
         q="occupations__in",
     )

@@ -10,7 +10,7 @@
     }
 
     div.heroContainer {
-        @apply py-16;
+        @apply py-16 z-10 relative;
     }
     html:global(.dark) div.heroBg {
         background-image: linear-gradient(

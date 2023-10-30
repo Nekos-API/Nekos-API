@@ -9,6 +9,9 @@ from nekosapi.characters.schemas import CharacterSchema
 
 class ImageSchema(Schema):
     id: int = Field(..., title="ID", description="The image's ID.")
+    id_v2: Optional[str] = Field(
+        ..., title="ID v2", description="The image's ID in the v2 API. Format: UUID"
+    )
 
     image_url: str = Field(
         ...,
@@ -149,6 +152,9 @@ class ImageSchema(Schema):
 
 class TagSchema(Schema):
     id: int = Field(..., title="ID", description="The tag's ID.")
+    id_v2: Optional[str] = Field(
+        ..., title="ID v2", description="The tag's ID in the v2 API. Format: UUID"
+    )
 
     name: str = Field(..., description="The tag's name.")
     description: str = Field(

@@ -6,7 +6,7 @@ import styles from './index.module.css';
 
 export function APIRequest({
     method = "GET",
-    baseUrl = "https://api.nekosapi.com/v2",
+    baseUrl = "https://api.nekosapi.com/v3",
     endpoint,
     title,
     description = "",

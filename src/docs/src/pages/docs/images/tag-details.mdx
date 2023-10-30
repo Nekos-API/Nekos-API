@@ -1,0 +1,43 @@
+import { Tab, Tabs } from "nextra-theme-docs";
+
+# Get a Tag by ID
+
+This endpoint allows you to get a tag by its ID.
+
+## Endpoint Details
+
+-   URL: `/v3/images/tag/{id}`
+-   Method: `GET`
+-   Response: `JSON`
+
+## Parameters
+
+| Location | Name | Type    | Description   | Required |
+| -------- | ---- | ------- | ------------- | -------- |
+| Path     | `id` | Integer | The tag's ID. | Yes      |
+
+## Example Request
+
+<Tabs items={["Python 3", "JavaScript"]}>
+    <Tabs.Tab>
+        ```python filename="tag_details.py" showLineNumbers
+        import requests
+
+        res = requests.get(f"https://api.nekosapi.com/v3/images/tag/{tag_id}")
+        res.raise_for_status()
+
+        data = res.json()
+        ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+        ```javascript filename="tag_details.js" showLineNumbers
+        fetch(`https://api.nekosapi.com/v3/images/tag/${tag_id}`, {
+            method: "GET",
+        }).then(res => res.json())
+        .then(data => {
+            console.log(data);
+        })
+        ```
+    </Tabs.Tab>
+
+</Tabs>

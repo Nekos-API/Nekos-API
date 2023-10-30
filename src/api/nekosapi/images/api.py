@@ -21,7 +21,7 @@ router = Router(tags=["Images"])
     "",
     response={200: List[ImageSchema]},
     summary="Get all images",
-    description="Returns a paginated list of all the visible images in the API.",
+    description="Returns a paginated list of all the verified images in the API.",
 )
 @paginate(LimitOffsetPagination)
 def images(request, filters: ImageFilterSchema = Query(...)):
@@ -41,7 +41,11 @@ def images(request, filters: ImageFilterSchema = Query(...)):
     description="Returns a random image. It supports all the same filters than the /images endpoint.",
 )
 def random_image(request, filters: ImageFilterSchema = Query(...)):
-    qs = Image.objects.prefetch_related("tags", "characters").select_related("artist")
+    qs = (
+        Image.objects.filter(verification=Image.Verification.VERIFIED)
+        .prefetch_related("tags", "characters")
+        .select_related("artist")
+    )
     qs = filters.filter(qs)
     count = qs.count()
     return qs[secrets.randbelow(count)]
@@ -76,5 +80,5 @@ async def tag(request, id: int):
 )
 async def image(request, id: int):
     return await async_get_or_404(
-        Image, prefetch_related=["tags", "characters"], select_related=["artist"], id=id
+        Image, prefetch_related=["tags", "characters"], select_related=["artist"], id=id, verification=Image.Verification.VERIFIED
     )

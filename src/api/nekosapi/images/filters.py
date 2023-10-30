@@ -33,20 +33,20 @@ class ImageFilterSchema(FilterSchema):
     artist: Optional[list[int]] = Field(
         None,
         title="Artist(s)",
-        description="The artist's ID. Can be set multiple times (in the same query) to filter by multiple artists.",
+        description="The artist's ID.",
         q="artist__id__in",
     )
     character: Optional[list[int]] = Field(
         None,
         title="Character(s)",
-        description="The character's ID. Can be set multiple times (in the same query) to filter by multiple characters.",
-        q="character__id__in",
+        description="The character's ID.",
+        q="characters__id__in",
     )
     tag: Optional[list[int]] = Field(
         None,
         title="Tag(s)",
-        description="The tag's ID. Can be set multiple times (in the same query) to filter by multiple tags.",
-        q="tag__id__in",
+        description="The tag's ID.",
+        q="tags__id__in",
     )
 
 
@@ -55,6 +55,7 @@ class TagFilterSchema(FilterSchema):
         None,
         q=["name__icontains", "description__icontains"],
         expression_operator="OR",
+        description="Search for a tag by name or description.",
     )
     is_nsfw: Optional[bool] = Field(
         None, title="Is NSFW", description="Whether the tag is NSFW or not."

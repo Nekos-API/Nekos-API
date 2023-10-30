@@ -1,0 +1,52 @@
+import { Callout } from "nextra-theme-docs";
+
+# Introduction
+
+OpenAPI v3: [/v3/openapi.json](https://api.nekosapi.com/v3/openapi.json)<br/>
+Auto-generated docs: [/v3/docs](https://api.nekosapi.com/v3/docs)<br/>
+Base URL: `https://api.nekosapi.com/v3`
+
+This page will help you understand how to use the Rest API. We highly recommend reading this before starting to use the API.
+
+## Rate limits
+
+The API has no rate limits at the moment. Can this be a problem in the future? Yes. In case that this becomes an issue, a rate limit will be set.
+
+## Pagination
+
+The API uses limit and offset parameters to paginate the results.
+
+```jsonc filename="GET /v3/images?limit=100&offset=10"
+{
+    "items": [
+        { ... },
+        { ... },
+        ...
+    ],
+    "count": 4038  // Total number of items, not only those returned in the page
+}
+```
+
+The `limit` parameter has a maximum of 100 items. The `offset` parameter is not limited.
+
+## Errors
+
+Though we try to make error formats as consistent as possible, we cannot guarantee that all errors will return the same json format (due to different libraries having their own error formats). You can try to read the following error format and use the status code in case it fails:
+
+```jsonc filename="GET /v3/images?limit=101"
+{
+    "detail": [
+        {
+            "loc": [
+                "query",
+                "limit"
+            ],
+            "msg": "ensure this value is less than or equal to 100",
+            "type": "value_error.number.not_le",
+            "ctx": {
+                "limit_value": 100
+            }
+        }
+    ]
+}
+```

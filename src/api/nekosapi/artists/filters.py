@@ -8,6 +8,7 @@ class ArtistFilterSchema(FilterSchema):
         None,
         q=["name__icontains", "aliases__icontains"],
         expression_operator="OR",
+        description="Search term. Will return all tags with this term(s) in their name or description."
     )
     policy_repost: Optional[bool] = Field(
         None,

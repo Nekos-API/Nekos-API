@@ -151,7 +151,7 @@ class Image(models.Model):
         image = PIL.Image.open(file)
 
         self.image = _to_webp(image)
-        self.sample = _make_sample(image, (360, None))
+        self.sample = _make_sample(image, (360, None) if image.width < image.height else (None, 360))
 
         self.image_size = self.image.size
         self.sample_size = self.sample.size

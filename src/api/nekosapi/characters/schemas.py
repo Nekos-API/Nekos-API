@@ -7,6 +7,9 @@ from nekosapi.characters.models import Character
 
 class CharacterSchema(Schema):
     id: int = Field(..., title="ID", description="The character's ID.")
+    id_v2: Optional[str] = Field(
+        ..., title="ID v2", description="The character's ID in the v2 API. Format: UUID"
+    )
 
     name: str = Field(..., description="The character's name.")
     aliases: list[str] = Field(
@@ -55,6 +58,12 @@ class CharacterSchema(Schema):
     occupations: Optional[list[str]] = Field(
         ...,
         description="All the occupations the character officially has/has officially had.",
+    )
+
+    main_image_id: Optional[int] = Field(
+        ...,
+        alias="main_image",
+        description="The character's main image's ID. This image shows the character and can be used, for example, as the character's \"profile picture\".",
     )
 
     @staticmethod

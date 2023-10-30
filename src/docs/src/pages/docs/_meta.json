@@ -6,9 +6,10 @@
         "type": "separator",
         "title": "Reference"
     },
-    "rest-api": "Rest API",
-    "websockets": "WebSockets",
-    "embeds": "Embeds",
+    "api-introduction": "Introduction",
+    "images": "Images",
+    "artists": "Artists",
+    "characters": "Characters",
     "--- More ---": {
         "type": "separator",
         "title": "More"

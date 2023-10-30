@@ -8,9 +8,30 @@ Nekos API does not follow a strict semantic versioning. Although there are many 
 
 ## Log
 
-<Callout>
-    We're already working on v3!
-</Callout>
+### `v3.0.0`
+
+> October 27, 2023
+
+- `Added`: v3.0.0
+- `Added`: Artist policies
+- `Added`: [NekoSauce](https://nekosauce.org) sauce ID is now in image objects
+- `Added`: `is_animated` and `duration` attributes to images
+- `Added`: Character height and weight
+- `Added`: [OpenAPI schema](https://api.nekosapi.com/v3/openapi.json)
+- `Changed`: Colors are now represented as arrays of 3 integers (R, G, B)
+- `Changed`: IDs are now integers
+- `Changed`: Restructured all schemas
+- `Changed`: Categories were renamed to tags
+- `Changed`: GIFs were merged with images
+- `Removed`: Content-Type header requirement
+- `Removed`: Rate limits
+- `Removed`: Embeds API
+- `Removed`: WebSocket APIs
+- `Removed`: Webhooks APIs
+- `Removed`: All user-related endpoints
+- `Removed`: JSON:API specification
+- `Removed`: Relationships endpoints
+- `Removed`: `<APIRequest/>` component for API endpoint documentation
 
 ### `v2.7.0`
 
@@ -26,7 +47,7 @@ Nekos API does not follow a strict semantic versioning. Although there are many 
 - `Added`: `/applications/@me` endpoint for authentication with client credentials
 - `Fixed`: `/applications` endpoint raising a 500 error
 - `Fixed`: Permissions for authorization with client credentials
-- `Updated`: GIF schema
+- `Changed`: GIF schema
 - `Removed`: **16:9** version of the GIFs ("constant")
 
 ### `v2.5.0`
@@ -114,6 +135,7 @@ Nekos API does not follow a strict semantic versioning. Although there are many 
 
 > June 4, 2023
 
+- `Added`: v2
 - `Added`: [GIFs](/docs/rest-api/gifs/resource)
 - `Added`: Reactions
 - `Added`: [Image relationship search filters](/docs/rest-api/images/resource)
@@ -139,6 +161,7 @@ Nekos API does not follow a strict semantic versioning. Although there are many 
 
 > May 1, 2023
 
+- `Added`: v2 beta version
 - `Added`: Changelog
 - `Added`: Embeds API
 - `Added`: Image embed (light/dark, vertical/horizontal, palette on/off, nekos logo on/off)
