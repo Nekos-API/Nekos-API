@@ -1,3 +1,4 @@
+from uuid import UUID
 from typing import Optional
 
 from ninja import Schema, Field
@@ -5,8 +6,10 @@ from ninja import Schema, Field
 
 class ArtistSchema(Schema):
     id: int = Field(..., title="ID", description="The artist's ID.")
-    id_v2: Optional[str] = Field(
-        ..., title="ID v2", description="The artist's ID in the v2 API. Format: UUID"
+    id_v2: Optional[UUID] = Field(
+        None,
+        title="ID v2",
+        description="The character's ID in the v2 API. Format: UUID"
     )
 
     name: str = Field(..., description="The artist's name.")
