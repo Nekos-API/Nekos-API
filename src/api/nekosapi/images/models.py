@@ -78,7 +78,7 @@ class Image(models.Model):
         EXPLICIT = "explicit", "Explicit"
 
     id_v2 = models.UUIDField("ID v2", null=True)
-    image_v2 = models.URLField("Image URL v2", null=True)
+    image_v2 = models.URLField("Image URL v2", null=True, blank=True)
 
     image = models.ImageField(
         upload_to=FilePattern(filename_pattern="images/original/{uuid}{ext}"),
@@ -183,7 +183,7 @@ class Tag(models.Model):
         CHARACTER = "character", "Character"
         SETTING = "setting", "Setting"
 
-    id_v2 = models.UUIDField(null=True)
+    id_v2 = models.UUIDField(null=True, blank=True)
 
     name = models.CharField(max_length=255)
     description = models.TextField()

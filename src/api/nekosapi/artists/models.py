@@ -5,7 +5,7 @@ from dynamic_filenames import FilePattern
 
 
 class Artist(models.Model):
-    id_v2 = models.UUIDField(null=True)
+    id_v2 = models.UUIDField(null=True, blank=True)
 
     name = models.TextField()
     image = models.ImageField(

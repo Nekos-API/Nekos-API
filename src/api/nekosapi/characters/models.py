@@ -3,7 +3,7 @@ from django.contrib.postgres.fields import ArrayField
 
 
 class Character(models.Model):
-    id_v2 = models.UUIDField(null=True)
+    id_v2 = models.UUIDField(null=True, blank=True)
 
     name = models.TextField(
         help_text="The character's complete name. Last name first, followed by a comma, followed by the first name."
