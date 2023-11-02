@@ -71,13 +71,13 @@ const UserButton = () => {
 
 function VersionOption({ label, stable = false, href }) {
     return (
-        <Link href={href} className="rounded hover:bg-neutral-800 transition flex flex-row items-center gap-1 pr-1 leading-none text-sm font-mono">
+        <Link href={href} className="rounded hover:bg-neutral-100 dark:hover:bg-neutral-800 transition flex flex-row items-center gap-1 pr-1 leading-none text-sm font-mono">
             {stable ? (
                 <div className="bg-blue-400/20 text-blue-400 rounded aspect-square h-4 w-4 text-center">
                     S
                 </div>
             ) : (
-                <div className="bg-yellow-400/20 text-yellow-400 rounded aspect-square h-4 w-4 text-center">
+                <div className="bg-yellow-400/30 dark:bg-yellow-400/20 text-yellow-500 dark:text-yellow-400 rounded aspect-square h-4 w-4 text-center">
                     D
                 </div>
             )}
@@ -97,7 +97,7 @@ export default {
                 </Link>
                 <Popup
                     trigger={(
-                        <button className="hidden md:flex flex-row items-center rounded transition hover:bg-neutral-900 border border-neutral-700">
+                        <button className="hidden md:flex flex-row items-center rounded transition border border-neutral-200 hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-900">
                             <div className="flex flex-row items-center gap-1 font-mono p-1 rounded border dark:border-neutral-700 dark:bg-neutral-800 border-neutral-200 bg-neutral-100 text-sm leading-none h-fit -my-px -ml-px">
                                 {process.env.NEXT_PUBLIC_NEKOS_API_VERSION}
                             </div>
@@ -128,7 +128,7 @@ export default {
                         }
                     }}
                 >
-                    <div className="bg-neutral-900 border border-neutral-800 rounded p-1 flex flex-col gap-1">
+                    <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded p-1 flex flex-col gap-1">
                         <VersionOption label={process.env.NEXT_PUBLIC_NEKOS_API_VERSION} href="" stable />
                         <VersionOption label="v1.6.0" href="https://v1.nekosapi.com" />
                         <VersionOption label="v0.3.0" href="https://v0.nekosapi.com" />

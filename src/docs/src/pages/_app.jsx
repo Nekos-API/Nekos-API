@@ -56,14 +56,23 @@ export default function NekosAPI({ Component, pageProps }) {
                 </div>
                 <div className='flex flex-row items-center gap-2 justify-between md:justify-start md:ml-auto min-w-max'>
                     <span className="hidden md:inline-block whitespace-nowrap">Thanks to:</span>
-                    {contributors.map((contributor) => (
-                        <Contributor
-                            key={contributor.id}
-                            username={contributor.name}
-                            image={contributor.id ? `https://nekosapi.com/api/discord/avatar?user_id=${contributor.id}` : contributor.imageUrl}
-                            url={contributor.link ? contributor.link : `https://discord.com/users/${contributor.id}`}
-                        />
-                    ))}
+                    {contributors.map((contributor, index) => {
+                        if (index <= 8) {
+                            return (
+                                <Contributor
+                                    key={contributor.id}
+                                    username={contributor.name}
+                                    image={contributor.id ? `https://nekosapi.com/api/discord/avatar?user_id=${contributor.id}` : contributor.imageUrl}
+                                    url={contributor.link ? contributor.link : `https://discord.com/users/${contributor.id}`}
+                                />
+                            )
+                        }
+                    })}
+                    <Link href="/docs#contributors">
+                        <button className="text-xl text-[hsl(var(--nextra-primary-hue),100%,50%)] h-7 w-7 flex flex-col items-center justify-center rounded-full border bg-white border-neutral-200 hover:border-neutral-400 dark:bg-transparent dark:!border-neutral-800 dark:hover:bg-neutral-800 transition">
+                            +
+                        </button>
+                    </Link>
                 </div>
             </div>
             <Analytics />
