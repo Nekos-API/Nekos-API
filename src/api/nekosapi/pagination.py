@@ -43,5 +43,5 @@ class LimitPagination(PaginationBase):
         limit: int = pagination.limit
         return {
             "items": queryset[:limit],
-            # "count": self._items_count(queryset),
+            "count": self._items_count(queryset),
         }  # noqa: E203
