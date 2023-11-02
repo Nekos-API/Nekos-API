@@ -26,3 +26,22 @@ class LimitOffsetPagination(PaginationBase):
             "items": queryset[offset : offset + limit],
             "count": self._items_count(queryset),
         }  # noqa: E203
+
+
+class LimitPagination(PaginationBase):
+    class Input(Schema):
+        limit: int = Field(
+            settings.PAGINATION_PER_PAGE, ge=1, le=settings.PAGINATION_PER_PAGE
+        )
+
+    def paginate_queryset(
+        self,
+        queryset: QuerySet,
+        pagination: Input,
+        **params: Any,
+    ) -> Any:
+        limit: int = pagination.limit
+        return {
+            "items": queryset[:limit],
+            # "count": self._items_count(queryset),
+        }  # noqa: E203

@@ -22,12 +22,13 @@ This endpoint allows you to get a random image, filtering by tags, characters, a
 | Query    | `artist`        | Array of integers                                         | The artist's ID.                                                                                               | No       |
 | Query    | `character`     | Array of integers                                         | The character's ID.                                                                                            | No       |
 | Query    | `tag`           | Array of integers                                         | The tag's ID.                                                                                                  | No       |
+| Query    | `limit`         | Integer [1..100]                                          | The amount of random images to get                                                                             | No       |
 
 ## Example Request
 
 <Tabs items={["Python 3", "JavaScript"]}>
     <Tabs.Tab>
-        ```python filename="random_image.py" showLineNumbers
+        ```python filename="random_images.py" showLineNumbers
         import requests
 
         res = requests.get("https://api.nekosapi.com/v3/images/random")
@@ -37,7 +38,7 @@ This endpoint allows you to get a random image, filtering by tags, characters, a
         ```
     </Tabs.Tab>
     <Tabs.Tab>
-        ```javascript filename="random_image.js" showLineNumbers
+        ```javascript filename="random_images.js" showLineNumbers
         fetch("https://api.nekosapi.com/v3/images/random", {
             method: "GET",
         }).then(res => res.json())

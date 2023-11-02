@@ -1,5 +1,3 @@
-from typing import List
-
 import secrets
 
 from django.http import Http404
@@ -8,7 +6,7 @@ from ninja import Router, Query
 from ninja.pagination import paginate
 
 from nekosapi.utils import async_get_or_404
-from nekosapi.pagination import LimitOffsetPagination
+from nekosapi.pagination import LimitOffsetPagination, LimitPagination
 from nekosapi.images.models import Image, Tag
 from nekosapi.images.schemas import ImageSchema, TagSchema
 from nekosapi.images.filters import ImageFilterSchema, TagFilterSchema
@@ -19,7 +17,7 @@ router = Router(tags=["Images"])
 
 @router.get(
     "",
-    response={200: List[ImageSchema]},
+    response={200: list[ImageSchema]},
     summary="Get all images",
     description="Returns a paginated list of all the verified images in the API.",
 )
@@ -36,19 +34,19 @@ def images(request, filters: ImageFilterSchema = Query(...)):
 
 @router.get(
     "/random",
-    response={200: ImageSchema},
-    summary="Get a random image",
-    description="Returns a random image. It supports all the same filters than the /images endpoint.",
+    response={200: list[ImageSchema]},
+    summary="Get random images",
+    description="Returns x random images. It supports all the same filters than the /images endpoint.",
 )
-def random_image(request, filters: ImageFilterSchema = Query(...)):
+@paginate(LimitPagination)
+def random_images(request, filters: ImageFilterSchema = Query(...)):
     qs = (
         Image.objects.filter(verification=Image.Verification.VERIFIED)
         .prefetch_related("tags", "characters")
         .select_related("artist")
     )
     qs = filters.filter(qs)
-    count = qs.count()
-    return qs[secrets.randbelow(count)]
+    return qs.order_by("?")
 
 
 @router.get(
