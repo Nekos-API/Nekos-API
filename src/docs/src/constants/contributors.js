@@ -69,9 +69,13 @@ export default [
     {
         imageUrl: "https://avatars.githubusercontent.com/u/54375789?v=4",
         name: "Vanesca",
-        contributions: [
-            "Donator"
-        ],
-        link: "https://github.com/vanesca88"
-    }
+        contributions: ["Donator"],
+        link: "https://github.com/vanesca88",
+    },
+    {
+        imageUrl: "https://avatars.githubusercontent.com/u/79148798?v=4",
+        name: "Nevil Ingutu",
+        contributions: ["Donator"],
+        link: "https://github.com/nevilpurpp",
+    },
 ];
