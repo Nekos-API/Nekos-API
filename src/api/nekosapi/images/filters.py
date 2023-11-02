@@ -30,23 +30,24 @@ class ImageFilterSchema(FilterSchema):
         title="Is Animated",
         description="Whether the image is animated or not. This'll become useful in the future when we add GIFs.",
     )
-    artist: Optional[list[int]] = Field(
+    artist: Optional[int] = Field(
         None,
-        title="Artist(s)",
+        title="Artist",
         description="The artist's ID.",
-        q="artist__id__in",
     )
     character: Optional[list[int]] = Field(
         None,
         title="Character(s)",
         description="The character's ID.",
-        q="characters__id__in",
+        q="characters",
+        expression_connector="AND",
     )
     tag: Optional[list[int]] = Field(
         None,
         title="Tag(s)",
         description="The tag's ID.",
-        q="tags__id__in",
+        q="tags",
+        expression_connector="AND",
     )
 
 
