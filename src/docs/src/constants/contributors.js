@@ -78,4 +78,9 @@ export default [
         contributions: ["Donator"],
         link: "https://github.com/nevilpurpp",
     },
+    {
+        id: "1024872859753005066",
+        name: "CaraDanoCJwits",
+        contributions: ["Donator"]
+    }
 ];
