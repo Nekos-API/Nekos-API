@@ -4,12 +4,17 @@ export default async function handler(req, res) {
 
     const r = await fetch(`https://discord.com/api/v10/users/${user_id}`, {
         headers: {
-            Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`
-        }
+            Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+        },
     });
 
     const user = await r.json();
     const avatar_hash = user.avatar;
 
-    res.redirect(307, `https://cdn.discordapp.com/avatars/${user_id}/${avatar_hash}?size=512`)
+    res.redirect(
+        307,
+        avatar_hash != null
+            ? `https://cdn.discordapp.com/avatars/${user_id}/${avatar_hash}?size=512`
+            : "https://discord.com/assets/529459de1dc4c2424a03.png"
+    );
 }

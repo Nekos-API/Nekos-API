@@ -81,6 +81,6 @@ export default [
     {
         id: "1024872859753005066",
         name: "CaraDanoCJwits",
-        contributions: ["Donator"]
+        contributions: ["Donator"]  // BTC
     }
 ];
