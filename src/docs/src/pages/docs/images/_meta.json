@@ -2,6 +2,7 @@
     "search": "Search for an Image",
     "details": "Get an Image by ID",
     "random": "Get Random Images",
+    "random-file": "Get a Random Image File",
     "tag-search": "Search for a Tag",
     "tag-details": "Get a Tag by ID"
 }
