@@ -1,5 +1,3 @@
-import sharp from "sharp";
-
 export default async function handler(req, res) {
     const { user_id } = req.query;
     BigInt(user_id);
