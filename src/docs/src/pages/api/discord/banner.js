@@ -11,7 +11,6 @@ export default async function handler(req, res) {
     });
 
     const user = await r.json();
-    console.log(user);
     const banner_hash = user.banner;
 
     res.redirect(
