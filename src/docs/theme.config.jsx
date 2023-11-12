@@ -344,7 +344,7 @@ export default {
             setError(false)
             setIsLoading(true)
             fetch(
-                `https://api.github.com/repos/Nekos-API/Nekos-API/commits?path=/docs/src/pages${['/', '/docs'].includes(router.pathname) ?
+                `https://api.github.com/repos/Nekos-API/Nekos-API/commits?path=/src/docs/src/pages${['/', '/docs'].includes(router.pathname) ?
                     router.pathname + '/index.mdx' :
                     router.pathname + ".mdx"
                 }`)
