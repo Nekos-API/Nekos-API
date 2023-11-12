@@ -1,6 +1,7 @@
 import secrets
 
 from django.http import Http404
+from django.shortcuts import redirect
 
 from ninja import Router, Query
 from ninja.pagination import paginate
@@ -50,6 +51,18 @@ def random_images(request, filters: ImageFilterSchema = Query(...)):
 
 
 @router.get(
+    "/random/file",
+    summary="Get a random image file redirect",
+    description="Redirects to a random image file URL.",
+)
+def random_image_file(request, filters: ImageFilterSchema = Query(...)):
+    qs = Image.objects.filter(verification=Image.Verification.VERIFIED)
+    qs = filters.filter(qs)
+    image = secrets.choice(qs)
+    return redirect(image.image.url)
+
+
+@router.get(
     "/tags",
     response={200: list[TagSchema]},
     summary="Get all tags",
@@ -78,5 +91,9 @@ async def tag(request, id: int):
 )
 async def image(request, id: int):
     return await async_get_or_404(
-        Image, prefetch_related=["tags", "characters"], select_related=["artist"], id=id, verification=Image.Verification.VERIFIED
+        Image,
+        prefetch_related=["tags", "characters"],
+        select_related=["artist"],
+        id=id,
+        verification=Image.Verification.VERIFIED,
     )

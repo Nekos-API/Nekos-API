@@ -1,8 +1,8 @@
 import { Tab, Tabs } from "nextra-theme-docs";
 
-# Get Random Images
+# Get a Random Image File
 
-This endpoint allows you to get x random images, filtering by tags, characters, artists, etc.
+This endpoint allows you to get a redirect to a random image's file URL, filtering by tags, characters, artists, etc.
 
 ## Endpoint Details
 
@@ -22,24 +22,23 @@ This endpoint allows you to get x random images, filtering by tags, characters, 
 | Query    | `artist`        | Array of integers                                         | The artist's ID.                                                                                               | No       |
 | Query    | `character`     | Array of integers                                         | The character's ID.                                                                                            | No       |
 | Query    | `tag`           | Array of integers                                         | The tag's ID.                                                                                                  | No       |
-| Query    | `limit`         | Integer [1..100]                                          | The amount of random images to get                                                                             | No       |
 
 ## Example Request
 
 <Tabs items={["Python 3", "JavaScript"]}>
     <Tabs.Tab>
-        ```python filename="random_images.py" showLineNumbers
+        ```python filename="random_image_file.py" showLineNumbers
         import requests
 
-        res = requests.get("https://api.nekosapi.com/v3/images/random")
+        res = requests.get("https://api.nekosapi.com/v3/images/random/file")
         res.raise_for_status()
 
         data = res.json()
         ```
     </Tabs.Tab>
     <Tabs.Tab>
-        ```javascript filename="random_images.js" showLineNumbers
-        fetch("https://api.nekosapi.com/v3/images/random", {
+        ```javascript filename="random_image_file.js" showLineNumbers
+        fetch("https://api.nekosapi.com/v3/images/random/file", {
             method: "GET",
         }).then(res => res.json())
         .then(data => {

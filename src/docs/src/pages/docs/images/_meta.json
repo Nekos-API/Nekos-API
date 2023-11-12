@@ -1,7 +1,7 @@
 {
     "search": "Search for an Image",
     "details": "Get an Image by ID",
-    "random": "Get a Random Image",
+    "random": "Get Random Images",
     "tag-search": "Search for a Tag",
     "tag-details": "Get a Tag by ID"
 }

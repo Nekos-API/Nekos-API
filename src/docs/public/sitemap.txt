@@ -8,6 +8,7 @@ https://nekosapi.com/docs/api-introduction
 https://nekosapi.com/docs/images/search
 https://nekosapi.com/docs/images/details
 https://nekosapi.com/docs/images/random
+https://nekosapi.com/docs/images/random-file
 https://nekosapi.com/docs/images/tag-search
 https://nekosapi.com/docs/images/tag-details
 https://nekosapi.com/docs/artists/search
