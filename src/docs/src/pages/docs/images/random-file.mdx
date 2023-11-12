@@ -33,14 +33,14 @@ This endpoint allows you to get a redirect to a random image's file URL, filteri
         res = requests.get("https://api.nekosapi.com/v3/images/random/file")
         res.raise_for_status()
 
-        data = res.json()
+        data = res.content
         ```
     </Tabs.Tab>
     <Tabs.Tab>
         ```javascript filename="random_image_file.js" showLineNumbers
         fetch("https://api.nekosapi.com/v3/images/random/file", {
             method: "GET",
-        }).then(res => res.json())
+        }).then(res => res.blob())
         .then(data => {
             console.log(data);
         })
