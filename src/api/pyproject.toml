@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "nekosapi"
 version = "3.0.0"
-description = "An open-source anime artwork REST API."
+description = "An open-source anime artwork JSON API."
 authors = ["Nyeki <hello@nyeki.dev>"]
 license = "MIT"
 readme = "README.md"
