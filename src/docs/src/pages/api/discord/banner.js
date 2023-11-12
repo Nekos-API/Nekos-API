@@ -1,3 +1,5 @@
+import sharp from "sharp";
+
 export default async function handler(req, res) {
     const { user_id } = req.query;
     BigInt(user_id);
@@ -9,12 +11,13 @@ export default async function handler(req, res) {
     });
 
     const user = await r.json();
-    const avatar_hash = user.avatar;
+    console.log(user);
+    const banner_hash = user.banner;
 
     res.redirect(
         307,
-        avatar_hash != null
-            ? `https://cdn.discordapp.com/avatars/${user_id}/${avatar_hash}?size=512`
-            : "/imgs/discord/default-avatar.png"
+        banner_hash != null
+            ? `https://cdn.discordapp.com/banners/${user_id}/${banner_hash}?size=512`
+            : "/imgs/discord/default-banner.png"
     );
 }
