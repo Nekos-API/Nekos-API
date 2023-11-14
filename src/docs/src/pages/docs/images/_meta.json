@@ -3,6 +3,11 @@
     "details": "Get an Image by ID",
     "random": "Get Random Images",
     "random-file": "Get a Random Image File",
+    "artist": "Get an Image's Artist",
+    "characters": "Get an Image's Characters",
+    "tags": "Get an Image's Tags",
+    "report": "Report an Image",
     "tag-search": "Search for a Tag",
-    "tag-details": "Get a Tag by ID"
+    "tag-details": "Get a Tag by ID",
+    "tag-images": "Get a Tag's Images"
 }

@@ -1,0 +1,42 @@
+import { Tabs } from "nextra-theme-docs";
+
+# Report an Image
+
+This endpoint allows you to create an image report. Use it when you think that an image has incorrect information. Using this endpoint multiple times won't report the image multiple times. It also won't create a new report if the image already has one. You can check the report status with the `is_flagged` attribute of the image.
+
+## Endpoint Details
+
+-   URL: `/v3/images/{id}/report`
+-   Method: `POST`
+-   Response: Empty
+
+## Parameters
+
+| Location | Name | Type    | Description    | Required |
+| -------- | ---- | ------- | -------------- | -------- |
+| Path     | `id` | Integer | The image's ID | Yes      |
+
+## Example Request
+
+<Tabs items={["Python 3", "JavaScript"]}>
+    <Tabs.Tab>
+        ```python filename="image_report.py" showLineNumbers
+        import requests
+
+        res = requests.post(f"https://api.nekosapi.com/v3/images/{image_id}/report")
+        res.raise_for_status()
+
+        # Response is empty as it returns a 204
+        ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+        ```javascript filename="image_details.js" showLineNumbers
+        fetch(`https://api.nekosapi.com/v3/images/${image_id}/report`, {
+            method: "POST",
+        }).then(res => {
+            // Response is empty as it returns a 204
+        })
+        ```
+    </Tabs.Tab>
+
+</Tabs>

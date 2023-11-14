@@ -1,7 +1,7 @@
 import secrets
 
 from django.http import Http404
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 
 from ninja import Router, Query
 from ninja.pagination import paginate
@@ -11,6 +11,9 @@ from nekosapi.pagination import LimitOffsetPagination, LimitPagination
 from nekosapi.images.models import Image, Tag
 from nekosapi.images.schemas import ImageSchema, TagSchema
 from nekosapi.images.filters import ImageFilterSchema, TagFilterSchema
+
+import nekosapi.artists.schemas as artist_schemas
+import nekosapi.characters.schemas as character_schemas
 
 
 router = Router(tags=["Images"])
@@ -84,6 +87,17 @@ async def tag(request, id: int):
 
 
 @router.get(
+    "/tags/{id}/images",
+    response={200: list[ImageSchema]},
+    summary="Get a tag's images",
+    description="Returns a paginated list of a tag's images.",
+)
+@paginate(LimitOffsetPagination)
+def tag_images(request, id: int):
+    return get_object_or_404(Tag.objects.prefetch_related("images"), id=id).images.all()
+
+
+@router.get(
     "/{id}",
     response={200: ImageSchema},
     summary="Get an image by ID",
@@ -91,9 +105,71 @@ async def tag(request, id: int):
 )
 async def image(request, id: int):
     return await async_get_or_404(
-        Image,
-        prefetch_related=["tags", "characters"],
-        select_related=["artist"],
+        Image.objects.prefetch_related("tags", "characters").select_related("artist"),
         id=id,
         verification=Image.Verification.VERIFIED,
     )
+
+
+@router.get(
+    "/{id}/artist",
+    response={200: artist_schemas.ArtistSchema | None},
+    summary="Get an image's artist",
+    description="Returns the artist of the image.",
+)
+async def image_artist(request, id: int):
+    image = await async_get_or_404(
+        Image.objects.select_related("artist"),
+        id=id,
+        verification=Image.Verification.VERIFIED,
+    )
+    return image.artist
+
+
+@router.get(
+    "/{id}/characters",
+    response={200: list[character_schemas.CharacterSchema]},
+    summary="Get an image's characters",
+    description="Returns the characters of the image.",
+)
+@paginate(LimitOffsetPagination)
+def image_characters(request, id: int):
+    image = get_objects_or_404(
+        Image.objects.prefetch_related("characters"),
+        id=id,
+        verification=Image.Verification.VERIFIED,
+    )
+    return image.characters
+
+
+@router.get(
+    "/{id}/tags",
+    response={200: list[TagSchema]},
+    summary="Get an image's tags",
+    description="Returns the tags of the image.",
+)
+@paginate(LimitOffsetPagination)
+def image_tags(request, id: int):
+    image = get_object_or_404(
+        Image.objects.prefetch_related("tags"),
+        id=id,
+        verification=Image.Verification.VERIFIED,
+    )
+    return image.tags
+
+
+@router.post(
+    "/{id}/report",
+    response={204: None},
+    summary="Create an image report",
+    description="Reports an image.",
+)
+async def image_report(request, id: int):
+    image = await async_get_or_404(
+        Image,
+        id=id,
+        verification=Image.Verification.VERIFIED,
+    )
+    image.is_flagged = True
+    await image.asave()
+    return ""

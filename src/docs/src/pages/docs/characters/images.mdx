@@ -1,0 +1,45 @@
+import { Tabs } from "nextra-theme-docs";
+
+# Get a Character's Images
+
+This endpoint allows you to get all images picturing a certain character.
+
+## Endpoint Details
+
+-   URL: `/v3/characters/{id}/images`
+-   Method: `GET`
+-   Response: `JSON`
+
+## Parameters
+
+| Location | Name     | Type             | Description                     | Required |
+| -------- | -------- | ---------------- | ------------------------------- | -------- |
+| Path     | `id`     | Integer          | The character's ID.                | Yes      |
+| Query    | `limit`  | Integer [1..100] | The amount of images to return. | No       |
+| Query    | `offset` | Integer          | The amount of images to skip.   | No       |
+
+## Example Request
+
+<Tabs items={["Python 3", "JavaScript"]}>
+    <Tabs.Tab>
+        ```python filename="character_images.py" showLineNumbers
+        import requests
+
+        res = requests.get(f"https://api.nekosapi.com/v3/characters/{artist_id}/images")
+        res.raise_for_status()
+
+        data = res.json()
+        ```
+    </Tabs.Tab>
+    <Tabs.Tab>
+        ```javascript filename="character_images.js" showLineNumbers
+        fetch(`https://api.nekosapi.com/v3/characters/${artist_id}/images`, {
+            method: "GET",
+        }).then(res => res.json())
+        .then(data => {
+            console.log(data);
+        })
+        ```
+    </Tabs.Tab>
+
+</Tabs>

@@ -9,8 +9,13 @@ https://nekosapi.com/docs/images/search
 https://nekosapi.com/docs/images/details
 https://nekosapi.com/docs/images/random
 https://nekosapi.com/docs/images/random-file
+https://nekosapi.com/docs/images/tags
+https://nekosapi.com/docs/images/artist
+https://nekosapi.com/docs/images/report
+https://nekosapi.com/docs/images/characters
 https://nekosapi.com/docs/images/tag-search
 https://nekosapi.com/docs/images/tag-details
+https://nekosapi.com/docs/images/tag-images
 https://nekosapi.com/docs/artists/search
 https://nekosapi.com/docs/artists/details
 https://nekosapi.com/docs/characters/search

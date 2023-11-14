@@ -1,3 +1,5 @@
+from django.http import Http404
+
 from ninja import NinjaAPI
 
 from nekosapi.errors import HttpError
@@ -10,7 +12,7 @@ from nekosapi.characters.api import router as characters_router
 
 api = NinjaAPI(
     title="Nekos API",
-    version="3.0.0",
+    version="3",
     description="An open source anime artworks API.",
     servers=[
         {
@@ -34,13 +36,20 @@ async def index(request):
             "/",
             "/images",
             "/images/{id:int}",
+            "/images/{id:int}/tags",
+            "/images/{id:int}/report" "/images/{id:int}/artist",
+            "/images/{id:int}/characters",
             "/images/random",
+            "/images/random/file",
             "/images/tags",
             "/images/tags/{id:int}",
+            "/images/tags/{id:int}/images",
             "/artists",
             "/artists/{id:int}",
+            "/artists/{id:int}/images",
             "/characters",
             "/characters/{id:int}",
+            "/characters/{id:int}/images",
             "/openapi.json",
         ],
         "versions": {
@@ -57,6 +66,24 @@ async def index(request):
 @api.exception_handler(HttpError)
 def http_error(request, exc: HttpError):
     return api.create_response(request, {"detail": exc.errors}, status=exc.status_code)
+
+
+@api.exception_handler(Http404)
+def http_404(request, exc: Http404):
+    return api.create_response(
+        request,
+        {
+            "detail": [
+                {
+                    "loc": [],
+                    "msg": f"Could nto find this resource.",
+                    "type": "not_found",
+                    "ctx": {},
+                }
+            ]
+        },
+        status=404,
+    )
 
 
 api.add_router("/images", images_router)

@@ -1,7 +1,11 @@
+from django.shortcuts import get_object_or_404
+
 from ninja import Schema, Router, Query
 from ninja.pagination import paginate
 
+from nekosapi.utils import async_get_or_404
 from nekosapi.pagination import LimitOffsetPagination
+from nekosapi.images.schemas import ImageSchema
 from nekosapi.characters.models import Character
 from nekosapi.characters.schemas import CharacterSchema
 from nekosapi.characters.filters import CharacterFilterSchema
@@ -28,4 +32,17 @@ def characters(request, filters: CharacterFilterSchema = Query(...)):
     description="Returns a character by it's ID. You'll get a 404 if the character doesn't exist.",
 )
 async def character(request, id: int):
-    return await Character.objects.aget(id=id)
+    return await async_get_or_404(Character, id=id)
+
+
+@router.get(
+    "/{id}/images",
+    response={200: list[ImageSchema]},
+    summary="Get a character's images",
+    description="Returns a paginated list of a character's images.",
+)
+@paginate(LimitOffsetPagination)
+def character_images(request, id: int):
+    return get_object_or_404(
+        Character.objects.prefetch_related("images"), id=id
+    ).images.all()

@@ -1,7 +1,11 @@
+from django.shortcuts import get_object_or_404
+
 from ninja import Router, Query
 from ninja.pagination import paginate
 
+from nekosapi.utils import async_get_or_404
 from nekosapi.pagination import LimitOffsetPagination
+from nekosapi.images.schemas import ImageSchema
 from nekosapi.artists.models import Artist
 from nekosapi.artists.schemas import ArtistSchema
 from nekosapi.artists.filters import ArtistFilterSchema
@@ -28,4 +32,17 @@ def artists(request, filters: ArtistFilterSchema = Query(...)):
     description="Returns a single artist by it's ID. You'll get a 404 if the artist doesn't exist.",
 )
 async def artist(request, id: int):
-    return await Artist.objects.aget(id=id)
+    return await async_get_or_404(Artist, id=id)
+
+
+@router.get(
+    "/{id}/images",
+    response={200: list[ImageSchema]},
+    summary="Get an artist's images",
+    description="Returns a paginated list of an artist's images.",
+)
+@paginate(LimitOffsetPagination)
+def artist_images(request, id: int):
+    return get_object_or_404(
+        Artist.objects.prefetch_related("images"), id=id
+    ).images.all()

@@ -1,6 +1,8 @@
 import os
 
 from django.db.models import Model
+from django.db.models.base import ModelBase
+from django.core.exceptions import ObjectDoesNotExist
 
 from nekosapi.errors import HttpError
 
@@ -22,23 +24,23 @@ def getsecret(name: str, default=None, env_fallback: bool = True):
 
 
 async def async_get_or_404(
-    model: Model,
-    prefetch_related: list[str] = [],
-    select_related: list[str] = [],
+    qs,
     **kwargs,
 ) -> Model:
-    qs = model.objects.prefetch_related(*prefetch_related).select_related(
-        *select_related
-    )
+    print(isinstance(qs, Model), type(qs))
+
+    if isinstance(qs, ModelBase):
+        qs = qs.objects
+
     try:
         return await qs.aget(**kwargs)
-    except model.DoesNotExist:
+    except ObjectDoesNotExist:
         raise HttpError(
             404,
             [
                 {
                     "loc": list(kwargs.keys()),
-                    "msg": f"Could not find {model.__name__.title()} with {', '.join(f'{k}={v}' for k, v in kwargs.items())}",
+                    "msg": f"Could not find {qs.model.__name__.title()} with {', '.join(f'{k}={v}' for k, v in kwargs.items())}",
                     "type": "not_found",
                     "ctx": {
                         "id": kwargs["id"],
