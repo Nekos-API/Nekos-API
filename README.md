@@ -1,5 +1,7 @@
 # Nekos API
 
+[Documentation](https://nekosapi.com/docs) • [Nekos.Land](https://nekos.land) • [Discord](https://discord.gg/w48Sk9X9UE) • [Donate](https://ko-fi.com/Nekidev)
+
 Nekos API is a free JSON API that provides a diverse collection of anime images and gifs. Our mission is to offer the best service possible, delivering high-quality content to developers and anime enthusiasts alike. We are committed to continuously improving our API and welcome any suggestions or feedback from our users.
 
 ## Features
