@@ -37,5 +37,5 @@ class CharacterFilterSchema(FilterSchema):
         None,
         title="Occupation(s)",
         description="Occupations the character officially has/has officially had.",
-        q="occupations__in",
+        q="occupations__icontains",
     )
