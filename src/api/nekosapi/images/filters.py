@@ -35,15 +35,13 @@ class ImageFilterSchema(FilterSchema):
         None,
         title="Character(s)",
         description="The character's ID.",
-        q="characters",
-        expression_connector="AND",
+        q="characters__contains"
     )
     tag: Optional[list[int]] = Field(
         None,
         title="Tag(s)",
         description="The tag's ID.",
-        q="tags",
-        expression_connector="AND",
+        q="tags__contains"
     )
 
 
