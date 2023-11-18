@@ -44,7 +44,9 @@ class ImageFilterSchema(FilterSchema):
         description="The tag's ID.",
     )
 
-    def filter_tags(self, value: list[int]) -> Q:
+    def filter_tag(self, value: list[int] | None) -> Q:
+        if value is None: return Q()
+
         q = Q()
 
         for tag_id in value:
@@ -52,7 +54,9 @@ class ImageFilterSchema(FilterSchema):
 
         return q
 
-    def filter_characters(self, value: list[int]) -> Q:
+    def filter_character(self, value: list[int] | None) -> Q:
+        if value is None: return Q()
+
         q = Q()
 
         for character_id in value:
