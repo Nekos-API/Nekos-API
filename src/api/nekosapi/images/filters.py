@@ -1,5 +1,7 @@
 from typing import Optional, Union
 
+from django.db.models import Q
+
 from ninja import Field, FilterSchema
 
 from nekosapi.images.models import Image
@@ -35,14 +37,28 @@ class ImageFilterSchema(FilterSchema):
         None,
         title="Character(s)",
         description="The character's ID.",
-        q="characters__contains"
     )
     tag: Optional[list[int]] = Field(
         None,
         title="Tag(s)",
         description="The tag's ID.",
-        q="tags__contains"
     )
+
+    def filter_tags(self, value: list[int]) -> Q:
+        q = Q()
+
+        for tag_id in value:
+            q |= Q(tags__id=tag_id)
+
+        return q
+
+    def filter_characters(self, value: list[int]) -> Q:
+        q = Q()
+
+        for character_id in value:
+            q |= Q(characters__id=character_id)
+
+        return q
 
 
 class TagFilterSchema(FilterSchema):
