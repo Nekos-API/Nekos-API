@@ -38,6 +38,7 @@ There are a few projects using Nekos API:
 2. [Nyatastic](https://go.nekogirl.net/invite-nyatastic): A multipurpose anime Discord bot.
 3. [Waifu List](https://github.com/Oreki-Dev/Waifu-List): An (almost) infinite gallery of anime art.
 4. [AnimeInk](https://play.google.com/store/apps/details?id=com.anime_wallpaper.fl): An android Anime wallpaper app.
+5. [WaifuPics](https://github.com/MarketTwits/WaifuPics)
 
 *Psst! You can make a PR to add your project to this list :)*
 
