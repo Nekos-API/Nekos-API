@@ -51,7 +51,7 @@ export default function NekosAPI({ Component, pageProps }) {
                     <FooterLink href="https://github.com/Nekos-API/Nekos-API">GitHub Repo</FooterLink>
                     <FooterLink href="https://status.nekosapi.com/">Status</FooterLink>
                     <FooterLink href="https://discord.gg/PgQnuM3YnM">Discord</FooterLink>
-                    <FooterLink href="/donate">Donate</FooterLink>
+                    <FooterLink href="https://ko-fi.com/Nekidev" target="_blank">Donate</FooterLink>
                     <FooterLink href="mailto:dmca@nekosapi.com">DMCA</FooterLink>
                 </div>
                 <div className='flex flex-row items-center gap-2 justify-between md:justify-start md:ml-auto min-w-max'>
