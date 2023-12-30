@@ -63,7 +63,7 @@ class CharacterSchema(Schema):
 
     main_image_id: Optional[int] = Field(
         ...,
-        alias="main_image",
+        alias="main_image_id",
         description="The character's main image's ID. This image shows the character and can be used, for example, as the character's \"profile picture\".",
     )
 
