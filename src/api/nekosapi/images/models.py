@@ -107,7 +107,9 @@ class Image(models.Model):
         default=Verification.UNVERIFIED,
     )
 
-    rating = models.CharField(choices=Rating.choices, max_length=12, null=True, blank=True)
+    rating = models.CharField(
+        choices=Rating.choices, max_length=12, null=True, blank=True
+    )
 
     hash_md5 = models.CharField(max_length=32, null=True, unique=True)
     hash_perceptual = models.CharField(max_length=32, null=True)
@@ -152,7 +154,9 @@ class Image(models.Model):
         image = PIL.Image.open(file)
 
         self.image = _to_webp(image)
-        self.sample = _make_sample(image, (360, None) if image.width < image.height else (None, 360))
+        self.sample = _make_sample(
+            image, (360, None) if image.width < image.height else (None, 360)
+        )
 
         self.image_size = self.image.size
         self.sample_size = self.sample.size
@@ -187,7 +191,9 @@ class Tag(models.Model):
     id_v2 = models.UUIDField(null=True, blank=True, default=None)
 
     name = models.CharField(max_length=255)
-    danbooru_tags = ArrayField(models.TextField(), default=list(), blank=True, db_index=True)
+    danbooru_tags = ArrayField(
+        models.TextField(), default=list, blank=True, db_index=True
+    )
     description = models.TextField()
     sub = models.CharField(choices=Sub.choices, max_length=9, default=Sub.FORMAT)
     is_nsfw = models.BooleanField(default=False)

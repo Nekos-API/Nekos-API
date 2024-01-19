@@ -32,7 +32,9 @@ class Character(models.Model):
         default="Human", null=True, help_text="The character's species."
     )
     birthday = models.DateField(
-        null=True, blank=True, help_text="The character's birthday. Year doesn't matter."
+        null=True,
+        blank=True,
+        help_text="The character's birthday. Year doesn't matter.",
     )
     nationality = models.TextField(null=True, help_text="The character's nationality.")
     occupations = ArrayField(
@@ -49,7 +51,7 @@ class Character(models.Model):
     )
 
     danbooru_tags = ArrayField(
-        models.TextField(), default=list(), blank=True, db_index=True
+        models.TextField(), default=list, blank=True, db_index=True
     )
 
     def __str__(self) -> str:
