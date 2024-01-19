@@ -22,17 +22,17 @@ class Character(models.Model):
         help_text="All the ages the character offically has/has officially had.",
     )
     height = models.PositiveSmallIntegerField(
-        null=True, help_text="The character's height in cm."
+        null=True, blank=True, help_text="The character's height in cm."
     )
     weight = models.PositiveSmallIntegerField(
-        null=True, help_text="The character's weight in kg."
+        null=True, blank=True, help_text="The character's weight in kg."
     )
     gender = models.TextField(null=True, help_text="The character's gender.")
     species = models.TextField(
         default="Human", null=True, help_text="The character's species."
     )
     birthday = models.DateField(
-        null=True, help_text="The character's birthday. Year doesn't matter."
+        null=True, blank=True, help_text="The character's birthday. Year doesn't matter."
     )
     nationality = models.TextField(null=True, help_text="The character's nationality.")
     occupations = ArrayField(
@@ -44,6 +44,7 @@ class Character(models.Model):
         "images.Image",
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
         help_text="An image that illustrates the character. Something like what you'd see as the image for a character in MAL or AniList.",
     )
 
