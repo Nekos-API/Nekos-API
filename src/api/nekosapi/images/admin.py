@@ -26,6 +26,7 @@ class ImageAdmin(admin.ModelAdmin):
         "is_screenshot",
         "is_flagged",
         "is_animated",
+        "danbooru_processed",
         "created_at",
         "updated_at",
     )
@@ -44,6 +45,7 @@ class ImageAdmin(admin.ModelAdmin):
         "duration",
         "hash_md5",
         "hash_perceptual",
+        "id_v2",
     )
     autocomplete_fields = ("tags", "characters")
     raw_id_fields = ("artist",)

@@ -107,7 +107,7 @@ class Image(models.Model):
         default=Verification.UNVERIFIED,
     )
 
-    rating = models.CharField(choices=Rating.choices, max_length=12, null=True)
+    rating = models.CharField(choices=Rating.choices, max_length=12, null=True, blank=True)
 
     hash_md5 = models.CharField(max_length=32, null=True, unique=True)
     hash_perceptual = models.CharField(max_length=32, null=True)
@@ -142,6 +142,7 @@ class Image(models.Model):
     )
 
     tags = models.ManyToManyField("Tag", blank=True, related_name="images")
+    danbooru_processed = models.BooleanField(default=False, db_index=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -183,9 +184,10 @@ class Tag(models.Model):
         CHARACTER = "character", "Character"
         SETTING = "setting", "Setting"
 
-    id_v2 = models.UUIDField(null=True, blank=True)
+    id_v2 = models.UUIDField(null=True, blank=True, default=None)
 
     name = models.CharField(max_length=255)
+    danbooru_tags = ArrayField(models.TextField(), default=list(), blank=True, db_index=True)
     description = models.TextField()
     sub = models.CharField(choices=Sub.choices, max_length=9, default=Sub.FORMAT)
     is_nsfw = models.BooleanField(default=False)

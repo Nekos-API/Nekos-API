@@ -47,5 +47,9 @@ class Character(models.Model):
         help_text="An image that illustrates the character. Something like what you'd see as the image for a character in MAL or AniList.",
     )
 
+    danbooru_tags = ArrayField(
+        models.TextField(), default=list(), blank=True, db_index=True
+    )
+
     def __str__(self) -> str:
         return self.name
