@@ -66,15 +66,15 @@ class Command(BaseCommand):
             hentai_rating = classification["hentai"]
             sexy_rating = classification["sexy"]
 
-            if hentai_rating > 0.75:
+            if hentai_rating > 0.85:
                 image.rating = Image.Rating.EXPLICIT
                 image.verification = Image.Verification.VERIFIED
                 image.save()
-            elif hentai_rating > 0.5:
+            elif hentai_rating > 0.60:
                 image.rating = Image.Rating.BORDERLINE
                 image.verification = Image.Verification.VERIFIED
                 image.save()
-            elif hentai_rating > 0.25 or sexy_rating > 0.5:
+            elif hentai_rating > 0.30 or sexy_rating > 0.5:
                 image.rating = Image.Rating.SUGGESTIVE
                 image.verification = Image.Verification.VERIFIED
                 image.save()
