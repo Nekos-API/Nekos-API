@@ -30,7 +30,10 @@ class Command(BaseCommand):
             if not all
             else Image.objects.all()
         )
-        print(f"Processing {uv.count()} images...")
+        total = uv.count()
+        print(f"Processing {total} images...")
+
+        i = 1
 
         for image in uv:
             imgb = requests.get(image.image.url).content
@@ -82,5 +85,6 @@ class Command(BaseCommand):
 
             self.stdout.write(
                 self.style.SUCCESS("SUCCESS")
-                + ": Processed image {} - {}".format(image.id, image.rating)
+                + ": ({}/{}) Processed image {} - {}".format(i, total, image.id, image.rating)
             )
+            i += 1
