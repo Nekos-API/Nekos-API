@@ -72,7 +72,7 @@ class Command(BaseCommand):
                 image.verification = Image.Verification.VERIFIED
                 image.save()
             elif hentai_rating > 0.25 or sexy_rating > 0.5:
-                image.rating = Image.Rating.QUESTIONABLE
+                image.rating = Image.Rating.SUGGESTIVE
                 image.verification = Image.Verification.VERIFIED
                 image.save()
             else:
