@@ -29,16 +29,14 @@ class Command(BaseCommand):
             Image.objects.filter(verification=Image.Verification.UNVERIFIED)
             if not all
             else Image.objects.all()
-        ).exclude(image__isnull=True, image="")
+        )
         total = uv.count()
         print(f"Processing {total} images...")
-
+        
         i = 1
-
         for image in uv:
-            imgb = requests.get(image.image.url).content
-
             try:
+                imgb = requests.get(image.image.url).content
                 imgp = PIL.Image.open(io.BytesIO(imgb))
                 imgp.convert("RGBA")
             except Exception as e:
