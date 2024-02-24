@@ -29,7 +29,7 @@ class Command(BaseCommand):
             Image.objects.filter(verification=Image.Verification.UNVERIFIED)
             if not all
             else Image.objects.all()
-        )
+        ).exclude(image__isnull=True, image="")
         total = uv.count()
         print(f"Processing {total} images...")
 
