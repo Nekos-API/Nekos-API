@@ -13,7 +13,7 @@ from nekosapi.characters.api import router as characters_router
 api = NinjaAPI(
     title="Nekos API",
     version="3",
-    description="An open source anime artworks API.",
+    description="An open source anime art API.",
     servers=[
         {
             "url": "https://api.nekosapi.com",
