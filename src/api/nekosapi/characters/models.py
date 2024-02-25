@@ -42,13 +42,6 @@ class Character(models.Model):
         blank=True,
         help_text="All the occupations the character officially has/has officially had.",
     )
-    main_image = models.ForeignKey(
-        "images.Image",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        help_text="An image that illustrates the character. Something like what you'd see as the image for a character in MAL or AniList.",
-    )
 
     danbooru_tags = ArrayField(
         models.TextField(), default=list, blank=True, db_index=True

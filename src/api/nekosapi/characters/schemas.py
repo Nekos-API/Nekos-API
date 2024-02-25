@@ -61,12 +61,6 @@ class CharacterSchema(Schema):
         description="All the occupations the character officially has/has officially had.",
     )
 
-    main_image_id: Optional[int] = Field(
-        ...,
-        alias="main_image_id",
-        description="The character's main image's ID. This image shows the character and can be used, for example, as the character's \"profile picture\".",
-    )
-
     @staticmethod
     def resolve_birthday(obj: Character) -> Optional[str]:
         return obj.birthday.strftime("%m/%d") if obj.birthday else None

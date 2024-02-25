@@ -5,6 +5,17 @@ from nekosapi.images.models import Image, Tag
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
+    search_fields = (
+        "image",
+        "sample",
+        "artist__name",
+        "artist__aliases",
+        "characters__name",
+        "characters__aliases",
+        "characters__danbooru_tags",
+        "tags__name",
+        "tags__danbooru_tags"
+    )
     list_display = (
         "id",
         "artist",

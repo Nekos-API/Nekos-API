@@ -25,4 +25,3 @@ class CharacterAdmin(admin.ModelAdmin):
         "nationality",
         "occupations",
     )
-    raw_id_fields = ("main_image",)
