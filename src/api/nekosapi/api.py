@@ -37,7 +37,8 @@ async def index(request):
             "/images",
             "/images/{id:int}",
             "/images/{id:int}/tags",
-            "/images/{id:int}/report" "/images/{id:int}/artist",
+            "/images/{id:int}/report",
+            "/images/{id:int}/artist",
             "/images/{id:int}/characters",
             "/images/random",
             "/images/random/file",
@@ -58,8 +59,11 @@ async def index(request):
             "v1": {"url": "https://api.nekosapi.com/v1", "status": "deprecated"},
             "v0": {"url": "https://api.nekosapi.com/v0", "status": "deprecated"},
         },
+        "github": "https://github.com/Nekos-API/Nekos-API",
+        "discord": "https://discord.gg/PgQnuM3YnM",
         "openapi": "/v3/openapi.json",
         "documentation": "https://nekosapi.com/docs",
+        "openapi_documentation": "https://api.nekosapi.com/v3/docs"
     }
 
 
