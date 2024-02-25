@@ -136,7 +136,7 @@ class Image(models.Model):
     is_animated = models.BooleanField(default=False)
 
     artist = models.ForeignKey(
-        "artists.Artist", on_delete=models.CASCADE, related_name="images", null=True
+        "artists.Artist", on_delete=models.CASCADE, related_name="images", null=True, blank=True
     )
 
     characters = models.ManyToManyField(
