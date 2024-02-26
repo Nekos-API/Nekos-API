@@ -1,4 +1,4 @@
-import { Tabs } from "nextra-theme-docs";
+import { Tabs, Callout } from "nextra-theme-docs";
 
 # Report an Image
 
@@ -6,15 +6,20 @@ This endpoint allows you to create an image report. Use it when you think that a
 
 ## Endpoint Details
 
--   URL: `/v3/images/{id}/report`
+-   URL: `/v3/images/report`
 -   Method: `POST`
 -   Response: Empty
 
 ## Parameters
 
-| Location | Name | Type    | Description    | Required |
-| -------- | ---- | ------- | -------------- | -------- |
-| Path     | `id` | Integer | The image's ID | Yes      |
+| Location  | Name  | Type    | Description         | Required |
+| --------- | ----- | ------- | ------------------- | -------- |
+| Query     | `id`  | Integer | The image's ID      | No       |
+| Query     | `url` | URL     | The image's CDN URL | No       |
+
+<Callout>
+    Either `id` or `url` must be present.
+</Callout>
 
 ## Example Request
 
@@ -23,7 +28,7 @@ This endpoint allows you to create an image report. Use it when you think that a
         ```python filename="image_report.py" showLineNumbers
         import requests
 
-        res = requests.post(f"https://api.nekosapi.com/v3/images/{image_id}/report")
+        res = requests.post(f"https://api.nekosapi.com/v3/images/report?id={image_id}")
         res.raise_for_status()
 
         # Response is empty as it returns a 204
@@ -31,7 +36,7 @@ This endpoint allows you to create an image report. Use it when you think that a
     </Tabs.Tab>
     <Tabs.Tab>
         ```javascript filename="image_details.js" showLineNumbers
-        fetch(`https://api.nekosapi.com/v3/images/${image_id}/report`, {
+        fetch(`https://api.nekosapi.com/v3/images/report?id=${image_id}`, {
             method: "POST",
         }).then(res => {
             // Response is empty as it returns a 204

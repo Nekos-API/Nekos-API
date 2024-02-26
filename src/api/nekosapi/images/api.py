@@ -7,6 +7,7 @@ from ninja import Router, Query
 from ninja.pagination import paginate
 
 from nekosapi.utils import async_get_or_404
+from nekosapi.errors import HttpError
 from nekosapi.pagination import LimitOffsetPagination, LimitPagination
 from nekosapi.images.models import Image, Tag
 from nekosapi.images.schemas import ImageSchema, TagSchema
@@ -159,17 +160,29 @@ def image_tags(request, id: int):
 
 
 @router.post(
-    "/{id}/report",
+    "/report",
     response={204: None},
     summary="Create an image report",
     description="Reports an image.",
 )
-async def image_report(request, id: int):
-    image = await async_get_or_404(
-        Image,
-        id=id,
-        verification=Image.Verification.VERIFIED,
-    )
+async def image_report(request, id: int | None = None, url: str | None = None):
+    if id:
+        image = await async_get_or_404(
+            Image,
+            id=id,
+            verification=Image.Verification.VERIFIED,
+        )
+        
+    elif url:
+        image = await async_get_or_404(
+            Image,
+            image=url.replace("https://cdn.nekosapi.com/", ""),
+            verification=Image.Verification.VERIFIED,
+        )
+    
+    else:
+        raise HttpError(status_code=400)
+    
     image.is_flagged = True
     await image.asave()
     return ""
