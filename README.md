@@ -6,7 +6,7 @@ Nekos API is a free JSON API that provides a diverse collection of anime images 
 
 ## Features
 
-- **Anime Images and Gifs:** Access a wide variety of anime-related images and gifs for use in your applications or projects.
+- **Anime Images and GIFs:** Access a wide variety of anime-related images and gifs for use in your applications or projects.
 
 - **Free to Use:** Nekos API is completely free to use, allowing developers to integrate anime content seamlessly.
 
@@ -20,7 +20,7 @@ Base URL:
 ```https://api.nekosapi.com/v3```
 
 - To get Random Images: ```https://api.nekosapi.com/v3/images/random```
-- To get list of Artists: ```https://api.nekosapi.com/v3/artists```
+- To get a list of Artists: ```https://api.nekosapi.com/v3/artists```
 - To get Specific Image: ```https://api.nekosapi.com/v3/images/{id:int}```
 
 For more details on available endpoints and usage guidelines, refer to documentation.
@@ -38,6 +38,7 @@ There are a few projects using Nekos API:
 2. [Nyatastic](https://go.nekogirl.net/invite-nyatastic): A multipurpose anime Discord bot.
 3. [Waifu List](https://github.com/Oreki-Dev/Waifu-List): An (almost) infinite gallery of anime art.
 4. [WaifuPics](https://github.com/MarketTwits/WaifuPics)
+5. [Waifu Image Generator](https://github.com/RohanDas28/Waifu-Finder): Waifu Image Generator based on ratings.
 
 *Psst! You can make a PR to add your project to this list :)*
 
