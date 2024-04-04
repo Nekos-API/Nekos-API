@@ -66,6 +66,35 @@ def random_image_file(request, filters: ImageFilterSchema = Query(...)):
     return redirect(image.image.url)
 
 
+@router.post(
+    "/report",
+    response={204: None},
+    summary="Create an image report",
+    description="Reports an image.",
+)
+async def image_report(request, id: int | None = None, url: str | None = None):
+    if id:
+        image = await async_get_or_404(
+            Image,
+            id=id,
+            verification=Image.Verification.VERIFIED,
+        )
+
+    elif url:
+        image = await async_get_or_404(
+            Image,
+            image=url.replace("https://cdn.nekosapi.com/", ""),
+            verification=Image.Verification.VERIFIED,
+        )
+
+    else:
+        raise HttpError(status_code=400)
+
+    image.is_flagged = True
+    await image.asave()
+    return ""
+
+
 @router.get(
     "/tags",
     response={200: list[TagSchema]},
@@ -157,34 +186,3 @@ def image_tags(request, id: int):
         verification=Image.Verification.VERIFIED,
     )
     return image.tags
-
-
-@router.post(
-    "/report",
-    response={204: None},
-    summary="Create an image report",
-    description="Reports an image.",
-)
-async def image_report(
-    request, id: int | None = Query(None), url: str | None = Query(None)
-):
-    if id:
-        image = await async_get_or_404(
-            Image,
-            id=id,
-            verification=Image.Verification.VERIFIED,
-        )
-
-    elif url:
-        image = await async_get_or_404(
-            Image,
-            image=url.replace("https://cdn.nekosapi.com/", ""),
-            verification=Image.Verification.VERIFIED,
-        )
-
-    else:
-        raise HttpError(status_code=400)
-
-    image.is_flagged = True
-    await image.asave()
-    return ""
