@@ -82,5 +82,11 @@ export default [
         id: "1024872859753005066",
         name: "CaraDanoCJwits",
         contributions: ["Donator"]  // BTC
+    },
+    {
+        imageUrl: "https://avatars.githubusercontent.com/u/88086373?v=4",
+        name: "Danpoj",
+        contributions: ["Donator"],
+        link: "https://github.com/danpoj",
     }
 ];
