@@ -88,5 +88,11 @@ export default [
         name: "Danpoj",
         contributions: ["Donator"],
         link: "https://github.com/danpoj",
-    }
+    },
+    {
+        imageUrl: "https://avatars.githubusercontent.com/u/52465709?v=4",
+        name: "notN33T",
+        contributions: ["Donator"],
+        link: "https://github.com/notN33T"
+    },
 ];
