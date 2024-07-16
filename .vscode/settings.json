@@ -4,5 +4,6 @@
         "editor.defaultFormatter": "ms-python.black-formatter",
         "editor.formatOnSave": true,
         "formatting.provider": "black"
-    }
+    },
+    "conventionalCommits.scopes": ["api"]
 }
