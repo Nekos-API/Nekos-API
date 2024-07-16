@@ -7,6 +7,7 @@ authors = [
 ]
 dependencies = [
     "click>=8.1.7",
+    "strawberry-graphql[asgi]>=0.235.2",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
