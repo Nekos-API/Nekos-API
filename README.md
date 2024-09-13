@@ -39,6 +39,7 @@ There are a few projects using Nekos API:
 3. [Waifu List](https://github.com/Oreki-Dev/Waifu-List): An (almost) infinite gallery of anime art.
 4. [WaifuPics](https://github.com/MarketTwits/WaifuPics)
 5. [Waifu Image Generator](https://github.com/RohanDas28/Waifu-Finder): Waifu Image Generator based on ratings.
+6. [Flare](https://github.com/trecente/flare): An image gallery of anime pictures.
 
 *Psst! You can make a PR to add your project to this list :)*
 
