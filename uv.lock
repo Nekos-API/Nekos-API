@@ -275,7 +275,6 @@ dependencies = [
     { name = "django-dynamic-filenames" },
     { name = "django-ninja" },
     { name = "django-storages", extra = ["s3"] },
-    { name = "gunicorn" },
     { name = "pillow" },
     { name = "psycopg", extra = ["binary", "pool"] },
     { name = "python-dotenv" },
@@ -285,6 +284,7 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "grequests" },
+    { name = "gunicorn" },
     { name = "requests" },
 ]
 
@@ -294,7 +294,6 @@ requires-dist = [
     { name = "django-dynamic-filenames", specifier = ">=1.4.0" },
     { name = "django-ninja", specifier = ">=1.3.0" },
     { name = "django-storages", extras = ["s3"], specifier = ">=1.14.4" },
-    { name = "gunicorn", specifier = ">=23.0.0" },
     { name = "pillow", specifier = ">=11.1.0" },
     { name = "psycopg", extras = ["binary", "pool"], specifier = ">=3.2.3" },
     { name = "python-dotenv", specifier = ">=1.0.1" },
@@ -304,6 +303,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "grequests", specifier = ">=0.7.0" },
+    { name = "gunicorn", specifier = ">=23.0.0" },
     { name = "requests", specifier = ">=2.32.3" },
 ]
 

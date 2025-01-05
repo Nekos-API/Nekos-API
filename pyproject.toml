@@ -13,11 +13,11 @@ dependencies = [
     "django-dynamic-filenames>=1.4.0",
     "pillow>=11.1.0",
     "uvicorn>=0.34.0",
-    "gunicorn>=23.0.0",
 ]
 
 [dependency-groups]
 dev = [
     "grequests>=0.7.0",
+    "gunicorn>=23.0.0",
     "requests>=2.32.3",
 ]

@@ -64,9 +64,7 @@ Path parameters:
 
 ## Deployment
 
-You can deploy Nekos API v4 as a docker image.
-
-To deploy, you'll need an S3-compatible object storage and an accessible PostgreSQL instance.
+You can deploy Nekos API v4 as a docker image. To deploy, you'll need an S3-compatible object storage and an accessible PostgreSQL instance.
 
 The docker image is located at `registry.nyeki.dev/nekos-api/nekos-api:latest`. You'll need to set up the following environment variables before deploying:
 
@@ -81,3 +79,29 @@ The docker image is located at `registry.nyeki.dev/nekos-api/nekos-api:latest`. 
 -   `S3_SECRET_KEY`: The S3 bucket's secret key.
 -   `S3_BUCKET_NAME`: The S3 bucket's name.
 -   `S3_ENDPOINT_URL`: The S3 bucket's endpoint URL.
+
+The API will be exposed at port 8000.
+
+## Development
+
+To set up the development environment, you'll need to have Python 3.13 installed. You can install the dependencies by running:
+
+```bash
+pip install uv
+uv sync  # Add the --no-dev flag if you're on Windows.
+uv run python3 manage.py migrate
+```
+
+To start the development server, run:
+
+```bash
+uv run python3 manage.py runserver
+```
+
+To access the admin panel, you'll need to create a superuser:
+
+```bash
+uv run python3 manage.py createsuperuser
+```
+
+The admin panel will be accessible at `/admin`. You may need to update the CSRF settings in `nekosapi/settings.py` to allow the admin panel to work.
