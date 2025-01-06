@@ -11,6 +11,8 @@ The main changes from v3 are:
 
 ## Usage
 
+The API is hosted at `https://api.nekosapi.com/v4`.
+
 This API version has few endpoints:
 
 ### `GET /v4/images`
