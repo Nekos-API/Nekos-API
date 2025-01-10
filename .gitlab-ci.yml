@@ -1,0 +1,11 @@
+build:
+  image: docker:20.10.16
+  stage: build
+  services:
+    - docker:20.10.16-dind
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:latest
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
