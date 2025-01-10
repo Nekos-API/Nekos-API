@@ -18,6 +18,8 @@ def index(request):
             "/v4/images/{image_id}",
             "/v4/images/{image_id}/file",
         ],
+        "git_repository": "https://git.nyeki.dev/nekos-api/nekos-api",
+        "documentation": "https://git.nyeki.dev/nekos-api/nekos-api"
     }
 
 
