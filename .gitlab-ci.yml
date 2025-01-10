@@ -1,8 +1,8 @@
 build:
-  image: docker:20.10.16
+  image: index.docker.io/docker:20.10.16
   stage: build
   services:
-    - docker:20.10.16-dind
+    - index.docker.io/docker:20.10.16-dind
   variables:
     IMAGE_TAG: registry.nyeki.dev/nekos-api/nekos-api:latest
   script:
