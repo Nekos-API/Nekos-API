@@ -27,6 +27,7 @@ def index(request):
 def v3_discontinued(request, path: str):
     return {
         "message": "This version has been discontinued. Use v4 instead.",
+        "v4_documentation": "https://git.nyeki.dev/nekos-api/nekos-api"
     }
 
 
@@ -34,6 +35,7 @@ def v3_discontinued(request, path: str):
 def v2_discontinued(request, path: str):
     return {
         "message": "This version has been discontinued. Use v4 instead.",
+        "v4_documentation": "https://git.nyeki.dev/nekos-api/nekos-api"
     }
 
 
@@ -41,6 +43,7 @@ def v2_discontinued(request, path: str):
 def v1_discontinued(request, path: str):
     return {
         "message": "This version has been discontinued. Use v4 instead.",
+        "v4_documentation": "https://git.nyeki.dev/nekos-api/nekos-api"
     }
 
 
@@ -48,6 +51,7 @@ def v1_discontinued(request, path: str):
 def v0_discontinued(request, path: str):
     return {
         "message": "This version has been discontinued. Use v4 instead.",
+        "v4_documentation": "https://git.nyeki.dev/nekos-api/nekos-api"
     }
 
 
