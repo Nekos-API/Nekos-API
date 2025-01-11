@@ -2,6 +2,9 @@
 
 [Documentation](https://nekosapi.com/docs) • [Nekos.Land](https://nekos.land) • [Discord](https://discord.gg/w48Sk9X9UE) • [Donate](https://ko-fi.com/Nekidev)
 
+> [!WARNING]
+> Nekos API's repository has been moved to GitLab. You can find the new repository at [the new Nekos API GitLab repository](https://git.nyeki.dev/nekos-api/nekos-api).
+
 Nekos API is a free JSON API that provides a diverse collection of anime images and gifs. Our mission is to offer the best service possible, delivering high-quality content to developers and anime enthusiasts alike. We are committed to continuously improving our API and welcome any suggestions or feedback from our users.
 
 ## Features
@@ -17,11 +20,10 @@ Nekos API is a free JSON API that provides a diverse collection of anime images 
 To use the Nekos API, simply make HTTP requests to our endpoint, and you'll receive JSON responses containing anime images and gifs.
 
 Base URL:
-```https://api.nekosapi.com/v3```
+```https://api.nekosapi.com/v4```
 
-- To get Random Images: ```https://api.nekosapi.com/v3/images/random```
-- To get a list of Artists: ```https://api.nekosapi.com/v3/artists```
-- To get Specific Image: ```https://api.nekosapi.com/v3/images/{id:int}```
+- To get Random Images: ```https://api.nekosapi.com/v4/images/random```
+- To get Specific Image: ```https://api.nekosapi.com/v4/images/{id:int}```
 
 For more details on available endpoints and usage guidelines, refer to documentation.
   
