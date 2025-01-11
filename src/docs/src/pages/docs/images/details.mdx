@@ -6,7 +6,7 @@ This endpoint allows you to get an image by its ID.
 
 ## Endpoint Details
 
--   URL: `/v3/images/{id}`
+-   URL: `/v4/images/{id}`
 -   Method: `GET`
 -   Response: `JSON`
 
@@ -14,7 +14,7 @@ This endpoint allows you to get an image by its ID.
 
 | Location | Name | Type    | Description    | Required |
 | -------- | ---- | ------- | -------------- | -------- |
-| Path     | `id` | Integer | The image's ID | Yes      |
+| Path     | `id` | String  | The image's ID | Yes      |
 
 ## Example Request
 
@@ -23,7 +23,7 @@ This endpoint allows you to get an image by its ID.
         ```python filename="image_details.py" showLineNumbers
         import requests
 
-        res = requests.get(f"https://api.nekosapi.com/v3/images/{image_id}")
+        res = requests.get(f"https://api.nekosapi.com/v4/images/{image_id}")
         res.raise_for_status()
 
         data = res.json()
@@ -31,7 +31,7 @@ This endpoint allows you to get an image by its ID.
     </Tabs.Tab>
     <Tabs.Tab>
         ```javascript filename="image_details.js" showLineNumbers
-        fetch(`https://api.nekosapi.com/v3/images/${image_id}`, {
+        fetch(`https://api.nekosapi.com/v4/images/${image_id}`, {
             method: "GET",
         }).then(res => res.json())
         .then(data => {

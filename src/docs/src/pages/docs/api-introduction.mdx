@@ -1,8 +1,6 @@
 # Introduction
 
-OpenAPI v3: [/v3/openapi.json](https://api.nekosapi.com/v3/openapi.json)<br/>
-Auto-generated docs: [/v3/docs](https://api.nekosapi.com/v3/docs)<br/>
-Base URL: `https://api.nekosapi.com/v3`
+Base URL: `https://api.nekosapi.com/v4`
 
 This page will help you understand how to use the JSON API. We highly recommend reading this before starting to use the API.
 
@@ -14,7 +12,7 @@ The API has no rate limits at the moment. Can this be a problem in the future? Y
 
 The API uses limit and offset parameters to paginate the results.
 
-```jsonc filename="GET /v3/images?limit=100&offset=10"
+```jsonc filename="GET /v4/images?limit=100&offset=10"
 {
     "items": [
         { ... },
@@ -31,7 +29,7 @@ The `limit` parameter has a maximum of 100 items. The `offset` parameter is not 
 
 Though we try to make error formats as consistent as possible, we cannot guarantee that all errors will return the same json format (due to different libraries having their own error formats). You can try to read the following error format and use the status code in case it fails:
 
-```jsonc filename="GET /v3/images?limit=101"
+```jsonc filename="GET /v4/images?limit=101"
 {
     "detail": [
         {
@@ -51,8 +49,8 @@ Though we try to make error formats as consistent as possible, we cannot guarant
 
 ## Array Query Parameters
 
-Array query parameters require the same query parameter to be set once per item, like this:
+Array query parameters are always a comma-delimited list.
 
 ```
-/images?tag=1&tag=2
+/images?tag=girl,blue_hair
 ```

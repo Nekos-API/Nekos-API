@@ -6,7 +6,7 @@ This endpoint allows you to get a redirect to a random image's file URL, filteri
 
 ## Endpoint Details
 
--   URL: `/v3/images/random`
+-   URL: `/v4/images/random`
 -   Method: `GET`
 -   Response: `JSON`
 
@@ -15,13 +15,8 @@ This endpoint allows you to get a redirect to a random image's file URL, filteri
 | Location | Name            | Type                                                      | Description                                                                                                    | Required |
 | -------- | --------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------- |
 | Query    | `rating`        | Array of strings [safe, suggestive, borderline, explicit] | The (age) rating of the image.                                                                                 | No       |
-| Query    | `is_original`   | Boolean                                                   | Whether the image's idea is original or it uses characters/settings/content from another place (not original). | No       |
-| Query    | `is_screenshot` | Boolean                                                   | Whether the image is a screenshot of an anime ep./manga page.                                                  | No       |
-| Query    | `is_flagged`    | Boolean                                                   | Whether the image is flagged by mods.                                                                          | No       |
-| Query    | `is_animated`   | Boolean                                                   | Whether the image is animated or not. This'll become useful in the future when we add GIFs.                    | No       |
 | Query    | `artist`        | Array of integers                                         | The artist's ID.                                                                                               | No       |
-| Query    | `character`     | Array of integers                                         | The character's ID.                                                                                            | No       |
-| Query    | `tag`           | Array of integers                                         | The tag's ID.                                                                                                  | No       |
+| Query    | `tags`          | Array of strings                                          | The tags names, comma-delimited.                                                                               | No       |
 
 ## Example Request
 
@@ -30,7 +25,7 @@ This endpoint allows you to get a redirect to a random image's file URL, filteri
         ```python filename="random_image_file.py" showLineNumbers
         import requests
 
-        res = requests.get("https://api.nekosapi.com/v3/images/random/file")
+        res = requests.get("https://api.nekosapi.com/v4/images/random/file")
         res.raise_for_status()
 
         data = res.content
@@ -38,7 +33,7 @@ This endpoint allows you to get a redirect to a random image's file URL, filteri
     </Tabs.Tab>
     <Tabs.Tab>
         ```javascript filename="random_image_file.js" showLineNumbers
-        fetch("https://api.nekosapi.com/v3/images/random/file", {
+        fetch("https://api.nekosapi.com/v4/images/random/file", {
             method: "GET",
         }).then(res => res.blob())
         .then(data => {

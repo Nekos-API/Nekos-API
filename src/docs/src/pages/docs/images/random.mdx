@@ -6,7 +6,7 @@ This endpoint allows you to get x random images, filtering by tags, characters, 
 
 ## Endpoint Details
 
--   URL: `/v3/images/random`
+-   URL: `/v4/images/random`
 -   Method: `GET`
 -   Response: `JSON`
 
@@ -15,14 +15,9 @@ This endpoint allows you to get x random images, filtering by tags, characters, 
 | Location | Name            | Type                                                      | Description                                                                                                    | Required |
 | -------- | --------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------- |
 | Query    | `rating`        | Array of strings [safe, suggestive, borderline, explicit] | The (age) rating of the image.                                                                                 | No       |
-| Query    | `is_original`   | Boolean                                                   | Whether the image's idea is original or it uses characters/settings/content from another place (not original). | No       |
-| Query    | `is_screenshot` | Boolean                                                   | Whether the image is a screenshot of an anime ep./manga page.                                                  | No       |
-| Query    | `is_flagged`    | Boolean                                                   | Whether the image is flagged by mods.                                                                          | No       |
-| Query    | `is_animated`   | Boolean                                                   | Whether the image is animated or not. This'll become useful in the future when we add GIFs.                    | No       |
 | Query    | `artist`        | Array of integers                                         | The artist's ID.                                                                                               | No       |
-| Query    | `character`     | Array of integers                                         | The character's ID.                                                                                            | No       |
-| Query    | `tag`           | Array of integers                                         | The tag's ID.                                                                                                  | No       |
-| Query    | `limit`         | Integer [1..100]                                          | The amount of random images to get                                                                             | No       |
+| Query    | `tags`          | Array of strings                                          | The tags names, comma-delimited.                                                                               | No       |
+| Query    | `limit`         | Integer [1..100]                                          | The amount of images to return.                                                                                | No       |
 
 ## Example Request
 
@@ -31,7 +26,7 @@ This endpoint allows you to get x random images, filtering by tags, characters, 
         ```python filename="random_images.py" showLineNumbers
         import requests
 
-        res = requests.get("https://api.nekosapi.com/v3/images/random")
+        res = requests.get("https://api.nekosapi.com/v4/images/random")
         res.raise_for_status()
 
         data = res.json()
@@ -39,7 +34,7 @@ This endpoint allows you to get x random images, filtering by tags, characters, 
     </Tabs.Tab>
     <Tabs.Tab>
         ```javascript filename="random_images.js" showLineNumbers
-        fetch("https://api.nekosapi.com/v3/images/random", {
+        fetch("https://api.nekosapi.com/v4/images/random", {
             method: "GET",
         }).then(res => res.json())
         .then(data => {
