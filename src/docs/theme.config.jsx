@@ -139,7 +139,7 @@ export default {
     },
     logoLink: false,
     project: {
-        link: 'https://github.com/Nekos-API/Nekos-API',
+        link: 'https://git.nyeki.dev/nekos-api/nekos-api',
     },
     docsRepositoryBase: "https://github.com/Nekos-API/Nekos-API/tree/main/docs",
     useNextSeoProps() {
@@ -160,17 +160,17 @@ export default {
         return <>
             <meta property="og:type" content="website" />
             <meta property="og:url" content={`https://nekosapi.com${asPath}`} />
-            <meta property="og:title" content={frontMatter.title || 'Nekos API - Unleash the Meow-nificent Power of +17.5k Anime Images, GIFs, and More!'} />
-            <meta property="og:description" content={frontMatter.description || 'Discover +13.5k high-quality anime images & GIFs for UwU-filled adventures. Explore artists, categories, and adorable characters. Embark on purrfect anime journeys now!'} />
+            <meta property="og:title" content={frontMatter.title || 'Nekos API - Unleash the Meow-nificent Power of +40k Anime Images, GIFs, and More!'} />
+            <meta property="og:description" content={frontMatter.description || 'Discover +40k high-quality anime images & GIFs for UwU-filled adventures. Explore artists, categories, and adorable characters. Embark on purrfect anime journeys now!'} />
             <meta property="og:image" content="/imgs/banners/banner.jfif" />
 
-            <meta name="description" content={frontMatter.description || "Discover +13.5k high-quality anime images & GIFs for UwU-filled adventures. Explore artists, categories, and adorable characters. Embark on purrfect anime journeys now!"} />
+            <meta name="description" content={frontMatter.description || "Discover +40k high-quality anime images & GIFs for UwU-filled adventures. Explore artists, categories, and adorable characters. Embark on purrfect anime journeys now!"} />
             <meta name="theme-color" content="#ff0055" />
 
             <meta property="twitter:card" content="summary_large_image" />
             <meta property="twitter:url" content="https://nekosapi.com/" />
-            <meta property="twitter:title" content="Nekos API - Unleash the Meow-nificent Power of +17.5k Anime Images, GIFs, and More!" />
-            <meta property="twitter:description" content="Discover +13.5k high-quality anime images & GIFs for UwU-filled adventures. Explore artists, categories, and adorable characters. Embark on purrfect anime journeys now!" />
+            <meta property="twitter:title" content="Nekos API - Unleash the Meow-nificent Power of +40k Anime Images, GIFs, and More!" />
+            <meta property="twitter:description" content="Discover +40k high-quality anime images & GIFs for UwU-filled adventures. Explore artists, categories, and adorable characters. Embark on purrfect anime journeys now!" />
             <meta property="twitter:image" content="/imgs/banners/banner.jfif" />
         </>
     },
