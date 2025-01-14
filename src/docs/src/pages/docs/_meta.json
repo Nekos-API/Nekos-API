@@ -8,8 +8,6 @@
     },
     "api-introduction": "Introduction",
     "images": "Images",
-    "artists": "Artists",
-    "characters": "Characters",
     "--- More ---": {
         "type": "separator",
         "title": "More"
