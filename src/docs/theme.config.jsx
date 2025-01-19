@@ -195,20 +195,6 @@ export default {
     },
     footer: {
         text: () => {
-            const [status, setStatus] = React.useState();
-            const [error, setError] = React.useState();
-            const [isLoading, setIsLoading] = React.useState(true);
-
-            React.useEffect(() => {
-                fetch('/api/status', { cache: "no-store" }).then(res => res.json()).then((data) => {
-                    setStatus(data.status)
-                }).catch((e) => {
-                    setError(e)
-                }).finally(() => {
-                    setIsLoading(false)
-                })
-            }, [])
-
             return (
                 <div className="flex flex-col md:flex-row md:items-center justify-between w-full gap-4">
                     <div>
@@ -220,38 +206,13 @@ export default {
                         from Argentina, <Link className="hover:underline" href="https://google.com/search?q=argentina+vs+france+2022+world+cup+results" target="_blank">the football world champion 🏆 ⭐⭐⭐</Link>.
                     </div>
                     <Link href="https://status.nekosapi.com/" target="_blank" className="rounded p-2 border border-neutral-200 hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600 bg-white dark:bg-black leading-none w-fit text-neutral-800 dark:text-white font-medium flex flex-row items-center gap-2 drop-shadow-sm transition cursor-pointer">
-                        {isLoading ? (
-                            <>
-                                <div className="h-2.5 w-2.5 rounded-full bg-neutral-400">
-                                    <div className="h-2.5 w-2.5 rounded-full bg-neutral-400 animate-ping"></div>
-                                </div>
-                                Status:
-                                <span>
-                                    Loading...
-                                </span>
-                            </>
-                        ) : error || (status != undefined && status != "up") ? (
-                            <>
-                                <div className="h-2.5 w-2.5 rounded-full bg-red-400">
-                                    <div className="h-2.5 w-2.5 rounded-full bg-red-400 animate-ping"></div>
-                                </div>
-                                Status:
-                                <span className="text-red-400">
-                                    Some systems are down!
-                                </span>
-                            </>
-                        ) : (
-                            <>
-                                <div className="h-2.5 w-2.5 rounded-full bg-green-400">
-                                    <div className="h-2.5 w-2.5 rounded-full bg-green-400 animate-ping"></div>
-                                </div>
-                                Status:
-                                <span className="text-green-400">
-                                    All systems are up
-                                </span>
-                            </>
-                        )}
-
+                        <div className="h-2.5 w-2.5 rounded-full bg-green-400">
+                            <div className="h-2.5 w-2.5 rounded-full bg-green-400 animate-ping"></div>
+                        </div>
+                        Status:
+                        <span className="text-green-400">
+                            All systems are up
+                        </span>
                     </Link>
                 </div>
             )
