@@ -38,9 +38,9 @@ async def get_random_image_file(
     # Returns a redirect to a random image's URL.
 
     image = (
-        models.Image.objects.filter(image_filters.get_filter_expression())
+        await models.Image.objects.filter(image_filters.get_filter_expression())
         .order_by("?")
-        .first()
+        .afirst()
     )
 
     return response.HttpResponseRedirect(image.file.url)

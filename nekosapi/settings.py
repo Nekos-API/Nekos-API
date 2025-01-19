@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import dotenv
 
-dotenv.load_dotenv()
+dotenv.load_dotenv(override=True)
 
 from pathlib import Path
 
