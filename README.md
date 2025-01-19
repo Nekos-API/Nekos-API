@@ -24,6 +24,7 @@ Query parameters:
 -   `limit`: The amount of items to get. Max is 100, min is 1. Defaults to 100.
 -   `offset`: The amount of items to skip. Min is 0. Defaults to 0.
 -   `tags`: The tags to filter by, comma separated.
+-   `without_tags`: The tags to exclude, comma separated.
 -   `rating`: The ratings to filter by, comma separated. The possible values are _safe_, _suggestive_, _borderline_, and _explicit_. WARNIGN: THE RATIGN IS NOT 100% PRECISE. BE CAREFUL. YOU MAY SEE SOME EXPLICIT IMAGES TAGGED AS BORDERLINE AND SOME SUGGESTIVE ONES TAGGED AS SAFE.
 -   `artist`: The name of the artist to filter by.
 
@@ -35,6 +36,7 @@ Query parameters:
 
 -   `limit`: The amount of items to get. Max is 100, min is 1. Defaults to 10.
 -   `tags`: The tags to filter by, comma separated.
+-   `without_tags`: The tags to exclude, comma separated.
 -   `rating`: The ratings to filter by, comma separated. The possible values are _safe_, _suggestive_, _borderline_, and _explicit_. WARNIGN: THE RATIGN IS NOT 100% PRECISE. BE CAREFUL. YOU MAY SEE SOME EXPLICIT IMAGES TAGGED AS BORDERLINE AND SOME SUGGESTIVE ONES TAGGED AS SAFE.
 -   `artist`: The name of the artist to filter by.
 
@@ -45,6 +47,7 @@ Redirects to a random image file.
 Query parameters:
 
 -   `tags`: The tags to filter by, comma separated.
+-   `without_tags`: The tags to exclude, comma separated.
 -   `rating`: The ratings to filter by, comma separated. The possible values are _safe_, _suggestive_, _borderline_, and _explicit_. WARNIGN: THE RATIGN IS NOT 100% PRECISE. BE CAREFUL. YOU MAY SEE SOME EXPLICIT IMAGES TAGGED AS BORDERLINE AND SOME SUGGESTIVE ONES TAGGED AS SAFE.
 -   `artist`: The name of the artist to filter by.
 
