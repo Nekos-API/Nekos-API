@@ -1,0 +1,19 @@
+[package]
+name = "nekosapi"
+version = "5.0.0"
+edition = "2024"
+default-run = "nekosapi"
+
+[dependencies]
+axum = { version = "0.8.3", features = ["macros", "query"] }
+axum-extra = { version = "0.10.1", features = ["query"] }
+colored = "3.0.0"
+diesel = { version = "2.2.9", features = ["sqlite", "returning_clauses_for_sqlite_3_35"] }
+dotenv = "0.15.0"
+futures = "0.3.31"
+libsqlite3-sys = { version = "0.32.0", features = ["bundled"] }
+reqwest = "0.12.15"
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = "1.0.140"
+tokio = { version = "1.44.2", features = ["fs", "rt-multi-thread"] }
+url = "2.5.4"
