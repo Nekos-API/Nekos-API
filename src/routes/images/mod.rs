@@ -83,8 +83,16 @@ pub async fn search_images(
 
     let result = match query
         .select(DbImage::as_select())
-        .limit(limit as i64)
-        .offset(offset as i64)
+        .limit(
+            limit
+                .try_into()
+                .expect("Could not convert usize limit into i64."),
+        )
+        .offset(
+            offset
+                .try_into()
+                .expect("Could not convert usize offset into i64."),
+        )
         .load(conn)
     {
         Ok(i) => i,
@@ -139,7 +147,10 @@ pub async fn search_images(
         items: result_with_tags
             .into_iter()
             .map(|(img, img_tags)| Image {
-                id: img.id as i64,
+                id: img
+                    .id
+                    .try_into()
+                    .expect("Could not convert database's image ID to the schema's image ID."),
                 url: format!(
                     "https://s3.nyeki.dev/nekos-api/images/original/{}",
                     img.file_name

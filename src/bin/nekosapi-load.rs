@@ -129,7 +129,9 @@ async fn main() {
     for (i, tag_name) in tags_list.iter().enumerate() {
         diesel::insert_into(tags)
             .values(Tag {
-                id: i as i32,
+                id: i
+                    .try_into()
+                    .expect("Could not convert enumeration counter into i32 for the tag's ID."),
                 name: tag_name.to_owned(),
             })
             .execute(&mut conn)
@@ -154,11 +156,7 @@ async fn main() {
         if i != 0 && i % 500 == 0 {
             print!(
                 "\r{}",
-                format!(
-                    "   Inserted {:} (out of {:}) images.",
-                    i,
-                    images_list.len()
-                ).dimmed()
+                format!("   Inserted {:} (out of {:}) images.", i, images_list.len()).dimmed()
             );
             io::stdout().flush().unwrap();
         }
@@ -173,7 +171,9 @@ async fn main() {
 
         insert_into(images)
             .values(Image {
-                id: image.id as i32,
+                id: image.id.try_into().expect(
+                    "Could not convert API's image ID into database's image table ID type.",
+                ),
                 file_name: image_file_name,
                 rating: image.rating.clone(),
                 artist_name: image.artist_name.clone(),
@@ -193,7 +193,7 @@ async fn main() {
                     .tags
                     .iter()
                     .map(|tag_name| ImageTag {
-                        image_id: image.id as i32,
+                        image_id: image.id.try_into().expect("Could not convert API's image ID into images_tag table's image_id type."),
                         tag_id: *tag_map
                             .get(tag_name)
                             .expect(
