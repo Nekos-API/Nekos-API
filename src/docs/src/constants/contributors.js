@@ -1,7 +1,7 @@
 export default [
     {
-        id: "777338793803513886",
-        name: "Nekidev",
+        id: "1357199907512914051",
+        name: "Nyeki",
         contributions: [
             "Main developer",
             "PY Library maintainer",
