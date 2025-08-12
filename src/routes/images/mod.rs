@@ -38,6 +38,9 @@ pub struct Pagination {
 
     #[serde(default, deserialize_with = "deserialize_list")]
     pub tags: Vec<String>,
+
+    #[serde(default, deserialize_with = "deserialize_list")]
+    pub without_tags: Vec<String>,
 }
 
 pub async fn search_images(
@@ -77,6 +80,17 @@ pub async fn search_images(
                     .inner_join(tags)
                     .select(image_id)
                     .filter(name.eq_any(page.tags)),
+            ),
+        );
+    }
+
+    if !page.without_tags.is_empty() {
+        query = query.filter(
+            id.ne_all(
+                image_tags
+                    .inner_join(tags)
+                    .select(image_id)
+                    .filter(name.eq_any(page.without_tags)),
             ),
         );
     }
