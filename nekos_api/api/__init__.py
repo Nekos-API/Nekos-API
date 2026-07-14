@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 from nekos_api.lib import settings, project
 from nekos_api.api import docs
@@ -39,6 +40,13 @@ app_v5.add_exception_handler(BaseError, BaseError.handler)
 app_v5.add_exception_handler(404, NotFoundError.handler)
 app_v5.add_exception_handler(422, ValidationError.handler)
 app_v5.add_exception_handler(Exception, InternalServerError.handler)
+
+app_v5.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 app.mount("/v5", app_v5)
