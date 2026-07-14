@@ -6,4 +6,4 @@ WORKDIR /app
 RUN pip install uv
 RUN uv sync --no-dev
 
-CMD ["uv", "run", "gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "nekosapi.asgi:application"]
+CMD ["uv", "run", "gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "nekosapi.asgi:application", "--host", "0.0.0.0"]
