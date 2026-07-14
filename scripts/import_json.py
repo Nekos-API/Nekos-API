@@ -53,9 +53,7 @@ async def main():
             url=image["url"],
             rating=Rating(image["rating"]),
             color_primary="#%02x%02x%02x" % tuple(image["color"]["dominant"]),
-            color_palette=",".join(
-                "#%02x%02x%02x" % tuple(c) for c in image["color"]["palette"]
-            ),
+            color_palette=",".join("#%02x%02x%02x" % tuple(c) for c in image["color"]["palette"]),
             artist_name=image["artist"],
             source_id=image["source"]["id"],
             source_url=image["source"]["name"],
@@ -69,6 +67,4 @@ async def main():
     await db.on_shutdown()
 
 
-
-if __name__ == "__main__":
-    asyncio.run(main())
+asyncio.run(main())

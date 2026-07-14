@@ -3,7 +3,6 @@ import asyncio
 from nekos_api.db import Image, Tag, Rating, lifespan as db
 
 
-
 async def main():
     print("Starting database connections...")
     await db.on_startup()
@@ -14,7 +13,7 @@ async def main():
     for tag in tags:
         is_nsfw = input(f"Is the tag '{tag.name}' NSFW? (y/n): ").strip().lower() == "y"
         tag.is_nsfw = is_nsfw
-    
+
     print(f"Updating {len(tags)} tags in the database...")
     await Tag.bulk_update(tags, fields=["is_nsfw"])
 
@@ -22,6 +21,4 @@ async def main():
     await db.on_shutdown()
 
 
-
-if __name__ == "__main__":
-    asyncio.run(main())
+asyncio.run(main())
