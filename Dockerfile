@@ -15,4 +15,4 @@ VOLUME /app
 
 # The ENTRYPOINT is set to `uv run --no-dev` by default, so only put your app's src directory as
 # the command.
-ENTRYPOINT [ "sh", "-c", "uv run --no-dev tortoise migrate && uv run --no-dev uvicorn nekos_api:app --host 0.0.0.0 --port 8000" ]
+ENTRYPOINT [ "sh", "-c", "uv run --no-dev tortoise migrate && uv run --no-dev uvicorn nekos_api:app --host ${NEKOS_BIND_HOST:-0.0.0.0} --port ${NEKOS_BIND_PORT:-8000} --workers $(nproc)" ]
