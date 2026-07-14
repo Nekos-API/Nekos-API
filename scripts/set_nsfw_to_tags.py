@@ -1,6 +1,6 @@
 import asyncio
 
-from nekos_api.db import Image, Tag, Rating, lifespan as db
+from nekos_api.db import Tag, lifespan as db
 
 
 async def main():
