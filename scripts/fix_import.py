@@ -5,7 +5,7 @@ from typing import TypedDict
 import orjson
 
 from nekos_api.db import lifespan as db, Image
-from nekos_api.lib import requests
+from nekos_api.lib.requests import httpx
 
 
 class ImageV4(TypedDict):
@@ -14,7 +14,7 @@ class ImageV4(TypedDict):
 
 
 async def get_images(page: int) -> list[ImageV4]:
-    response = await requests.get(f"https://api.nekosapi.com/v4/images?limit=100&offset={(page - 1) * 100}")
+    response = await httpx.get(f"https://api.nekosapi.com/v4/images?limit=100&offset={(page - 1) * 100}")
 
     return response.json()["items"]
 
