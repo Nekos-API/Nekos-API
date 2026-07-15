@@ -39,7 +39,7 @@ async def main():
 
         for image in images:
             new_url = image["url"]
-            old_url = json_dict[image["id"]]
+            old_url = json_dict[image["id"]]["url"]
 
             row = await Image.get_or_none(url=old_url)
 
